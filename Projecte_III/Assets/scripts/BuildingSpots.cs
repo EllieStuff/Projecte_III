@@ -4,22 +4,60 @@ using UnityEngine;
 
 public class BuildingSpots : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private ModifiersManager modifiers;
+    [SerializeField] private bool placed;
+
+    [SerializeField] private LayerMask layerMask;
+
+    private void Awake()
     {
-        
+        placed = false;
+        this.transform.localScale = new Vector3(1, 1, 1);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        if(Physics.Raycast(ray, out RaycastHit raycastHit))
+        if (Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, layerMask))
         {
-            float distance = Vector3.Distance(raycastHit.point, this.transform.position);
+            if(!placed)
+            {
+                this.transform.position = raycastHit.transform.position;
 
-            Debug.Log(distance);        
+                if (Input.GetMouseButtonDown(0) && raycastHit.transform.childCount == 0)    //Instantiate Object
+                {
+                    GameObject clone = GameObject.Instantiate(this, raycastHit.transform).gameObject;
+
+                    clone.transform.position = Vector3.zero;
+                    clone.transform.localPosition = Vector3.zero;
+
+                    clone.GetComponent<BuildingSpots>().SetPlaced();
+                }
+            }
+            else
+            {
+                if (Input.GetMouseButtonDown(1))                                            //Remove Object
+                {
+                    if(this.transform.parent != null)
+                    {
+                        if(raycastHit.transform == this.transform.parent)
+                        {
+                            Destroy(this.gameObject);
+                        }
+                    }
+                }
+            }
         }
+        else
+        {
+            if(!placed)
+                this.transform.position = new Vector3(1000, 0 ,0);
+        }
+    }
+
+    public void SetPlaced()
+    {
+        placed = true;
     }
 }
