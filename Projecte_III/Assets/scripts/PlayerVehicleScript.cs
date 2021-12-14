@@ -21,6 +21,7 @@ public class PlayerVehicleScript : MonoBehaviour
     private Material chasisMat;
     private Transform enemyTransform;
     public bool ignoreCollisionBetweenCoreAndEnemy;
+    private Vector3 savedVelocity;
 
     [SerializeField] public bool editorModeActive;
 
@@ -220,6 +221,7 @@ public class PlayerVehicleScript : MonoBehaviour
                         vehicleRB.velocity = transform.TransformDirection(new Vector3(0, 0, -vehicleMaxSpeed));
                 }
             }
+            savedVelocity = vehicleRB.velocity;
         }
         else if (vehicleReversed && lifeVehicle > 0)
         {
@@ -235,6 +237,22 @@ public class PlayerVehicleScript : MonoBehaviour
                 //if (vehicleRB.angularVelocity.z * Mathf.Rad2Deg < 10)
                 vehicleRB.AddTorque(new Vector3(0, 0, vehicleTorque));
             }
+        }
+        else
+        {
+            if (savedVelocity.x > 0)
+                savedVelocity -= new Vector3(0.1f + Mathf.Clamp(vehicleRB.velocity.y, 0, 0.2f), 0, 0);
+            else if (savedVelocity.x < 0)
+                savedVelocity += new Vector3(0.1f + Mathf.Clamp(vehicleRB.velocity.y, 0, 0.2f), 0, 0);
+            if (savedVelocity.z > 0)
+                savedVelocity -= new Vector3(0, 0, 0.1f + Mathf.Clamp(vehicleRB.velocity.y, 0, 0.2f));
+            else if (savedVelocity.z < 0)
+                savedVelocity += new Vector3(0, 0, 0.1f + Mathf.Clamp(vehicleRB.velocity.y, 0, 0.2f));
+
+            if(vehicleRB.velocity.y >= 0)
+                vehicleRB.velocity = new Vector3(savedVelocity.x, vehicleRB.velocity.y, savedVelocity.z);
+            else
+                vehicleRB.velocity = new Vector3(savedVelocity.x, vehicleRB.velocity.y - 0.5f, savedVelocity.z);
         }
 
         if (lifeVehicle <= 0 && Input.GetKey(KeyCode.Backspace))
