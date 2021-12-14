@@ -19,9 +19,11 @@ public class BuildingSpots : MonoBehaviour
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
+
         if (Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, layerMask))
         {
-            if(!placed)
+            
+            if (!placed)
             {
                 this.transform.position = raycastHit.transform.position;
 
@@ -52,8 +54,15 @@ public class BuildingSpots : MonoBehaviour
         else
         {
             if(!placed)
-                this.transform.position = new Vector3(1000, 0 ,0);
+            {
+                Vector3 newPos = ray.origin + ray.direction * (modifiers.transform.position.z + Mathf.Abs(Camera.main.transform.position.z));
+                //newPos.z = modifiers.transform.parent.transform.localPosition.z;
+
+                Debug.Log(Camera.main.nearClipPlane);
+                this.transform.position = newPos;
+            }
         }
+        Debug.DrawLine(ray.origin, this.transform.position, Color.red);
     }
 
     public void SetPlaced()
