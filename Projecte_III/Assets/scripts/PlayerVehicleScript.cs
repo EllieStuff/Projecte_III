@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class PlayerVehicleScript : MonoBehaviour
 {
+    [SerializeField] Vector3 centerOfMass = new Vector3(0.0f, -0.7f, 0.0f);
+
     public Rigidbody vehicleRB;
     public float vehicleAcceleration;
     public float vehicleTorque;
@@ -27,6 +29,7 @@ public class PlayerVehicleScript : MonoBehaviour
         chasisMat.color = Color.red;
         Physics.gravity = new Vector3(0, -9.8f * 2, 0);
         vehicleRB = this.GetComponent<Rigidbody>();
+        vehicleRB.centerOfMass = centerOfMass;
     }
 
     private void Awake()
@@ -194,65 +197,6 @@ public class PlayerVehicleScript : MonoBehaviour
             this.GetComponent<AudioSource>().pitch = (vehicleRB.velocity.magnitude * 2) / vehicleMaxSpeed;
         }
     }
-
-    /*void CollisionFunction(Collision other)
-    {
-        if (other != null && !other.gameObject.tag.Equals("ground") && !ignoreCollisionBetweenCoreAndEnemy && !other.gameObject.tag.Equals("Untagged"))
-            lifeVehicle = 0;
-        if (lifeVehicle <= 0 && !explosion)
-        {
-            this.GetComponent<Light>().enabled = true;
-            Physics.gravity = new Vector3(0, -9.8f, 0);
-            this.GetComponent<AudioSource>().enabled = false;
-            AudioSource localSound = this.transform.GetChild(0).gameObject.GetComponent<AudioSource>();
-            localSound.clip = explodeClip;
-            localSound.loop = false;
-            localSound.volume = 0.5f;
-            localSound.Play();
-
-            this.gameObject.AddComponent<BoxCollider>();
-            this.gameObject.GetComponent<BoxCollider>().isTrigger = false;
-            this.gameObject.GetComponent<ParticleSystem>().Play();
-
-            for (int i = 0; i < this.transform.childCount; i++)
-            {
-                GameObject child = this.transform.GetChild(i).gameObject;
-                
-                if(child.name != "vehicleChasis")
-                {
-                    for (int j = 0; j < child.transform.childCount; j++)
-                    {
-                        GameObject grandChild = child.transform.GetChild(j).gameObject;
-                        
-                        if(grandChild.name.Contains("Block"))
-                        {
-                            grandChild.GetComponent<BlockScript>().lifeBlock = 0;
-                            Physics.IgnoreCollision(enemyTransform.GetChild(0).GetComponent<BoxCollider>(), grandChild.GetComponent<BoxCollider>());
-                        }
-                        else
-                        {
-                            if (grandChild.GetComponent<BoxCollider>() == null)
-                                grandChild.AddComponent<BoxCollider>();
-                            grandChild.GetComponent<BoxCollider>().isTrigger = false;
-                            if (grandChild.GetComponent<Rigidbody>() == null)
-                                grandChild.AddComponent<Rigidbody>();
-                            Physics.IgnoreCollision(enemyTransform.GetChild(0).GetComponent<BoxCollider>(), grandChild.GetComponent<BoxCollider>());
-                            Physics.IgnoreCollision(enemyTransform.GetChild(0).GetComponent<BoxCollider>(), grandChild.GetComponent<WheelCollider>());
-                            grandChild.GetComponent<Rigidbody>().AddExplosionForce(100, this.transform.position, 50, 50, ForceMode.Force);
-                        }
-                    }
-
-                    for (int o = 0; o < child.transform.childCount; o++)
-                    {
-                        child.transform.GetChild(o).parent = null;
-                    }
-                }
-                else
-                    Physics.IgnoreCollision(enemyTransform.GetChild(0).GetComponent<BoxCollider>(), child.GetComponent<BoxCollider>());
-            }
-            explosion = true;
-        }
-    }*/
 
     void OnCollisionExit(Collision other)
     {
