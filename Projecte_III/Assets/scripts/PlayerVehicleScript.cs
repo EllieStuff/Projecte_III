@@ -15,30 +15,18 @@ public class PlayerVehicleScript : MonoBehaviour
     public int lifeVehicle;
     public bool touchingGround;
     public bool vehicleReversed;
-    public bool explosion;
-    public AudioClip explodeClip;
-    private Quaternion initialRot;
     private Material chasisMat;
-    private Transform enemyTransform;
-    public bool ignoreCollisionBetweenCoreAndEnemy;
-
-    [SerializeField] public bool editorModeActive;
+    private Vector3 savedVelocity;
 
     // Start is called before the first frame update
     void Start()
     {
         this.GetComponent<AudioSource>().enabled = false;
-        enemyTransform = GameObject.Find("Enemy").transform;
         chasisMat = new Material(this.transform.GetChild(0).GetComponent<MeshRenderer>().material);
         this.transform.GetChild(0).GetComponent<MeshRenderer>().material = chasisMat;
         chasisMat.color = Color.red;
-
-        initialRot = this.transform.rotation;
         Physics.gravity = new Vector3(0, -9.8f * 2, 0);
-        this.gameObject.GetComponent<ParticleSystem>().Stop();
         vehicleRB = this.GetComponent<Rigidbody>();
-
-        EditorStart();
     }
 
     private void Awake()
@@ -47,81 +35,6 @@ public class PlayerVehicleScript : MonoBehaviour
     }
 
     void Update()
-    {
-        if (!editorModeActive)
-        {
-            BattleUpdate();
-        }
-        else
-        {
-            EditorUpdate();
-        }
-    }
-
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        if(!editorModeActive)
-        {
-            BattleFixedUpdate();
-        }
-    }
-
-    void OnCollisionStay(Collision other)
-    {
-        if (!editorModeActive && other.gameObject.tag.Equals("ground"))
-            vehicleReversed = true;
-    }
-
-    public void EditorStart()
-    {
-        if (this.transform.rotation != new Quaternion(0, 0, 0, 0))
-            this.transform.rotation = new Quaternion(0, 0, 0, 0);
-
-        vehicleRB.useGravity = false;
-
-        this.transform.position = new Vector3(200, 0, 0);
-
-        editorModeActive = true;
-    }
-
-    public void BattleStart()
-    {
-        if (this.transform.rotation != new Quaternion(0, 0, 0, 0))
-            this.transform.rotation = new Quaternion(0, 0, 0, 0);
-
-        vehicleRB.useGravity = true;
-
-        this.transform.position = new Vector3(130, 0, -427);
-
-        editorModeActive = false;
-    }
-
-    public void EditorUpdate()
-    {
-        if(this.GetComponent<AudioSource>().enabled)
-            this.GetComponent<AudioSource>().enabled = false;
-
-        for (int i = 0; i < wheelCollider.Length; i++)
-        {
-            wheelCollider[i].GetWorldPose(out var pos, out var rot);
-            wheels[i].transform.position = pos;
-            wheels[i].transform.rotation = rot;
-        }
-
-        //if (this.transform.rotation != new Quaternion(0, 0, 0, 0))
-            //this.transform.rotation = new Quaternion(0, 0, 0, 0);
-
-        if (vehicleRB.velocity != Vector3.zero)
-            vehicleRB.velocity = Vector3.zero;
-        
-        if(vehicleRB.angularVelocity != Vector3.zero)
-            vehicleRB.angularVelocity = Vector3.zero;
-
-        this.transform.position = new Vector3(200, 0, 0);
-    }
-
-    public void BattleUpdate()
     {
         touchingGround = false;
 
@@ -137,7 +50,19 @@ public class PlayerVehicleScript : MonoBehaviour
         }
     }
 
-    void BattleFixedUpdate()
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        vehicleMovement();
+    }
+
+    void OnCollisionStay(Collision other)
+    {
+        if (other.gameObject.tag.Equals("ground"))
+            vehicleReversed = true;
+    }
+
+    void vehicleMovement()
     {
         var locVel = transform.InverseTransformDirection(vehicleRB.velocity);
         if (touchingGround && lifeVehicle > 0)
@@ -220,6 +145,7 @@ public class PlayerVehicleScript : MonoBehaviour
                         vehicleRB.velocity = transform.TransformDirection(new Vector3(0, 0, -vehicleMaxSpeed));
                 }
             }
+            savedVelocity = vehicleRB.velocity;
         }
         else if (vehicleReversed && lifeVehicle > 0)
         {
@@ -235,6 +161,22 @@ public class PlayerVehicleScript : MonoBehaviour
                 //if (vehicleRB.angularVelocity.z * Mathf.Rad2Deg < 10)
                 vehicleRB.AddTorque(new Vector3(0, 0, vehicleTorque));
             }
+        }
+        else
+        {
+            if (savedVelocity.x > 0)
+                savedVelocity -= new Vector3(0.1f + Mathf.Clamp(vehicleRB.velocity.y, 0, 0.2f), 0, 0);
+            else if (savedVelocity.x < 0)
+                savedVelocity += new Vector3(0.1f + Mathf.Clamp(vehicleRB.velocity.y, 0, 0.2f), 0, 0);
+            if (savedVelocity.z > 0)
+                savedVelocity -= new Vector3(0, 0, 0.1f + Mathf.Clamp(vehicleRB.velocity.y, 0, 0.2f));
+            else if (savedVelocity.z < 0)
+                savedVelocity += new Vector3(0, 0, 0.1f + Mathf.Clamp(vehicleRB.velocity.y, 0, 0.2f));
+
+            if (vehicleRB.velocity.y >= 0)
+                vehicleRB.velocity = new Vector3(savedVelocity.x, vehicleRB.velocity.y, savedVelocity.z);
+            else
+                vehicleRB.velocity = new Vector3(savedVelocity.x, vehicleRB.velocity.y - 0.5f, savedVelocity.z);
         }
 
         if (lifeVehicle <= 0 && Input.GetKey(KeyCode.Backspace))
@@ -253,13 +195,7 @@ public class PlayerVehicleScript : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter(Collision other)
-    {
-        if (!editorModeActive)
-            BattleCollision(other);
-    }
-
-    void BattleCollision(Collision other)
+    /*void CollisionFunction(Collision other)
     {
         if (other != null && !other.gameObject.tag.Equals("ground") && !ignoreCollisionBetweenCoreAndEnemy && !other.gameObject.tag.Equals("Untagged"))
             lifeVehicle = 0;
@@ -316,16 +252,10 @@ public class PlayerVehicleScript : MonoBehaviour
             }
             explosion = true;
         }
-    }
+    }*/
 
     void OnCollisionExit(Collision other)
     {
-        if (!editorModeActive)
-            vehicleReversed = false;
-    }
-
-    public Vector3 GetEditorInitialChasisPos()
-    {
-        return this.transform.GetChild(0).localPosition + new Vector3(200, 0, 0);
+        vehicleReversed = false;
     }
 }
