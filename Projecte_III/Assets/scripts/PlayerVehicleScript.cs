@@ -17,6 +17,7 @@ public class PlayerVehicleScript : MonoBehaviour
     public int lifeVehicle;
     public bool touchingGround;
     public bool vehicleReversed;
+    public float minDriftSpeed;
     private Material chasisMat;
     private Vector3 savedVelocity;
 
@@ -41,6 +42,7 @@ public class PlayerVehicleScript : MonoBehaviour
     {
         touchingGround = false;
 
+        //HERE WE SET THE POSITION AND ROTATION FROM THE WHEELS RENDERERS
         for (int i = 0; i < wheelCollider.Length; i++)
         {
             if (wheelCollider[i].GetGroundHit(out var touchingGroundV))
@@ -51,6 +53,7 @@ public class PlayerVehicleScript : MonoBehaviour
             wheels[i].transform.position = pos;
             wheels[i].transform.rotation = rot;
         }
+        //_______________________________________________________________
     }
 
     // Update is called once per frame
@@ -70,19 +73,25 @@ public class PlayerVehicleScript : MonoBehaviour
         var locVel = transform.InverseTransformDirection(vehicleRB.velocity);
         if (touchingGround && lifeVehicle > 0)
         {
+            //MAIN MOVEMENT KEYS______________________________________________________________________________________________________________________
             //FORWARD
             if (Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
             {
-                vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, vehicleAcceleration));
+                if (vehicleRB.velocity.y <= vehicleMaxSpeed / 2 && !Input.GetKey(KeyCode.Space))
+                    vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, vehicleAcceleration));
             }
             else if (Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.A))
             {
-                vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, vehicleAcceleration));
+                if (vehicleRB.velocity.y <= vehicleMaxSpeed / 2 && !Input.GetKey(KeyCode.Space))
+                    vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, vehicleAcceleration));
+
                 vehicleRB.AddTorque(new Vector3(0, -vehicleTorque, 0));
             }
             else if (Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
             {
-                vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, vehicleAcceleration));
+                if (vehicleRB.velocity.y <= vehicleMaxSpeed / 2 && !Input.GetKey(KeyCode.Space))
+                    vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, vehicleAcceleration));
+
                 vehicleRB.AddTorque(new Vector3(0, vehicleTorque, 0));
             }
 
@@ -100,91 +109,84 @@ public class PlayerVehicleScript : MonoBehaviour
             //BACKWARDS
             else if (Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.W))
             {
-                vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, -vehicleAcceleration));
+                if(vehicleRB.velocity.y > -minDriftSpeed / 2 && vehicleRB.velocity.y <= vehicleMaxSpeed / 2)
+                    vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, -vehicleAcceleration));
+                else if(vehicleRB.velocity.y <= vehicleMaxSpeed / 2)
+                    vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, -vehicleAcceleration/10));
             }
             else if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.W))
             {
-                vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, -vehicleAcceleration));
+                if(vehicleRB.velocity.y > -minDriftSpeed / 2 && vehicleRB.velocity.y <= vehicleMaxSpeed / 2)
+                    vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, -vehicleAcceleration));
+                else if(vehicleRB.velocity.y <= vehicleMaxSpeed / 2)
+                    vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, -vehicleAcceleration/10));
+                
                 vehicleRB.AddTorque(new Vector3(0, vehicleTorque, 0));
             }
             else if (Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.W))
             {
-                vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, -vehicleAcceleration));
+                if(vehicleRB.velocity.y > -minDriftSpeed / 2 && vehicleRB.velocity.y <= vehicleMaxSpeed / 2)
+                    vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, -vehicleAcceleration));
+                else if(vehicleRB.velocity.y <= vehicleMaxSpeed / 2)
+                    vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, -vehicleAcceleration/10));
+                
                 vehicleRB.AddTorque(new Vector3(0, -vehicleTorque, 0));
             }
+            //MAIN MOVEMENT KEYS______________________________________________________________________________________________________________________
 
-            if (!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
-                vehicleRB.angularVelocity = new Vector3(vehicleRB.angularVelocity.x, 0, vehicleRB.angularVelocity.z);
+            //SPEED REGULATION FUNCTION
+            SpeedRegulation();
 
-            if (vehicleRB.angularVelocity.y > vehicleMaxTorque)
-            {
-                vehicleRB.angularVelocity = new Vector3(vehicleRB.angularVelocity.x, vehicleMaxTorque, vehicleRB.angularVelocity.z);
-            }
-            else if (vehicleRB.angularVelocity.y < -vehicleMaxTorque)
-            {
-                vehicleRB.angularVelocity = new Vector3(vehicleRB.angularVelocity.x, -vehicleMaxTorque, vehicleRB.angularVelocity.z);
-            }
-            if (vehicleRB.velocity.z > vehicleMaxSpeed || vehicleRB.velocity.x > vehicleMaxSpeed)
-            {
-                if (vehicleRB.velocity.x > vehicleMaxSpeed && vehicleRB.velocity.z < vehicleMaxSpeed)
-                {
-                    vehicleRB.velocity = transform.TransformDirection(new Vector3(0, 0, vehicleMaxSpeed));
-                    if (Input.GetKey(KeyCode.S) && vehicleRB.velocity.x < 0)
-                        vehicleRB.velocity = transform.TransformDirection(new Vector3(0, 0, -vehicleMaxSpeed));
-                }
-                if (vehicleRB.velocity.z > vehicleMaxSpeed)
-                    vehicleRB.velocity = transform.TransformDirection(new Vector3(0, 0, vehicleMaxSpeed));
-                if (Input.GetKey(KeyCode.S) && vehicleRB.velocity.z < 0)
-                    vehicleRB.velocity = transform.TransformDirection(new Vector3(0, 0, -vehicleMaxSpeed));
-            }
-            else if (vehicleRB.velocity.z < -vehicleMaxSpeed || vehicleRB.velocity.x < -vehicleMaxSpeed)
-            {
-                if (!Input.GetKey(KeyCode.S))
-                    vehicleRB.velocity = transform.TransformDirection(new Vector3(0, 0, vehicleMaxSpeed));
-                else
-                {
-                    vehicleRB.velocity = transform.TransformDirection(new Vector3(0, 0, -vehicleMaxSpeed));
-                    if (vehicleRB.velocity.z < 0)
-                        vehicleRB.velocity = transform.TransformDirection(new Vector3(0, 0, -vehicleMaxSpeed));
-                }
-            }
+            //DRIFT FUNCTION
+            DriftFunction();
+
             savedVelocity = vehicleRB.velocity;
         }
         else if (vehicleReversed && lifeVehicle > 0)
         {
-            //LEFT
-            if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.D))
-            {
-                // if(vehicleRB.angularVelocity.z * Mathf.Rad2Deg > -10)
-                vehicleRB.AddTorque(new Vector3(0, 0, -vehicleTorque));
-            }
-            //RIGHT
-            else if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.A))
-            {
-                //if (vehicleRB.angularVelocity.z * Mathf.Rad2Deg < 10)
-                vehicleRB.AddTorque(new Vector3(0, 0, vehicleTorque));
-            }
+            //WHEN THE VEHICLE IS REVERSED YOU CAN ROTATE THE QUAD LEFT AND RIGHT UNTIL THE VEHICLE STANDS UP
+            VehicleRecoverFunction();
         }
         else
         {
-            if (savedVelocity.x > 0)
-                savedVelocity -= new Vector3(0.1f + Mathf.Clamp(vehicleRB.velocity.y, 0, 0.2f), 0, 0);
-            else if (savedVelocity.x < 0)
-                savedVelocity += new Vector3(0.1f + Mathf.Clamp(vehicleRB.velocity.y, 0, 0.2f), 0, 0);
-            if (savedVelocity.z > 0)
-                savedVelocity -= new Vector3(0, 0, 0.1f + Mathf.Clamp(vehicleRB.velocity.y, 0, 0.2f));
-            else if (savedVelocity.z < 0)
-                savedVelocity += new Vector3(0, 0, 0.1f + Mathf.Clamp(vehicleRB.velocity.y, 0, 0.2f));
-
-            if (vehicleRB.velocity.y >= 0)
-                vehicleRB.velocity = new Vector3(savedVelocity.x, vehicleRB.velocity.y, savedVelocity.z);
-            else
-                vehicleRB.velocity = new Vector3(savedVelocity.x, vehicleRB.velocity.y - 0.5f, savedVelocity.z);
+            //FALL FUNCTION
+            FallFunction();
         }
 
-        if (lifeVehicle <= 0 && Input.GetKey(KeyCode.Backspace))
-            SceneManager.LoadScene("testScene");
+        //VEHICLE SOUND PITCH SYSTEM
+        VehicleSoundPitchFunction();
+    }
 
+    void VehicleRecoverFunction()
+    {
+        //LEFT
+        if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.D))
+        {
+            vehicleRB.AddTorque(new Vector3(0, 0, -vehicleTorque * 10));
+        }
+        //RIGHT
+        else if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.A))
+        {
+            vehicleRB.AddTorque(new Vector3(0, 0, vehicleTorque * 10));
+        }
+    }
+
+    void DriftFunction()
+    {
+        if (vehicleRB.velocity.magnitude >= minDriftSpeed)
+        {
+            if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.Space))
+            {
+                vehicleRB.AddTorque(new Vector3(0, -vehicleTorque * 5, 0));
+            }
+            else if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.Space))
+            {
+                vehicleRB.AddTorque(new Vector3(0, vehicleTorque * 5, 0));
+            }
+        }
+    }
+    void VehicleSoundPitchFunction()
+    {
         if ((vehicleRB.velocity.magnitude > 1 || vehicleRB.velocity.magnitude < -1) && !this.GetComponent<AudioSource>().enabled && lifeVehicle > 0)
         {
             this.GetComponent<AudioSource>().enabled = true;
@@ -195,6 +197,62 @@ public class PlayerVehicleScript : MonoBehaviour
         if (this.GetComponent<AudioSource>().enabled)
         {
             this.GetComponent<AudioSource>().pitch = (vehicleRB.velocity.magnitude * 2) / vehicleMaxSpeed;
+        }
+    }
+
+    void FallFunction()
+    {
+        if (savedVelocity.x > 0)
+            savedVelocity -= new Vector3(0.1f + Mathf.Clamp(vehicleRB.velocity.y, 0, 0.2f), 0, 0);
+        else if (savedVelocity.x < 0)
+            savedVelocity += new Vector3(0.1f + Mathf.Clamp(vehicleRB.velocity.y, 0, 0.2f), 0, 0);
+        if (savedVelocity.z > 0)
+            savedVelocity -= new Vector3(0, 0, 0.1f + Mathf.Clamp(vehicleRB.velocity.y, 0, 0.2f));
+        else if (savedVelocity.z < 0)
+            savedVelocity += new Vector3(0, 0, 0.1f + Mathf.Clamp(vehicleRB.velocity.y, 0, 0.2f));
+
+        if (vehicleRB.velocity.y >= 0)
+            vehicleRB.velocity = new Vector3(savedVelocity.x, vehicleRB.velocity.y, savedVelocity.z);
+        else
+            vehicleRB.velocity = new Vector3(savedVelocity.x, vehicleRB.velocity.y - 0.5f, savedVelocity.z);
+    }
+
+    void SpeedRegulation()
+    {
+        if (!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
+            vehicleRB.angularVelocity = new Vector3(vehicleRB.angularVelocity.x, 0, vehicleRB.angularVelocity.z);
+
+        if (vehicleRB.angularVelocity.y > vehicleMaxTorque)
+        {
+            vehicleRB.angularVelocity = new Vector3(vehicleRB.angularVelocity.x, vehicleMaxTorque, vehicleRB.angularVelocity.z);
+        }
+        else if (vehicleRB.angularVelocity.y < -vehicleMaxTorque)
+        {
+            vehicleRB.angularVelocity = new Vector3(vehicleRB.angularVelocity.x, -vehicleMaxTorque, vehicleRB.angularVelocity.z);
+        }
+        if (vehicleRB.velocity.z > vehicleMaxSpeed || vehicleRB.velocity.x > vehicleMaxSpeed)
+        {
+            if (vehicleRB.velocity.x > vehicleMaxSpeed && vehicleRB.velocity.z < vehicleMaxSpeed)
+            {
+                vehicleRB.velocity = transform.TransformDirection(new Vector3(0, 0, vehicleMaxSpeed));
+                if (Input.GetKey(KeyCode.S) && vehicleRB.velocity.x < 0)
+                    vehicleRB.velocity = transform.TransformDirection(new Vector3(0, 0, -vehicleMaxSpeed));
+            }
+            if (vehicleRB.velocity.z > vehicleMaxSpeed)
+                vehicleRB.velocity = transform.TransformDirection(new Vector3(0, 0, vehicleMaxSpeed));
+            if (Input.GetKey(KeyCode.S) && vehicleRB.velocity.z < 0)
+                vehicleRB.velocity = transform.TransformDirection(new Vector3(0, 0, -vehicleMaxSpeed));
+        }
+        else if (vehicleRB.velocity.z < -vehicleMaxSpeed || vehicleRB.velocity.x < -vehicleMaxSpeed)
+        {
+            if (!Input.GetKey(KeyCode.S))
+                vehicleRB.velocity = transform.TransformDirection(new Vector3(0, 0, vehicleMaxSpeed));
+            else
+            {
+                vehicleRB.velocity = transform.TransformDirection(new Vector3(0, 0, -vehicleMaxSpeed));
+                if (vehicleRB.velocity.z < 0)
+                    vehicleRB.velocity = transform.TransformDirection(new Vector3(0, 0, -vehicleMaxSpeed));
+            }
         }
     }
 

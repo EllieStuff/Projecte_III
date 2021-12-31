@@ -407,7 +407,7 @@ GameObject:
   - component: {fileID: 1765445252}
   m_Layer: 0
   m_Name: Terrain_0_0_0cf8253b-a208-4c7f-bf16-b60ba8e7c1b5
-  m_TagString: Untagged
+  m_TagString: ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -589,7 +589,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1253692601427293596, guid: 14049457b2096824eb74e8a1b789f0ab, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.0004005432
+      value: 204
       objectReference: {fileID: 0}
     - target: {fileID: 1253692601427293596, guid: 14049457b2096824eb74e8a1b789f0ab, type: 3}
       propertyPath: m_LocalPosition.y
@@ -642,6 +642,10 @@ PrefabInstance:
     - target: {fileID: 6694556762977321256, guid: 14049457b2096824eb74e8a1b789f0ab, type: 3}
       propertyPath: m_LocalPosition.z
       value: -175.13
+      objectReference: {fileID: 0}
+    - target: {fileID: 6694556762977321262, guid: 14049457b2096824eb74e8a1b789f0ab, type: 3}
+      propertyPath: minDriftSpeed
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6694556762977321262, guid: 14049457b2096824eb74e8a1b789f0ab, type: 3}
       propertyPath: vehicleTorque
