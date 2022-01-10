@@ -17,19 +17,24 @@ public class BuildingSpots : MonoBehaviour
 
     private void Update()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        this.transform.localScale = new Vector3(1,1,1);
 
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, layerMask))
         {
             
             if (!placed)
             {
+
                 this.transform.position = raycastHit.transform.position;
+                this.transform.localScale = raycastHit.transform.lossyScale;
 
                 if (Input.GetMouseButtonDown(0) && raycastHit.transform.childCount == 0)    //Instantiate Object
                 {
                     GameObject clone = GameObject.Instantiate(this, raycastHit.transform).gameObject;
+
+                    clone.transform.localScale = clone.transform.parent.parent.localScale;
 
                     clone.transform.position = Vector3.zero;
                     clone.transform.localPosition = Vector3.zero;
