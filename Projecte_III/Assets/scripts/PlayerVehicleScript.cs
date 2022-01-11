@@ -25,6 +25,8 @@ public class PlayerVehicleScript : MonoBehaviour
     private Material chasisMat;
     private Vector3 savedVelocity;
 
+    public Vector3 respawnPosition;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,6 +45,7 @@ public class PlayerVehicleScript : MonoBehaviour
     private void Awake()
     {
         this.transform.name = "Player";
+        respawnPosition = new Vector3(0, 0, 0);
     }
 
     void Update()
