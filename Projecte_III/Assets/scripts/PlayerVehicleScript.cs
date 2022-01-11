@@ -18,8 +18,10 @@ public class PlayerVehicleScript : MonoBehaviour
     public bool touchingGround;
     public bool vehicleReversed;
     public float minDriftSpeed;
+    private float chasisElevationTimer;
     private Material chasisMat;
     private Vector3 savedVelocity;
+    [SerializeField] private bool chasisElevation;
 
     // Start is called before the first frame update
     void Start()
@@ -140,6 +142,10 @@ public class PlayerVehicleScript : MonoBehaviour
             //DRIFT FUNCTION
             DriftFunction();
 
+            //CHASIS ELEVATION FUNCTION
+            ChasisElevationFunction();
+
+
             savedVelocity = vehicleRB.velocity;
         }
         else if (vehicleReversed && lifeVehicle > 0)
@@ -171,6 +177,33 @@ public class PlayerVehicleScript : MonoBehaviour
         }
     }
 
+    void ChasisElevationFunction()
+    {
+        Transform chasisTransform = this.transform.GetChild(0);
+
+        if (Input.GetKey(KeyCode.Keypad1) && !chasisElevation && chasisTransform.localPosition.y <= 0)
+        {
+            chasisElevation = true;
+            chasisElevationTimer = 2;
+        }
+
+        if (chasisElevation)
+        {
+            if (chasisElevationTimer > 0)
+                chasisElevationTimer -= Time.deltaTime;
+            else
+                chasisElevation = false;
+
+            if (chasisTransform.localPosition.y <= 2)
+                chasisTransform.localPosition = new Vector3(chasisTransform.localPosition.x, chasisTransform.localPosition.y + 0.05f, chasisTransform.localPosition.z);
+        }
+        else
+        {
+            if (chasisTransform.localPosition.y > 0)
+                chasisTransform.localPosition = new Vector3(chasisTransform.localPosition.x, chasisTransform.localPosition.y - 0.05f, chasisTransform.localPosition.z);
+        }
+    }
+
     void DriftFunction()
     {
         if (vehicleRB.velocity.magnitude >= minDriftSpeed)
@@ -185,6 +218,7 @@ public class PlayerVehicleScript : MonoBehaviour
             }
         }
     }
+
     void VehicleSoundPitchFunction()
     {
         if ((vehicleRB.velocity.magnitude > 1 || vehicleRB.velocity.magnitude < -1) && !this.GetComponent<AudioSource>().enabled && lifeVehicle > 0)
