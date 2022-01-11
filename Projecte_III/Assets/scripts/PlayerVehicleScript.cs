@@ -19,9 +19,6 @@ public class PlayerVehicleScript : MonoBehaviour
     public bool vehicleReversed;
     public float minDriftSpeed;
     private Material chasisMat;
-    private Transform enemyTransform;
-    public bool ignoreCollisionBetweenCoreAndEnemy;
-    private Vector3 savedVelocity;
     private Vector3 savedVelocity;
 
     // Start is called before the first frame update
@@ -78,19 +75,19 @@ public class PlayerVehicleScript : MonoBehaviour
         {
             //MAIN MOVEMENT KEYS______________________________________________________________________________________________________________________
             //FORWARD
-            if (Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
+            if (Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A) && transform.rotation.ToEulerAngles().x > -1)
             {
                 if (vehicleRB.velocity.y <= vehicleMaxSpeed / 2 && !Input.GetKey(KeyCode.Space))
                     vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, vehicleAcceleration));
             }
-            else if (Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.A))
+            else if (Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.A) && transform.rotation.ToEulerAngles().x > -1)
             {
                 if (vehicleRB.velocity.y <= vehicleMaxSpeed / 2 && !Input.GetKey(KeyCode.Space))
                     vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, vehicleAcceleration));
 
                 vehicleRB.AddTorque(new Vector3(0, -vehicleTorque, 0));
             }
-            else if (Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
+            else if (Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A) && transform.rotation.ToEulerAngles().x > -1)
             {
                 if (vehicleRB.velocity.y <= vehicleMaxSpeed / 2 && !Input.GetKey(KeyCode.Space))
                     vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, vehicleAcceleration));
@@ -110,29 +107,29 @@ public class PlayerVehicleScript : MonoBehaviour
             }
 
             //BACKWARDS
-            else if (Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.W))
+            else if (Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.W) && transform.rotation.ToEulerAngles().x > -1)
             {
-                if(vehicleRB.velocity.y > -minDriftSpeed / 2 && vehicleRB.velocity.y <= vehicleMaxSpeed / 2)
+                if (vehicleRB.velocity.y > -minDriftSpeed / 2 && vehicleRB.velocity.y <= vehicleMaxSpeed / 2)
                     vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, -vehicleAcceleration));
-                else if(vehicleRB.velocity.y <= vehicleMaxSpeed / 2)
-                    vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, -vehicleAcceleration/10));
+                else if (vehicleRB.velocity.y <= vehicleMaxSpeed / 2)
+                    vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, -vehicleAcceleration / 10));
             }
-            else if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.W))
+            else if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.W) && transform.rotation.ToEulerAngles().x > -1)
             {
-                if(vehicleRB.velocity.y > -minDriftSpeed / 2 && vehicleRB.velocity.y <= vehicleMaxSpeed / 2)
+                if (vehicleRB.velocity.y > -minDriftSpeed / 2 && vehicleRB.velocity.y <= vehicleMaxSpeed / 2)
                     vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, -vehicleAcceleration));
-                else if(vehicleRB.velocity.y <= vehicleMaxSpeed / 2)
-                    vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, -vehicleAcceleration/10));
-                
+                else if (vehicleRB.velocity.y <= vehicleMaxSpeed / 2)
+                    vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, -vehicleAcceleration / 10));
+
                 vehicleRB.AddTorque(new Vector3(0, vehicleTorque, 0));
             }
-            else if (Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.W))
+            else if (Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.W) && transform.rotation.ToEulerAngles().x > -1)
             {
-                if(vehicleRB.velocity.y > -minDriftSpeed / 2 && vehicleRB.velocity.y <= vehicleMaxSpeed / 2)
+                if (vehicleRB.velocity.y > -minDriftSpeed / 2 && vehicleRB.velocity.y <= vehicleMaxSpeed / 2)
                     vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, -vehicleAcceleration));
-                else if(vehicleRB.velocity.y <= vehicleMaxSpeed / 2)
-                    vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, -vehicleAcceleration/10));
-                
+                else if (vehicleRB.velocity.y <= vehicleMaxSpeed / 2)
+                    vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, -vehicleAcceleration / 10));
+
                 vehicleRB.AddTorque(new Vector3(0, -vehicleTorque, 0));
             }
             //MAIN MOVEMENT KEYS______________________________________________________________________________________________________________________
@@ -199,7 +196,7 @@ public class PlayerVehicleScript : MonoBehaviour
 
         if (this.GetComponent<AudioSource>().enabled)
         {
-            this.GetComponent<AudioSource>().pitch = (vehicleRB.velocity.magnitude * 2) / vehicleMaxSpeed;
+            this.GetComponent<AudioSource>().pitch = (vehicleRB.velocity.magnitude * 1) / vehicleMaxSpeed;
         }
     }
 
