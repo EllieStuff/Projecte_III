@@ -1,11 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class PlayerVehicleScript : MonoBehaviour
 {
     [SerializeField] Vector3 centerOfMass = new Vector3(0.0f, -0.7f, 0.0f);
+
+    QuadControls controls;
 
     public Rigidbody vehicleRB;
     public float vehicleAcceleration;
@@ -24,6 +28,9 @@ public class PlayerVehicleScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        controls = new QuadControls();
+        controls.Enable();
+
         this.GetComponent<AudioSource>().enabled = false;
         chasisMat = new Material(this.transform.GetChild(0).GetComponent<MeshRenderer>().material);
         this.transform.GetChild(0).GetComponent<MeshRenderer>().material = chasisMat;
@@ -75,46 +82,46 @@ public class PlayerVehicleScript : MonoBehaviour
         {
             //MAIN MOVEMENT KEYS______________________________________________________________________________________________________________________
             //FORWARD
-            if (Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
+            if (controls.Quad.Forward.ReadValue<float>() > 0 && controls.Quad.Backward.ReadValue<float>() == 0 && controls.Quad.Right.ReadValue<float>() == 0 && controls.Quad.Left.ReadValue<float>() == 0)
             {
-                if (vehicleRB.velocity.y <= vehicleMaxSpeed / 2 && !Input.GetKey(KeyCode.Space))
+                if (vehicleRB.velocity.y <= vehicleMaxSpeed / 2 && controls.Quad.Drift.ReadValue<float>() == 0)
                     vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, vehicleAcceleration));
             }
-            else if (Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.A))
+            else if (controls.Quad.Forward.ReadValue<float>() > 0 && controls.Quad.Backward.ReadValue<float>() == 0 && controls.Quad.Right.ReadValue<float>() == 0 && controls.Quad.Left.ReadValue<float>() > 0)
             {
-                if (vehicleRB.velocity.y <= vehicleMaxSpeed / 2 && !Input.GetKey(KeyCode.Space))
+                if (vehicleRB.velocity.y <= vehicleMaxSpeed / 2 && controls.Quad.Drift.ReadValue<float>() == 0)
                     vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, vehicleAcceleration));
 
                 vehicleRB.AddTorque(new Vector3(0, -vehicleTorque, 0));
             }
-            else if (Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
+            else if (controls.Quad.Forward.ReadValue<float>() > 0 && controls.Quad.Backward.ReadValue<float>() == 0 && controls.Quad.Right.ReadValue<float>() > 0 && controls.Quad.Left.ReadValue<float>() == 0)
             {
-                if (vehicleRB.velocity.y <= vehicleMaxSpeed / 2 && !Input.GetKey(KeyCode.Space))
+                if (vehicleRB.velocity.y <= vehicleMaxSpeed / 2 && controls.Quad.Drift.ReadValue<float>() == 0)
                     vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, vehicleAcceleration));
 
                 vehicleRB.AddTorque(new Vector3(0, vehicleTorque, 0));
             }
 
             //LEFT
-            else if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.D))
+            else if (controls.Quad.Left.ReadValue<float>() > 0 && controls.Quad.Forward.ReadValue<float>() == 0 && controls.Quad.Backward.ReadValue<float>() == 0 && controls.Quad.Right.ReadValue<float>() == 0)
             {
                 vehicleRB.AddTorque(new Vector3(0, -vehicleTorque, 0));
             }
             //RIGHT
-            else if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.A))
+            else if (controls.Quad.Right.ReadValue<float>() > 0 && controls.Quad.Forward.ReadValue<float>() == 0 && controls.Quad.Backward.ReadValue<float>() == 0 && controls.Quad.Left.ReadValue<float>() == 0)
             {
                 vehicleRB.AddTorque(new Vector3(0, vehicleTorque, 0));
             }
 
             //BACKWARDS
-            else if (Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.W))
+            else if (controls.Quad.Backward.ReadValue<float>() > 0 && controls.Quad.Left.ReadValue<float>() == 0 && controls.Quad.Right.ReadValue<float>() == 0 && controls.Quad.Forward.ReadValue<float>() == 0)
             {
                 if(vehicleRB.velocity.y > -minDriftSpeed / 2 && vehicleRB.velocity.y <= vehicleMaxSpeed / 2)
                     vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, -vehicleAcceleration));
                 else if(vehicleRB.velocity.y <= vehicleMaxSpeed / 2)
                     vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, -vehicleAcceleration/10));
             }
-            else if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.W))
+            else if (controls.Quad.Backward.ReadValue<float>() > 0 && controls.Quad.Left.ReadValue<float>() > 0 && controls.Quad.Right.ReadValue<float>() == 0 && controls.Quad.Forward.ReadValue<float>() == 0)
             {
                 if(vehicleRB.velocity.y > -minDriftSpeed / 2 && vehicleRB.velocity.y <= vehicleMaxSpeed / 2)
                     vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, -vehicleAcceleration));
@@ -123,7 +130,7 @@ public class PlayerVehicleScript : MonoBehaviour
                 
                 vehicleRB.AddTorque(new Vector3(0, vehicleTorque, 0));
             }
-            else if (Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.W))
+            else if (controls.Quad.Backward.ReadValue<float>() > 0 && controls.Quad.Left.ReadValue<float>() == 0 && controls.Quad.Right.ReadValue<float>() > 0 && controls.Quad.Forward.ReadValue<float>() == 0)
             {
                 if(vehicleRB.velocity.y > -minDriftSpeed / 2 && vehicleRB.velocity.y <= vehicleMaxSpeed / 2)
                     vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, -vehicleAcceleration));
@@ -160,12 +167,12 @@ public class PlayerVehicleScript : MonoBehaviour
     void VehicleRecoverFunction()
     {
         //LEFT
-        if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.D))
+        if (controls.Quad.Left.ReadValue<float>() > 0 && controls.Quad.Forward.ReadValue<float>() == 0 && controls.Quad.Backward.ReadValue<float>() == 0 && controls.Quad.Right.ReadValue<float>() == 0)
         {
             vehicleRB.AddTorque(new Vector3(0, 0, -vehicleTorque * 10));
         }
         //RIGHT
-        else if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.A))
+        else if (controls.Quad.Right.ReadValue<float>() > 0 && controls.Quad.Forward.ReadValue<float>() == 0 && controls.Quad.Backward.ReadValue<float>() == 0 && controls.Quad.Left.ReadValue<float>() == 0)
         {
             vehicleRB.AddTorque(new Vector3(0, 0, vehicleTorque * 10));
         }
@@ -175,11 +182,11 @@ public class PlayerVehicleScript : MonoBehaviour
     {
         if (vehicleRB.velocity.magnitude >= minDriftSpeed)
         {
-            if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.Space))
+            if (controls.Quad.Left.ReadValue<float>() > 0 && controls.Quad.Drift.ReadValue<float>() > 0)
             {
                 vehicleRB.AddTorque(new Vector3(0, -vehicleTorque * 5, 0));
             }
-            else if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.Space))
+            else if (controls.Quad.Right.ReadValue<float>() > 0 && controls.Quad.Drift.ReadValue<float>() > 0)
             {
                 vehicleRB.AddTorque(new Vector3(0, vehicleTorque * 5, 0));
             }
@@ -219,7 +226,7 @@ public class PlayerVehicleScript : MonoBehaviour
 
     void SpeedRegulation()
     {
-        if (!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
+        if (controls.Quad.Left.ReadValue<float>() == 0 && controls.Quad.Right.ReadValue<float>() == 0)
             vehicleRB.angularVelocity = new Vector3(vehicleRB.angularVelocity.x, 0, vehicleRB.angularVelocity.z);
 
         if (vehicleRB.angularVelocity.y > vehicleMaxTorque)
@@ -235,17 +242,17 @@ public class PlayerVehicleScript : MonoBehaviour
             if (vehicleRB.velocity.x > vehicleMaxSpeed && vehicleRB.velocity.z < vehicleMaxSpeed)
             {
                 vehicleRB.velocity = transform.TransformDirection(new Vector3(0, 0, vehicleMaxSpeed));
-                if (Input.GetKey(KeyCode.S) && vehicleRB.velocity.x < 0)
+                if (controls.Quad.Backward.ReadValue<float>() > 0 && vehicleRB.velocity.x < 0)
                     vehicleRB.velocity = transform.TransformDirection(new Vector3(0, 0, -vehicleMaxSpeed));
             }
             if (vehicleRB.velocity.z > vehicleMaxSpeed)
                 vehicleRB.velocity = transform.TransformDirection(new Vector3(0, 0, vehicleMaxSpeed));
-            if (Input.GetKey(KeyCode.S) && vehicleRB.velocity.z < 0)
+            if (controls.Quad.Backward.ReadValue<float>() > 0 && vehicleRB.velocity.z < 0)
                 vehicleRB.velocity = transform.TransformDirection(new Vector3(0, 0, -vehicleMaxSpeed));
         }
         else if (vehicleRB.velocity.z < -vehicleMaxSpeed || vehicleRB.velocity.x < -vehicleMaxSpeed)
         {
-            if (!Input.GetKey(KeyCode.S))
+            if (controls.Quad.Backward.ReadValue<float>() == 0)
                 vehicleRB.velocity = transform.TransformDirection(new Vector3(0, 0, vehicleMaxSpeed));
             else
             {

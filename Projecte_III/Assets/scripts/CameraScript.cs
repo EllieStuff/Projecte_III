@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CameraScript : MonoBehaviour
 {
@@ -9,10 +10,15 @@ public class CameraScript : MonoBehaviour
     [SerializeField] Vector3 rotOffset;
     [SerializeField] float camSpeed;
 
+    public QuadControls controls;
+
     Quaternion rotOffsetQuat, lookBackRotOffset;
 
     private void Start()
     {
+        controls = new QuadControls();
+        controls.Enable();
+
         rotOffsetQuat = Quaternion.Euler(rotOffset);
         lookBackRotOffset = Quaternion.Euler(0, 180, 0);
 
@@ -24,9 +30,9 @@ public class CameraScript : MonoBehaviour
     {
         this.transform.position = Vector3.Lerp(this.transform.position + posOffset, new Vector3(playerVehicle.transform.position.x, playerVehicle.transform.position.y + 2, playerVehicle.transform.position.z), Time.deltaTime * camSpeed);
 
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (controls.Quad.LookBackwards.ReadValue<float>() > 0/*Input.GetKeyDown(KeyCode.Tab)*/)
             this.transform.rotation = rotOffsetQuat * lookBackRotOffset;
-        else if (Input.GetKeyUp(KeyCode.Tab))
+        else /*if (Input.GetKeyUp(KeyCode.Tab))*/
             this.transform.rotation = rotOffsetQuat;
 
 
