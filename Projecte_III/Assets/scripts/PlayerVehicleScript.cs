@@ -24,8 +24,10 @@ public class PlayerVehicleScript : MonoBehaviour
     public float minDriftSpeed;
     private Material chasisMat;
     private Vector3 savedVelocity;
+    private float savedMaxVelocity;
 
-    public Vector3 respawnPosition;
+    public Vector3 respawnPosition, respawnRotation, respawnVelocity;
+    public float boostPadMultiplier;
 
     // Start is called before the first frame update
     void Start()
@@ -40,12 +42,16 @@ public class PlayerVehicleScript : MonoBehaviour
         Physics.gravity = new Vector3(0, -9.8f * 2, 0);
         vehicleRB = this.GetComponent<Rigidbody>();
         vehicleRB.centerOfMass = centerOfMass;
+        savedMaxVelocity = vehicleMaxSpeed;
+        boostPadMultiplier = 50;
     }
 
     private void Awake()
     {
         this.transform.name = "Player";
         respawnPosition = new Vector3(0, 0, 0);
+        respawnRotation = new Vector3(0, 0, 0);
+        respawnVelocity = new Vector3(0, 0, 0);
     }
 
     void Update()
@@ -264,6 +270,23 @@ public class PlayerVehicleScript : MonoBehaviour
                     vehicleRB.velocity = transform.TransformDirection(new Vector3(0, 0, -vehicleMaxSpeed));
             }
         }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("Boost Pad"))
+        {
+            float angle = Vector3.Angle(this.transform.forward, other.transform.forward);
+            angle *= Mathf.Deg2Rad;
+            angle = Mathf.Cos(angle);
+            vehicleMaxSpeed = boostPadMultiplier * angle;
+            if (vehicleMaxSpeed < savedMaxVelocity)
+                vehicleMaxSpeed = savedMaxVelocity;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        vehicleMaxSpeed = savedMaxVelocity;
     }
 
     void OnCollisionExit(Collision other)

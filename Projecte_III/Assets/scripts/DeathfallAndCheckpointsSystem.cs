@@ -12,20 +12,34 @@ public class DeathfallAndCheckpointsSystem : MonoBehaviour
     void Start()
     {
         chasis = GameObject.Find("vehicleChasis");
+        //Set default checkpoint (should be the first of the level)
+        if (this.name.Equals("Checkpoint"))
+        {
+            chasis.GetComponentInParent<PlayerVehicleScript>().respawnPosition = this.transform.position;
+            chasis.GetComponentInParent<PlayerVehicleScript>().respawnRotation = this.transform.localEulerAngles;
+            chasis.GetComponentInParent<PlayerVehicleScript>().respawnVelocity = new Vector3(0, 0, 0);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        chasis = GameObject.Find("vehicleChasis");
+        //chasis = GameObject.Find("vehicleChasis");
         //Debug.Log(chasis);
         if (gameObject.tag.Equals("Respawn") && chasis == other.gameObject)
         {
             chasis.GetComponentInParent<PlayerVehicleScript>().respawnPosition = this.transform.position;
+            chasis.GetComponentInParent<PlayerVehicleScript>().respawnRotation = this.transform.localEulerAngles;
+            chasis.GetComponentInParent<PlayerVehicleScript>().respawnVelocity = new Vector3(0, 0, 0);
             //Debug.Log(chasis.GetComponentInParent<PlayerVehicleScript>().respawnPosition);
         }
         if (gameObject.tag.Equals("Death Zone") && chasis == other.gameObject)
         {
             other.GetComponentInParent<Transform>().parent.position = chasis.GetComponentInParent<PlayerVehicleScript>().respawnPosition;
+            other.GetComponentInParent<PlayerVehicleScript>().vehicleRB.velocity = chasis.GetComponentInParent<PlayerVehicleScript>().respawnVelocity;
+            other.GetComponentInParent<Transform>().parent.localEulerAngles = chasis.GetComponentInParent<PlayerVehicleScript>().respawnRotation;
+            other.GetComponentInParent<Transform>().parent.localEulerAngles += new Vector3(0, 90, 0);
+            Debug.Log(chasis.GetComponentInParent<PlayerVehicleScript>().respawnRotation);
+            
             //Debug.Log(other.GetComponentInParent<Transform>().parent.position);
         }
     }
