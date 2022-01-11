@@ -12,12 +12,12 @@ public class BuildingSpots : MonoBehaviour
     private void Awake()
     {
         placed = false;
-        this.transform.localScale = new Vector3(1, 1, 1);
+        transform.localScale = new Vector3(1, 1, 1);
     }
 
     private void Update()
     {
-        this.transform.localScale = new Vector3(1,1,1);
+        transform.localScale = new Vector3(1,1,1);
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -27,14 +27,16 @@ public class BuildingSpots : MonoBehaviour
             if (!placed)
             {
 
-                this.transform.position = raycastHit.transform.position;
-                this.transform.localScale = raycastHit.transform.lossyScale;
+                transform.position = raycastHit.transform.position;
+                transform.localScale = raycastHit.transform.lossyScale;
+                transform.rotation = raycastHit.transform.rotation;
 
                 if (Input.GetMouseButtonDown(0) && raycastHit.transform.childCount == 0)    //Instantiate Object
                 {
-                    GameObject clone = GameObject.Instantiate(this, raycastHit.transform).gameObject;
+                    GameObject clone = Instantiate(gameObject, raycastHit.transform).gameObject;
 
                     clone.transform.localScale = clone.transform.parent.parent.localScale;
+                    clone.transform.localRotation = clone.transform.parent.parent.localRotation;
 
                     clone.transform.position = Vector3.zero;
                     clone.transform.localPosition = Vector3.zero;
@@ -46,11 +48,11 @@ public class BuildingSpots : MonoBehaviour
             {
                 if (Input.GetMouseButtonDown(1))                                            //Remove Object
                 {
-                    if(this.transform.parent != null)
+                    if(transform.parent != null)
                     {
-                        if(raycastHit.transform == this.transform.parent)
+                        if(raycastHit.transform == transform.parent)
                         {
-                            Destroy(this.gameObject);
+                            Destroy(gameObject);
                         }
                     }
                 }
@@ -64,14 +66,29 @@ public class BuildingSpots : MonoBehaviour
                 //newPos.z = modifiers.transform.parent.transform.localPosition.z;
 
                 Debug.Log(Camera.main.nearClipPlane);
-                this.transform.position = newPos;
+                transform.position = newPos;
             }
         }
-        Debug.DrawLine(ray.origin, this.transform.position, Color.red);
+        Debug.DrawLine(ray.origin, transform.position, Color.red);
     }
 
     public void SetPlaced()
     {
         placed = true;
+    }
+
+    public void ChangeGameObject(GameObject obj)
+    {
+        if(transform.childCount > 0)
+        {
+            GameObject currentChild = transform.GetChild(0).gameObject;
+            if (obj.name == currentChild.name)
+            {
+                return;
+            }
+            Destroy(currentChild);
+        }
+        
+        Instantiate(obj, transform);
     }
 }
