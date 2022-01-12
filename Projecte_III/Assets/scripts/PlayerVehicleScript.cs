@@ -99,14 +99,14 @@ public class PlayerVehicleScript : MonoBehaviour
                 if (vehicleRB.velocity.y <= vehicleMaxSpeed / 2 && controls.Quad.Drift.ReadValue<float>() == 0)
                     vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, vehicleAcceleration));
             }
-            else if (controls.Quad.Forward.ReadValue<float>() > 0 && controls.Quad.Backward.ReadValue<float>() == 0 && controls.Quad.Right.ReadValue<float>() == 0 && controls.Quad.Left.ReadValue<float>() > 0)
+            else if (controls.Quad.Forward.ReadValue<float>() > 0 && controls.Quad.Backward.ReadValue<float>() == 0 && controls.Quad.Right.ReadValue<float>() == 0 && controls.Quad.Left.ReadValue<float>() > 0 && transform.rotation.ToEulerAngles().x > -1)
             {
                 if (vehicleRB.velocity.y <= vehicleMaxSpeed / 2 && controls.Quad.Drift.ReadValue<float>() == 0)
                     vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, vehicleAcceleration));
 
                 vehicleRB.AddTorque(new Vector3(0, -vehicleTorque, 0));
             }
-            else if (controls.Quad.Forward.ReadValue<float>() > 0 && controls.Quad.Backward.ReadValue<float>() == 0 && controls.Quad.Right.ReadValue<float>() > 0 && controls.Quad.Left.ReadValue<float>() == 0)
+            else if (controls.Quad.Forward.ReadValue<float>() > 0 && controls.Quad.Backward.ReadValue<float>() == 0 && controls.Quad.Right.ReadValue<float>() > 0 && controls.Quad.Left.ReadValue<float>() == 0 && transform.rotation.ToEulerAngles().x > -1)
             {
                 if (vehicleRB.velocity.y <= vehicleMaxSpeed / 2 && controls.Quad.Drift.ReadValue<float>() == 0)
                     vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, vehicleAcceleration));
@@ -126,14 +126,14 @@ public class PlayerVehicleScript : MonoBehaviour
             }
 
             //BACKWARDS
-            else if (controls.Quad.Backward.ReadValue<float>() > 0 && controls.Quad.Left.ReadValue<float>() == 0 && controls.Quad.Right.ReadValue<float>() == 0 && controls.Quad.Forward.ReadValue<float>() == 0)
+            else if (controls.Quad.Backward.ReadValue<float>() > 0 && controls.Quad.Left.ReadValue<float>() == 0 && controls.Quad.Right.ReadValue<float>() == 0 && controls.Quad.Forward.ReadValue<float>() == 0 && transform.rotation.ToEulerAngles().x > -1)
             {
                 if (vehicleRB.velocity.y > -minDriftSpeed / 2 && vehicleRB.velocity.y <= vehicleMaxSpeed / 2)
                     vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, -vehicleAcceleration));
                 else if (vehicleRB.velocity.y <= vehicleMaxSpeed / 2)
                     vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, -vehicleAcceleration / 10));
             }
-            else if (controls.Quad.Backward.ReadValue<float>() > 0 && controls.Quad.Left.ReadValue<float>() > 0 && controls.Quad.Right.ReadValue<float>() == 0 && controls.Quad.Forward.ReadValue<float>() == 0)
+            else if (controls.Quad.Backward.ReadValue<float>() > 0 && controls.Quad.Left.ReadValue<float>() > 0 && controls.Quad.Right.ReadValue<float>() == 0 && controls.Quad.Forward.ReadValue<float>() == 0 && transform.rotation.ToEulerAngles().x > -1)
             {
                 if (vehicleRB.velocity.y > -minDriftSpeed / 2 && vehicleRB.velocity.y <= vehicleMaxSpeed / 2)
                     vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, -vehicleAcceleration));
@@ -142,7 +142,7 @@ public class PlayerVehicleScript : MonoBehaviour
 
                 vehicleRB.AddTorque(new Vector3(0, vehicleTorque, 0));
             }
-            else if (controls.Quad.Backward.ReadValue<float>() > 0 && controls.Quad.Left.ReadValue<float>() == 0 && controls.Quad.Right.ReadValue<float>() > 0 && controls.Quad.Forward.ReadValue<float>() == 0)
+            else if (controls.Quad.Backward.ReadValue<float>() > 0 && controls.Quad.Left.ReadValue<float>() == 0 && controls.Quad.Right.ReadValue<float>() > 0 && controls.Quad.Forward.ReadValue<float>() == 0 && transform.rotation.ToEulerAngles().x > -1)
             {
                 if (vehicleRB.velocity.y > -minDriftSpeed / 2 && vehicleRB.velocity.y <= vehicleMaxSpeed / 2)
                     vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, -vehicleAcceleration));
@@ -336,6 +336,12 @@ public class PlayerVehicleScript : MonoBehaviour
             if (vehicleMaxSpeed < savedMaxVelocity)
                 vehicleMaxSpeed = savedMaxVelocity;
             //Debug.Log(vehicleMaxSpeed);
+        }
+
+        if (other.CompareTag("Water"))
+        {
+            vehicleRB.AddForce(other.GetComponent<WaterStreamColliderScript>().Stream, ForceMode.Force);
+            Debug.Log("bahsdfjabfhajv");
         }
     }
     private void OnTriggerExit(Collider other)
