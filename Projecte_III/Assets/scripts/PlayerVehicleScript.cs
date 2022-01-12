@@ -31,6 +31,13 @@ public class PlayerVehicleScript : MonoBehaviour
         Physics.gravity = new Vector3(0, -9.8f * 2, 0);
         vehicleRB = this.GetComponent<Rigidbody>();
         vehicleRB.centerOfMass = centerOfMass;
+
+        GameObject _wheels = transform.parent.GetChild(1).GetChild(0).gameObject;
+
+        wheels[0] = _wheels.transform.GetChild(1).gameObject;
+        wheels[1] = _wheels.transform.GetChild(0).gameObject;
+        wheels[2] = _wheels.transform.GetChild(3).gameObject;
+        wheels[3] = _wheels.transform.GetChild(2).gameObject;
     }
 
     private void Awake()
@@ -43,15 +50,19 @@ public class PlayerVehicleScript : MonoBehaviour
         touchingGround = false;
 
         //HERE WE SET THE POSITION AND ROTATION FROM THE WHEELS RENDERERS
-        for (int i = 0; i < wheelCollider.Length; i++)
+
+        if(SceneManager.GetActiveScene().name != "Building Scene")
         {
-            if (wheelCollider[i].GetGroundHit(out var touchingGroundV))
+            for (int i = 0; i < wheelCollider.Length; i++)
             {
-                touchingGround = true;
+                if (wheelCollider[i].GetGroundHit(out var touchingGroundV))
+                {
+                    touchingGround = true;
+                }
+                wheelCollider[i].GetWorldPose(out var pos, out var rot);
+                wheels[i].transform.position = pos;
+                wheels[i].transform.rotation = rot;
             }
-            wheelCollider[i].GetWorldPose(out var pos, out var rot);
-            wheels[i].transform.position = pos;
-            wheels[i].transform.rotation = rot;
         }
         //_______________________________________________________________
     }
