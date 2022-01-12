@@ -60,6 +60,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "ChasisElevation",
+                    "type": "Button",
+                    "id": "6e1b1bb5-77ff-493c-9f3c-692aa3e32ec0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -214,6 +222,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "LookBackwards",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "483fbb31-2a07-4c63-b3b7-fbfb81657d89",
+                    "path": "<Keyboard>/leftCtrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ChasisElevation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "326b1345-901d-460a-b5a4-f7aba8c38d3f",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ChasisElevation",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

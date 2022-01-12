@@ -73,6 +73,14 @@ public class @QuadControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""ChasisElevation"",
+                    ""type"": ""Button"",
+                    ""id"": ""6e1b1bb5-77ff-493c-9f3c-692aa3e32ec0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -229,6 +237,28 @@ public class @QuadControls : IInputActionCollection, IDisposable
                     ""action"": ""LookBackwards"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""483fbb31-2a07-4c63-b3b7-fbfb81657d89"",
+                    ""path"": ""<Keyboard>/leftCtrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChasisElevation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""326b1345-901d-460a-b5a4-f7aba8c38d3f"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChasisElevation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -244,6 +274,7 @@ public class @QuadControls : IInputActionCollection, IDisposable
         m_Quad_Drift = m_Quad.FindAction("Drift", throwIfNotFound: true);
         m_Quad_UseActualGadget = m_Quad.FindAction("UseActualGadget", throwIfNotFound: true);
         m_Quad_LookBackwards = m_Quad.FindAction("LookBackwards", throwIfNotFound: true);
+        m_Quad_ChasisElevation = m_Quad.FindAction("ChasisElevation", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -300,6 +331,7 @@ public class @QuadControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Quad_Drift;
     private readonly InputAction m_Quad_UseActualGadget;
     private readonly InputAction m_Quad_LookBackwards;
+    private readonly InputAction m_Quad_ChasisElevation;
     public struct QuadActions
     {
         private @QuadControls m_Wrapper;
@@ -311,6 +343,7 @@ public class @QuadControls : IInputActionCollection, IDisposable
         public InputAction @Drift => m_Wrapper.m_Quad_Drift;
         public InputAction @UseActualGadget => m_Wrapper.m_Quad_UseActualGadget;
         public InputAction @LookBackwards => m_Wrapper.m_Quad_LookBackwards;
+        public InputAction @ChasisElevation => m_Wrapper.m_Quad_ChasisElevation;
         public InputActionMap Get() { return m_Wrapper.m_Quad; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -341,6 +374,9 @@ public class @QuadControls : IInputActionCollection, IDisposable
                 @LookBackwards.started -= m_Wrapper.m_QuadActionsCallbackInterface.OnLookBackwards;
                 @LookBackwards.performed -= m_Wrapper.m_QuadActionsCallbackInterface.OnLookBackwards;
                 @LookBackwards.canceled -= m_Wrapper.m_QuadActionsCallbackInterface.OnLookBackwards;
+                @ChasisElevation.started -= m_Wrapper.m_QuadActionsCallbackInterface.OnChasisElevation;
+                @ChasisElevation.performed -= m_Wrapper.m_QuadActionsCallbackInterface.OnChasisElevation;
+                @ChasisElevation.canceled -= m_Wrapper.m_QuadActionsCallbackInterface.OnChasisElevation;
             }
             m_Wrapper.m_QuadActionsCallbackInterface = instance;
             if (instance != null)
@@ -366,6 +402,9 @@ public class @QuadControls : IInputActionCollection, IDisposable
                 @LookBackwards.started += instance.OnLookBackwards;
                 @LookBackwards.performed += instance.OnLookBackwards;
                 @LookBackwards.canceled += instance.OnLookBackwards;
+                @ChasisElevation.started += instance.OnChasisElevation;
+                @ChasisElevation.performed += instance.OnChasisElevation;
+                @ChasisElevation.canceled += instance.OnChasisElevation;
             }
         }
     }
@@ -379,5 +418,6 @@ public class @QuadControls : IInputActionCollection, IDisposable
         void OnDrift(InputAction.CallbackContext context);
         void OnUseActualGadget(InputAction.CallbackContext context);
         void OnLookBackwards(InputAction.CallbackContext context);
+        void OnChasisElevation(InputAction.CallbackContext context);
     }
 }

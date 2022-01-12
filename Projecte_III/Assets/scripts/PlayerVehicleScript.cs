@@ -31,8 +31,6 @@ public class PlayerVehicleScript : MonoBehaviour
     public Vector3 respawnPosition, respawnRotation, respawnVelocity;
     public float boostPadMultiplier;
     private float chasisElevationTimer;
-    private Material chasisMat;
-    private Vector3 savedVelocity;
     [SerializeField] private bool chasisElevation;
 
     // Start is called before the first frame update
@@ -211,7 +209,7 @@ public class PlayerVehicleScript : MonoBehaviour
     {
         Transform chasisTransform = this.transform.GetChild(0);
 
-        if (Input.GetKey(KeyCode.Keypad1) && !chasisElevation && chasisTransform.localPosition.y <= 0)
+        if (controls.Quad.ChasisElevation.ReadValue<float>() > 0 && !chasisElevation && chasisTransform.localPosition.y <= 0)
         {
             chasisElevation = true;
             chasisElevationTimer = 2;
