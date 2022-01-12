@@ -38,7 +38,6 @@ public class DeathfallAndCheckpointsSystem : MonoBehaviour
             other.GetComponentInParent<PlayerVehicleScript>().vehicleRB.velocity = chasis.GetComponentInParent<PlayerVehicleScript>().respawnVelocity;
             other.GetComponentInParent<Transform>().parent.localEulerAngles = chasis.GetComponentInParent<PlayerVehicleScript>().respawnRotation;
             other.GetComponentInParent<Transform>().parent.localEulerAngles += new Vector3(0, 90, 0);
-            Debug.Log(chasis.GetComponentInParent<PlayerVehicleScript>().respawnRotation);
             
             //Debug.Log(other.GetComponentInParent<Transform>().parent.position);
         }

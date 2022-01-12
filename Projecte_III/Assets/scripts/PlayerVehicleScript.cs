@@ -8,7 +8,13 @@ using UnityEngine.InputSystem;
 public class PlayerVehicleScript : MonoBehaviour
 {
     [SerializeField] Vector3 centerOfMass = new Vector3(0.0f, -0.7f, 0.0f);
+    [SerializeField] float boostPadDuration;
 
+    private Material chasisMat;
+    private Vector3 savedVelocity;
+    private float savedMaxVelocity;
+    private bool reduceSpeed;
+    
     QuadControls controls;
 
     public Rigidbody vehicleRB;
@@ -22,9 +28,7 @@ public class PlayerVehicleScript : MonoBehaviour
     public bool touchingGround;
     public bool vehicleReversed;
     public float minDriftSpeed;
-    private Material chasisMat;
-    private Vector3 savedVelocity;
-    private float savedMaxVelocity;
+
 
     public Vector3 respawnPosition, respawnRotation, respawnVelocity;
     public float boostPadMultiplier;
@@ -43,7 +47,6 @@ public class PlayerVehicleScript : MonoBehaviour
         vehicleRB = this.GetComponent<Rigidbody>();
         vehicleRB.centerOfMass = centerOfMass;
         savedMaxVelocity = vehicleMaxSpeed;
-        boostPadMultiplier = 50;
     }
 
     private void Awake()
@@ -169,6 +172,17 @@ public class PlayerVehicleScript : MonoBehaviour
             FallFunction();
         }
 
+        if(reduceSpeed && vehicleMaxSpeed > savedMaxVelocity)
+        {
+            vehicleMaxSpeed -= Time.deltaTime * 10;
+        }
+        else if(reduceSpeed && vehicleMaxSpeed <= savedMaxVelocity)
+        {
+            reduceSpeed = false;
+            vehicleMaxSpeed = savedMaxVelocity;
+        }
+        Debug.Log(vehicleMaxSpeed);
+
         //VEHICLE SOUND PITCH SYSTEM
         VehicleSoundPitchFunction();
     }
@@ -272,6 +286,13 @@ public class PlayerVehicleScript : MonoBehaviour
         }
     }
 
+    IEnumerator WaitEndBoost()
+    {
+        yield return new WaitForSeconds(boostPadDuration);
+        Debug.Log("AAAAAAAAAAAAAAA");
+        reduceSpeed = true;
+    }
+
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag("Boost Pad"))
@@ -282,11 +303,14 @@ public class PlayerVehicleScript : MonoBehaviour
             vehicleMaxSpeed = boostPadMultiplier * angle;
             if (vehicleMaxSpeed < savedMaxVelocity)
                 vehicleMaxSpeed = savedMaxVelocity;
+            //Debug.Log(vehicleMaxSpeed);
         }
     }
     private void OnTriggerExit(Collider other)
     {
-        vehicleMaxSpeed = savedMaxVelocity;
+        //Debug.Log(vehicleMaxSpeed);
+        //vehicleMaxSpeed = savedMaxVelocity;
+        StartCoroutine(WaitEndBoost());
     }
 
     void OnCollisionExit(Collision other)
