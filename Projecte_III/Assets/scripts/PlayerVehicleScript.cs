@@ -185,7 +185,6 @@ public class PlayerVehicleScript : MonoBehaviour
             reduceSpeed = false;
             vehicleMaxSpeed = savedMaxVelocity;
         }
-        Debug.Log(vehicleMaxSpeed);
 
         //VEHICLE SOUND PITCH SYSTEM
         VehicleSoundPitchFunction();
@@ -335,13 +334,12 @@ public class PlayerVehicleScript : MonoBehaviour
             vehicleMaxSpeed = boostPadMultiplier * angle;
             if (vehicleMaxSpeed < savedMaxVelocity)
                 vehicleMaxSpeed = savedMaxVelocity;
-            //Debug.Log(vehicleMaxSpeed);
+            Debug.Log("HOLA");
         }
 
         if (other.CompareTag("Water"))
         {
             vehicleRB.AddForce(other.GetComponent<WaterStreamColliderScript>().Stream, ForceMode.Force);
-            Debug.Log("bahsdfjabfhajv");
         }
     }
     private void OnTriggerExit(Collider other)
