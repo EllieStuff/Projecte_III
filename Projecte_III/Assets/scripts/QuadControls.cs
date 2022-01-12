@@ -261,6 +261,74 @@ public class @QuadControls : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Construction Menu"",
+            ""id"": ""0f660e42-79b2-456b-ab56-e54bf92be21f"",
+            ""actions"": [
+                {
+                    ""name"": ""Delete Modifier"",
+                    ""type"": ""Button"",
+                    ""id"": ""e603e5c5-f50c-42eb-8c88-ececdfd73bcb"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Construct Modifier"",
+                    ""type"": ""Button"",
+                    ""id"": ""7b0c8abf-29c9-4c24-ac9d-3c07a0627fd9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""7ff355b3-f958-4a14-ac5e-340223429ddd"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Delete Modifier"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8768f4b0-cce3-489c-999f-4aa54a74f346"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Delete Modifier"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c77dabcf-77b5-4d7e-8dbe-72482ea8caec"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Construct Modifier"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9cf39890-7080-4b3a-a0d7-db5b29893b32"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Construct Modifier"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -275,6 +343,10 @@ public class @QuadControls : IInputActionCollection, IDisposable
         m_Quad_UseActualGadget = m_Quad.FindAction("UseActualGadget", throwIfNotFound: true);
         m_Quad_LookBackwards = m_Quad.FindAction("LookBackwards", throwIfNotFound: true);
         m_Quad_ChasisElevation = m_Quad.FindAction("ChasisElevation", throwIfNotFound: true);
+        // Construction Menu
+        m_ConstructionMenu = asset.FindActionMap("Construction Menu", throwIfNotFound: true);
+        m_ConstructionMenu_DeleteModifier = m_ConstructionMenu.FindAction("Delete Modifier", throwIfNotFound: true);
+        m_ConstructionMenu_ConstructModifier = m_ConstructionMenu.FindAction("Construct Modifier", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -409,6 +481,47 @@ public class @QuadControls : IInputActionCollection, IDisposable
         }
     }
     public QuadActions @Quad => new QuadActions(this);
+
+    // Construction Menu
+    private readonly InputActionMap m_ConstructionMenu;
+    private IConstructionMenuActions m_ConstructionMenuActionsCallbackInterface;
+    private readonly InputAction m_ConstructionMenu_DeleteModifier;
+    private readonly InputAction m_ConstructionMenu_ConstructModifier;
+    public struct ConstructionMenuActions
+    {
+        private @QuadControls m_Wrapper;
+        public ConstructionMenuActions(@QuadControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @DeleteModifier => m_Wrapper.m_ConstructionMenu_DeleteModifier;
+        public InputAction @ConstructModifier => m_Wrapper.m_ConstructionMenu_ConstructModifier;
+        public InputActionMap Get() { return m_Wrapper.m_ConstructionMenu; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(ConstructionMenuActions set) { return set.Get(); }
+        public void SetCallbacks(IConstructionMenuActions instance)
+        {
+            if (m_Wrapper.m_ConstructionMenuActionsCallbackInterface != null)
+            {
+                @DeleteModifier.started -= m_Wrapper.m_ConstructionMenuActionsCallbackInterface.OnDeleteModifier;
+                @DeleteModifier.performed -= m_Wrapper.m_ConstructionMenuActionsCallbackInterface.OnDeleteModifier;
+                @DeleteModifier.canceled -= m_Wrapper.m_ConstructionMenuActionsCallbackInterface.OnDeleteModifier;
+                @ConstructModifier.started -= m_Wrapper.m_ConstructionMenuActionsCallbackInterface.OnConstructModifier;
+                @ConstructModifier.performed -= m_Wrapper.m_ConstructionMenuActionsCallbackInterface.OnConstructModifier;
+                @ConstructModifier.canceled -= m_Wrapper.m_ConstructionMenuActionsCallbackInterface.OnConstructModifier;
+            }
+            m_Wrapper.m_ConstructionMenuActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @DeleteModifier.started += instance.OnDeleteModifier;
+                @DeleteModifier.performed += instance.OnDeleteModifier;
+                @DeleteModifier.canceled += instance.OnDeleteModifier;
+                @ConstructModifier.started += instance.OnConstructModifier;
+                @ConstructModifier.performed += instance.OnConstructModifier;
+                @ConstructModifier.canceled += instance.OnConstructModifier;
+            }
+        }
+    }
+    public ConstructionMenuActions @ConstructionMenu => new ConstructionMenuActions(this);
     public interface IQuadActions
     {
         void OnForward(InputAction.CallbackContext context);
@@ -419,5 +532,10 @@ public class @QuadControls : IInputActionCollection, IDisposable
         void OnUseActualGadget(InputAction.CallbackContext context);
         void OnLookBackwards(InputAction.CallbackContext context);
         void OnChasisElevation(InputAction.CallbackContext context);
+    }
+    public interface IConstructionMenuActions
+    {
+        void OnDeleteModifier(InputAction.CallbackContext context);
+        void OnConstructModifier(InputAction.CallbackContext context);
     }
 }

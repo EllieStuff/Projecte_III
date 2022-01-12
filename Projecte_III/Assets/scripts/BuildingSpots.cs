@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class BuildingSpots : MonoBehaviour
 {
@@ -9,17 +10,25 @@ public class BuildingSpots : MonoBehaviour
 
     [SerializeField] private LayerMask layerMask;
 
+    QuadControls controls;
+
     private void Awake()
     {
         placed = false;
         transform.localScale = new Vector3(1, 1, 1);
     }
 
+    private void Start()
+    {
+        controls = new QuadControls();
+        controls.Enable();
+    }
+
     private void Update()
     {
         transform.localScale = new Vector3(1,1,1);
 
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
 
         if (Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, layerMask))
         {
@@ -31,7 +40,7 @@ public class BuildingSpots : MonoBehaviour
                 transform.localScale = raycastHit.transform.lossyScale;
                 transform.rotation = raycastHit.transform.rotation;
 
-                if (Input.GetMouseButtonDown(0) && raycastHit.transform.childCount == 0)    //Instantiate Object
+                if (controls.ConstructionMenu.ConstructModifier.ReadValue<float>() > 0 && raycastHit.transform.childCount == 0)    //Instantiate Object
                 {
                     GameObject clone = Instantiate(gameObject, raycastHit.transform).gameObject;
 
@@ -46,7 +55,7 @@ public class BuildingSpots : MonoBehaviour
             }
             else
             {
-                if (Input.GetMouseButtonDown(1))                                            //Remove Object
+                if (controls.ConstructionMenu.DeleteModifier.ReadValue<float>() > 0)                                            //Remove Object
                 {
                     if(transform.parent != null)
                     {
