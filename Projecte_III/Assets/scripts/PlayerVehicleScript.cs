@@ -283,6 +283,12 @@ public class PlayerVehicleScript : MonoBehaviour
             if (vehicleMaxSpeed < savedMaxVelocity)
                 vehicleMaxSpeed = savedMaxVelocity;
         }
+
+        if (other.CompareTag("Water"))
+        {
+            vehicleRB.AddForce(other.GetComponent<WaterStreamColliderScript>().Stream, ForceMode.Force);
+        }
+
     }
     private void OnTriggerExit(Collider other)
     {
@@ -293,4 +299,5 @@ public class PlayerVehicleScript : MonoBehaviour
     {
         vehicleReversed = false;
     }
+
 }
