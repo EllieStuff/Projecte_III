@@ -6,17 +6,22 @@ using UnityEngine.UI;
 public class ButtonScript: MonoBehaviour
 {
     [SerializeField] private ButtonManager manager;
+    [SerializeField] private GameObject modifierSpots = null;
     [SerializeField] private GameObject list;
     private Button bttn;
 
     private void Start()
     {
         bttn = this.GetComponent<Button>();
+
+        if(modifierSpots != null && modifierSpots.activeSelf)
+        {
+            modifierSpots.SetActive(false);
+        }
     }
 
     public void ChangeList()
     {
-        Debug.Log("Enter");
         if (!list.activeSelf)
         {
             manager.OpenButtons();
@@ -36,6 +41,10 @@ public class ButtonScript: MonoBehaviour
         if(list.activeSelf != active)
         {
             list.SetActive(active);
+            if(modifierSpots != null)
+            {
+                modifierSpots.SetActive(active);
+            }
         }
     }
 }
