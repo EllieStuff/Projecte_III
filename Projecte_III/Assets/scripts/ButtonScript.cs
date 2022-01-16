@@ -16,6 +16,7 @@ public class ButtonScript: MonoBehaviour
 
     public void ChangeList()
     {
+        Debug.Log("Enter");
         if (!list.activeSelf)
         {
             manager.OpenButtons();

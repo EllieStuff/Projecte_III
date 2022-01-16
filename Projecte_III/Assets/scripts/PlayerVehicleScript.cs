@@ -196,7 +196,7 @@ public class PlayerVehicleScript : MonoBehaviour
             reduceSpeed = false;
             vehicleMaxSpeed = savedMaxVelocity;
         }
-        Debug.Log(vehicleMaxSpeed);
+        //Debug.Log(vehicleMaxSpeed);
 
         //VEHICLE SOUND PITCH SYSTEM
         VehicleSoundPitchFunction();

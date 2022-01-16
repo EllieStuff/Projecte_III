@@ -74,7 +74,7 @@ public class BuildingSpots : MonoBehaviour
                 Vector3 newPos = ray.origin + ray.direction * (modifiers.transform.position.z + Mathf.Abs(Camera.main.transform.position.z));
                 //newPos.z = modifiers.transform.parent.transform.localPosition.z;
 
-                Debug.Log(Camera.main.nearClipPlane);
+                //Debug.Log(Camera.main.nearClipPlane);
                 transform.position = newPos;
             }
         }
