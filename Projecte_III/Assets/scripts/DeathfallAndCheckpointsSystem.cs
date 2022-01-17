@@ -4,42 +4,38 @@ using UnityEngine;
 
 public class DeathfallAndCheckpointsSystem : MonoBehaviour
 {
-    //public Vector3 savedPosition;
-    //public int ID = -1;
+    PlayerVehicleScript vehicleScript;
     GameObject chasis;
-    //public GameObject fallEffectSound;
 
     // Start is called before the first frame update
     void Start()
     {
-        chasis = GameObject.Find("vehicleChasis");
+        vehicleScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerVehicleScript>();
+        chasis = vehicleScript.transform.Find("vehicleChasis").gameObject;
         //Set default checkpoint (should be the first of the level)
         if (this.name.Equals("Checkpoint"))
         {
-            chasis.GetComponentInParent<PlayerVehicleScript>().respawnPosition = this.transform.position;
-            chasis.GetComponentInParent<PlayerVehicleScript>().respawnRotation = this.transform.localEulerAngles;
-            chasis.GetComponentInParent<PlayerVehicleScript>().respawnVelocity = new Vector3(0, 0, 0);
+            vehicleScript.respawnPosition = this.transform.position;
+            vehicleScript.respawnRotation = this.transform.localEulerAngles;
+            vehicleScript.respawnVelocity = new Vector3(0, 0, 0);
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        //chasis = GameObject.Find("vehicleChasis");
-        //Debug.Log(chasis);
         if (gameObject.tag.Equals("Respawn") && chasis == other.gameObject)
         {
-            chasis.GetComponentInParent<PlayerVehicleScript>().respawnPosition = this.transform.position;
-            chasis.GetComponentInParent<PlayerVehicleScript>().respawnRotation = this.transform.localEulerAngles;
-            chasis.GetComponentInParent<PlayerVehicleScript>().respawnVelocity = new Vector3(0, 0, 0);
+            vehicleScript.respawnPosition = this.transform.position;
+            vehicleScript.respawnRotation = this.transform.localEulerAngles;
+            vehicleScript.respawnVelocity = new Vector3(0, 0, 0);
             //Debug.Log(chasis.GetComponentInParent<PlayerVehicleScript>().respawnPosition);
         }
         if (gameObject.tag.Equals("Death Zone") && chasis == other.gameObject)
         {
-            //GameObject soundFall = Instantiate(fallEffectSound, this.transform.position, this.transform.rotation);
             AudioManager.Instance.Play_SFX("Fall_SFX");
-            other.GetComponentInParent<Transform>().parent.position = chasis.GetComponentInParent<PlayerVehicleScript>().respawnPosition;
-            other.GetComponentInParent<PlayerVehicleScript>().vehicleRB.velocity = chasis.GetComponentInParent<PlayerVehicleScript>().respawnVelocity;
-            other.GetComponentInParent<Transform>().parent.localEulerAngles = chasis.GetComponentInParent<PlayerVehicleScript>().respawnRotation;
+            other.GetComponentInParent<Transform>().parent.position = vehicleScript.respawnPosition;
+            other.GetComponentInParent<PlayerVehicleScript>().vehicleRB.velocity = vehicleScript.respawnVelocity;
+            other.GetComponentInParent<Transform>().parent.localEulerAngles = vehicleScript.respawnRotation;
             other.GetComponentInParent<Transform>().parent.localEulerAngles += new Vector3(0, 90, 0);
             
             //Debug.Log(other.GetComponentInParent<Transform>().parent.position);
