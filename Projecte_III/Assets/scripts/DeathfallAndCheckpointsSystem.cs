@@ -7,7 +7,7 @@ public class DeathfallAndCheckpointsSystem : MonoBehaviour
     //public Vector3 savedPosition;
     //public int ID = -1;
     GameObject chasis;
-    public GameObject fallEffectSound;
+    //public GameObject fallEffectSound;
 
     // Start is called before the first frame update
     void Start()
@@ -35,7 +35,8 @@ public class DeathfallAndCheckpointsSystem : MonoBehaviour
         }
         if (gameObject.tag.Equals("Death Zone") && chasis == other.gameObject)
         {
-            GameObject soundFall = Instantiate(fallEffectSound, this.transform.position, this.transform.rotation);
+            //GameObject soundFall = Instantiate(fallEffectSound, this.transform.position, this.transform.rotation);
+            AudioManager.Instance.Play_SFX("Fall_SFX");
             other.GetComponentInParent<Transform>().parent.position = chasis.GetComponentInParent<PlayerVehicleScript>().respawnPosition;
             other.GetComponentInParent<PlayerVehicleScript>().vehicleRB.velocity = chasis.GetComponentInParent<PlayerVehicleScript>().respawnVelocity;
             other.GetComponentInParent<Transform>().parent.localEulerAngles = chasis.GetComponentInParent<PlayerVehicleScript>().respawnRotation;
