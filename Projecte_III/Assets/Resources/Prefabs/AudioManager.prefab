@@ -40,7 +40,7 @@ AudioSource:
   m_GameObject: {fileID: 6853815749881439021}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -3727445664540870370, guid: 7cd46532c27832e419187842cf79c7a0, type: 2}
+  OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -167,7 +167,7 @@ AudioSource:
   m_GameObject: {fileID: 6853815749913559965}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -9065810583659548003, guid: 7cd46532c27832e419187842cf79c7a0, type: 2}
+  OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 382394d1aba0702418e1774c000d4563, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -263,7 +263,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6853815750020878624}
-  - component: {fileID: 6853815750020878629}
+  - component: {fileID: 1107298739962028953}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -287,7 +287,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6853815750020878629
+--- !u!114 &1107298739962028953
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -296,8 +296,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6853815750020878625}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ab3a892d9a42224f9dd5c034acada33, type: 3}
+  m_Script: {fileID: 11500000, guid: 56f52494369ceab48b01600b56e65a36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   SFX_Volume: 1
   OST_Volume: 1
+  SFX_AudioSource: {fileID: 6853815749881438995}
+  OST_AudioSource: {fileID: 6853815749913559939}
