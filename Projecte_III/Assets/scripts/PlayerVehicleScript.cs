@@ -9,6 +9,8 @@ public class PlayerVehicleScript : MonoBehaviour
 {
     [SerializeField] Vector3 centerOfMass = new Vector3(0.0f, -0.7f, 0.0f);
     [SerializeField] float boostPadDuration;
+    [SerializeField] float alaDeltaDuration;
+    [SerializeField] float alaDeltaTimer;
 
     private Material chasisMat;
     private Vector3 savedVelocity;
@@ -32,10 +34,13 @@ public class PlayerVehicleScript : MonoBehaviour
     public float boostPadMultiplier;
     private float chasisElevationTimer;
     [SerializeField] private bool chasisElevation;
+    private bool alaDelta;
 
     // Start is called before the first frame update
     void Start()
     {
+        alaDeltaDuration = 8;
+        alaDeltaTimer = 8;
         controls = new QuadControls();
         controls.Enable();
 
@@ -182,10 +187,14 @@ public class PlayerVehicleScript : MonoBehaviour
         else
         {
             //FALL FUNCTION
-            FallFunction();
+            if (!alaDelta)
+                FallFunction();
         }
 
-        if(reduceSpeed && vehicleMaxSpeed > savedMaxVelocity)
+        //ALADELTA FUNCTION
+        AlaDeltaFunction();
+
+        if (reduceSpeed && vehicleMaxSpeed > savedMaxVelocity)
         {
             vehicleMaxSpeed -= Time.deltaTime * 10;
         }
@@ -266,7 +275,7 @@ public class PlayerVehicleScript : MonoBehaviour
 
         if (this.GetComponent<AudioSource>().enabled)
         {
-            this.GetComponent<AudioSource>().pitch = (vehicleRB.velocity.magnitude * 1) / vehicleMaxSpeed;
+            this.GetComponent<AudioSource>().pitch = (vehicleRB.velocity.magnitude * 1) / vehicleMaxSpeed/2;
         }
     }
 
@@ -326,10 +335,42 @@ public class PlayerVehicleScript : MonoBehaviour
         }
     }
 
+    void AlaDeltaFunction() 
+    {
+        if (!alaDelta && touchingGround && controls.Quad.AlaDelta.ReadValue<float>() == 1)
+            alaDelta = true;
+
+        if(alaDelta && alaDeltaTimer >= 0)
+        {
+            alaDeltaTimer -= Time.deltaTime;
+            if (alaDeltaTimer >= alaDeltaDuration - 0.8f)
+            {
+                this.transform.rotation = new Quaternion(0, this.transform.rotation.y, 0, this.transform.rotation.w);
+                vehicleRB.velocity += new Vector3(0, 5, 0);
+            }
+            else
+            {
+                this.transform.rotation = new Quaternion(0, this.transform.rotation.y, 0, this.transform.rotation.w);
+                if (controls.Quad.Right.ReadValue<float>() == 1)
+                    vehicleRB.AddTorque(new Vector3(0, vehicleTorque, 0));
+                else if (controls.Quad.Left.ReadValue<float>() == 1)
+                    vehicleRB.AddTorque(new Vector3(0, -vehicleTorque, 0));
+
+                savedVelocity = transform.TransformDirection(new Vector3(0, 0, 25));
+
+                vehicleRB.velocity = new Vector3(savedVelocity.x, -5, savedVelocity.z);
+            }
+            if(alaDeltaTimer <= 0)
+            {
+                alaDeltaTimer = alaDeltaDuration;
+                alaDelta = false;
+            }
+        }
+    }
+
     IEnumerator WaitEndBoost()
     {
         yield return new WaitForSeconds(boostPadDuration);
-        Debug.Log("AAAAAAAAAAAAAAA");
         reduceSpeed = true;
     }
 
@@ -343,7 +384,6 @@ public class PlayerVehicleScript : MonoBehaviour
             vehicleMaxSpeed = boostPadMultiplier * angle;
             if (vehicleMaxSpeed < savedMaxVelocity)
                 vehicleMaxSpeed = savedMaxVelocity;
-            Debug.Log("HOLA");
         }
 
         if (other.CompareTag("Water"))

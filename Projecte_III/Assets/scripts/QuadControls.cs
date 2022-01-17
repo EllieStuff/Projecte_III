@@ -81,6 +81,14 @@ public class @QuadControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""AlaDelta"",
+                    ""type"": ""Button"",
+                    ""id"": ""183df223-cdd4-4beb-9465-d9577c47fd7c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -259,6 +267,17 @@ public class @QuadControls : IInputActionCollection, IDisposable
                     ""action"": ""ChasisElevation"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""01ffc2be-886e-49f9-a450-4c1b2c38ae39"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AlaDelta"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -275,6 +294,7 @@ public class @QuadControls : IInputActionCollection, IDisposable
         m_Quad_UseActualGadget = m_Quad.FindAction("UseActualGadget", throwIfNotFound: true);
         m_Quad_LookBackwards = m_Quad.FindAction("LookBackwards", throwIfNotFound: true);
         m_Quad_ChasisElevation = m_Quad.FindAction("ChasisElevation", throwIfNotFound: true);
+        m_Quad_AlaDelta = m_Quad.FindAction("AlaDelta", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -332,6 +352,7 @@ public class @QuadControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Quad_UseActualGadget;
     private readonly InputAction m_Quad_LookBackwards;
     private readonly InputAction m_Quad_ChasisElevation;
+    private readonly InputAction m_Quad_AlaDelta;
     public struct QuadActions
     {
         private @QuadControls m_Wrapper;
@@ -344,6 +365,7 @@ public class @QuadControls : IInputActionCollection, IDisposable
         public InputAction @UseActualGadget => m_Wrapper.m_Quad_UseActualGadget;
         public InputAction @LookBackwards => m_Wrapper.m_Quad_LookBackwards;
         public InputAction @ChasisElevation => m_Wrapper.m_Quad_ChasisElevation;
+        public InputAction @AlaDelta => m_Wrapper.m_Quad_AlaDelta;
         public InputActionMap Get() { return m_Wrapper.m_Quad; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -377,6 +399,9 @@ public class @QuadControls : IInputActionCollection, IDisposable
                 @ChasisElevation.started -= m_Wrapper.m_QuadActionsCallbackInterface.OnChasisElevation;
                 @ChasisElevation.performed -= m_Wrapper.m_QuadActionsCallbackInterface.OnChasisElevation;
                 @ChasisElevation.canceled -= m_Wrapper.m_QuadActionsCallbackInterface.OnChasisElevation;
+                @AlaDelta.started -= m_Wrapper.m_QuadActionsCallbackInterface.OnAlaDelta;
+                @AlaDelta.performed -= m_Wrapper.m_QuadActionsCallbackInterface.OnAlaDelta;
+                @AlaDelta.canceled -= m_Wrapper.m_QuadActionsCallbackInterface.OnAlaDelta;
             }
             m_Wrapper.m_QuadActionsCallbackInterface = instance;
             if (instance != null)
@@ -405,6 +430,9 @@ public class @QuadControls : IInputActionCollection, IDisposable
                 @ChasisElevation.started += instance.OnChasisElevation;
                 @ChasisElevation.performed += instance.OnChasisElevation;
                 @ChasisElevation.canceled += instance.OnChasisElevation;
+                @AlaDelta.started += instance.OnAlaDelta;
+                @AlaDelta.performed += instance.OnAlaDelta;
+                @AlaDelta.canceled += instance.OnAlaDelta;
             }
         }
     }
@@ -419,5 +447,6 @@ public class @QuadControls : IInputActionCollection, IDisposable
         void OnUseActualGadget(InputAction.CallbackContext context);
         void OnLookBackwards(InputAction.CallbackContext context);
         void OnChasisElevation(InputAction.CallbackContext context);
+        void OnAlaDelta(InputAction.CallbackContext context);
     }
 }
