@@ -23,7 +23,7 @@ public class PlayerVehicleScript : MonoBehaviour
     public float vehicleMaxSpeed;
     public float vehicleMaxTorque;
     public WheelCollider[] wheelCollider;
-    public GameObject[] wheels;
+    public GameObject wheels;
     public int lifeVehicle;
     public bool touchingGround;
     public bool vehicleReversed;
@@ -32,6 +32,8 @@ public class PlayerVehicleScript : MonoBehaviour
     public float boostPadMultiplier;
     private float chasisElevationTimer;
     [SerializeField] private bool chasisElevation;
+
+    internal bool buildingScene;
 
     // Start is called before the first frame update
     void Start()
@@ -48,12 +50,7 @@ public class PlayerVehicleScript : MonoBehaviour
         vehicleRB.centerOfMass = centerOfMass;
         savedMaxVelocity = vehicleMaxSpeed;
 
-        GameObject _wheels = transform.parent.GetChild(1).GetChild(0).gameObject;
-
-        wheels[0] = _wheels.transform.GetChild(1).gameObject;
-        wheels[1] = _wheels.transform.GetChild(0).gameObject;
-        wheels[2] = _wheels.transform.GetChild(3).gameObject;
-        wheels[3] = _wheels.transform.GetChild(2).gameObject;
+        wheels = transform.parent.GetChild(1).GetChild(0).gameObject;
     }
 
     private void Awake()
@@ -62,6 +59,8 @@ public class PlayerVehicleScript : MonoBehaviour
         respawnPosition = new Vector3(0, 0, 0);
         respawnRotation = new Vector3(0, 0, 0);
         respawnVelocity = new Vector3(0, 0, 0);
+
+        buildingScene = SceneManager.GetActiveScene().name != "Building Scene";
     }
 
     void Update()
@@ -70,7 +69,7 @@ public class PlayerVehicleScript : MonoBehaviour
 
         //HERE WE SET THE POSITION AND ROTATION FROM THE WHEELS RENDERERS
 
-        if(SceneManager.GetActiveScene().name != "Building Scene")
+        if(buildingScene)
         {
             for (int i = 0; i < wheelCollider.Length; i++)
             {
@@ -79,11 +78,16 @@ public class PlayerVehicleScript : MonoBehaviour
                     touchingGround = true;
                 }
                 wheelCollider[i].GetWorldPose(out var pos, out var rot);
-                wheels[i].transform.position = pos;
-                wheels[i].transform.rotation = rot;
+                wheels.transform.GetChild(i).position = pos;
+                wheels.transform.GetChild(i).rotation = rot;
             }
         }
         //_______________________________________________________________
+    }
+
+    public void SetWheels(GameObject _wheels)
+    {
+        wheels = _wheels;
     }
 
     // Update is called once per frame

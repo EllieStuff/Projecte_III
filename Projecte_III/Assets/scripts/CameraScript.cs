@@ -22,6 +22,8 @@ public class CameraScript : MonoBehaviour
         rotOffsetQuat = Quaternion.Euler(rotOffset);
         lookBackRotOffset = Quaternion.Euler(0, 180, 0);
 
+        playerVehicle = GameObject.FindGameObjectWithTag("Player").transform.GetChild(0).GetChild(0).gameObject;
+
         this.transform.rotation = rotOffsetQuat;
     }
 
