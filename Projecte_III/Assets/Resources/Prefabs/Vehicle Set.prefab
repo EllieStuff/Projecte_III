@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1840777868928025695}
+  - component: {fileID: 4862031014789150789}
   m_Layer: 0
   m_Name: Vehicle Set
   m_TagString: Untagged
@@ -32,6 +33,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4862031014789150789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1840777868928025694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea0eb50ccea8cd44e8ddc14eeb9399e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1840777870717367252
 GameObject:
   m_ObjectHideFlags: 0
@@ -430,6 +443,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   centerOfMass: {x: 0, y: -0.7, z: 0}
+  boostPadDuration: 0
   vehicleRB: {fileID: 6055675288928596202}
   vehicleAcceleration: 2
   vehicleTorque: 6000
@@ -449,6 +463,11 @@ MonoBehaviour:
   touchingGround: 1
   vehicleReversed: 0
   minDriftSpeed: 10
+  respawnPosition: {x: 0, y: 0, z: 0}
+  respawnRotation: {x: 0, y: 0, z: 0}
+  respawnVelocity: {x: 0, y: 0, z: 0}
+  boostPadMultiplier: 0
+  chasisElevation: 0
 --- !u!82 &6055675288928596204
 AudioSource:
   m_ObjectHideFlags: 0
