@@ -24,6 +24,7 @@ public class QuadSceneManager : MonoBehaviour
             gameObject.transform.localScale = initial.localScale;
 
             GetComponentInChildren<PlayerVehicleScript>().buildingScene = false;
+            GetComponentInChildren<PlayerVehicleScript>().SetWheels();
 
             Rigidbody rb = transform.GetChild(0).GetComponent<Rigidbody>();
             rb.constraints = RigidbodyConstraints.None;
@@ -32,7 +33,7 @@ public class QuadSceneManager : MonoBehaviour
         }
         else
         {
-            GetComponentInChildren<PlayerVehicleScript>().buildingScene = false;
+            GetComponentInChildren<PlayerVehicleScript>().buildingScene = true;
         }
     }
 }

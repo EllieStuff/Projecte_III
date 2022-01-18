@@ -52,9 +52,7 @@ public class WheelButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             Destroy(wheelSpot.transform.GetChild(0).gameObject);
         }
 
-        wheelSpot.transform.parent.GetComponentInChildren<PlayerVehicleScript>().SetWheels(wheelsModel);
-
-        Instantiate(wheelsModel, wheelSpot.transform);
+        GameObject wheel = Instantiate(wheelsModel, wheelSpot.transform);
         placed = true;
     }
 }

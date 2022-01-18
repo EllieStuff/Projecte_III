@@ -60,7 +60,7 @@ public class PlayerVehicleScript : MonoBehaviour
         respawnRotation = new Vector3(0, 0, 0);
         respawnVelocity = new Vector3(0, 0, 0);
 
-        buildingScene = SceneManager.GetActiveScene().name != "Building Scene";
+        buildingScene = SceneManager.GetActiveScene().name == "Building Scene";
     }
 
     void Update()
@@ -69,7 +69,7 @@ public class PlayerVehicleScript : MonoBehaviour
 
         //HERE WE SET THE POSITION AND ROTATION FROM THE WHEELS RENDERERS
 
-        if(buildingScene)
+        if(!buildingScene)
         {
             for (int i = 0; i < wheelCollider.Length; i++)
             {
@@ -77,17 +77,16 @@ public class PlayerVehicleScript : MonoBehaviour
                 {
                     touchingGround = true;
                 }
-                wheelCollider[i].GetWorldPose(out var pos, out var rot);
-                wheels.transform.GetChild(i).position = pos;
-                wheels.transform.GetChild(i).rotation = rot;
+                wheels.transform.localPosition = transform.localPosition;
+                wheels.transform.localRotation = transform.localRotation;
             }
         }
         //_______________________________________________________________
     }
 
-    public void SetWheels(GameObject _wheels)
+    public void SetWheels()
     {
-        wheels = _wheels;
+        wheels = gameObject.transform.parent.GetChild(1).GetChild(0).gameObject;
     }
 
     // Update is called once per frame
