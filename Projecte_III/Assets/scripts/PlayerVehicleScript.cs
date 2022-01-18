@@ -15,6 +15,7 @@ public class PlayerVehicleScript : MonoBehaviour
     private Material chasisMat;
     private Vector3 savedVelocity;
     private float savedMaxVelocity;
+    private float timerReversed;
     private bool reduceSpeed;
     
     QuadControls controls;
@@ -39,8 +40,8 @@ public class PlayerVehicleScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        alaDeltaDuration = 8;
-        alaDeltaTimer = 8;
+        alaDeltaDuration = 5;
+        alaDeltaTimer = 5;
         controls = new QuadControls();
         controls.Enable();
 
@@ -64,6 +65,7 @@ public class PlayerVehicleScript : MonoBehaviour
 
     void Update()
     {
+        print(vehicleRB.velocity.y);
         touchingGround = false;
 
         //HERE WE SET THE POSITION AND ROTATION FROM THE WHEELS RENDERERS
@@ -72,6 +74,15 @@ public class PlayerVehicleScript : MonoBehaviour
             if (wheelCollider[i].GetGroundHit(out var touchingGroundV))
             {
                 touchingGround = true;
+                //FALLDEATH CHECK
+                if(!alaDelta)
+                checkFallDeath();
+                //RESETTING ALADELTA VARIABLES
+                if(alaDeltaTimer <= alaDeltaDuration - 0.8f)
+                {
+                    alaDeltaTimer = alaDeltaDuration;
+                    alaDelta = false;
+                }
             }
             wheelCollider[i].GetWorldPose(out var pos, out var rot);
             wheels[i].transform.position = pos;
@@ -210,15 +221,15 @@ public class PlayerVehicleScript : MonoBehaviour
 
     void VehicleRecoverFunction()
     {
-        //LEFT
-        if (controls.Quad.Left.ReadValue<float>() > 0 && controls.Quad.Forward.ReadValue<float>() == 0 && controls.Quad.Backward.ReadValue<float>() == 0 && controls.Quad.Right.ReadValue<float>() == 0)
+        timerReversed += Time.deltaTime;
+        if(timerReversed >= 1)
         {
-            vehicleRB.AddTorque(new Vector3(0, 0, -vehicleTorque * 10));
-        }
-        //RIGHT
-        else if (controls.Quad.Right.ReadValue<float>() > 0 && controls.Quad.Forward.ReadValue<float>() == 0 && controls.Quad.Backward.ReadValue<float>() == 0 && controls.Quad.Left.ReadValue<float>() == 0)
-        {
-            vehicleRB.AddTorque(new Vector3(0, 0, vehicleTorque * 10));
+            AudioManager.Instance.Play_SFX("Fall_SFX");
+            this.transform.position = respawnPosition;
+            this.transform.localEulerAngles = respawnRotation;
+            this.transform.localEulerAngles += new Vector3(0, 90, 0);
+            vehicleRB.velocity = new Vector3(respawnVelocity.x, respawnVelocity.y, respawnVelocity.z);
+            timerReversed = 0;
         }
     }
 
@@ -343,10 +354,10 @@ public class PlayerVehicleScript : MonoBehaviour
         if(alaDelta && alaDeltaTimer >= 0)
         {
             alaDeltaTimer -= Time.deltaTime;
-            if (alaDeltaTimer >= alaDeltaDuration - 0.8f)
+            if (alaDeltaTimer >= alaDeltaDuration - 0.6f)
             {
                 this.transform.rotation = new Quaternion(0, this.transform.rotation.y, 0, this.transform.rotation.w);
-                vehicleRB.velocity += new Vector3(0, 5, 0);
+                vehicleRB.velocity += new Vector3(0, 1, 0);
             }
             else
             {
@@ -365,6 +376,18 @@ public class PlayerVehicleScript : MonoBehaviour
                 alaDeltaTimer = alaDeltaDuration;
                 alaDelta = false;
             }
+        }
+    }
+
+    void checkFallDeath()
+    {
+        if(vehicleRB.velocity.y <= -22)
+        {
+            AudioManager.Instance.Play_SFX("Fall_SFX");
+            this.transform.position = respawnPosition;
+            this.transform.localEulerAngles = respawnRotation;
+            this.transform.localEulerAngles += new Vector3(0, 90, 0);
+            vehicleRB.velocity = new Vector3(respawnVelocity.x, respawnVelocity.y, respawnVelocity.z);
         }
     }
 
@@ -401,5 +424,6 @@ public class PlayerVehicleScript : MonoBehaviour
     void OnCollisionExit(Collision other)
     {
         vehicleReversed = false;
+        timerReversed = 0;
     }
 }
