@@ -81,7 +81,21 @@ public class PlayerVehicleScript : MonoBehaviour
                 wheels.transform.localRotation = transform.localRotation;
             }
         }
+
+        transform.parent.GetChild(2).localPosition = transform.localPosition;
         //_______________________________________________________________
+    }
+
+    public void HideVoidModifier()
+    {
+        for (int i = 0; i < transform.parent.GetChild(2).childCount; i++)
+        {
+            GameObject child = transform.parent.GetChild(2).GetChild(i).gameObject;
+            if (child.transform.childCount <= 0)
+            {
+                child.SetActive(false);
+            }
+        }
     }
 
     public void SetWheels()
@@ -335,7 +349,6 @@ public class PlayerVehicleScript : MonoBehaviour
     IEnumerator WaitEndBoost()
     {
         yield return new WaitForSeconds(boostPadDuration);
-        Debug.Log("AAAAAAAAAAAAAAA");
         reduceSpeed = true;
     }
 

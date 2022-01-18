@@ -44,6 +44,10 @@ public class BuildingSpots : MonoBehaviour
                 {
                     GameObject clone = Instantiate(gameObject, raycastHit.transform).gameObject;
 
+                    clone.transform.GetComponentInChildren<MeshCollider>().enabled = false;
+
+                    raycastHit.transform.GetComponent<MeshRenderer>().enabled = false;
+
                     clone.transform.localScale = clone.transform.parent.parent.localScale;
                     clone.transform.localRotation = clone.transform.parent.parent.localRotation;
 
@@ -61,6 +65,7 @@ public class BuildingSpots : MonoBehaviour
                     {
                         if(raycastHit.transform == transform.parent)
                         {
+                            raycastHit.transform.GetComponent<MeshRenderer>().enabled = true;
                             Destroy(gameObject);
                         }
                     }

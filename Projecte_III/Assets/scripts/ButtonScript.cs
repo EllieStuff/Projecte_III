@@ -16,7 +16,10 @@ public class ButtonScript: MonoBehaviour
 
         if(modifierSpots != null && modifierSpots.activeSelf)
         {
-            modifierSpots.SetActive(false);
+            for (int i = 0; i < modifierSpots.transform.childCount; i++)
+            {
+                modifierSpots.transform.GetChild(i).gameObject.SetActive(false);
+            }
         }
     }
 
@@ -43,7 +46,14 @@ public class ButtonScript: MonoBehaviour
             list.SetActive(active);
             if(modifierSpots != null)
             {
-                modifierSpots.SetActive(active);
+                for (int i = 0; i < modifierSpots.transform.childCount; i++)
+                {
+                    GameObject child = modifierSpots.transform.GetChild(i).gameObject;
+                    if (child.transform.childCount <= 0)
+                    {
+                        child.SetActive(active);
+                    }
+                }
             }
         }
     }

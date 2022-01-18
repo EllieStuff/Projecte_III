@@ -23,8 +23,11 @@ public class QuadSceneManager : MonoBehaviour
             gameObject.transform.localRotation = initial.localRotation;
             gameObject.transform.localScale = initial.localScale;
 
-            GetComponentInChildren<PlayerVehicleScript>().buildingScene = false;
-            GetComponentInChildren<PlayerVehicleScript>().SetWheels();
+            PlayerVehicleScript player = GetComponentInChildren<PlayerVehicleScript>();
+
+            player.buildingScene = false;
+            player.SetWheels();
+            player.HideVoidModifier();
 
             Rigidbody rb = transform.GetChild(0).GetComponent<Rigidbody>();
             rb.constraints = RigidbodyConstraints.None;
