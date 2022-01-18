@@ -11,6 +11,7 @@ public class PlayerVehicleScript : MonoBehaviour
     [SerializeField] float boostPadDuration;
     [SerializeField] float alaDeltaDuration;
     [SerializeField] float alaDeltaTimer;
+    [SerializeField] float driftTorqueInc = 3.0f;
 
     private Material chasisMat;
     private Vector3 savedVelocity;
@@ -255,11 +256,11 @@ public class PlayerVehicleScript : MonoBehaviour
         {
             if (controls.Quad.Left.ReadValue<float>() > 0 && controls.Quad.Drift.ReadValue<float>() > 0)
             {
-                vehicleRB.AddTorque(new Vector3(0, -vehicleTorque * 5, 0));
+                vehicleRB.AddTorque(new Vector3(0, -vehicleTorque * driftTorqueInc, 0));
             }
             else if (controls.Quad.Right.ReadValue<float>() > 0 && controls.Quad.Drift.ReadValue<float>() > 0)
             {
-                vehicleRB.AddTorque(new Vector3(0, vehicleTorque * 5, 0));
+                vehicleRB.AddTorque(new Vector3(0, vehicleTorque * driftTorqueInc, 0));
             }
         }
     }
