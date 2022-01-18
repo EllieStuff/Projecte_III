@@ -34,6 +34,7 @@ public class PlayerVehicleScript : MonoBehaviour
     [SerializeField] private bool chasisElevation;
 
     internal bool buildingScene;
+    internal bool hasFloater = false;
 
     // Start is called before the first frame update
     void Start()

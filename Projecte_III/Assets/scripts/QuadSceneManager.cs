@@ -5,10 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class QuadSceneManager : MonoBehaviour
 {
+    PlayerVehicleScript playerScript;
 
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
+
+        playerScript = GetComponentInChildren<PlayerVehicleScript>();
 
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
@@ -23,17 +26,39 @@ public class QuadSceneManager : MonoBehaviour
             gameObject.transform.localRotation = initial.localRotation;
             gameObject.transform.localScale = initial.localScale;
 
-            GetComponentInChildren<PlayerVehicleScript>().buildingScene = false;
-            GetComponentInChildren<PlayerVehicleScript>().SetWheels();
+            playerScript.buildingScene = false;
+            playerScript.SetWheels();
 
-            Rigidbody rb = transform.GetChild(0).GetComponent<Rigidbody>();
+            Rigidbody rb = playerScript.GetComponent<Rigidbody>();
             rb.constraints = RigidbodyConstraints.None;
-
             rb.useGravity = true;
+
+            SetCarModifiers();
+
         }
         else
         {
-            GetComponentInChildren<PlayerVehicleScript>().buildingScene = true;
+            playerScript.buildingScene = true;
         }
     }
+
+    void SetCarModifiers()
+    {
+        Transform modifiers = transform.Find("Modifiers");
+        for (int i = 0; i < modifiers.childCount; i++)
+        {
+            switch (modifiers.GetChild(i).GetChild(0).tag)
+            {
+                case "Floater":
+                    playerScript.hasFloater = true;
+                    break;
+
+                default:
+                    break;
+            }
+
+        }
+
+    }
+
 }
