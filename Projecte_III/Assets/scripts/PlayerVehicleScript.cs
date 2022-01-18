@@ -12,7 +12,7 @@ public class PlayerVehicleScript : MonoBehaviour
 
     private Material chasisMat;
     private Vector3 savedVelocity;
-    private float savedMaxVelocity;
+    private float savedMaxSpeed;
     private bool reduceSpeed;
     
     QuadControls controls;
@@ -34,7 +34,8 @@ public class PlayerVehicleScript : MonoBehaviour
     [SerializeField] private bool chasisElevation;
 
     internal bool buildingScene;
-    internal bool hasFloater = false;
+    internal List<string> listOfModifiers;
+    bool hasFloater = false;
 
     // Start is called before the first frame update
     void Start()
@@ -49,7 +50,7 @@ public class PlayerVehicleScript : MonoBehaviour
         Physics.gravity = new Vector3(0, -9.8f * 2, 0);
         vehicleRB = this.GetComponent<Rigidbody>();
         vehicleRB.centerOfMass = centerOfMass;
-        savedMaxVelocity = vehicleMaxSpeed;
+        savedMaxSpeed = vehicleMaxSpeed;
 
         wheels = transform.parent.GetChild(1).GetChild(0).gameObject;
     }
@@ -62,6 +63,15 @@ public class PlayerVehicleScript : MonoBehaviour
         respawnVelocity = new Vector3(0, 0, 0);
 
         buildingScene = SceneManager.GetActiveScene().name == "Building Scene";
+    }
+
+    internal void Init()
+    {
+        if (!hasFloater)
+        {
+            Physics.IgnoreLayerCollision(3, 4, true);
+        }
+
     }
 
     void Update()
@@ -83,6 +93,14 @@ public class PlayerVehicleScript : MonoBehaviour
             }
         }
         //_______________________________________________________________
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            Debug.LogWarning("quitar en vFinal");
+            Physics.IgnoreLayerCollision(3, 4, hasFloater);
+            hasFloater = !hasFloater;
+        }
+
     }
 
     public void SetWheels()
@@ -191,14 +209,14 @@ public class PlayerVehicleScript : MonoBehaviour
             FallFunction();
         }
 
-        if(reduceSpeed && vehicleMaxSpeed > savedMaxVelocity)
+        if(reduceSpeed && vehicleMaxSpeed > savedMaxSpeed)
         {
             vehicleMaxSpeed -= Time.deltaTime * 10;
         }
-        else if(reduceSpeed && vehicleMaxSpeed <= savedMaxVelocity)
+        else if(reduceSpeed && vehicleMaxSpeed <= savedMaxSpeed)
         {
             reduceSpeed = false;
-            vehicleMaxSpeed = savedMaxVelocity;
+            vehicleMaxSpeed = savedMaxSpeed;
         }
         //Debug.Log(vehicleMaxSpeed);
 
@@ -333,10 +351,44 @@ public class PlayerVehicleScript : MonoBehaviour
         }
     }
 
+    internal void SetCarModifiers()
+    {
+        for(int i = 0; i < listOfModifiers.Count; i++)
+        {
+            switch (listOfModifiers[i])
+            {
+                case "Floater":
+                    hasFloater = true;
+
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+    }
+
+    void UpdateCarModifiers()
+    {
+        for (int i = 0; i < listOfModifiers.Count; i++)
+        {
+            switch (listOfModifiers[i])
+            {
+                //case "Floater":
+                    
+
+                //    break;
+
+                default:
+                    break;
+            }
+        }
+    }
+
     IEnumerator WaitEndBoost()
     {
         yield return new WaitForSeconds(boostPadDuration);
-        Debug.Log("AAAAAAAAAAAAAAA");
         reduceSpeed = true;
     }
 
@@ -348,8 +400,8 @@ public class PlayerVehicleScript : MonoBehaviour
             angle *= Mathf.Deg2Rad;
             angle = Mathf.Cos(angle);
             vehicleMaxSpeed = boostPadMultiplier * angle;
-            if (vehicleMaxSpeed < savedMaxVelocity)
-                vehicleMaxSpeed = savedMaxVelocity;
+            if (vehicleMaxSpeed < savedMaxSpeed)
+                vehicleMaxSpeed = savedMaxSpeed;
             //Debug.Log(vehicleMaxSpeed);
         }
 
@@ -359,15 +411,29 @@ public class PlayerVehicleScript : MonoBehaviour
             Debug.Log("bahsdfjabfhajv");
         }
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag.Equals("Water") && !hasFloater)
+        {
+            vehicleMaxSpeed = savedMaxSpeed / 3;
+        }
+    }
     private void OnTriggerExit(Collider other)
     {
         //Debug.Log(vehicleMaxSpeed);
         //vehicleMaxSpeed = savedMaxVelocity;
         StartCoroutine(WaitEndBoost());
+
+        if(other.tag.Equals("Water") && !hasFloater)
+        {
+            vehicleMaxSpeed = savedMaxSpeed;
+        }
+
     }
 
     void OnCollisionExit(Collision other)
     {
         vehicleReversed = false;
     }
+
 }

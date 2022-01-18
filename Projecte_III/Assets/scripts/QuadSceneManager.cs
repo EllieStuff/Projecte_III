@@ -35,6 +35,7 @@ public class QuadSceneManager : MonoBehaviour
 
             SetCarModifiers();
 
+            playerScript.Init();
         }
         else
         {
@@ -45,19 +46,13 @@ public class QuadSceneManager : MonoBehaviour
     void SetCarModifiers()
     {
         Transform modifiers = transform.Find("Modifiers");
+        playerScript.listOfModifiers = new List<string>(modifiers.childCount);
         for (int i = 0; i < modifiers.childCount; i++)
         {
-            switch (modifiers.GetChild(i).GetChild(0).tag)
-            {
-                case "Floater":
-                    playerScript.hasFloater = true;
-                    break;
-
-                default:
-                    break;
-            }
-
+            if(modifiers.GetChild(i).childCount > 0)
+                playerScript.listOfModifiers.Add(modifiers.GetChild(i).GetChild(0).tag);
         }
+        playerScript.SetCarModifiers();
 
     }
 
