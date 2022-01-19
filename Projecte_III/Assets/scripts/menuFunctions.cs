@@ -11,7 +11,7 @@ public class menuFunctions : MonoBehaviour
 
     public void OpenSettings()
     {
-        localVoiceValue.value = AudioListener.volume;
+        //localVoiceValue.value = AudioListener.volume;
         settingsMenu.SetActive(true);
     }
 
