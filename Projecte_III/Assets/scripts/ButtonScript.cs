@@ -6,13 +6,14 @@ using UnityEngine.UI;
 public class ButtonScript: MonoBehaviour
 {
     [SerializeField] private ButtonManager manager;
-    [SerializeField] private GameObject modifierSpots = null;
+    private GameObject modifierSpots = null;
     [SerializeField] private GameObject list;
     private Button bttn;
 
     private void Start()
     {
         bttn = this.GetComponent<Button>();
+        modifierSpots = QuadSceneManager.Instance.transform.Find("Modifiers").gameObject;
 
         if(modifierSpots != null && modifierSpots.activeSelf)
         {

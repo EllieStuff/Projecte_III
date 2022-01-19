@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 public class WheelButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private GameObject wheelsModel;
-    [SerializeField] private GameObject wheelSpot;
+    private GameObject wheelSpot;
     [SerializeField] private GameObject currentWheel;
 
     private bool placed = false;
@@ -15,6 +15,8 @@ public class WheelButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnPointerEnter(PointerEventData data)
     {
+        wheelSpot = QuadSceneManager.Instance.transform.Find("Wheels Models").gameObject;
+
         if (wheelsModel != null)
         {
             Instantiate(wheelsModel, wheelSpot.transform);

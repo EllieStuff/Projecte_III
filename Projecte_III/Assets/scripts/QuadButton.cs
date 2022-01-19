@@ -12,6 +12,10 @@ public class QuadButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     [SerializeField] private GameObject currentQuad;
     private bool placed = false;
 
+    private void Start()
+    {
+        quadSpot = QuadSceneManager.Instance.transform.GetChild(0).GetChild(0).GetChild(0).gameObject;
+    }
 
     public void OnPointerEnter(PointerEventData data)
     {
