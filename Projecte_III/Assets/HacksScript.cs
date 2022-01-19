@@ -5,6 +5,7 @@ using UnityEngine;
 public class HacksScript : MonoBehaviour
 {
     [SerializeField] Transform[] tpTransforms;
+    [SerializeField] LoadSceneManager sceneLoader;
 
     PlayerVehicleScript playerScript;
     Quaternion rotMargin;
@@ -12,6 +13,8 @@ public class HacksScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        sceneLoader = GetComponent<LoadSceneManager>();
+
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerVehicleScript>();
         rotMargin = Quaternion.Euler(0, 90, 0);
     }
@@ -73,6 +76,10 @@ public class HacksScript : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.F12))
         {
             VechicleTP(tpTransforms.Length - 1);
+        }
+        else if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            sceneLoader.ChangeScene("Menu");
         }
 
     }

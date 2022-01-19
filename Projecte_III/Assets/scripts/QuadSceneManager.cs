@@ -18,7 +18,11 @@ public class QuadSceneManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name != "Building Scene")
+        if (scene.name == "Building Scene")
+        {
+            playerScript.buildingScene = true;
+        }
+        else if (scene.name != "Menu")
         {
             Transform initial = GameObject.FindGameObjectWithTag("InitPos").transform;
 
@@ -41,10 +45,7 @@ public class QuadSceneManager : MonoBehaviour
 
             playerScript.Init();
         }
-        else
-        {
-            playerScript.buildingScene = true;
-        }
+        
     }
 
     void SetCarModifiers()
