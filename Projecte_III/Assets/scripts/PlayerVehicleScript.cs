@@ -45,8 +45,8 @@ public class PlayerVehicleScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        alaDeltaDuration = 5;
-        alaDeltaTimer = 5;
+        alaDeltaDuration = 1;
+        alaDeltaTimer = 1;
         controls = new QuadControls();
         controls.Enable();
 
@@ -98,10 +98,9 @@ public class PlayerVehicleScript : MonoBehaviour
                 }
                 wheels.transform.localPosition = transform.localPosition;
                 wheels.transform.localRotation = transform.localRotation;
-                touchingGround = true;
                 //FALLDEATH CHECK
                 if(!alaDelta)
-                checkFallDeath();
+                    checkFallDeath();
                 //RESETTING ALADELTA VARIABLES
                 if(alaDeltaTimer <= alaDeltaDuration - 0.8f)
                 {
