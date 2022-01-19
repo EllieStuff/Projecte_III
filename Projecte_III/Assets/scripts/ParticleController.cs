@@ -26,7 +26,7 @@ public class ParticleController : MonoBehaviour
         //Ground Particles
         for(int i = 0; i < numOfDustParticleSystems; i++)
         {
-            DustParticleSys = this.transform.Find("WheelParticles").GetChild(i).GetComponent<ParticleSystem>();
+            DustParticleSys = transform.Find("WheelParticles").GetChild(i).GetComponent<ParticleSystem>();
 
             if (Player.GetComponent<PlayerVehicleScript>().touchingGround && !DustParticleSys.isPlaying)
                 DustParticleSys.Play();
@@ -36,9 +36,9 @@ public class ParticleController : MonoBehaviour
         }       
 
         //Smoke Particles
-        if((controls.Quad.Forward.ReadValue<float>() > 0 || controls.Quad.Backward.ReadValue<float>() > 0) && !SmokeParticleSys.isEmitting)
+        if((controls.Quad.Forward.ReadValue<float>() > 0) && !SmokeParticleSys.isEmitting)
             SmokeParticleSys.Play();
-        else if ((controls.Quad.Forward.ReadValue<float>() == 0 && controls.Quad.Backward.ReadValue<float>() == 0) && SmokeParticleSys.isEmitting)
+        else if ((controls.Quad.Forward.ReadValue<float>() == 0) && SmokeParticleSys.isEmitting)
             SmokeParticleSys.Stop();
     }
 }
