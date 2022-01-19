@@ -15,7 +15,7 @@ public class PlayerVehicleScript : MonoBehaviour
 
     private Material chasisMat;
     private Vector3 savedVelocity;
-    private float savedMaxVelocity;
+    private float savedMaxSpeed;
     private bool reduceSpeed;
     
     QuadControls controls;
@@ -38,6 +38,8 @@ public class PlayerVehicleScript : MonoBehaviour
     private bool alaDelta;
 
     internal bool buildingScene;
+    internal List<string> listOfModifiers;
+    bool hasFloater = false;
 
     // Start is called before the first frame update
     void Start()
@@ -54,7 +56,7 @@ public class PlayerVehicleScript : MonoBehaviour
         Physics.gravity = new Vector3(0, -9.8f * 2, 0);
         vehicleRB = this.GetComponent<Rigidbody>();
         vehicleRB.centerOfMass = centerOfMass;
-        savedMaxVelocity = vehicleMaxSpeed;
+        savedMaxSpeed = vehicleMaxSpeed;
 
         wheels = transform.parent.GetChild(1).GetChild(0).gameObject;
     }
@@ -67,6 +69,15 @@ public class PlayerVehicleScript : MonoBehaviour
         respawnVelocity = new Vector3(0, 0, 0);
 
         buildingScene = SceneManager.GetActiveScene().name == "Building Scene";
+    }
+
+    internal void Init()
+    {
+        if (!hasFloater)
+        {
+            Physics.IgnoreLayerCollision(3, 4, true);
+        }
+
     }
 
     void Update()
@@ -88,30 +99,38 @@ public class PlayerVehicleScript : MonoBehaviour
             }
         }
 
-        if(touchingGround && vehicleRB.constraints != RigidbodyConstraints.None)
-        {
-            vehicleRB.constraints = RigidbodyConstraints.None;
+        if(touchingGround && vehicleRB.constraints != RigidbodyConstraints.None)
+        {
+            vehicleRB.constraints = RigidbodyConstraints.None;
         }
 
         transform.parent.GetChild(2).localPosition = transform.localPosition;
         //_______________________________________________________________
-    }
 
-    public void HideVoidModifier()
-    {
-        for (int i = 0; i < transform.parent.GetChild(2).childCount; i++)
+        if (Input.GetKeyDown(KeyCode.F))
         {
-            GameObject child = transform.parent.GetChild(2).GetChild(i).gameObject;
-            if (child.transform.childCount <= 0)
-            {
-                child.SetActive(false);
-            }
+            Debug.LogWarning("quitar en vFinal");
+            Physics.IgnoreLayerCollision(3, 4, hasFloater);
+            hasFloater = !hasFloater;
         }
+
     }
 
-    public void SetWheels()
-    {
-        wheels = gameObject.transform.parent.GetChild(1).GetChild(0).gameObject;
+    public void HideVoidModifier()
+    {
+        for (int i = 0; i < transform.parent.GetChild(2).childCount; i++)
+        {
+            GameObject child = transform.parent.GetChild(2).GetChild(i).gameObject;
+            if (child.transform.childCount <= 0)
+            {
+                child.SetActive(false);
+            }
+        }
+    }
+
+    public void SetWheels()
+    {
+        wheels = gameObject.transform.parent.GetChild(1).GetChild(0).gameObject;
     }
 
     // Update is called once per frame
@@ -232,10 +251,10 @@ public class PlayerVehicleScript : MonoBehaviour
         {
             vehicleMaxSpeed -= Time.deltaTime * 10;
         }
-        else if(reduceSpeed && vehicleMaxSpeed <= savedMaxVelocity)
+        else if(reduceSpeed && vehicleMaxSpeed <= savedMaxSpeed)
         {
             reduceSpeed = false;
-            vehicleMaxSpeed = savedMaxVelocity;
+            vehicleMaxSpeed = savedMaxSpeed;
         }
 
         //VEHICLE SOUND PITCH SYSTEM
@@ -402,6 +421,41 @@ public class PlayerVehicleScript : MonoBehaviour
         }
     }
 
+    internal void SetCarModifiers()
+    {
+        for(int i = 0; i < listOfModifiers.Count; i++)
+        {
+            switch (listOfModifiers[i])
+            {
+                case "Floater":
+                    hasFloater = true;
+
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+    }
+
+    void UpdateCarModifiers()
+    {
+        for (int i = 0; i < listOfModifiers.Count; i++)
+        {
+            switch (listOfModifiers[i])
+            {
+                //case "Floater":
+                    
+
+                //    break;
+
+                default:
+                    break;
+            }
+        }
+    }
+
     IEnumerator WaitEndBoost()
     {
         yield return new WaitForSeconds(boostPadDuration);
@@ -425,15 +479,29 @@ public class PlayerVehicleScript : MonoBehaviour
             vehicleRB.AddForce(other.GetComponent<WaterStreamColliderScript>().Stream, ForceMode.Force);
         }
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag.Equals("Water") && !hasFloater)
+        {
+            vehicleMaxSpeed = savedMaxSpeed / 3;
+        }
+    }
     private void OnTriggerExit(Collider other)
     {
         //Debug.Log(vehicleMaxSpeed);
         //vehicleMaxSpeed = savedMaxVelocity;
         StartCoroutine(WaitEndBoost());
+
+        if(other.tag.Equals("Water") && !hasFloater)
+        {
+            vehicleMaxSpeed = savedMaxSpeed;
+        }
+
     }
 
     void OnCollisionExit(Collision other)
     {
         vehicleReversed = false;
     }
+
 }

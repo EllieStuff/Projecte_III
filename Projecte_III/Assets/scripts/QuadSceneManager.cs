@@ -5,10 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class QuadSceneManager : MonoBehaviour
 {
+    PlayerVehicleScript playerScript;
 
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
+
+        playerScript = GetComponentInChildren<PlayerVehicleScript>();
 
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
@@ -23,20 +26,38 @@ public class QuadSceneManager : MonoBehaviour
             gameObject.transform.localRotation = initial.localRotation;
             gameObject.transform.localScale = initial.localScale;
 
-            PlayerVehicleScript player = GetComponentInChildren<PlayerVehicleScript>();
+            GetComponentInChildren<PlayerVehicleScript>().buildingScene = false;
+            GetComponentInChildren<PlayerVehicleScript>().SetWheels();
 
-            player.buildingScene = false;
-            player.SetWheels();
-            player.HideVoidModifier();
+            playerScript.HideVoidModifier();
+            playerScript.SetWheels();
+            playerScript.buildingScene = false;
 
-            Rigidbody rb = transform.GetChild(0).GetComponent<Rigidbody>();
+            Rigidbody rb = playerScript.GetComponent<Rigidbody>();
             rb.constraints = RigidbodyConstraints.None;
-
             rb.useGravity = true;
+
+            SetCarModifiers();
+
+            playerScript.Init();
         }
         else
         {
-            GetComponentInChildren<PlayerVehicleScript>().buildingScene = true;
+            playerScript.buildingScene = true;
         }
     }
+
+    void SetCarModifiers()
+    {
+        Transform modifiers = transform.Find("Modifiers");
+        playerScript.listOfModifiers = new List<string>(modifiers.childCount);
+        for (int i = 0; i < modifiers.childCount; i++)
+        {
+            if(modifiers.GetChild(i).childCount > 0)
+                playerScript.listOfModifiers.Add(modifiers.GetChild(i).GetChild(0).tag);
+        }
+        playerScript.SetCarModifiers();
+
+    }
+
 }
