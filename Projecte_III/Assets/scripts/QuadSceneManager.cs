@@ -7,8 +7,20 @@ public class QuadSceneManager : MonoBehaviour
 {
     PlayerVehicleScript playerScript;
 
+    private static QuadSceneManager quadSMInstance = null;
+
+    public static QuadSceneManager Instance { get { return quadSMInstance; } }
+
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        quadSMInstance = this;
+
         DontDestroyOnLoad(gameObject);
 
         playerScript = GetComponentInChildren<PlayerVehicleScript>();

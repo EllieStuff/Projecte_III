@@ -83,7 +83,6 @@ public class PlayerVehicleScript : MonoBehaviour
 
     void Update()
     {
-        print(vehicleRB.velocity.y);
         touchingGround = false;
 
         //HERE WE SET THE POSITION AND ROTATION FROM THE WHEELS RENDERERS

@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class BuildingSpots : MonoBehaviour
 {
-    [SerializeField] private ModifiersManager modifiers;
+    private ModifiersManager modifiers;
     [SerializeField] private bool placed;
 
     [SerializeField] private LayerMask layerMask;
@@ -22,6 +22,7 @@ public class BuildingSpots : MonoBehaviour
     {
         controls = new QuadControls();
         controls.Enable();
+        modifiers = QuadSceneManager.Instance.GetComponentInChildren<ModifiersManager>();
     }
 
     private void Update()
