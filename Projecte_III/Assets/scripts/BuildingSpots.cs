@@ -43,8 +43,8 @@ public class BuildingSpots : MonoBehaviour
                 if (controls.ConstructionMenu.ConstructModifier.ReadValue<float>() > 0 && raycastHit.transform.childCount == 0)    //Instantiate Object
                 {
                     GameObject clone = Instantiate(gameObject, raycastHit.transform).gameObject;
-
-                    clone.transform.GetComponentInChildren<MeshCollider>().enabled = false;
+                    if (clone.transform.GetComponentInChildren<MeshCollider>() != null)
+                        clone.transform.GetComponentInChildren<MeshCollider>().enabled = false;
 
                     raycastHit.transform.GetComponent<MeshRenderer>().enabled = false;
 

@@ -99,9 +99,12 @@ public class PlayerVehicleScript : MonoBehaviour
             }
         }
 
-        if(touchingGround && vehicleRB.constraints != RigidbodyConstraints.None)
-        {
-            vehicleRB.constraints = RigidbodyConstraints.None;
+        if(touchingGround && vehicleRB.constraints != RigidbodyConstraints.None)
+
+        {
+
+            vehicleRB.constraints = RigidbodyConstraints.None;
+
         }
 
         transform.parent.GetChild(2).localPosition = transform.localPosition;
@@ -109,28 +112,41 @@ public class PlayerVehicleScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F))
         {
-            Debug.LogWarning("quitar en vFinal");
+            //Debug.LogWarning("quitar en vFinal");
             Physics.IgnoreLayerCollision(3, 4, hasFloater);
             hasFloater = !hasFloater;
         }
 
     }
 
-    public void HideVoidModifier()
-    {
-        for (int i = 0; i < transform.parent.GetChild(2).childCount; i++)
-        {
-            GameObject child = transform.parent.GetChild(2).GetChild(i).gameObject;
-            if (child.transform.childCount <= 0)
-            {
-                child.SetActive(false);
-            }
-        }
+    public void HideVoidModifier()
+
+    {
+
+        for (int i = 0; i < transform.parent.GetChild(2).childCount; i++)
+
+        {
+
+            GameObject child = transform.parent.GetChild(2).GetChild(i).gameObject;
+
+            if (child.transform.childCount <= 0)
+
+            {
+
+                child.SetActive(false);
+
+            }
+
+        }
+
     }
 
-    public void SetWheels()
-    {
-        wheels = gameObject.transform.parent.GetChild(1).GetChild(0).gameObject;
+    public void SetWheels()
+
+    {
+
+        wheels = gameObject.transform.parent.GetChild(1).GetChild(0).gameObject;
+
     }
 
     // Update is called once per frame
@@ -247,7 +263,7 @@ public class PlayerVehicleScript : MonoBehaviour
         //ALADELTA FUNCTION
         AlaDeltaFunction();
 
-        if (reduceSpeed && vehicleMaxSpeed > savedMaxVelocity)
+        if (reduceSpeed && vehicleMaxSpeed > savedMaxSpeed)
         {
             vehicleMaxSpeed -= Time.deltaTime * 10;
         }
@@ -470,8 +486,8 @@ public class PlayerVehicleScript : MonoBehaviour
             angle *= Mathf.Deg2Rad;
             angle = Mathf.Cos(angle);
             vehicleMaxSpeed = boostPadMultiplier * angle;
-            if (vehicleMaxSpeed < savedMaxVelocity)
-                vehicleMaxSpeed = savedMaxVelocity;
+            if (vehicleMaxSpeed < savedMaxSpeed)
+                vehicleMaxSpeed = savedMaxSpeed;
         }
 
         if (other.CompareTag("Water"))
@@ -488,8 +504,8 @@ public class PlayerVehicleScript : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        //Debug.Log(vehicleMaxSpeed);
-        //vehicleMaxSpeed = savedMaxVelocity;
+        Debug.Log(vehicleMaxSpeed);
+        vehicleMaxSpeed = savedMaxSpeed;
         StartCoroutine(WaitEndBoost());
 
         if(other.tag.Equals("Water") && !hasFloater)
