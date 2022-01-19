@@ -30,8 +30,4 @@ public class menuFunctions : MonoBehaviour
         Application.Quit();
     }
 
-    public void UpdateMasterVoiceVolume(Slider voiceValue)
-    {
-        AudioListener.volume = voiceValue.value;
-    }
 }
