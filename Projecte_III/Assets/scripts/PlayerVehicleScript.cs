@@ -26,7 +26,7 @@ public class PlayerVehicleScript : MonoBehaviour
     public float vehicleMaxSpeed;
     public float vehicleMaxTorque;
     public WheelCollider[] wheelCollider;
-    public GameObject[] wheels;
+    public GameObject wheels;
     public int lifeVehicle;
     public bool touchingGround;
     public bool vehicleReversed;
@@ -36,6 +36,8 @@ public class PlayerVehicleScript : MonoBehaviour
     private float chasisElevationTimer;
     [SerializeField] private bool chasisElevation;
     private bool alaDelta;
+
+    internal bool buildingScene;
 
     // Start is called before the first frame update
     void Start()
@@ -53,6 +55,8 @@ public class PlayerVehicleScript : MonoBehaviour
         vehicleRB = this.GetComponent<Rigidbody>();
         vehicleRB.centerOfMass = centerOfMass;
         savedMaxVelocity = vehicleMaxSpeed;
+
+        wheels = transform.parent.GetChild(1).GetChild(0).gameObject;
     }
 
     private void Awake()
@@ -61,6 +65,8 @@ public class PlayerVehicleScript : MonoBehaviour
         respawnPosition = new Vector3(0, 0, 0);
         respawnRotation = new Vector3(0, 0, 0);
         respawnVelocity = new Vector3(0, 0, 0);
+
+        buildingScene = SceneManager.GetActiveScene().name == "Building Scene";
     }
 
     void Update()
@@ -68,17 +74,39 @@ public class PlayerVehicleScript : MonoBehaviour
         touchingGround = false;
 
         //HERE WE SET THE POSITION AND ROTATION FROM THE WHEELS RENDERERS
-        for (int i = 0; i < wheelCollider.Length; i++)
+
+        if(!buildingScene)
         {
-            if (wheelCollider[i].GetGroundHit(out var touchingGroundV))
+            for (int i = 0; i < wheelCollider.Length; i++)
             {
-                touchingGround = true;
+                if (wheelCollider[i].GetGroundHit(out var touchingGroundV))
+                {
+                    touchingGround = true;
+                }
+                wheels.transform.localPosition = transform.localPosition;
+                wheels.transform.localRotation = transform.localRotation;
             }
-            wheelCollider[i].GetWorldPose(out var pos, out var rot);
-            wheels[i].transform.position = pos;
-            wheels[i].transform.rotation = rot;
         }
+
+        transform.parent.GetChild(2).localPosition = transform.localPosition;
         //_______________________________________________________________
+    }
+
+    public void HideVoidModifier()
+    {
+        for (int i = 0; i < transform.parent.GetChild(2).childCount; i++)
+        {
+            GameObject child = transform.parent.GetChild(2).GetChild(i).gameObject;
+            if (child.transform.childCount <= 0)
+            {
+                child.SetActive(false);
+            }
+        }
+    }
+
+    public void SetWheels()
+    {
+        wheels = gameObject.transform.parent.GetChild(1).GetChild(0).gameObject;
     }
 
     // Update is called once per frame
