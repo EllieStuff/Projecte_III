@@ -55,7 +55,7 @@ public class QuadSceneManager : MonoBehaviour
         for (int i = 0; i < modifiers.childCount; i++)
         {
             if(modifiers.GetChild(i).childCount > 0)
-                playerScript.listOfModifiers.Add(modifiers.GetChild(i).GetChild(0).tag);
+                playerScript.listOfModifiers.Add(modifiers.GetChild(i).GetChild(0).GetChild(0).tag);
         }
         playerScript.SetCarModifiers();
 
