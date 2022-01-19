@@ -88,6 +88,11 @@ public class PlayerVehicleScript : MonoBehaviour
             }
         }
 
+        if(touchingGround && vehicleRB.constraints != RigidbodyConstraints.None)
+        {
+            vehicleRB.constraints = RigidbodyConstraints.None;
+        }
+
         transform.parent.GetChild(2).localPosition = transform.localPosition;
         //_______________________________________________________________
     }
