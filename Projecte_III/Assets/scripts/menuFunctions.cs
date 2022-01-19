@@ -22,7 +22,7 @@ public class menuFunctions : MonoBehaviour
 
     public void Play()
     {
-        SceneManager.LoadScene("Snaky Mounty");
+        SceneManager.LoadScene("Building Scene");
     }
 
     public void ExitGame()

@@ -362,11 +362,11 @@ public class @QuadControls : IInputActionCollection, IDisposable
         m_Quad_UseActualGadget = m_Quad.FindAction("UseActualGadget", throwIfNotFound: true);
         m_Quad_LookBackwards = m_Quad.FindAction("LookBackwards", throwIfNotFound: true);
         m_Quad_ChasisElevation = m_Quad.FindAction("ChasisElevation", throwIfNotFound: true);
+        m_Quad_AlaDelta = m_Quad.FindAction("AlaDelta", throwIfNotFound: true);
         // Construction Menu
         m_ConstructionMenu = asset.FindActionMap("Construction Menu", throwIfNotFound: true);
         m_ConstructionMenu_DeleteModifier = m_ConstructionMenu.FindAction("Delete Modifier", throwIfNotFound: true);
         m_ConstructionMenu_ConstructModifier = m_ConstructionMenu.FindAction("Construct Modifier", throwIfNotFound: true);
-        m_Quad_AlaDelta = m_Quad.FindAction("AlaDelta", throwIfNotFound: true);
     }
 
     public void Dispose()

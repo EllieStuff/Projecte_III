@@ -17,7 +17,7 @@ public class QuadSceneManager : MonoBehaviour
     {
         if (scene.name != "Building Scene")
         {
-            Transform initial = GameObject.Find("InitPos").transform;
+            Transform initial = GameObject.FindGameObjectWithTag("InitPos").transform;
 
             gameObject.transform.localPosition = initial.localPosition;
             gameObject.transform.localRotation = initial.localRotation;
