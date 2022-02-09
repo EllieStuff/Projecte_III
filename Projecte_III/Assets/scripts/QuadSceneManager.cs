@@ -22,8 +22,14 @@ public class QuadSceneManager : MonoBehaviour
         if (scene.name == "Building Scene")
         {
             playerScript.buildingScene = true;
+
+            GameObject[] objs = GameObject.FindGameObjectsWithTag("VehicleSet");
+            if (objs.Length > 1)
+            {
+                Destroy(objs[0]);
+            }
         }
-        else if (scene.name != "Menu")
+        else if(scene.name != "Menu")
         {
             Transform initial = GameObject.FindGameObjectWithTag("InitPos").transform;
 
