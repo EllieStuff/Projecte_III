@@ -8,10 +8,11 @@ public class CameraScript : MonoBehaviour
     [SerializeField] GameObject playerVehicle;
     [SerializeField] Vector3 posOffset;
     [SerializeField] Vector3 rotOffset;
-    [SerializeField] float camSpeed;
 
     public QuadControls controls;
 
+    float camPosSpeed = 5.0f;
+    float camRotSpeed = 1.1f;
     Quaternion rotOffsetQuat, lookBackRotOffset;
 
     private void Start()
@@ -24,18 +25,24 @@ public class CameraScript : MonoBehaviour
 
         playerVehicle = GameObject.FindGameObjectWithTag("Player").transform.GetChild(0).GetChild(0).gameObject;
 
+        this.transform.position = new Vector3(playerVehicle.transform.position.x, playerVehicle.transform.position.y + 2, playerVehicle.transform.position.z);
         this.transform.rotation = rotOffsetQuat;
     }
 
     // Update is called once per frame
     void Update()
     {
-        this.transform.position = Vector3.Lerp(this.transform.position + posOffset, new Vector3(playerVehicle.transform.position.x, playerVehicle.transform.position.y + 2, playerVehicle.transform.position.z), Time.deltaTime * camSpeed);
+        Vector3 targetPos = new Vector3(playerVehicle.transform.position.x, playerVehicle.transform.position.y + 2, playerVehicle.transform.position.z);
+        transform.position = Vector3.Lerp(this.transform.position + posOffset, targetPos, Time.deltaTime * camPosSpeed);
+        //transform.rotation = Quaternion.Euler(rotOffset);
+        transform.rotation = Quaternion.Lerp(transform.rotation, rotOffsetQuat, Time.deltaTime * camRotSpeed);
+        //transform.rotation = rotOffsetQuat;
 
-        if (controls.Quad.LookBackwards.ReadValue<float>() > 0/*Input.GetKeyDown(KeyCode.Tab)*/)
-            this.transform.rotation = rotOffsetQuat * lookBackRotOffset;
-        else /*if (Input.GetKeyUp(KeyCode.Tab))*/
-            this.transform.rotation = rotOffsetQuat;
+
+        //if (controls.Quad.LookBackwards.ReadValue<float>() > 0/*Input.GetKeyDown(KeyCode.Tab)*/)
+        //    this.transform.rotation = rotOffsetQuat * lookBackRotOffset;
+        //else /*if (Input.GetKeyUp(KeyCode.Tab))*/
+        //    this.transform.rotation = rotOffsetQuat;
 
 
         // Test Mode
@@ -50,4 +57,17 @@ public class CameraScript : MonoBehaviour
         //else
         //    this.transform.rotation = Quaternion.Lerp(this.transform.rotation, new Quaternion(this.transform.rotation.x, playerVehicle.transform.rotation.y, this.transform.rotation.z, playerVehicle.transform.rotation.w), Time.deltaTime * camSpeed);
     }
+
+
+    public void ChangeRotation(Vector3 newRot)
+    {
+        rotOffsetQuat = Quaternion.Euler(newRot);
+
+    }
+
+    public void ResetRotation()
+    {
+        rotOffsetQuat = Quaternion.Euler(rotOffset);
+    }
+
 }
