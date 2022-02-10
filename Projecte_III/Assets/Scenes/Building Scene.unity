@@ -3727,7 +3727,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   manager: {fileID: 1137906785}
-  modifierSpots: {fileID: 1522864652}
+  modifierSpots: {fileID: 0}
   list: {fileID: 1973581815}
 --- !u!1 &945826253
 GameObject:
@@ -4779,6 +4779,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1232199299}
   m_CullTransparentMesh: 1
+--- !u!1 &1268354655
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1268354656}
+  m_Layer: 0
+  m_Name: InitPos
+  m_TagString: InitPos
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1268354656
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1268354655}
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 1, z: 1}
+  m_LocalScale: {x: 3.500001, y: 3.5, z: 3.500001}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1292168003
 GameObject:
   m_ObjectHideFlags: 0
@@ -5829,22 +5859,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1493435452}
   m_CullTransparentMesh: 1
---- !u!1 &1522864652 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6089789508452674747, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
-  m_PrefabInstance: {fileID: 6089789507022749367}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1522864654 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6089789508452674745, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
-  m_PrefabInstance: {fileID: 6089789507022749367}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1522864652}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3f0b6526b9147e4f85c8acc8f5f6959, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1533739382
 GameObject:
   m_ObjectHideFlags: 0
@@ -6649,7 +6663,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf1b37f7f6679b14db66239ed1901cd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modifiers: {fileID: 1522864654}
   placed: 0
   layerMask:
     serializedVersion: 2
@@ -7484,6 +7497,18 @@ PrefabInstance:
     - target: {fileID: 5550834916945680585, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6089789508452674747, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6089789508452674747, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+      propertyPath: m_TagString
+      value: ModifierSpots
+      objectReference: {fileID: 0}
+    - target: {fileID: 6468821771490017155, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+      propertyPath: m_TagString
+      value: ModifierSpots
       objectReference: {fileID: 0}
     - target: {fileID: 7702168493779973505, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: m_Layer

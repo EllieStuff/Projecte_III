@@ -12,15 +12,24 @@ public class ButtonScript: MonoBehaviour
 
     private void Start()
     {
-        bttn = this.GetComponent<Button>();
+        bttn = GetComponent<Button>();
 
-        if(modifierSpots != null && modifierSpots.activeSelf)
+        if (list.name == "Modifiers Objs" && modifierSpots == null)
+            modifierSpots = GameObject.FindGameObjectWithTag("ModifierSpots").gameObject;
+
+        if (modifierSpots != null && modifierSpots.activeSelf)
         {
             for (int i = 0; i < modifierSpots.transform.childCount; i++)
             {
                 modifierSpots.transform.GetChild(i).gameObject.SetActive(false);
             }
         }
+    }
+
+    private void Update()
+    {
+        if (list.name == "Modifiers Objs" && modifierSpots == null)
+            modifierSpots = GameObject.FindGameObjectWithTag("ModifierSpots").gameObject;
     }
 
     public void ChangeList()

@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class BuildingSpots : MonoBehaviour
 {
-    [SerializeField] private ModifiersManager modifiers;
+    private ModifiersManager modifiers;
     [SerializeField] private bool placed;
 
     [SerializeField] private LayerMask layerMask;
@@ -22,10 +22,15 @@ public class BuildingSpots : MonoBehaviour
     {
         controls = new QuadControls();
         controls.Enable();
+
+        modifiers = GameObject.FindGameObjectWithTag("ModifierSpots").GetComponent<ModifiersManager>();
     }
 
     private void Update()
     {
+        if(modifiers == null)
+            modifiers = GameObject.FindGameObjectWithTag("ModifierSpots").GetComponent<ModifiersManager>();
+
         transform.localScale = new Vector3(1,1,1);
 
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());

@@ -22,12 +22,12 @@ public class PlayerVehicleScript : MonoBehaviour
     QuadControls controls;
 
     public Rigidbody vehicleRB;
-    public float vehicleAcceleration;
+    private float vehicleAcceleration;
     public float vehicleTorque;
     public float vehicleMaxSpeed;
     public float vehicleMaxTorque;
-    public WheelCollider[] wheelCollider;
-    public GameObject wheels;
+    private WheelCollider[] wheelCollider;
+    private GameObject wheels;
     public int lifeVehicle;
     public bool touchingGround;
     public bool vehicleReversed;
@@ -45,26 +45,37 @@ public class PlayerVehicleScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        vehicleAcceleration = 2;
+
+        wheelCollider = new WheelCollider[4];
+
+        Transform _wheels = transform.GetChild(1);
+
+        for (int i = 0; i < wheelCollider.Length; i++)
+        {
+            wheelCollider[i] = _wheels.GetChild(i).GetComponent<WheelCollider>();
+        }
+
         alaDeltaDuration = 1;
         alaDeltaTimer = 1;
         controls = new QuadControls();
         controls.Enable();
 
-        this.GetComponent<AudioSource>().enabled = false;
-        chasisMat = new Material(this.transform.GetChild(0).GetComponent<MeshRenderer>().material);
-        this.transform.GetChild(0).GetComponent<MeshRenderer>().material = chasisMat;
+        GetComponent<AudioSource>().enabled = false;
+        chasisMat = new Material(transform.GetChild(0).GetComponent<MeshRenderer>().material);
+        transform.GetChild(0).GetComponent<MeshRenderer>().material = chasisMat;
         chasisMat.color = Color.red;
         Physics.gravity = new Vector3(0, -9.8f * 2, 0);
-        vehicleRB = this.GetComponent<Rigidbody>();
+        vehicleRB = GetComponent<Rigidbody>();
         vehicleRB.centerOfMass = centerOfMass;
         savedMaxSpeed = vehicleMaxSpeed;
 
-        wheels = transform.parent.GetChild(1).GetChild(0).gameObject;
+        wheels = transform.parent.GetChild(1).gameObject;
     }
 
     private void Awake()
     {
-        this.transform.name = "Player";
+        transform.name = "Player";
         respawnPosition = new Vector3(0, 0, 0);
         respawnRotation = new Vector3(0, 0, 0);
         respawnVelocity = new Vector3(0, 0, 0);
@@ -154,9 +165,7 @@ public class PlayerVehicleScript : MonoBehaviour
     public void SetWheels()
 
     {
-
-        wheels = gameObject.transform.parent.GetChild(1).GetChild(0).gameObject;
-
+        wheels = gameObject.transform.parent.GetChild(1).gameObject;
     }
 
     // Update is called once per frame
@@ -293,9 +302,9 @@ public class PlayerVehicleScript : MonoBehaviour
         if(timerReversed >= 1)
         {
             AudioManager.Instance.Play_SFX("Fall_SFX");
-            this.transform.position = respawnPosition;
-            this.transform.localEulerAngles = respawnRotation;
-            this.transform.localEulerAngles += new Vector3(0, 90, 0);
+            transform.position = respawnPosition;
+            transform.localEulerAngles = respawnRotation;
+            transform.localEulerAngles += new Vector3(0, 90, 0);
             vehicleRB.velocity = new Vector3(respawnVelocity.x, respawnVelocity.y, respawnVelocity.z);
             timerReversed = 0;
         }
@@ -303,7 +312,7 @@ public class PlayerVehicleScript : MonoBehaviour
 
     void ChasisElevationFunction()
     {
-        Transform chasisTransform = this.transform.GetChild(0);
+        Transform chasisTransform = transform.GetChild(0);
 
         if (controls.Quad.ChasisElevation.ReadValue<float>() > 0 && !chasisElevation && chasisTransform.localPosition.y <= 0)
         {
@@ -345,11 +354,11 @@ public class PlayerVehicleScript : MonoBehaviour
 
     void VehicleSoundPitchFunction()
     {
-        if ((vehicleRB.velocity.magnitude > 1 || vehicleRB.velocity.magnitude < -1) && !this.GetComponent<AudioSource>().enabled && lifeVehicle > 0)
+        if ((vehicleRB.velocity.magnitude > 1 || vehicleRB.velocity.magnitude < -1) && !GetComponent<AudioSource>().enabled && lifeVehicle > 0)
         {
             this.GetComponent<AudioSource>().enabled = true;
         }
-        else if ((vehicleRB.velocity.magnitude <= 1 && vehicleRB.velocity.magnitude >= -1) && this.GetComponent<AudioSource>().enabled && lifeVehicle > 0)
+        else if ((vehicleRB.velocity.magnitude <= 1 && vehicleRB.velocity.magnitude >= -1) && GetComponent<AudioSource>().enabled && lifeVehicle > 0)
             this.GetComponent<AudioSource>().enabled = false;
 
         if (this.GetComponent<AudioSource>().enabled)
@@ -424,12 +433,12 @@ public class PlayerVehicleScript : MonoBehaviour
             alaDeltaTimer -= Time.deltaTime;
             if (alaDeltaTimer >= alaDeltaDuration - 0.6f)
             {
-                this.transform.rotation = new Quaternion(0, this.transform.rotation.y, 0, this.transform.rotation.w);
+                this.transform.rotation = new Quaternion(0, transform.rotation.y, 0, transform.rotation.w);
                 vehicleRB.velocity += new Vector3(0, 1, 0);
             }
             else
             {
-                this.transform.rotation = new Quaternion(0, this.transform.rotation.y, 0, this.transform.rotation.w);
+                this.transform.rotation = new Quaternion(0, transform.rotation.y, 0, transform.rotation.w);
                 if (controls.Quad.Right.ReadValue<float>() == 1)
                     vehicleRB.AddTorque(new Vector3(0, vehicleTorque, 0));
                 else if (controls.Quad.Left.ReadValue<float>() == 1)
@@ -487,9 +496,9 @@ public class PlayerVehicleScript : MonoBehaviour
         if(vehicleRB.velocity.y <= -22)
         {
             AudioManager.Instance.Play_SFX("Fall_SFX");
-            this.transform.position = respawnPosition;
-            this.transform.localEulerAngles = respawnRotation;
-            this.transform.localEulerAngles += new Vector3(0, 90, 0);
+            transform.position = respawnPosition;
+            transform.localEulerAngles = respawnRotation;
+            transform.localEulerAngles += new Vector3(0, 90, 0);
             vehicleRB.velocity = new Vector3(respawnVelocity.x, respawnVelocity.y, respawnVelocity.z);
         }
     }
@@ -504,7 +513,7 @@ public class PlayerVehicleScript : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Boost Pad"))
         {
-            float angle = Vector3.Angle(this.transform.forward, other.transform.forward);
+            float angle = Vector3.Angle(transform.forward, other.transform.forward);
             angle *= Mathf.Deg2Rad;
             angle = Mathf.Cos(angle);
             vehicleMaxSpeed = boostPadMultiplier * angle;
