@@ -330,16 +330,21 @@ public class PlayerVehicleScript : MonoBehaviour
 
     void DriftFunction()
     {
-        if (vehicleRB.velocity.magnitude >= minDriftSpeed)
+        if (controls.Quad.Drift.ReadValue<float>() > 0)
         {
-            if (controls.Quad.Left.ReadValue<float>() > 0 && controls.Quad.Drift.ReadValue<float>() > 0)
-            {
-                vehicleRB.AddTorque(new Vector3(0, -vehicleTorque * driftTorqueInc, 0));
-            }
-            else if (controls.Quad.Right.ReadValue<float>() > 0 && controls.Quad.Drift.ReadValue<float>() > 0)
-            {
-                vehicleRB.AddTorque(new Vector3(0, vehicleTorque * driftTorqueInc, 0));
-            }
+            int value = 0;
+            if (controls.Quad.Left.ReadValue<float>() > 0) value = -1;
+            else if (controls.Quad.Right.ReadValue<float>() > 0) value = 1;
+
+            float vMagnitude = vehicleRB.velocity.magnitude;
+            float torqueAdded = 0;
+            if (vMagnitude < 1.0f) torqueAdded = vehicleTorque * 100 * value;
+            else if (vMagnitude < 12.0f) torqueAdded = vehicleTorque * 20 * value;
+            else if (vMagnitude < 14.0f) torqueAdded = vehicleTorque * 10 * value;
+            else torqueAdded = vehicleTorque * 5 * value;
+
+            vehicleRB.AddTorque(new Vector3(0, torqueAdded, 0));
+
         }
     }
 
