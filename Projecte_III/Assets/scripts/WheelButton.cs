@@ -12,7 +12,6 @@ public class WheelButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     private bool placed = false;
 
-
     public void OnPointerEnter(PointerEventData data)
     {
         if (wheelsModel != null)

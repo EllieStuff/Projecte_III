@@ -13,6 +13,9 @@ public class PlayerVehicleScript : MonoBehaviour
     [SerializeField] float alaDeltaTimer;
     [SerializeField] float driftTorqueInc = 3.0f;
 
+    //Vehicle Stats
+    Stats stats;
+
     private Material chasisMat;
     private Vector3 savedVelocity;
     private float timerReversed;
@@ -45,6 +48,8 @@ public class PlayerVehicleScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        stats = gameObject.AddComponent<Stats>();
+
         vehicleAcceleration = 2;
 
         wheelCollider = new WheelCollider[4];
@@ -71,6 +76,11 @@ public class PlayerVehicleScript : MonoBehaviour
         savedMaxSpeed = vehicleMaxSpeed;
 
         wheels = transform.parent.GetChild(1).gameObject;
+    }
+
+    void SetStats(Stats _stats)
+    {
+        stats = _stats;
     }
 
     private void Awake()
