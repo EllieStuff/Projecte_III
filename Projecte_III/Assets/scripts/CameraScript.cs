@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class CameraScript : MonoBehaviour
 {
-    [SerializeField] GameObject playerVehicle;
+    public GameObject playerVehicle;
     [SerializeField] Vector3 posOffset;
     [SerializeField] Vector3 rotOffset;
     [SerializeField] float camSpeed;
