@@ -91,51 +91,51 @@ public class QuadControlSystem : MonoBehaviour
             case 2:
                 //FORWARD
                 if (Input.GetKey(KeyCode.Joystick2Button5))
-                    Quad.Forward = 1;
+                    QuadP2.Forward = 1;
                 else
-                    Quad.Forward = 0;
+                    QuadP2.Forward = 0;
                 //______________________________________________
                 //BACKWARD
                 if (Input.GetKey(KeyCode.Joystick2Button4))
-                    Quad.Backward = 1;
+                    QuadP2.Backward = 1;
                 else
-                    Quad.Backward = 0;
+                    QuadP2.Backward = 0;
                 //______________________________________________
                 //LEFT
                 if (Input.GetAxis("HorizontalP2") <= -1)
-                    Quad.Left = 1;
+                    QuadP2.Left = 1;
                 else
-                    Quad.Left = 0;
+                    QuadP2.Left = 0;
                 //______________________________________________
                 //RIGHT
                 if (Input.GetAxis("HorizontalP2") >= 1)
-                    Quad.Right = 1;
+                    QuadP2.Right = 1;
                 else
-                    Quad.Right = 0;
+                    QuadP2.Right = 0;
                 //______________________________________________
                 //DRIFT
                 if (Input.GetAxis("DriftP2") >= 1)
-                    Quad.Drift = 1;
+                    QuadP2.Drift = 1;
                 else
-                    Quad.Drift = 0;
+                    QuadP2.Drift = 0;
                 //______________________________________________
                 //CHASIS ELEVATION
                 if (Input.GetKey(KeyCode.Joystick2Button1))
-                    Quad.ChasisElevation = 1;
+                    QuadP2.ChasisElevation = 1;
                 else
-                    Quad.ChasisElevation = 0;
+                    QuadP2.ChasisElevation = 0;
                 //______________________________________________
                 //ALADELTA
                 if (Input.GetKey(KeyCode.Joystick2Button0))
-                    Quad.AlaDelta = 1;
+                    QuadP2.AlaDelta = 1;
                 else
-                    Quad.AlaDelta = 0;
+                    QuadP2.AlaDelta = 0;
                 //______________________________________________
                 //SWITCH CAMERA
                 if (Input.GetKey(KeyCode.Joystick2Button3))
-                    Quad.LookBackwards = 1;
+                    QuadP2.LookBackwards = 1;
                 else
-                    Quad.LookBackwards = 0;
+                    QuadP2.LookBackwards = 0;
                 //______________________________________________
                 break;
         }
