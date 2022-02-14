@@ -528,10 +528,14 @@ public class PlayerVehicleScript : MonoBehaviour
         {
             vehicleMaxSpeed = savedMaxSpeed / 3;
         }
+        if(other.tag.Equals("Tree") && !other.GetComponent<ParticleSystem>().isPlaying)
+        {
+            other.GetComponent<ParticleSystem>().Play();
+        }
     }
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log(vehicleMaxSpeed);
+        //Debug.Log(vehicleMaxSpeed);
         vehicleMaxSpeed = savedMaxSpeed;
         StartCoroutine(WaitEndBoost());
 
