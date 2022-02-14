@@ -7,7 +7,7 @@ public class QuadSceneManager : MonoBehaviour
 {
     PlayerVehicleScript playerScript;
 
-    [SerializeField] private bool multiplayerMode;
+    public bool multiplayerMode;
 
     private static QuadSceneManager quadSMInstance = null;
 

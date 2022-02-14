@@ -1,12 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class StartMultiplayerScript : MonoBehaviour
 {
+    [SerializeField] private bool multiplayerMode;
+
+    private void Start()
+    {
+        if(multiplayerMode)
+        {
+            GameObject.Find("Vehicle Set").SetActive(false);
+        }
+    }
+
     void Update()
     {
-        if (Input.GetKey(KeyCode.Joystick2Button7))
-            LoadSceneManager.LoadScene("Building Scene Multiplayer");
+        if (Input.GetKey(KeyCode.Joystick1Button7) || Input.GetKey(KeyCode.Joystick2Button7) || Input.GetKey(KeyCode.Joystick3Button7))
+        {
+            SceneManager.LoadScene("Building Scene Multiplayer");
+        }
     }
 }
