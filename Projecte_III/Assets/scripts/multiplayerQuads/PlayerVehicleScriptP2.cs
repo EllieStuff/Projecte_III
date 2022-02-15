@@ -35,6 +35,7 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
     public bool vehicleReversed;
     public float minDriftSpeed;
     public Vector3 respawnPosition, respawnRotation, respawnVelocity;
+    private float savedAcceleration;
     public float boostPadMultiplier;
     private float chasisElevationTimer;
     [SerializeField] private bool chasisElevation;
@@ -75,7 +76,7 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
         respawnPosition = new Vector3(0, 0, 0);
         respawnRotation = new Vector3(0, 0, 0);
         respawnVelocity = new Vector3(0, 0, 0);
-
+        savedAcceleration = vehicleAcceleration;
         buildingScene = SceneManager.GetActiveScene().name == "Building Scene";
     }
 
@@ -289,6 +290,7 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
         {
             reduceSpeed = false;
             vehicleMaxSpeed = savedMaxSpeed;
+            vehicleAcceleration = savedAcceleration;
         }
 
         //VEHICLE SOUND PITCH SYSTEM
@@ -515,6 +517,7 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
             float angle = Vector3.Angle(this.transform.forward, other.transform.forward);
             angle *= Mathf.Deg2Rad;
             angle = Mathf.Cos(angle);
+            vehicleAcceleration = 2;
             vehicleMaxSpeed = boostPadMultiplier * angle;
             if (vehicleMaxSpeed < savedMaxSpeed)
                 vehicleMaxSpeed = savedMaxSpeed;

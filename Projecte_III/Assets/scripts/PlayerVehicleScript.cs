@@ -43,6 +43,7 @@ public class PlayerVehicleScript : MonoBehaviour
     internal bool buildingScene;
     internal List<string> listOfModifiers;
     bool hasFloater = false;
+    private float savedAcceleration;
 
     // Start is called before the first frame update
     void Start()
@@ -69,7 +70,7 @@ public class PlayerVehicleScript : MonoBehaviour
         respawnPosition = new Vector3(0, 0, 0);
         respawnRotation = new Vector3(0, 0, 0);
         respawnVelocity = new Vector3(0, 0, 0);
-
+        savedAcceleration = vehicleAcceleration;
         buildingScene = SceneManager.GetActiveScene().name == "Building Scene";
     }
 
@@ -289,6 +290,7 @@ public class PlayerVehicleScript : MonoBehaviour
         {
             reduceSpeed = false;
             vehicleMaxSpeed = savedMaxSpeed;
+            vehicleAcceleration = savedAcceleration;
         }
 
         //VEHICLE SOUND PITCH SYSTEM
@@ -515,6 +517,7 @@ public class PlayerVehicleScript : MonoBehaviour
             float angle = Vector3.Angle(this.transform.forward, other.transform.forward);
             angle *= Mathf.Deg2Rad;
             angle = Mathf.Cos(angle);
+            vehicleAcceleration = 2;
             vehicleMaxSpeed = boostPadMultiplier * angle;
             if (vehicleMaxSpeed < savedMaxSpeed)
                 vehicleMaxSpeed = savedMaxSpeed;

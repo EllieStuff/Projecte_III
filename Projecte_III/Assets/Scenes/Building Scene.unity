@@ -4650,6 +4650,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68bb1eff5a8bf664592e0e89e1e667d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  multiplayerMode: 0
 --- !u!4 &1190803792
 Transform:
   m_ObjectHideFlags: 0
@@ -7412,12 +7413,24 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 38654283868662907, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+      propertyPath: vehicleTorque
+      value: 18000
+      objectReference: {fileID: 0}
+    - target: {fileID: 38654283868662907, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+      propertyPath: vehicleMaxSpeed
+      value: 14.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 38654283868662907, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: alaDeltaDuration
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 38654283868662907, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: boostPadMultiplier
       value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 38654283868662907, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+      propertyPath: vehicleAcceleration
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 38654284546717500, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: m_Layer
