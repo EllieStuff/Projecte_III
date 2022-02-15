@@ -532,7 +532,8 @@ public class PlayerVehicleScript : MonoBehaviour
     {
         if (other.tag.Equals("Water") && !hasFloater)
         {
-            vehicleMaxSpeed = savedMaxSpeed / 3;
+            //vehicleMaxSpeed = savedMaxSpeed / 3;
+            StartCoroutine(LerpVehicleMaxSpeed(savedMaxSpeed / 3, 3.0f));
         }
     }
     private void OnTriggerExit(Collider other)
@@ -543,7 +544,8 @@ public class PlayerVehicleScript : MonoBehaviour
 
         if(other.tag.Equals("Water") && !hasFloater)
         {
-            vehicleMaxSpeed = savedMaxSpeed;
+            //vehicleMaxSpeed = savedMaxSpeed;
+            StartCoroutine(LerpVehicleMaxSpeed(savedMaxSpeed, 1.5f));
         }
 
     }
@@ -552,6 +554,20 @@ public class PlayerVehicleScript : MonoBehaviour
     {
         vehicleReversed = false;
         timerReversed = 0;
+    }
+
+    IEnumerator LerpVehicleMaxSpeed(float _targetValue, float _lerpTime)
+    {
+        float lerpTimer = 0;
+        while (vehicleMaxSpeed != _targetValue)
+        {
+            yield return new WaitForEndOfFrame();
+            lerpTimer += Time.deltaTime;
+            vehicleMaxSpeed = Mathf.Lerp(vehicleMaxSpeed, _targetValue, lerpTimer / _lerpTime);
+
+            //Debug.Log("In Coroutine: Curr->" + vehicleMaxSpeed + ". Target->" + _targetValue);
+        }
+
     }
 
 }
