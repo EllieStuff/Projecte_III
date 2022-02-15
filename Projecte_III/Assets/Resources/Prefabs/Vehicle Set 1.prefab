@@ -43,7 +43,7 @@ WheelCollider:
   m_Radius: 0.25
   m_SuspensionSpring:
     spring: 1
-    damper: 2
+    damper: 20
     targetPosition: 0.5
   m_SuspensionDistance: 0.3
   m_ForceAppPointDistance: 0
@@ -113,7 +113,7 @@ WheelCollider:
   m_Radius: 0.25
   m_SuspensionSpring:
     spring: 1
-    damper: 2
+    damper: 20
     targetPosition: 0.5
   m_SuspensionDistance: 0.3
   m_ForceAppPointDistance: 0
@@ -182,7 +182,7 @@ WheelCollider:
   m_Radius: 0.3
   m_SuspensionSpring:
     spring: 1
-    damper: 2
+    damper: 20
     targetPosition: 0.5
   m_SuspensionDistance: 0.3
   m_ForceAppPointDistance: 0
@@ -244,7 +244,7 @@ WheelCollider:
   m_Radius: 0.3
   m_SuspensionSpring:
     spring: 1
-    damper: 2
+    damper: 20
     targetPosition: 0.5
   m_SuspensionDistance: 0.3
   m_ForceAppPointDistance: 0
@@ -337,6 +337,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d1c02ba319a6e444b52b0e19ad5bec3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerNum: 0
   centerOfMass: {x: 0, y: -0.7, z: 0}
   boostPadDuration: 0
   alaDeltaDuration: 0
