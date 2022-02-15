@@ -7,10 +7,16 @@ using UnityEngine.EventSystems;
 public class WheelButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private GameObject wheelsModel;
-    [SerializeField] private GameObject wheelSpot;
+    [SerializeField] private GameObject wheelSpot = null;
     [SerializeField] private GameObject currentWheel;
 
     private bool placed = false;
+
+    private void Update()
+    {
+        if (wheelSpot == null)
+            wheelSpot = GameObject.FindGameObjectWithTag("VehicleSet").transform.GetChild(1).gameObject;
+    }
 
     public void OnPointerEnter(PointerEventData data)
     {

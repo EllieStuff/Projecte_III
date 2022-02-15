@@ -13,8 +13,11 @@ public class QuadSceneManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         playerScript = GetComponentInChildren<PlayerVehicleScript>();
-
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        GameObject[] objs = GameObject.FindGameObjectsWithTag("VehicleSet");
+        if (objs.Length < 2)
+        {
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -68,6 +71,8 @@ public class QuadSceneManager : MonoBehaviour
         else if (scene.name != "Menu")
         {
             Transform initial = GameObject.FindGameObjectWithTag("InitPos").transform;
+
+            Debug.Log(initial.localPosition);
 
             gameObject.transform.localPosition = initial.localPosition;
             gameObject.transform.localRotation = initial.localRotation;
