@@ -25,6 +25,7 @@ public class PlayerVehicleScript : MonoBehaviour
     public float vehicleAcceleration;
     public float vehicleTorque;
     public float vehicleMaxSpeed;
+    private float oldVehicleAcceleration;
     public float vehicleMaxTorque;
     public WheelCollider[] wheelCollider;
     public GameObject wheels;
@@ -68,7 +69,7 @@ public class PlayerVehicleScript : MonoBehaviour
         respawnPosition = new Vector3(0, 0, 0);
         respawnRotation = new Vector3(0, 0, 0);
         respawnVelocity = new Vector3(0, 0, 0);
-
+        oldVehicleAcceleration = vehicleAcceleration;
         buildingScene = SceneManager.GetActiveScene().name == "Building Scene";
     }
 
@@ -281,6 +282,7 @@ public class PlayerVehicleScript : MonoBehaviour
         {
             reduceSpeed = false;
             vehicleMaxSpeed = savedMaxSpeed;
+            vehicleAcceleration = oldVehicleAcceleration;
         }
 
         //VEHICLE SOUND PITCH SYSTEM
@@ -338,9 +340,9 @@ public class PlayerVehicleScript : MonoBehaviour
 
             float vMagnitude = vehicleRB.velocity.magnitude;
             float torqueAdded = 0;
-            if (vMagnitude < 1.0f) torqueAdded = vehicleTorque * 100 * value;
-            else if (vMagnitude < 12.0f) torqueAdded = vehicleTorque * 20 * value;
-            else if (vMagnitude < 14.0f) torqueAdded = vehicleTorque * 10 * value;
+            if (vMagnitude < 1.0f) torqueAdded = vehicleTorque * value;
+            else if (vMagnitude < 12.0f) torqueAdded = vehicleTorque * value;
+            else if (vMagnitude < 14.0f) torqueAdded = vehicleTorque * value;
             else torqueAdded = vehicleTorque * 5 * value;
 
             vehicleRB.AddTorque(new Vector3(0, torqueAdded, 0));
@@ -513,6 +515,7 @@ public class PlayerVehicleScript : MonoBehaviour
             angle *= Mathf.Deg2Rad;
             angle = Mathf.Cos(angle);
             vehicleMaxSpeed = boostPadMultiplier * angle;
+            vehicleAcceleration = 2;
             if (vehicleMaxSpeed < savedMaxSpeed)
                 vehicleMaxSpeed = savedMaxSpeed;
         }
