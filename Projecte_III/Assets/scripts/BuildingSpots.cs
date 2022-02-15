@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class BuildingSpots : MonoBehaviour
 {
@@ -10,7 +11,12 @@ public class BuildingSpots : MonoBehaviour
 
     [SerializeField] private LayerMask layerMask;
 
+    public Camera playerCamP1;
+    public Camera playerCamP2;
+
     QuadControls controls;
+
+   [SerializeField] private bool multiplayerMode;
 
     private void Awake()
     {
@@ -31,6 +37,14 @@ public class BuildingSpots : MonoBehaviour
 
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
 
+        if(multiplayerMode && SceneManager.GetActiveScene().name.Equals("Building Scene Multiplayer"))
+        {
+            if(Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue()).GetPoint(0).x < 0)
+                ray = playerCamP1.GetComponent<Camera>().ScreenPointToRay(Mouse.current.position.ReadValue() + new Vector2(500, 0));
+            else if (Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue()).GetPoint(0).x >= 0)
+                ray = playerCamP2.GetComponent<Camera>().ScreenPointToRay(Mouse.current.position.ReadValue() - new Vector2(500, 0));
+        }
+
         if (Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, layerMask))
         {
             
@@ -40,6 +54,7 @@ public class BuildingSpots : MonoBehaviour
                 transform.position = raycastHit.transform.position;
                 transform.localScale = raycastHit.transform.lossyScale;
                 transform.rotation = raycastHit.transform.rotation;
+
 
                 if (controls.ConstructionMenu.ConstructModifier.ReadValue<float>() > 0 && raycastHit.transform.childCount == 0)    //Instantiate Object
                 {

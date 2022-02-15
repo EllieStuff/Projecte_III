@@ -7,13 +7,15 @@ public class QuadSceneManager : MonoBehaviour
 {
     PlayerVehicleScript playerScript;
 
+    public bool multiplayerMode;
+
     private static QuadSceneManager quadSMInstance = null;
 
     public static QuadSceneManager Instance { get { return quadSMInstance; } }
 
     private void Awake()
     {
-        if (Instance != null && Instance != this)
+        if (Instance != null && Instance != this && !multiplayerMode)
         {
             Destroy(gameObject);
             return;
@@ -30,7 +32,7 @@ public class QuadSceneManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "Building Scene")
+        if (scene.name.Contains("Building Scene"))
         {
             playerScript.buildingScene = true;
         }

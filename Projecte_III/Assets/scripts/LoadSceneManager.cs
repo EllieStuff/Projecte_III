@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,5 +19,10 @@ public class LoadSceneManager : MonoBehaviour
         {
             SceneManager.LoadScene(_newScene);
         }
+    }
+
+    internal static void LoadScene(string v)
+    {
+        throw new NotImplementedException();
     }
 }
