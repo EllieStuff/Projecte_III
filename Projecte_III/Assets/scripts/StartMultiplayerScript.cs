@@ -7,14 +7,6 @@ public class StartMultiplayerScript : MonoBehaviour
 {
     [SerializeField] private bool multiplayerMode;
 
-    private void Start()
-    {
-        if(multiplayerMode)
-        {
-            GameObject.Find("Vehicle Set").SetActive(false);
-        }
-    }
-
     void Update()
     {
         if (Input.GetKey(KeyCode.Joystick1Button7) || Input.GetKey(KeyCode.Joystick2Button7) || Input.GetKey(KeyCode.Joystick3Button7))
