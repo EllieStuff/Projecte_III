@@ -97,33 +97,42 @@ public class PlayerVehicleScript : MonoBehaviour
             Quaternion wheelRotation;
             for (int i = 0; i < wheelCollider.Length; i++)
             {
-                wheelCollider[i].GetWorldPose(out wheelPosition, out wheelRotation);
-                if (wheelCollider[i].GetGroundHit(out var touchingGroundV))
+                try
                 {
-                    touchingGround = true;
-                }
-                wheelModels[i].transform.position = wheelPosition;
+                    wheelCollider[i].GetWorldPose(out wheelPosition, out wheelRotation);
+                    if (wheelCollider[i].GetGroundHit(out var touchingGroundV))
+                    {
+                        touchingGround = true;
+                    }
+                    wheelModels[i].transform.position = wheelPosition;
 
-                if (i > 1)
-                    wheelModels[i].transform.rotation = wheelRotation;
-                else if (controls.Quad.Right == 1 || controls.Quad.Left == 1)
-                {
-                    wheelModels[i].transform.localRotation = new Quaternion(0, (controls.Quad.Right / 5) - (controls.Quad.Left / 5), 0, 1);
-                    Debug.Log(wheelModels[i].transform.localRotation);
-                }
-                else
-                    wheelModels[i].transform.rotation = wheelRotation;
+                    if (i > 1)
+                        wheelModels[i].transform.rotation = wheelRotation;
+                    else if (controls.Quad.Right == 1 || controls.Quad.Left == 1)
+                    {
+                        wheelModels[i].transform.localRotation = new Quaternion(0, (controls.Quad.Right / 5) - (controls.Quad.Left / 5), 0, 1);
+                    }
+                    else
+                        wheelModels[i].transform.rotation = wheelRotation;
 
-                wheels.transform.localPosition = transform.localPosition;
-                wheels.transform.localRotation = transform.localRotation;
-                //FALLDEATH CHECK
-                if(!alaDelta)
-                    checkFallDeath();
-                //RESETTING ALADELTA VARIABLES
-                if(alaDeltaTimer <= alaDeltaDuration - 0.8f)
+                    wheels.transform.localPosition = transform.localPosition;
+                    wheels.transform.localRotation = transform.localRotation;
+                    //FALLDEATH CHECK
+                    if (!alaDelta)
+                        checkFallDeath();
+                    //RESETTING ALADELTA VARIABLES
+                    if (alaDeltaTimer <= alaDeltaDuration - 0.8f)
+                    {
+                        alaDeltaTimer = alaDeltaDuration;
+                        alaDelta = false;
+                    }
+                }
+                catch(Exception)
                 {
-                    alaDeltaTimer = alaDeltaDuration;
-                    alaDelta = false;
+                    wheelModels[0] = wheels.transform.GetChild(2).gameObject;
+                    wheelModels[1] = wheels.transform.GetChild(0).gameObject;
+                    wheelModels[2] = wheels.transform.GetChild(3).gameObject;
+                    wheelModels[3] = wheels.transform.GetChild(1).gameObject;
                 }
             }
         }
