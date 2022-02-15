@@ -23,6 +23,8 @@ public class PlayerVehicleScript : MonoBehaviour
 
     QuadControlSystem controls;
 
+    public GameObject[] wheelModels;
+
     public Rigidbody vehicleRB;
     public float vehicleAcceleration;
     public float vehicleTorque;
@@ -91,12 +93,17 @@ public class PlayerVehicleScript : MonoBehaviour
 
         if(!buildingScene)
         {
+            Vector3 wheelPosition;
+            Quaternion wheelRotation;
             for (int i = 0; i < wheelCollider.Length; i++)
             {
+                wheelCollider[i].GetWorldPose(out wheelPosition, out wheelRotation);
                 if (wheelCollider[i].GetGroundHit(out var touchingGroundV))
                 {
                     touchingGround = true;
                 }
+                wheelModels[i].transform.position = wheelPosition;
+                wheelModels[i].transform.rotation = wheelRotation;
                 wheels.transform.localPosition = transform.localPosition;
                 wheels.transform.localRotation = transform.localRotation;
                 //FALLDEATH CHECK
