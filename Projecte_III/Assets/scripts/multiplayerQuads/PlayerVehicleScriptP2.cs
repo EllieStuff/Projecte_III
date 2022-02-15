@@ -109,7 +109,16 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
                     touchingGround = true;
                 }
                 wheelModels[i].transform.position = wheelPosition;
-                wheelModels[i].transform.rotation = wheelRotation;
+
+                if (i > 1)
+                    wheelModels[i].transform.rotation = wheelRotation;
+                else if (controls.QuadP2.Right == 1 || controls.QuadP2.Left == 1)
+                {
+                    wheelModels[i].transform.localRotation = new Quaternion(0, (controls.QuadP2.Right / 5) - (controls.QuadP2.Left / 5), 0, 1);
+                }
+                else
+                    wheelModels[i].transform.rotation = wheelRotation;
+
                 wheels.transform.localPosition = transform.localPosition;
                 wheels.transform.localRotation = transform.localRotation;
                 //FALLDEATH CHECK

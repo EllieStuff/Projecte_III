@@ -103,7 +103,17 @@ public class PlayerVehicleScript : MonoBehaviour
                     touchingGround = true;
                 }
                 wheelModels[i].transform.position = wheelPosition;
-                wheelModels[i].transform.rotation = wheelRotation;
+
+                if (i > 1)
+                    wheelModels[i].transform.rotation = wheelRotation;
+                else if (controls.Quad.Right == 1 || controls.Quad.Left == 1)
+                {
+                    wheelModels[i].transform.localRotation = new Quaternion(0, (controls.Quad.Right / 5) - (controls.Quad.Left / 5), 0, 1);
+                    Debug.Log(wheelModels[i].transform.localRotation);
+                }
+                else
+                    wheelModels[i].transform.rotation = wheelRotation;
+
                 wheels.transform.localPosition = transform.localPosition;
                 wheels.transform.localRotation = transform.localRotation;
                 //FALLDEATH CHECK
