@@ -44,7 +44,6 @@ public class DeathfallAndCheckpointsSystem : MonoBehaviour
             vehicleScript.respawnPosition = transform.position;
             vehicleScript.respawnRotation = transform.localEulerAngles;
             vehicleScript.respawnVelocity = Vector3.zero;
-            //Debug.Log(chasis.GetComponentInParent<PlayerVehicleScript>().respawnPosition);
         }
         if (gameObject.tag.Equals("Death Zone") && chasis == other.gameObject)
         {
@@ -57,10 +56,6 @@ public class DeathfallAndCheckpointsSystem : MonoBehaviour
             other.GetComponentInParent<PlayerVehicleScript>().vehicleRB.constraints = RigidbodyConstraints.FreezePositionZ;
             other.GetComponentInParent<Transform>().parent.localEulerAngles = vehicleScript.respawnRotation;
             other.GetComponentInParent<Transform>().parent.localEulerAngles += new Vector3(0, 90, 0);
-
-            
-            
-            //Debug.Log(other.GetComponentInParent<Transform>().parent.position);
         }
         //____________________________________________________________________________________________________________________________
 

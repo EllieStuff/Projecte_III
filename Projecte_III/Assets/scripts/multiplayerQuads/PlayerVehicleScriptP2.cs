@@ -47,9 +47,12 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
     internal List<string> listOfModifiers;
     bool hasFloater = false;
 
+    [SerializeField] private GameObject wheelsPivot;
+
     // Start is called before the first frame update
     void Start()
     {
+        wheelsPivot = transform.GetChild(1).gameObject;
         alaDeltaDuration = 1;
         alaDeltaTimer = 1;
         controls = new QuadControlSystem();
@@ -97,53 +100,42 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
 
         //HERE WE SET THE POSITION AND ROTATION FROM THE WHEELS RENDERERS
 
-        if(!buildingScene)
+        if (!buildingScene)
         {
             Vector3 wheelPosition;
             Quaternion wheelRotation;
-            for (int i = 0; i < wheelCollider.Length; i++)
+            for (int i = 0; i < wheelsPivot.transform.childCount; i++)
             {
-                try
+                Transform wheel = wheels.transform.GetChild(i);
+                WheelCollider wheelCol = wheelsPivot.transform.GetChild(i).GetComponent<WheelCollider>();
+                wheelCol.GetWorldPose(out wheelPosition, out wheelRotation);
+                if (wheelCol.GetGroundHit(out var touchingGroundV))
                 {
-                    wheelCollider[i].GetWorldPose(out wheelPosition, out wheelRotation);
-                    if (wheelCollider[i].GetGroundHit(out var touchingGroundV))
-                    {
-                        touchingGround = true;
-                    }
-                    wheelModels[i].transform.position = wheelPosition;
-
-                    if (i > 1)
-                        wheelModels[i].transform.rotation = wheelRotation;
-                    else if (controls.QuadP2.Right == 1 || controls.QuadP2.Left == 1)
-                    {
-                        wheelModels[i].transform.localRotation = new Quaternion(0, (controls.QuadP2.Right / 5) - (controls.QuadP2.Left / 5), 0, 1);
-                    }
-                    else
-                        wheelModels[i].transform.rotation = wheelRotation;
-
-                    wheels.transform.localPosition = transform.localPosition;
-                    wheels.transform.localRotation = transform.localRotation;
-                    //FALLDEATH CHECK
-                    if(!alaDelta)
-                        checkFallDeath();
-                    //RESETTING ALADELTA VARIABLES
-                    if(alaDeltaTimer <= alaDeltaDuration - 0.8f)
-                    {
-                        alaDeltaTimer = alaDeltaDuration;
-                        alaDelta = false;
-                    }
+                    touchingGround = true;
                 }
-                catch (Exception)
+
+                wheel.transform.position = wheelPosition;
+
+                if (wheel.tag.Equals("front") && (controls.QuadP2.Right == 1 || controls.QuadP2.Left == 1))
+                    wheel.transform.localRotation = new Quaternion(0, (controls.QuadP2.Right / 5) - (controls.QuadP2.Left / 5), 0, 1);
+                else
+                    wheel.transform.rotation = wheelRotation;
+
+                wheels.transform.localPosition = transform.localPosition;
+                wheels.transform.localRotation = transform.localRotation;
+                //FALLDEATH CHECK
+                if (!alaDelta)
+                    checkFallDeath();
+                //RESETTING ALADELTA VARIABLES
+                if (alaDeltaTimer <= alaDeltaDuration - 0.8f)
                 {
-                    wheelModels[0] = wheels.transform.GetChild(2).gameObject;
-                    wheelModels[1] = wheels.transform.GetChild(0).gameObject;
-                    wheelModels[2] = wheels.transform.GetChild(3).gameObject;
-                    wheelModels[3] = wheels.transform.GetChild(1).gameObject;
+                    alaDeltaTimer = alaDeltaDuration;
+                    alaDelta = false;
                 }
             }
         }
 
-        if(touchingGround && vehicleRB.constraints != RigidbodyConstraints.None)
+        if (touchingGround && vehicleRB.constraints != RigidbodyConstraints.None)
 
         {
 

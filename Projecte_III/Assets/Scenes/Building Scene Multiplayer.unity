@@ -874,11 +874,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 140982360}
   m_CullTransparentMesh: 1
---- !u!1 &162934369 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4858116589921803699, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
-  m_PrefabInstance: {fileID: 247332502}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &220186448
 GameObject:
   m_ObjectHideFlags: 0
@@ -1310,6 +1305,18 @@ PrefabInstance:
       propertyPath: boostPadMultiplier
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 38654283868662909, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 38654283868662909, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 38654283868662909, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
     - target: {fileID: 38654284546717500, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: m_Layer
       value: 7
@@ -1452,10 +1459,10 @@ MonoBehaviour:
   alaDeltaTimer: 0
   driftTorqueInc: 3
   wheelModels:
-  - {fileID: 295982358}
-  - {fileID: 341237917}
-  - {fileID: 162934369}
-  - {fileID: 279119751}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   vehicleRB: {fileID: 247332509}
   vehicleAcceleration: 0.4
   vehicleTorque: 18000
@@ -1476,6 +1483,7 @@ MonoBehaviour:
   respawnVelocity: {x: 0, y: 0, z: 0}
   boostPadMultiplier: 30
   chasisElevation: 0
+  wheelsPivot: {fileID: 0}
 --- !u!146 &247332505 stripped
 WheelCollider:
   m_CorrespondingSourceObject: {fileID: 38654283663855623, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
@@ -1499,16 +1507,6 @@ WheelCollider:
 --- !u!54 &247332509 stripped
 Rigidbody:
   m_CorrespondingSourceObject: {fileID: 38654283868662908, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
-  m_PrefabInstance: {fileID: 247332502}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &279119751 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4858116589921803711, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
-  m_PrefabInstance: {fileID: 247332502}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &295982358 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4858116589921803697, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
   m_PrefabInstance: {fileID: 247332502}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &319086040
@@ -1703,11 +1701,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &341237917 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4858116589921803709, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
-  m_PrefabInstance: {fileID: 247332502}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &371426908
 GameObject:
   m_ObjectHideFlags: 0
