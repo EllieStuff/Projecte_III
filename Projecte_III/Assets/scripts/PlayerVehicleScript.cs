@@ -41,10 +41,16 @@ public class PlayerVehicleScript : MonoBehaviour
 
     [SerializeField] private GameObject wheelsPivot;
 
+    private bool desatascador;
+    private float desatascadorCooldown;
+
     internal bool buildingScene;
     internal List<string> listOfModifiers;
     bool hasFloater = false;
     private float savedAcceleration;
+    [SerializeField] private int desatascadorBaseCooldown = 20;
+    [SerializeField] private GameObject desatascadorPrefab;
+    private GameObject desatascadorInstance;
 
     // Start is called before the first frame update
     void Start()
@@ -144,6 +150,33 @@ public class PlayerVehicleScript : MonoBehaviour
             hasFloater = !hasFloater;
         }
 
+    }
+
+    public void Desatascador()
+    {
+        if(controls.Quad.Drift > 0 && !desatascador && desatascadorCooldown <= 0 && desatascadorInstance == null)
+        {
+            desatascadorInstance = Instantiate(desatascadorPrefab, this.transform.position, this.transform.rotation);
+            Physics.IgnoreCollision(desatascadorInstance.transform.GetChild(0).GetComponent<BoxCollider>(), transform.GetChild(0).GetComponent<BoxCollider>());
+            desatascador = true;
+            desatascadorCooldown = desatascadorBaseCooldown;
+        }
+
+        if (desatascadorCooldown > 0)
+            desatascadorCooldown -= Time.deltaTime;
+
+        if(desatascador)
+        {
+            if(desatascadorCooldown <= desatascadorBaseCooldown/ 2 && desatascadorInstance != null)
+            {
+                Destroy(desatascadorInstance);
+                desatascador = false;
+            }
+            else
+            {
+                
+            }
+        }
     }
 
     public void HideVoidModifier()
@@ -278,6 +311,9 @@ public class PlayerVehicleScript : MonoBehaviour
 
             //CHASIS ELEVATION FUNCTION
             ChasisElevationFunction();
+
+            //PLUNGER FUNCTION
+            Desatascador();
 
 
             savedVelocity = vehicleRB.velocity;
