@@ -12,7 +12,7 @@ public class PaintMesh : MonoBehaviour
     public Quality quality;
     public bool collideWithWalls = true;
     public GameObject avatar;
-    public GameObject[] hitPoints;
+    public Transform[] hitPoints;
 
     Mesh mesh;
     Vector3 origin = Vector3.zero;
@@ -49,6 +49,7 @@ public class PaintMesh : MonoBehaviour
         Debug.DrawRay(transform.position, origin);
         Debug.Log("Pos: " + transform.position);
         Debug.Log("Origin: " + origin);
+        InitPainting();
     }
 
     public void InitPainting()
@@ -57,19 +58,20 @@ public class PaintMesh : MonoBehaviour
         if (Physics.Raycast(transform.position, -transform.up, out hitHeight, Mathf.Infinity))
         {
             origin = hitHeight.point;
+            origin.y -= 0;
             float maxLength = Vector3.Distance(transform.position, origin) * 2;
-            Debug.Log("1 ray");
+            //Debug.Log("1 ray");
 
             vertices[0] = origin;
             int vertexIndex = 1;
             int trianglesIndex = 0;
-            for (int i = 0; i <= rayCount; i++)
+            for (int i = 0; i < hitPoints.Length; i++)
             {
-                Debug.Log("2 ray: " + i);
-                Vector3 tmpVertex = origin + Utils.Vectors.GetVectorFromAngle(angle) * viewDist;
+                //Debug.Log("2 ray: " + i);
+                //Vector3 tmpVertex = origin + Utils.Vectors.GetVectorFromAngle(angle) * viewDist;
 
                 RaycastHit hit;
-                if(Physics.Raycast(transform.position, tmpVertex, out hit, 10000))
+                if (Physics.Raycast(transform.position, hitPoints[i].position, out hit, 10000))
                 {
                     vertices[vertexIndex] = hit.point;
                 }
@@ -97,6 +99,15 @@ public class PaintMesh : MonoBehaviour
                 angle -= angleIncrease;
 
             }
+
+            triangles[trianglesIndex] = 0;
+            triangles[trianglesIndex + 1] = vertexIndex - 1;
+            triangles[trianglesIndex + 2] = vertexIndex;
+
+            trianglesIndex += 3;
+
+            vertexIndex++;
+            angle -= angleIncrease;
 
 
             /////
