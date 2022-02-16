@@ -8,6 +8,7 @@ public class plungerInstance : MonoBehaviour
     [SerializeField] private float plungerVelocity;
     [SerializeField] private float plungerSpeedLerp;
     private bool plungerHit;
+    public GameObject playerShotPlunger;
     Quaternion startRot;
     Quaternion endQuad;
 
@@ -19,13 +20,15 @@ public class plungerInstance : MonoBehaviour
 
     private void Update()
     {
+        GetComponent<LineRenderer>().SetPosition(0, this.transform.position);
+        GetComponent<LineRenderer>().SetPosition(1, playerShotPlunger.transform.position);
+
         if(plungerHit)
         {
             body.velocity = Vector3.zero;
             body.angularVelocity = Vector3.zero;
             transform.rotation = Quaternion.Lerp(transform.rotation, endQuad, Time.deltaTime * plungerSpeedLerp);
             transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(0, 180, 0), Time.deltaTime * plungerSpeedLerp);
-
         }
         else
             this.transform.rotation = startRot;

@@ -158,6 +158,7 @@ public class PlayerVehicleScript : MonoBehaviour
         {
             desatascadorInstance = Instantiate(desatascadorPrefab, this.transform.position, this.transform.rotation);
             Physics.IgnoreCollision(desatascadorInstance.transform.GetChild(0).GetComponent<BoxCollider>(), transform.GetChild(0).GetComponent<BoxCollider>());
+            desatascadorInstance.GetComponent<plungerInstance>().playerShotPlunger = this.gameObject;
             desatascador = true;
             desatascadorCooldown = desatascadorBaseCooldown;
         }
