@@ -1305,6 +1305,10 @@ PrefabInstance:
       propertyPath: boostPadMultiplier
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 38654283868662907, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+      propertyPath: desatascadorPrefab
+      value: 
+      objectReference: {fileID: 5119215797378497723, guid: b174012fb8007ab43a6bf4d2e5b25a5c, type: 3}
     - target: {fileID: 38654283868662909, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0
@@ -1452,27 +1456,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e987f073683b8c643acd2e8a6afdf1e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerNum: 0
+  playerNum: 2
   centerOfMass: {x: 0, y: -0.7, z: 0}
   boostPadDuration: 0
   alaDeltaDuration: 0
   alaDeltaTimer: 0
   driftTorqueInc: 3
-  wheelModels:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   vehicleRB: {fileID: 247332509}
   vehicleAcceleration: 0.4
   vehicleTorque: 18000
   vehicleMaxSpeed: 14.55
   vehicleMaxTorque: 1
-  wheelCollider:
-  - {fileID: 247332508}
-  - {fileID: 247332507}
-  - {fileID: 247332506}
-  - {fileID: 247332505}
   wheels: {fileID: 0}
   lifeVehicle: 100
   touchingGround: 1
@@ -1484,26 +1478,8 @@ MonoBehaviour:
   boostPadMultiplier: 30
   chasisElevation: 0
   wheelsPivot: {fileID: 0}
---- !u!146 &247332505 stripped
-WheelCollider:
-  m_CorrespondingSourceObject: {fileID: 38654283663855623, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
-  m_PrefabInstance: {fileID: 247332502}
-  m_PrefabAsset: {fileID: 0}
---- !u!146 &247332506 stripped
-WheelCollider:
-  m_CorrespondingSourceObject: {fileID: 38654283335074433, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
-  m_PrefabInstance: {fileID: 247332502}
-  m_PrefabAsset: {fileID: 0}
---- !u!146 &247332507 stripped
-WheelCollider:
-  m_CorrespondingSourceObject: {fileID: 38654282782597988, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
-  m_PrefabInstance: {fileID: 247332502}
-  m_PrefabAsset: {fileID: 0}
---- !u!146 &247332508 stripped
-WheelCollider:
-  m_CorrespondingSourceObject: {fileID: 38654283041918288, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
-  m_PrefabInstance: {fileID: 247332502}
-  m_PrefabAsset: {fileID: 0}
+  desatascadorBaseCooldown: 20
+  desatascadorPrefab: {fileID: 5119215797378497723, guid: b174012fb8007ab43a6bf4d2e5b25a5c, type: 3}
 --- !u!54 &247332509 stripped
 Rigidbody:
   m_CorrespondingSourceObject: {fileID: 38654283868662908, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}

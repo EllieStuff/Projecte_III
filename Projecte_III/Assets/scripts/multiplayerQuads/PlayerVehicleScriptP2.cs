@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerVehicleScriptP2 : MonoBehaviour
 {
-    [SerializeField] int playerNum;
+    [SerializeField] private int playerNum;
 
     [SerializeField] Vector3 centerOfMass = new Vector3(0.0f, -0.7f, 0.0f);
     [SerializeField] float boostPadDuration;
@@ -23,31 +23,34 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
 
     QuadControlSystem controls;
 
-    public GameObject[] wheelModels;
-
     public Rigidbody vehicleRB;
     public float vehicleAcceleration;
     public float vehicleTorque;
     public float vehicleMaxSpeed;
     public float vehicleMaxTorque;
-    public WheelCollider[] wheelCollider;
     public GameObject wheels;
     public int lifeVehicle;
     public bool touchingGround;
     public bool vehicleReversed;
     public float minDriftSpeed;
     public Vector3 respawnPosition, respawnRotation, respawnVelocity;
-    private float savedAcceleration;
     public float boostPadMultiplier;
     private float chasisElevationTimer;
     [SerializeField] private bool chasisElevation;
     private bool alaDelta;
 
+    [SerializeField] private GameObject wheelsPivot;
+
+    private bool desatascador;
+    private float desatascadorCooldown;
+
     internal bool buildingScene;
     internal List<string> listOfModifiers;
     bool hasFloater = false;
-
-    [SerializeField] private GameObject wheelsPivot;
+    private float savedAcceleration;
+    [SerializeField] private int desatascadorBaseCooldown = 20;
+    [SerializeField] private GameObject desatascadorPrefab;
+    private GameObject desatascadorInstance;
 
     // Start is called before the first frame update
     void Start()
@@ -69,14 +72,8 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
         wheels = transform.parent.GetChild(1).GetChild(0).gameObject;
     }
 
-    private void OnEnable()
-    {
-        GameObject.Find("camPivotP2").GetComponent<CameraScript>().playerVehicle = this.gameObject;
-    }
-
     private void Awake()
     {
-        playerNum = 2;
         this.transform.name = "Player";
         respawnPosition = new Vector3(0, 0, 0);
         respawnRotation = new Vector3(0, 0, 0);
@@ -117,7 +114,7 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
                 wheel.transform.position = wheelPosition;
 
                 if (wheel.tag.Equals("front") && (controls.QuadP2.Right == 1 || controls.QuadP2.Left == 1))
-                    wheel.transform.localRotation = new Quaternion(0, (controls.QuadP2.Right / 5) - (controls.QuadP2.Left / 5), 0, 1);
+                    wheel.transform.localRotation = Quaternion.Lerp(wheel.transform.localRotation, new Quaternion(0, (controls.QuadP2.Right / 5) - (controls.QuadP2.Left / 5), 0, 1), Time.deltaTime * 3);
                 else
                     wheel.transform.rotation = wheelRotation;
 
@@ -153,6 +150,42 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
             hasFloater = !hasFloater;
         }
 
+    }
+
+    public void Desatascador()
+    {
+        if (controls.QuadP2.Drift > 0 && !desatascador && desatascadorCooldown <= 0 && desatascadorInstance == null)
+        {
+            desatascadorInstance = Instantiate(desatascadorPrefab, this.transform.position, this.transform.rotation);
+            Physics.IgnoreCollision(desatascadorInstance.transform.GetChild(0).GetComponent<BoxCollider>(), transform.GetChild(0).GetComponent<BoxCollider>());
+            desatascadorInstance.GetComponent<plungerInstance>().playerShotPlunger = this.gameObject;
+            desatascadorInstance.GetComponent<plungerInstance>().playerNum = playerNum;
+            desatascador = true;
+            desatascadorCooldown = desatascadorBaseCooldown;
+        }
+
+        if (desatascadorCooldown > 0)
+            desatascadorCooldown -= Time.deltaTime;
+
+        if (desatascador)
+        {
+            if (desatascadorCooldown <= desatascadorBaseCooldown / 2 && desatascadorInstance != null)
+            {
+                vehicleMaxSpeed = savedMaxSpeed;
+                Destroy(desatascadorInstance);
+                desatascador = false;
+            }
+            else if (desatascadorInstance == null)
+            {
+                vehicleMaxSpeed = savedMaxSpeed;
+                desatascador = false;
+                desatascadorCooldown = 0;
+            }
+            if (vehicleMaxSpeed > savedMaxSpeed)
+            {
+                vehicleMaxSpeed -= 0.5f;
+            }
+        }
     }
 
     public void HideVoidModifier()
@@ -205,7 +238,7 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
         {
             //MAIN MOVEMENT KEYS______________________________________________________________________________________________________________________
             //FORWARD
-            if(controls.QuadP2.Forward > 0 && controls.QuadP2.Backward == 0 && transform.rotation.ToEulerAngles().x > -1)
+            if (controls.QuadP2.Forward > 0 && controls.QuadP2.Backward == 0 && transform.rotation.ToEulerAngles().x > -1)
             {
                 if (controls.QuadP2.Right == 0 && controls.QuadP2.Left == 0)
                 {
@@ -243,7 +276,7 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
             }
 
             //BACKWARDS
-            if(controls.QuadP2.Backward > 0 && controls.QuadP2.Forward == 0 && transform.rotation.ToEulerAngles().x > -1)
+            if (controls.QuadP2.Backward > 0 && controls.QuadP2.Forward == 0 && transform.rotation.ToEulerAngles().x > -1)
             {
                 if (controls.QuadP2.Left == 0 && controls.QuadP2.Right == 0)
                 {
@@ -282,6 +315,9 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
             //CHASIS ELEVATION FUNCTION
             ChasisElevationFunction();
 
+            //PLUNGER FUNCTION
+            Desatascador();
+
 
             savedVelocity = vehicleRB.velocity;
         }
@@ -304,7 +340,7 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
         {
             vehicleMaxSpeed -= Time.deltaTime * 10;
         }
-        else if(reduceSpeed && vehicleMaxSpeed <= savedMaxSpeed)
+        else if (reduceSpeed && vehicleMaxSpeed <= savedMaxSpeed)
         {
             reduceSpeed = false;
             vehicleMaxSpeed = savedMaxSpeed;
@@ -318,7 +354,7 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
     void VehicleRecoverFunction()
     {
         timerReversed += Time.deltaTime;
-        if(timerReversed >= 1)
+        if (timerReversed >= 1)
         {
             AudioManager.Instance.Play_SFX("Fall_SFX");
             this.transform.position = respawnPosition;
@@ -382,7 +418,7 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
 
         if (this.GetComponent<AudioSource>().enabled)
         {
-            this.GetComponent<AudioSource>().pitch = (vehicleRB.velocity.magnitude * 1) / vehicleMaxSpeed/2;
+            this.GetComponent<AudioSource>().pitch = (vehicleRB.velocity.magnitude * 1) / vehicleMaxSpeed / 2;
         }
     }
 
@@ -442,12 +478,12 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
         }
     }
 
-    void AlaDeltaFunction() 
+    void AlaDeltaFunction()
     {
         if (!alaDelta && touchingGround && controls.QuadP2.AlaDelta == 1)
             alaDelta = true;
 
-        if(alaDelta && alaDeltaTimer >= 0)
+        if (alaDelta && alaDeltaTimer >= 0)
         {
             alaDeltaTimer -= Time.deltaTime;
             if (alaDeltaTimer >= alaDeltaDuration - 0.6f)
@@ -467,7 +503,7 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
 
                 vehicleRB.velocity = new Vector3(savedVelocity.x, -5, savedVelocity.z);
             }
-            if(alaDeltaTimer <= 0)
+            if (alaDeltaTimer <= 0)
             {
                 alaDeltaTimer = alaDeltaDuration;
                 alaDelta = false;
@@ -477,7 +513,7 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
 
     internal void SetCarModifiers()
     {
-        for(int i = 0; i < listOfModifiers.Count; i++)
+        for (int i = 0; i < listOfModifiers.Count; i++)
         {
             switch (listOfModifiers[i])
             {
@@ -500,7 +536,7 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
             switch (listOfModifiers[i])
             {
                 //case "Floater":
-                    
+
 
                 //    break;
 
@@ -512,7 +548,7 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
 
     void checkFallDeath()
     {
-        if(vehicleRB.velocity.y <= -22)
+        if (vehicleRB.velocity.y <= -22)
         {
             AudioManager.Instance.Play_SFX("Fall_SFX");
             this.transform.position = respawnPosition;
@@ -550,7 +586,8 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
     {
         if (other.tag.Equals("Water") && !hasFloater)
         {
-            vehicleMaxSpeed = savedMaxSpeed / 3;
+            //vehicleMaxSpeed = savedMaxSpeed / 3;
+            StartCoroutine(LerpVehicleMaxSpeed(savedMaxSpeed / 3, 3.0f));
         }
     }
     private void OnTriggerExit(Collider other)
@@ -559,9 +596,10 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
         vehicleMaxSpeed = savedMaxSpeed;
         StartCoroutine(WaitEndBoost());
 
-        if(other.tag.Equals("Water") && !hasFloater)
+        if (other.tag.Equals("Water") && !hasFloater)
         {
-            vehicleMaxSpeed = savedMaxSpeed;
+            //vehicleMaxSpeed = savedMaxSpeed;
+            StartCoroutine(LerpVehicleMaxSpeed(savedMaxSpeed, 1.5f));
         }
 
     }
@@ -572,4 +610,17 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
         timerReversed = 0;
     }
 
+    IEnumerator LerpVehicleMaxSpeed(float _targetValue, float _lerpTime)
+    {
+        float lerpTimer = 0;
+        while (vehicleMaxSpeed != _targetValue)
+        {
+            yield return new WaitForEndOfFrame();
+            lerpTimer += Time.deltaTime;
+            vehicleMaxSpeed = Mathf.Lerp(vehicleMaxSpeed, _targetValue, lerpTimer / _lerpTime);
+
+            //Debug.Log("In Coroutine: Curr->" + vehicleMaxSpeed + ". Target->" + _targetValue);
+        }
+
+    }
 }

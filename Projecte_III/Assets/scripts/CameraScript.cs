@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class CameraScript : MonoBehaviour
 {
+    public int camIndex;
     public GameObject playerVehicle;
     [SerializeField] Vector3 posOffset;
     [SerializeField] Vector3 rotOffset;
@@ -23,7 +24,10 @@ public class CameraScript : MonoBehaviour
         rotOffsetQuat = Quaternion.Euler(rotOffset);
         lookBackRotOffset = Quaternion.Euler(0, 180, 0);
 
-        playerVehicle = GameObject.FindGameObjectWithTag("Player").transform.GetChild(0).GetChild(0).gameObject;
+        if(camIndex == 0)
+            playerVehicle = GameObject.FindGameObjectWithTag("Player").transform.GetChild(0).GetChild(0).gameObject;
+        else if(camIndex == 1)
+            playerVehicle = GameObject.FindGameObjectWithTag("Player2").transform.GetChild(0).GetChild(0).gameObject;
 
         this.transform.position = new Vector3(playerVehicle.transform.position.x, playerVehicle.transform.position.y + 2, playerVehicle.transform.position.z);
         this.transform.rotation = rotOffsetQuat;

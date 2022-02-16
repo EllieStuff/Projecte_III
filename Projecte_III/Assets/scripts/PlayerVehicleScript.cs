@@ -159,6 +159,7 @@ public class PlayerVehicleScript : MonoBehaviour
             desatascadorInstance = Instantiate(desatascadorPrefab, this.transform.position, this.transform.rotation);
             Physics.IgnoreCollision(desatascadorInstance.transform.GetChild(0).GetComponent<BoxCollider>(), transform.GetChild(0).GetComponent<BoxCollider>());
             desatascadorInstance.GetComponent<plungerInstance>().playerShotPlunger = this.gameObject;
+            desatascadorInstance.GetComponent<plungerInstance>().playerNum = playerNum;
             desatascador = true;
             desatascadorCooldown = desatascadorBaseCooldown;
         }
@@ -170,12 +171,19 @@ public class PlayerVehicleScript : MonoBehaviour
         {
             if(desatascadorCooldown <= desatascadorBaseCooldown/ 2 && desatascadorInstance != null)
             {
+                vehicleMaxSpeed = savedMaxSpeed;
                 Destroy(desatascadorInstance);
                 desatascador = false;
             }
-            else
+            else if(desatascadorInstance == null)
             {
-                
+                vehicleMaxSpeed = savedMaxSpeed;
+                desatascador = false;
+                desatascadorCooldown = 0;
+            }
+            if(vehicleMaxSpeed > savedMaxSpeed)
+            {
+                vehicleMaxSpeed -= 0.5f;
             }
         }
     }
