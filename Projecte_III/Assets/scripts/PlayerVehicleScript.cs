@@ -114,7 +114,7 @@ public class PlayerVehicleScript : MonoBehaviour
                 wheel.transform.position = wheelPosition;
 
                 if (wheel.tag.Equals("front") && (controls.Quad.Right == 1 || controls.Quad.Left == 1))
-                    wheel.transform.localRotation = new Quaternion(0, (controls.Quad.Right / 5) - (controls.Quad.Left / 5), 0, 1);
+                    wheel.transform.localRotation = Quaternion.Lerp(wheel.transform.localRotation, new Quaternion(0, (controls.Quad.Right / 5) - (controls.Quad.Left / 5), 0, 1), Time.deltaTime * 3);
                 else
                     wheel.transform.rotation = wheelRotation;
 
