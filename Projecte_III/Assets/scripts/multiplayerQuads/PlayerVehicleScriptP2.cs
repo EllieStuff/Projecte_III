@@ -26,6 +26,7 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
     public Rigidbody vehicleRB;
     public float vehicleAcceleration;
     public float vehicleTorque;
+    private Vector3 savedDirection;
     public float vehicleMaxSpeed;
     public float vehicleMaxTorque;
     public GameObject wheels;
@@ -154,12 +155,27 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
 
     public void Desatascador()
     {
+        RaycastHit hit;
+        if (Physics.SphereCast(transform.position, 2, transform.TransformDirection(Vector3.forward), out hit, 30))
+        {
+            if ((hit.transform.tag.Contains("Player") || hit.transform.tag.Contains("Tree")) && hit.transform != transform)
+            {
+                savedDirection = (hit.transform.position - transform.position).normalized;
+                Debug.Log(savedDirection);
+            }
+            else
+            {
+                Debug.Log(hit.transform.tag);
+            }
+        }
+
         if (controls.QuadP2.Drift > 0 && !desatascador && desatascadorCooldown <= 0 && desatascadorInstance == null)
         {
             desatascadorInstance = Instantiate(desatascadorPrefab, this.transform.position, this.transform.rotation);
             Physics.IgnoreCollision(desatascadorInstance.transform.GetChild(0).GetComponent<BoxCollider>(), transform.GetChild(0).GetComponent<BoxCollider>());
             desatascadorInstance.GetComponent<plungerInstance>().playerShotPlunger = this.gameObject;
             desatascadorInstance.GetComponent<plungerInstance>().playerNum = playerNum;
+            desatascadorInstance.GetComponent<plungerInstance>().normalDir = savedDirection;
             desatascador = true;
             desatascadorCooldown = desatascadorBaseCooldown;
         }
@@ -171,12 +187,14 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
         {
             if (desatascadorCooldown <= desatascadorBaseCooldown / 2 && desatascadorInstance != null)
             {
+                savedDirection = Vector3.zero;
                 vehicleMaxSpeed = savedMaxSpeed;
                 Destroy(desatascadorInstance);
                 desatascador = false;
             }
             else if (desatascadorInstance == null)
             {
+                savedDirection = Vector3.zero;
                 vehicleMaxSpeed = savedMaxSpeed;
                 desatascador = false;
                 desatascadorCooldown = 0;
