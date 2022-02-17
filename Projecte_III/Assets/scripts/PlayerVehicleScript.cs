@@ -159,7 +159,7 @@ public class PlayerVehicleScript : MonoBehaviour
         RaycastHit hit;
         if (Physics.SphereCast(transform.position, 2, transform.TransformDirection(Vector3.forward), out hit, 30))
         {
-            if((hit.transform.tag.Contains("Player") || hit.transform.tag.Contains("Tree")) && hit.transform != transform)
+            if(hit.transform.tag.Contains("Player") && hit.transform != transform)
             {
                 savedDirection = (hit.transform.position - transform.position).normalized;
                 Debug.Log(savedDirection);
