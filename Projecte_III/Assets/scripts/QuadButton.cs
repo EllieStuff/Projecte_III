@@ -26,6 +26,8 @@ public class QuadButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
                 currentQuad = quadSpot.transform.GetChild(0).gameObject;
 
                 currentQuad.SetActive(false);
+
+                
             }
         }
     }
