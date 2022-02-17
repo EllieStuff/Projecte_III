@@ -25,7 +25,7 @@ public class plungerInstance : MonoBehaviour
             body.velocity = new Vector3(plungerVelocity * normalDir.x, normalDir.y, plungerVelocity * normalDir.z);
         else
             body.velocity = transform.TransformDirection(new Vector3(0, 0.5f, plungerVelocity));
-        if (transform.TransformDirection(transform.GetComponent<Rigidbody>().velocity).z < 0)
+        if (transform.InverseTransformDirection(transform.GetComponent<Rigidbody>().velocity).z < 0)
             Destroy(gameObject);
     }
 
