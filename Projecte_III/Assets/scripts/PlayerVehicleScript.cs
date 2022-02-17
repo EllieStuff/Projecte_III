@@ -592,19 +592,16 @@ public class PlayerVehicleScript : MonoBehaviour
     {
         if (other.tag.Equals("Water") && !hasFloater)
         {
-            //vehicleMaxSpeed = savedMaxSpeed / 3;
             StartCoroutine(LerpVehicleMaxSpeed(savedMaxSpeed / 3, 3.0f));
         }
     }
     private void OnTriggerExit(Collider other)
     {
         Debug.Log(vehicleMaxSpeed);
-        vehicleMaxSpeed = savedMaxSpeed;
         StartCoroutine(WaitEndBoost());
 
         if(other.tag.Equals("Water") && !hasFloater)
         {
-            //vehicleMaxSpeed = savedMaxSpeed;
             StartCoroutine(LerpVehicleMaxSpeed(savedMaxSpeed, 1.5f));
         }
 
