@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class LoadSceneManager : MonoBehaviour
 {
-    [SerializeField] string currentSceneName;
+    string currentSceneName;
 
     private void Start()
     {
@@ -14,9 +12,13 @@ public class LoadSceneManager : MonoBehaviour
 
     public void ChangeScene(string _newScene)
     {
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerVehicleScript>().SetStats();
+
         if(_newScene != currentSceneName)
         {
             SceneManager.LoadScene(_newScene);
         }
     }
+
+
 }

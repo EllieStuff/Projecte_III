@@ -1,9 +1,7 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.InputSystem;
 
 public class PlayerVehicleScript : MonoBehaviour
 {
@@ -16,7 +14,6 @@ public class PlayerVehicleScript : MonoBehaviour
     //Vehicle Stats
     Stats stats;
 
-    private Material chasisMat;
     private Vector3 savedVelocity;
     private float timerReversed;
     private float savedMaxSpeed;
@@ -67,20 +64,32 @@ public class PlayerVehicleScript : MonoBehaviour
         controls.Enable();
 
         GetComponent<AudioSource>().enabled = false;
-        chasisMat = new Material(transform.GetChild(0).GetComponent<MeshRenderer>().material);
-        transform.GetChild(0).GetComponent<MeshRenderer>().material = chasisMat;
-        chasisMat.color = Color.red;
         Physics.gravity = new Vector3(0, -9.8f * 2, 0);
         vehicleRB = GetComponent<Rigidbody>();
         vehicleRB.centerOfMass = centerOfMass;
         savedMaxSpeed = vehicleMaxSpeed;
 
         wheels = transform.parent.GetChild(1).gameObject;
+
+        SetStats();
     }
 
-    void SetStats(Stats _stats)
+    public void SetStats()
     {
-        stats = _stats;
+        stats.SetStats(new Stats.Data());
+
+        stats.SetStats(stats + wheels.GetComponentInChildren<Stats>());
+        stats.SetStats(stats + GameObject.FindGameObjectWithTag("vehicleElement").transform.GetChild(0).GetChild(0).GetComponent<Stats>());
+
+        Transform modfs = GameObject.FindGameObjectWithTag("ModifierSpots").transform;
+        for (int i = 0; i < modfs.childCount; i++)
+        {
+            Transform child = modfs.GetChild(i);
+            if(child.childCount != 0)
+            {
+                stats.SetStats(stats + child.GetComponentInChildren<Stats>());
+            }    
+        }
     }
 
     private void Awake()
@@ -197,7 +206,7 @@ public class PlayerVehicleScript : MonoBehaviour
         {
             //MAIN MOVEMENT KEYS______________________________________________________________________________________________________________________
             //FORWARD
-            if(controls.Quad.Forward.ReadValue<float>() > 0 && controls.Quad.Backward.ReadValue<float>() == 0 && transform.rotation.ToEulerAngles().x > -1)
+            if(controls.Quad.Forward.ReadValue<float>() > 0 && controls.Quad.Backward.ReadValue<float>() == 0 && transform.rotation.eulerAngles.x > -1)
             {
                 if (controls.Quad.Right.ReadValue<float>() == 0 && controls.Quad.Left.ReadValue<float>() == 0)
                 {
@@ -235,7 +244,7 @@ public class PlayerVehicleScript : MonoBehaviour
             }
 
             //BACKWARDS
-            if(controls.Quad.Backward.ReadValue<float>() > 0 && controls.Quad.Forward.ReadValue<float>() == 0 && transform.rotation.ToEulerAngles().x > -1)
+            if(controls.Quad.Backward.ReadValue<float>() > 0 && controls.Quad.Forward.ReadValue<float>() == 0 && transform.rotation.eulerAngles.x > -1)
             {
                 if (controls.Quad.Left.ReadValue<float>() == 0 && controls.Quad.Right.ReadValue<float>() == 0)
                 {

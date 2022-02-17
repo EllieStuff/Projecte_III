@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
 
 public class Stats : MonoBehaviour
 {
     [Serializable]
-    private struct Data
+    public struct Data
     {
         public float weight;
         public float torque;
@@ -14,31 +12,35 @@ public class Stats : MonoBehaviour
         public float maxVelocity;
         public float friction;
     }
-    [SerializeField] Data stats;
+    [SerializeField] private Data stats;
 
-    public static Stats operator +(Stats a, Stats b)
+    public static Data operator +(Stats a, Stats b)
     {
-        Stats tmp = new Stats();
+        Data tmp;
 
-        tmp.stats.weight = a.stats.weight + b.stats.weight;
-        tmp.stats.torque = a.stats.torque + b.stats.torque;
-        tmp.stats.acceleration = a.stats.acceleration + b.stats.acceleration;
-        tmp.stats.maxVelocity = a.stats.maxVelocity + b.stats.maxVelocity;
-        tmp.stats.friction = a.stats.friction + b.stats.friction;
+        tmp.weight = a.stats.weight + b.stats.weight;
+        tmp.torque = a.stats.torque + b.stats.torque;
+        tmp.acceleration = a.stats.acceleration + b.stats.acceleration;
+        tmp.maxVelocity = a.stats.maxVelocity + b.stats.maxVelocity;
+        tmp.friction = a.stats.friction + b.stats.friction;
 
         return tmp;
     }
 
-    public static Stats operator -(Stats a, Stats b)
+    public static Data operator -(Stats a, Stats b)
     {
-        Stats tmp = new Stats();
+        Data tmp;
 
-        tmp.stats.weight = a.stats.weight - b.stats.weight;
-        tmp.stats.torque = a.stats.torque - b.stats.torque;
-        tmp.stats.acceleration = a.stats.acceleration - b.stats.acceleration;
-        tmp.stats.maxVelocity = a.stats.maxVelocity - b.stats.maxVelocity;
-        tmp.stats.friction = a.stats.friction - b.stats.friction;
+        tmp.weight = a.stats.weight - b.stats.weight;
+        tmp.torque = a.stats.torque - b.stats.torque;
+        tmp.acceleration = a.stats.acceleration - b.stats.acceleration;
+        tmp.maxVelocity = a.stats.maxVelocity - b.stats.maxVelocity;
+        tmp.friction = a.stats.friction - b.stats.friction;
 
         return tmp;
     }
+
+    public Data GetStats() { return stats; }
+
+    public void SetStats(Data s) { stats = s; }
 };
