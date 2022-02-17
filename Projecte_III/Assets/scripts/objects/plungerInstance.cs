@@ -25,16 +25,16 @@ public class plungerInstance : MonoBehaviour
             body.velocity = new Vector3(plungerVelocity * normalDir.x, normalDir.y, plungerVelocity * normalDir.z);
         else
             body.velocity = transform.TransformDirection(new Vector3(0, 0.5f, plungerVelocity));
-        if (transform.InverseTransformDirection(transform.GetComponent<Rigidbody>().velocity).z < 0)
+        if (transform.InverseTransformDirection(body.velocity).z < 0)
             Destroy(gameObject);
     }
 
     private void Update()
     {
-        GetComponent<LineRenderer>().SetPosition(0, this.transform.position);
+        GetComponent<LineRenderer>().SetPosition(0, transform.GetChild(1).position);
         GetComponent<LineRenderer>().SetPosition(1, playerShotPlunger.transform.position);
 
-        if(plungerHit)
+        if (plungerHit)
         {
             if (otherQuad != null)
             {
@@ -59,11 +59,11 @@ public class plungerInstance : MonoBehaviour
                 }
                 Debug.Log(playerShotPlunger.GetComponent<Rigidbody>().velocity);
             }
-            else if(!collisionTag.Equals("ground"))
+            else if (!collisionTag.Equals("ground"))
             {
                 prepareToDestroy = true;
             }
-            else if(Vector3.Distance(transform.position, playerShotPlunger.transform.position) <= 5 || Vector3.Distance(transform.position, playerShotPlunger.transform.position) > 20)
+            else if (Vector3.Distance(transform.position, playerShotPlunger.transform.position) <= 5 || Vector3.Distance(transform.position, playerShotPlunger.transform.position) > 20)
             {
                 Destroy(gameObject);
             }
@@ -73,8 +73,10 @@ public class plungerInstance : MonoBehaviour
             transform.rotation = Quaternion.Lerp(transform.rotation, endQuad, Time.deltaTime * plungerSpeedLerp);
             transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(0, 180, 0), Time.deltaTime * plungerSpeedLerp);
         }
-        else
+        else if (Vector3.Distance(transform.position, playerShotPlunger.transform.position) <= 5 || Vector3.Distance(transform.position, playerShotPlunger.transform.position) <= 50)
             this.transform.rotation = startRot;
+        else
+            Destroy(gameObject);
     }
 
     private void OnCollisionEnter(Collision collision)
