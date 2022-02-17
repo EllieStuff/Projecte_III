@@ -343,17 +343,11 @@ MonoBehaviour:
   alaDeltaDuration: 0
   alaDeltaTimer: 0
   driftTorqueInc: 3
-  wheelModels: []
   vehicleRB: {fileID: 38654283868662908}
   vehicleAcceleration: 4
   vehicleTorque: 6000
   vehicleMaxSpeed: 16
   vehicleMaxTorque: 1
-  wheelCollider:
-  - {fileID: 38654283041918288}
-  - {fileID: 38654282782597988}
-  - {fileID: 38654283335074433}
-  - {fileID: 38654283663855623}
   wheels: {fileID: 0}
   lifeVehicle: 100
   touchingGround: 1
@@ -363,7 +357,11 @@ MonoBehaviour:
   respawnRotation: {x: 0, y: 0, z: 0}
   respawnVelocity: {x: 0, y: 0, z: 0}
   boostPadMultiplier: 0
+  maxClimbingAngle: 60
   chasisElevation: 0
+  wheelsPivot: {fileID: 0}
+  desatascadorBaseCooldown: 20
+  desatascadorPrefab: {fileID: 0}
 --- !u!82 &38654283868662906
 AudioSource:
   m_ObjectHideFlags: 0

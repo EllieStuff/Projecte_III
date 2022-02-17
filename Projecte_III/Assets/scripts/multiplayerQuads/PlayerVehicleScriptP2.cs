@@ -35,6 +35,7 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
     public float minDriftSpeed;
     public Vector3 respawnPosition, respawnRotation, respawnVelocity;
     public float boostPadMultiplier;
+    public float maxClimbingAngle;
     private float chasisElevationTimer;
     [SerializeField] private bool chasisElevation;
     private bool alaDelta;
@@ -234,6 +235,10 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
     void vehicleMovement()
     {
         var locVel = transform.InverseTransformDirection(vehicleRB.velocity);
+
+        if (touchingGround && (vehicleRB.transform.rotation.x >= maxClimbingAngle || vehicleRB.transform.rotation.y >= maxClimbingAngle || vehicleRB.transform.rotation.z >= maxClimbingAngle))
+            touchingGround = false;
+
         if (touchingGround && lifeVehicle > 0)
         {
             //MAIN MOVEMENT KEYS______________________________________________________________________________________________________________________
@@ -593,7 +598,7 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         Debug.Log(vehicleMaxSpeed);
-        vehicleMaxSpeed = savedMaxSpeed;
+        //vehicleMaxSpeed = savedMaxSpeed;
         StartCoroutine(WaitEndBoost());
 
         if (other.tag.Equals("Water") && !hasFloater)
