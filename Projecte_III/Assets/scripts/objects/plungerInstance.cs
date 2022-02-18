@@ -6,6 +6,7 @@ public class plungerInstance : MonoBehaviour
 {
     public int playerNum;
     public Vector3 normalDir;
+    public bool destroyPlunger;
     [SerializeField] Rigidbody body;
     [SerializeField] private float plungerVelocity;
     [SerializeField] private float plungerSpeedLerp;
@@ -34,7 +35,7 @@ public class plungerInstance : MonoBehaviour
         GetComponent<LineRenderer>().SetPosition(0, transform.GetChild(1).position);
         GetComponent<LineRenderer>().SetPosition(1, playerShotPlunger.transform.position);
 
-        if (plungerHit)
+        if (plungerHit && !destroyPlunger)
         {
             if (otherQuad != null)
             {
@@ -45,7 +46,7 @@ public class plungerInstance : MonoBehaviour
             {
                 timerDestroy -= Time.deltaTime;
                 if (timerDestroy <= 0 || prepareToDestroy || Vector3.Distance(transform.position, playerShotPlunger.transform.position) >= 25)
-                    Destroy(gameObject);
+                    destroyPlunger = true;
                 float oldSpeedY = playerShotPlunger.GetComponent<Rigidbody>().velocity.y;
                 if (Mathf.Abs(transform.TransformDirection(playerShotPlunger.GetComponent<Rigidbody>().velocity).z) > 0 && playerShotPlunger.GetComponent<Rigidbody>().velocity.y < 5)
                 {
@@ -65,7 +66,7 @@ public class plungerInstance : MonoBehaviour
             }
             else if (Vector3.Distance(transform.position, playerShotPlunger.transform.position) <= 5 || Vector3.Distance(transform.position, playerShotPlunger.transform.position) > 20)
             {
-                Destroy(gameObject);
+                destroyPlunger = true;
             }
 
             body.velocity = Vector3.zero;
@@ -73,10 +74,17 @@ public class plungerInstance : MonoBehaviour
             transform.rotation = Quaternion.Lerp(transform.rotation, endQuad, Time.deltaTime * plungerSpeedLerp);
             transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(0, 180, 0), Time.deltaTime * plungerSpeedLerp);
         }
-        else if (Vector3.Distance(transform.position, playerShotPlunger.transform.position) <= 5 || Vector3.Distance(transform.position, playerShotPlunger.transform.position) <= 50)
+        else if (Vector3.Distance(transform.position, playerShotPlunger.transform.position) <= 5 || Vector3.Distance(transform.position, playerShotPlunger.transform.position) <= 50 && !destroyPlunger)
             this.transform.rotation = startRot;
+        else if(!destroyPlunger)
+            destroyPlunger = true;
         else
-            Destroy(gameObject);
+        {
+            transform.localScale -= new Vector3(0.01f, 0.01f, 0.01f);
+
+            if (transform.localScale.magnitude <= 0.5f || transform.localScale.magnitude > 2f)
+                Destroy(gameObject);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)

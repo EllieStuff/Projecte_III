@@ -190,7 +190,8 @@ public class PlayerVehicleScript : MonoBehaviour
             {
                 savedDirection = Vector3.zero;
                 vehicleMaxSpeed = savedMaxSpeed;
-                Destroy(desatascadorInstance);
+                desatascadorInstance.GetComponent<plungerInstance>().destroyPlunger = true;
+                desatascadorInstance = null;
                 desatascador = false;
             }
             else if(desatascadorInstance == null)
