@@ -40,6 +40,9 @@ public class plungerInstance : MonoBehaviour
             if (otherQuad != null)
             {
                 transform.position = otherQuad.transform.position;
+                Vector3 inverseTransformDir = otherQuad.transform.InverseTransformDirection(otherQuad.GetComponent<Rigidbody>().velocity);
+                if (inverseTransformDir.z >= -5 && otherQuad.GetComponent<Rigidbody>().velocity.y < 3)
+                    otherQuad.GetComponent<Rigidbody>().velocity += otherQuad.transform.TransformDirection(new Vector3(0, 0, -0.5f));
             }
 
             if (Vector3.Distance(transform.position, playerShotPlunger.transform.position) > 5 && !collisionTag.Equals("ground"))
