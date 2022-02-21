@@ -42,7 +42,7 @@ public class plungerInstance : MonoBehaviour
             {
                 transform.position = otherQuad.transform.position;
                 Vector3 inverseTransformDir = otherQuad.transform.InverseTransformDirection(otherQuad.GetComponent<Rigidbody>().velocity);
-                if (inverseTransformDir.z >= -5 && otherQuad.GetComponent<Rigidbody>().velocity.y < 3)
+                if (inverseTransformDir.z >= -5 && otherQuad.GetComponent<Rigidbody>().velocity.y < 1)
                     otherQuad.GetComponent<Rigidbody>().velocity += otherQuad.transform.TransformDirection(new Vector3(0, 0, -0.5f));
             }
 
