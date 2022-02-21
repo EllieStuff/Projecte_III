@@ -15,6 +15,8 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
     [SerializeField] float alaDeltaTimer;
     [SerializeField] float driftTorqueInc = 3.0f;
 
+    Vector3 savedDirection;
+
     private Material chasisMat;
     private Vector3 savedVelocity;
     private float timerReversed;
@@ -26,7 +28,6 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
     public Rigidbody vehicleRB;
     public float vehicleAcceleration;
     public float vehicleTorque;
-    private Vector3 savedDirection;
     public float vehicleMaxSpeed;
     public float vehicleMaxTorque;
     public GameObject wheels;
@@ -371,6 +372,8 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
             vehicleAcceleration = savedAcceleration;
         }
 
+
+
         //VEHICLE SOUND PITCH SYSTEM
         VehicleSoundPitchFunction();
     }
@@ -610,19 +613,16 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
     {
         if (other.tag.Equals("Water") && !hasFloater)
         {
-            //vehicleMaxSpeed = savedMaxSpeed / 3;
             StartCoroutine(LerpVehicleMaxSpeed(savedMaxSpeed / 3, 3.0f));
         }
     }
     private void OnTriggerExit(Collider other)
     {
         Debug.Log(vehicleMaxSpeed);
-        //vehicleMaxSpeed = savedMaxSpeed;
         StartCoroutine(WaitEndBoost());
 
         if (other.tag.Equals("Water") && !hasFloater)
         {
-            //vehicleMaxSpeed = savedMaxSpeed;
             StartCoroutine(LerpVehicleMaxSpeed(savedMaxSpeed, 1.5f));
         }
 
@@ -647,4 +647,6 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
         }
 
     }
+
 }
+
