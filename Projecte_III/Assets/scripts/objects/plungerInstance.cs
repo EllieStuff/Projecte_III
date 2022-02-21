@@ -21,6 +21,7 @@ public class plungerInstance : MonoBehaviour
 
     private void Start()
     {
+        AudioManager.Instance.Play_SFX("Plunger_Hit_SFX");
         startRot = new Quaternion(0, this.transform.rotation.y, 0, this.transform.rotation.w);
         if(normalDir != Vector3.zero)
             body.velocity = new Vector3(plungerVelocity * normalDir.x, normalDir.y, plungerVelocity * normalDir.z);
@@ -94,10 +95,14 @@ public class plungerInstance : MonoBehaviour
     {
         if (!plungerHit)
         {
+            AudioManager.Instance.Play_SFX("Plunger_Arrived_SFX");
             collisionTag = collision.gameObject.tag;
 
             if(collision.gameObject.tag.Contains("Player"))
+            {
                 otherQuad = collision.gameObject;
+                AudioManager.Instance.Play_SFX("Plunger_Arrived_SFX");
+            }
 
             this.transform.parent = collision.transform;
             if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out RaycastHit raycastHit, 100))
