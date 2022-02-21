@@ -46,9 +46,9 @@ public class PaintMesh : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.DrawRay(transform.position, origin);
-        Debug.Log("Pos: " + transform.position);
-        Debug.Log("Origin: " + origin);
+        //Debug.DrawRay(transform.position, origin);
+        //Debug.Log("Pos: " + transform.position);
+        //Debug.Log("Origin: " + origin);
         InitPainting();
     }
 

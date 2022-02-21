@@ -4,6 +4,19 @@ using UnityEngine;
 
 public class Utils
 {
+    [System.Serializable]
+    public struct MinMaxFloat
+    {
+        public float min, max;
+        public MinMaxFloat(float _min, float _max) { min = _min; max = _max; }
+    }
+    [System.Serializable]
+    public struct MinMaxVec3
+    {
+        public Vector3 min, max;
+        public MinMaxVec3(Vector3 _min, Vector3 _max) { min = _min; max = _max; }
+    }
+
     public class Vectors : MonoBehaviour
     {
         public static Vector3 GetRelativePosition2D(Vector3 v1, Vector3 v2)
