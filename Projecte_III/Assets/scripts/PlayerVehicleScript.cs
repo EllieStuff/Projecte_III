@@ -594,7 +594,7 @@ public class PlayerVehicleScript : MonoBehaviour
 
     void checkFallDeath()
     {
-        if(vehicleRB.velocity.y <= -22)
+        if(vehicleRB.velocity.y <= -100)
         {
             AudioManager.Instance.Play_SFX("Fall_SFX");
             this.transform.position = respawnPosition;
