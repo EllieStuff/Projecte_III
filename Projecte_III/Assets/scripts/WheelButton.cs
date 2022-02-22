@@ -30,6 +30,9 @@ public class WheelButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
             if (wheelSpot.transform.GetChild(0).childCount > 1 && (currentWheel == null || currentWheel.name != wheelsModel.name))
             {
+                if (wheelSpot.transform.childCount > 2)
+                    Destroy(wheelSpot.transform.GetChild(1));
+
                 currentWheel = wheelSpot.transform.GetChild(0).gameObject;
 
                 currentWheel.SetActive(false);

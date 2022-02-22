@@ -92,6 +92,8 @@ public class PlayerVehicleScript : MonoBehaviour
             if(modfs.GetChild(i).childCount > 0)
                 stats.SetStats(stats + modfs.GetChild(i).GetComponentInChildren<Stats>());
         }
+
+        GameObject.FindGameObjectWithTag("StatsManager").GetComponentInChildren<StatsListUI>().UpdateStatsUI(stats.GetStats());
     }
 
     private void Awake()
@@ -110,7 +112,6 @@ public class PlayerVehicleScript : MonoBehaviour
         {
             Physics.IgnoreLayerCollision(3, 4, true);
         }
-
     }
 
     void Update()
