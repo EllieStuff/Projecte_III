@@ -159,9 +159,9 @@ public class PlayerVehicleScript : MonoBehaviour
     public void Desatascador()
     {
         RaycastHit hit;
-        if (Physics.SphereCast(transform.position, 2, transform.TransformDirection(Vector3.forward), out hit, 30))
+        if (Physics.SphereCast(transform.position, 10, transform.TransformDirection(Vector3.forward), out hit, 30))
         {
-            if(hit.transform.tag.Contains("Player") && hit.transform != transform)
+            if((hit.transform.tag.Contains("Player") || hit.transform.tag.Contains("Tree") || hit.transform.tag.Contains("Valla")) && (hit.transform.position - transform.position).magnitude > 1 && hit.transform != transform)
             {
                 savedDirection = (hit.transform.position - transform.position).normalized;
                 Debug.Log(savedDirection);
@@ -612,6 +612,8 @@ public class PlayerVehicleScript : MonoBehaviour
 
         if (other.CompareTag("Water"))
         {
+            vehicleRB.velocity += transform.TransformDirection(new Vector3(50, 0, 50));
+            vehicleRB.velocity = new Vector3(vehicleRB.velocity.x, -10, vehicleRB.velocity.z);
             vehicleRB.AddForce(other.GetComponent<WaterStreamColliderScript>().Stream, ForceMode.Force);
         }
     }
@@ -629,7 +631,6 @@ public class PlayerVehicleScript : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log(vehicleMaxSpeed);
         StartCoroutine(WaitEndBoost());
 
         if(other.tag.Equals("Water") && !hasFloater)
