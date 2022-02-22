@@ -55,6 +55,7 @@ public class PlayerVehicleScript : MonoBehaviour
     [SerializeField] private int desatascadorBaseCooldown = 20;
     [SerializeField] private GameObject desatascadorPrefab;
     private GameObject desatascadorInstance;
+    bool paintingChecked = false;
 
     public bool finishedRace;
 
@@ -102,6 +103,7 @@ public class PlayerVehicleScript : MonoBehaviour
     void Update()
     {
         touchingGround = false;
+        paintingChecked = false;
 
         //HERE WE SET THE POSITION AND ROTATION FROM THE WHEELS RENDERERS
 
@@ -630,12 +632,13 @@ public class PlayerVehicleScript : MonoBehaviour
             vehicleRB.AddForce(other.GetComponent<WaterStreamColliderScript>().Stream, ForceMode.Force);
         }
 
-        if (other.CompareTag("Painting"))
+        if (!paintingChecked && other.CompareTag("Painting"))
         {
+            paintingChecked = true;
             if (vehicleRB.velocity.magnitude > 1.0f)
             {
                 Debug.Log("slkg");
-                AddFriction(100);
+                AddFriction(1000);
                 vehicleRB.angularDrag = savedAngularDrag * 2.0f;
             }
         }
@@ -692,8 +695,8 @@ public class PlayerVehicleScript : MonoBehaviour
         //Vector3 frictionVec = transform.up * _frictionForce;
         Vector3 velFrictionVec = -vehicleRB.velocity.normalized * _frictionForce * vehicleRB.velocity.magnitude;
         vehicleRB.AddForce(velFrictionVec, ForceMode.Force);
-        Vector3 angularFrictionVec = -vehicleRB.angularVelocity.normalized * _frictionForce;
-        vehicleRB.AddForce(angularFrictionVec, ForceMode.Force);
+        //Vector3 angularFrictionVec = -vehicleRB.angularVelocity.normalized * _frictionForce;
+        //vehicleRB.AddForce(angularFrictionVec, ForceMode.Force);
     }
 
     IEnumerator LerpVehicleMaxSpeed(float _targetValue, float _lerpTime)

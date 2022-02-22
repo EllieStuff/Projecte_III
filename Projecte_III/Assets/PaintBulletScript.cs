@@ -26,7 +26,7 @@ public class PaintBulletScript : MonoBehaviour
         }
         else
         {
-            if (!(other.CompareTag("Decal") || other.CompareTag("Painting") || other.CompareTag("Respawn") || other.CompareTag("CameraTrigger")))
+            if (!(other.CompareTag("Decal") || other.CompareTag("Painting") || other.CompareTag("Respawn") || other.CompareTag("CameraTrigger") || other.CompareTag("Untagged")))
             {
                 //Vector3 closesPoint = other.ClosestPoint(transform.position);
                 //Vector3 spawnPoint = closesPoint + ((transform.position - closesPoint).normalized * decalPrefab.transform.localScale.x);

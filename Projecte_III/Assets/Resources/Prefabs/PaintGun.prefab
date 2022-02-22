@@ -48,17 +48,17 @@ MonoBehaviour:
   prefab: {fileID: 4230321271944233719, guid: c0dd1246af7eda34ea8028f2db735f66, type: 3}
   timeActive: 0.5
   force:
-    min: 6
-    max: 10
+    min: 20
+    max: 26
   timeDiff:
-    min: 0.001
-    max: 0.003
+    min: 0.01
+    max: 0.05
   size:
     min: 0.3
-    max: 0.8
+    max: 0.7
   dirDiff:
-    min: {x: -1, y: 30, z: -1}
-    max: {x: 60, y: 40, z: 60}
+    min: {x: -1, y: 50, z: -1}
+    max: {x: 60, y: 60, z: 60}
 --- !u!33 &1621495200553532335
 MeshFilter:
   m_ObjectHideFlags: 0
