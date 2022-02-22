@@ -56,7 +56,7 @@ public class DeathfallAndCheckpointsSystem : MonoBehaviour
         {
             try
             {
-                if (!multiplayerMode && other.tag.Contains("Player"))
+                if (!multiplayerMode)
                     other.transform.parent.GetComponent<PlayerVehicleScript>().finishedRace = true;
 
                 GameObject.Find("UI").transform.GetChild(0).GetChild(0).GetComponent<UITimerChrono>().finishedRace = true;
