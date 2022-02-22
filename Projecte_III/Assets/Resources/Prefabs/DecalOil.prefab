@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: -2677857451967881074}
   - component: {fileID: -748945499118962290}
   m_Layer: 0
-  m_Name: DecalPaint
-  m_TagString: Painting
+  m_Name: DecalOil
+  m_TagString: Oil
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: abe5bcee9dbb68449955bbc1b0b16718, type: 2}
+  - {fileID: 2100000, guid: 66083e6dc062ae74b9198b53167a60bc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -113,5 +113,5 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 3
+  m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}

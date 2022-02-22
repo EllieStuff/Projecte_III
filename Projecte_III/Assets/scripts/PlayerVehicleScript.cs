@@ -55,7 +55,7 @@ public class PlayerVehicleScript : MonoBehaviour
     [SerializeField] private int desatascadorBaseCooldown = 20;
     [SerializeField] private GameObject desatascadorPrefab;
     private GameObject desatascadorInstance;
-    bool paintingChecked = false;
+    bool paintingChecked = false, oilChecked = false;
 
     public bool finishedRace;
 
@@ -103,7 +103,7 @@ public class PlayerVehicleScript : MonoBehaviour
     void Update()
     {
         touchingGround = false;
-        paintingChecked = false;
+        paintingChecked = oilChecked = false;
 
         //HERE WE SET THE POSITION AND ROTATION FROM THE WHEELS RENDERERS
 
@@ -637,9 +637,15 @@ public class PlayerVehicleScript : MonoBehaviour
             paintingChecked = true;
             if (vehicleRB.velocity.magnitude > 1.0f)
             {
-                Debug.Log("slkg");
-                AddFriction(1000);
-                vehicleRB.angularDrag = savedAngularDrag * 2.0f;
+                AddFriction(1000, 2.0f);
+            }
+        }
+        if (!oilChecked && other.CompareTag("Oil"))
+        {
+            oilChecked = true;
+            if (vehicleRB.velocity.magnitude > 1.0f)
+            {
+                AddFriction(-1200, 0.7f);
             }
         }
 
@@ -664,9 +670,9 @@ public class PlayerVehicleScript : MonoBehaviour
         {
             StartCoroutine(LerpVehicleMaxSpeed(savedMaxSpeed, 1.5f));
         }
-        if (other.CompareTag("Painting"))
+
+        if (other.CompareTag("Painting") || other.CompareTag("Oil"))
         {
-            Debug.Log("aaaaaa2");
             ResetFriction();
         }
 
@@ -690,13 +696,15 @@ public class PlayerVehicleScript : MonoBehaviour
         //vehicleMaxSpeed = savedMaxSpeed;
         //vehicleAcceleration = savedAcceleration;
     }
-    void AddFriction(float _frictionForce)
+    void AddFriction(float _frictionForce, float _dragInc)
     {
         //Vector3 frictionVec = transform.up * _frictionForce;
         Vector3 velFrictionVec = -vehicleRB.velocity.normalized * _frictionForce * vehicleRB.velocity.magnitude;
         vehicleRB.AddForce(velFrictionVec, ForceMode.Force);
         //Vector3 angularFrictionVec = -vehicleRB.angularVelocity.normalized * _frictionForce;
         //vehicleRB.AddForce(angularFrictionVec, ForceMode.Force);
+        vehicleRB.angularDrag = savedAngularDrag * _dragInc;
+
     }
 
     IEnumerator LerpVehicleMaxSpeed(float _targetValue, float _lerpTime)

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PaintBulletScript : MonoBehaviour
+public class OilBulletScript : MonoBehaviour
 {
     [SerializeField] GameObject decalPrefab;
     [SerializeField] SphereCollider col;
@@ -26,7 +26,7 @@ public class PaintBulletScript : MonoBehaviour
         }
         else
         {
-            if (!(other.CompareTag("Decal") || other.CompareTag("Painting") || other.CompareTag("Oil") || other.CompareTag("Respawn") || other.CompareTag("CameraTrigger") || other.CompareTag("Untagged")))
+            if (!TagToIgnore(other.tag))
             {
                 //Vector3 closesPoint = other.ClosestPoint(transform.position);
                 //Vector3 spawnPoint = closesPoint + ((transform.position - closesPoint).normalized * decalPrefab.transform.localScale.x);
@@ -42,10 +42,16 @@ public class PaintBulletScript : MonoBehaviour
     }
 
 
+    bool TagToIgnore(string _tag)
+    {
+        return (_tag.Equals("Decal") || _tag.Equals("Painting") || _tag.Equals("Oil") || _tag.Equals("Respawn") || _tag.Equals("CameraTrigger") || _tag.Equals("Untagged"));
+        //return (_other.CompareTag("Decal") || _other.CompareTag("Painting") || _other.CompareTag("Oil") || _other.CompareTag("Respawn") || _other.CompareTag("CameraTrigger") || _other.CompareTag("Untagged"));
+    }
+
+
     IEnumerator DespawnCoroutine()
     {
         yield return new WaitForSeconds(10.0f);
         Destroy(gameObject);
     }
-
 }

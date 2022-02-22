@@ -5,7 +5,8 @@ using UnityEngine;
 public class DecalPaintScript : MonoBehaviour
 {
     [SerializeField] Utils.MinMaxFloat despawnTime;
-    [SerializeField] float despawnSpeed = 2.0f;
+    [SerializeField] float despawnSpeed = 0.003f;
+    [SerializeField] Utils.MinMaxFloat despawnSpeedDiff = new Utils.MinMaxFloat(-0.002f, 0.002f);
 
 
     private void OnEnable()
@@ -17,6 +18,8 @@ public class DecalPaintScript : MonoBehaviour
     IEnumerator DespawnCoroutine()
     {
         yield return new WaitForSeconds(despawnTime.GetRndValue());
+
+        despawnSpeed += despawnSpeedDiff.GetRndValue();
         while(transform.localScale.x > 0.1f)
         {
             yield return new WaitForEndOfFrame();
