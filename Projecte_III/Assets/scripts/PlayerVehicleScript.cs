@@ -530,13 +530,13 @@ public class PlayerVehicleScript : MonoBehaviour
             vehicleRB.AddForce(other.GetComponent<WaterStreamColliderScript>().Stream, ForceMode.Force);
         }
 
-        //if (other.CompareTag("Decal"))
-        //{
-        //    Debug.Log("aaaaaa1");
-        //    //if(vehicleRB.velocity.magnitude > 1.0f)
-        //    //    AddFriction(-70);
-        //    //tOdO: TENIR EN COMPTE ANGULAR DRAG EN CONTRES DE ADDAGULARFORCE
-        //}
+        if (other.CompareTag("Painting"))
+        {
+            Debug.Log("aaaaaa1");
+            if(vehicleRB.velocity.magnitude > 1.0f)
+                AddFriction(400);
+            //tOdO: TENIR EN COMPTE ANGULAR DRAG EN CONTRES DE ADDAGULARFORCE
+        }
 
     }
     private void OnTriggerEnter(Collider other)
@@ -591,14 +591,14 @@ public class PlayerVehicleScript : MonoBehaviour
     //    vehicleAcceleration = savedAcceleration;
     //}
 
-    //void AddFriction(float _frictionForce)
-    //{
-    //    //Vector3 frictionVec = transform.up * _frictionForce;
-    //    Vector3 velFrictionVec = -vehicleRB.velocity.normalized * _frictionForce;
-    //    vehicleRB.AddForce(velFrictionVec, ForceMode.Force);
-    //    Vector3 angularFrictionVec = -vehicleRB.angularVelocity.normalized * _frictionForce;
-    //    vehicleRB.AddForce(angularFrictionVec, ForceMode.Force);
-    //}
+    void AddFriction(float _frictionForce)
+    {
+        //Vector3 frictionVec = transform.up * _frictionForce;
+        Vector3 velFrictionVec = -vehicleRB.velocity.normalized * _frictionForce;
+        vehicleRB.AddForce(velFrictionVec, ForceMode.Force);
+        Vector3 angularFrictionVec = -vehicleRB.angularVelocity.normalized * _frictionForce;
+        vehicleRB.AddForce(angularFrictionVec, ForceMode.Force);
+    }
 
     IEnumerator LerpVehicleMaxSpeed(float _targetValue, float _lerpTime)
     {
