@@ -5270,75 +5270,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!1001 &1420593502
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2249468740779258672, guid: 487d6e19a38cebc458f6446d0fea1620, type: 3}
-      propertyPath: m_Name
-      value: DecalPaint 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2249468740779258684, guid: 487d6e19a38cebc458f6446d0fea1620, type: 3}
-      propertyPath: m_RootOrder
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 2249468740779258684, guid: 487d6e19a38cebc458f6446d0fea1620, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 2.8176322
-      objectReference: {fileID: 0}
-    - target: {fileID: 2249468740779258684, guid: 487d6e19a38cebc458f6446d0fea1620, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2.8176322
-      objectReference: {fileID: 0}
-    - target: {fileID: 2249468740779258684, guid: 487d6e19a38cebc458f6446d0fea1620, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2.8176322
-      objectReference: {fileID: 0}
-    - target: {fileID: 2249468740779258684, guid: 487d6e19a38cebc458f6446d0fea1620, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.38
-      objectReference: {fileID: 0}
-    - target: {fileID: 2249468740779258684, guid: 487d6e19a38cebc458f6446d0fea1620, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -1.33
-      objectReference: {fileID: 0}
-    - target: {fileID: 2249468740779258684, guid: 487d6e19a38cebc458f6446d0fea1620, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -1.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2249468740779258684, guid: 487d6e19a38cebc458f6446d0fea1620, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2249468740779258684, guid: 487d6e19a38cebc458f6446d0fea1620, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2249468740779258684, guid: 487d6e19a38cebc458f6446d0fea1620, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2249468740779258684, guid: 487d6e19a38cebc458f6446d0fea1620, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2249468740779258684, guid: 487d6e19a38cebc458f6446d0fea1620, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2249468740779258684, guid: 487d6e19a38cebc458f6446d0fea1620, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2249468740779258684, guid: 487d6e19a38cebc458f6446d0fea1620, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 487d6e19a38cebc458f6446d0fea1620, type: 3}
 --- !u!1 &1429818029
 GameObject:
   m_ObjectHideFlags: 0
@@ -7509,6 +7440,18 @@ PrefabInstance:
       propertyPath: OutputAudioMixerGroup
       value: 
       objectReference: {fileID: -520945449439563406, guid: c53828cacc7a5d042b2aee58076faeb7, type: 2}
+    - target: {fileID: 108855353112509587, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+      propertyPath: timeDiff.max
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 108855353112509587, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+      propertyPath: timeDiff.min
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 108855353112509588, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 885021151033915514, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: m_Layer
       value: 3

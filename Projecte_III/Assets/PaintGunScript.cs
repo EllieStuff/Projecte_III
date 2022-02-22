@@ -41,7 +41,7 @@ public class PaintGunScript : MonoBehaviour
         float currTime = 0.0f;
         while(currTime < timeActive)
         {
-            GameObject currBullet = GameObject.Instantiate(prefab, this.transform);
+            GameObject currBullet = GameObject.Instantiate(prefab, transform.position, prefab.transform.rotation);
             float newScale = size.GetRndValue();
             currBullet.transform.localScale = new Vector3(newScale, newScale, newScale);
             currBullet.GetComponent<Rigidbody>().AddForce((transform.forward + dirDiff.GetRndValue().normalized/10.0f) * force.GetRndValue(), ForceMode.Impulse);

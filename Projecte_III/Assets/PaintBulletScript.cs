@@ -17,14 +17,19 @@ public class PaintBulletScript : MonoBehaviour
     {
         if (other.CompareTag("PlayerVehicle"))
         {
+            // Ho silencio perque el joc peta molt si no
+
+            //GameObject instancedGO = GameObject.Instantiate(decalPrefab, transform.position, decalPrefab.transform.rotation, other.transform);
+            //instancedGO.transform.localScale = instancedGO.transform.localScale * transform.localScale.x;
+            //instancedGO.tag = "Untagged";
 
         }
         else
         {
-            if (!(other.CompareTag("Decal") || other.CompareTag("Painting")))
+            if (!(other.CompareTag("Decal") || other.CompareTag("Painting") || other.CompareTag("Respawn") || other.CompareTag("CameraTrigger")))
             {
-                Vector3 closesPoint = other.ClosestPoint(transform.position);
-                Vector3 spawnPoint = closesPoint + ((transform.position - closesPoint).normalized * decalPrefab.transform.localScale.x);
+                //Vector3 closesPoint = other.ClosestPoint(transform.position);
+                //Vector3 spawnPoint = closesPoint + ((transform.position - closesPoint).normalized * decalPrefab.transform.localScale.x);
                 GameObject instancedGO = GameObject.Instantiate(decalPrefab, transform.position, decalPrefab.transform.rotation, other.transform);
                 instancedGO.transform.localScale = instancedGO.transform.localScale * transform.localScale.x * sizeInc;
 

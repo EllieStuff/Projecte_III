@@ -532,10 +532,12 @@ public class PlayerVehicleScript : MonoBehaviour
 
         if (other.CompareTag("Painting"))
         {
-            Debug.Log("aaaaaa1");
-            if(vehicleRB.velocity.magnitude > 1.0f)
-                AddFriction(400);
-            //tOdO: TENIR EN COMPTE ANGULAR DRAG EN CONTRES DE ADDAGULARFORCE
+            if (vehicleRB.velocity.magnitude > 1.0f)
+            {
+                Debug.Log("slkg");
+                AddFriction(100);
+                vehicleRB.angularDrag = savedAngularDrag * 2.0f;
+            }
         }
 
     }
@@ -564,11 +566,11 @@ public class PlayerVehicleScript : MonoBehaviour
             //vehicleMaxSpeed = savedMaxSpeed;
             StartCoroutine(LerpVehicleMaxSpeed(savedMaxSpeed, 1.5f));
         }
-        //if (other.CompareTag("Decal"))
-        //{
-        //    Debug.Log("aaaaaa2");
-        //    ResetFriction(); 
-        //}
+        if (other.CompareTag("Painting"))
+        {
+            Debug.Log("aaaaaa2");
+            ResetFriction();
+        }
 
     }
 
@@ -584,17 +586,16 @@ public class PlayerVehicleScript : MonoBehaviour
     //    vehicleMaxSpeed = savedMaxSpeed / _speedDec;
     //    if (_speedDec < 1.0f) vehicleAcceleration /= (_speedDec + (1-_speedDec)*2.0f);
     //}
-    //void ResetFriction()
-    //{
-    //    vehicleRB.angularDrag = savedAngularDrag;
-    //    vehicleMaxSpeed = savedMaxSpeed;
-    //    vehicleAcceleration = savedAcceleration;
-    //}
-
+    void ResetFriction()
+    {
+        vehicleRB.angularDrag = savedAngularDrag;
+        //vehicleMaxSpeed = savedMaxSpeed;
+        //vehicleAcceleration = savedAcceleration;
+    }
     void AddFriction(float _frictionForce)
     {
         //Vector3 frictionVec = transform.up * _frictionForce;
-        Vector3 velFrictionVec = -vehicleRB.velocity.normalized * _frictionForce;
+        Vector3 velFrictionVec = -vehicleRB.velocity.normalized * _frictionForce * vehicleRB.velocity.magnitude;
         vehicleRB.AddForce(velFrictionVec, ForceMode.Force);
         Vector3 angularFrictionVec = -vehicleRB.angularVelocity.normalized * _frictionForce;
         vehicleRB.AddForce(angularFrictionVec, ForceMode.Force);
