@@ -58,6 +58,7 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        desatascadorBaseCooldown = 10;
         wheelsPivot = transform.GetChild(1).gameObject;
         alaDeltaDuration = 1;
         alaDeltaTimer = 1;
@@ -200,7 +201,6 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
                 savedDirection = Vector3.zero;
                 vehicleMaxSpeed = savedMaxSpeed;
                 desatascador = false;
-                desatascadorCooldown = 0;
             }
             if (vehicleMaxSpeed > savedMaxSpeed)
             {

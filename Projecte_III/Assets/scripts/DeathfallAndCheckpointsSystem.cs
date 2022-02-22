@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DeathfallAndCheckpointsSystem : MonoBehaviour
 {
+    public bool activated;
     [SerializeField] private bool multiplayerMode;
     PlayerVehicleScript vehicleScript;
     PlayerVehicleScriptP2 vehicleScriptP2;

@@ -44,6 +44,10 @@ public class plungerInstance : MonoBehaviour
                 Vector3 inverseTransformDir = otherQuad.transform.InverseTransformDirection(otherQuad.GetComponent<Rigidbody>().velocity);
                 if (inverseTransformDir.z >= -5 && otherQuad.GetComponent<Rigidbody>().velocity.y < 1)
                     otherQuad.GetComponent<Rigidbody>().velocity += otherQuad.transform.TransformDirection(new Vector3(0, 0, -0.5f));
+                if (Vector3.Distance(transform.position, playerShotPlunger.transform.position) <= 5)
+                    Destroy(gameObject);
+                else if (Vector3.Distance(transform.position, playerShotPlunger.transform.position) >= 25)
+                    Destroy(gameObject);
             }
 
             if (Vector3.Distance(transform.position, playerShotPlunger.transform.position) > 5 && !collisionTag.Equals("ground"))
@@ -98,7 +102,7 @@ public class plungerInstance : MonoBehaviour
             AudioManager.Instance.Play_SFX("Plunger_Arrived_SFX");
             collisionTag = collision.gameObject.tag;
 
-            if(collision.gameObject.tag.Contains("Player"))
+            if(collision.gameObject.tag.Contains("Player") && collision.gameObject != playerShotPlunger)
             {
                 otherQuad = collision.gameObject;
                 AudioManager.Instance.Play_SFX("Plunger_Arrived_SFX");
@@ -117,5 +121,11 @@ public class plungerInstance : MonoBehaviour
             body.angularVelocity = Vector3.zero;
             plungerHit = true;
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag.Equals("Death Zone"))
+            Destroy(gameObject);
     }
 }

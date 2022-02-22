@@ -58,6 +58,7 @@ public class PlayerVehicleScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        desatascadorBaseCooldown = 10;
         wheelsPivot = transform.GetChild(1).gameObject;
         alaDeltaDuration = 1;
         alaDeltaTimer = 1;
@@ -167,7 +168,7 @@ public class PlayerVehicleScript : MonoBehaviour
             }
             else
             {
-                Debug.Log(hit.transform.tag);
+                //Debug.Log(hit.transform.tag);
             }
         }
 
@@ -200,7 +201,6 @@ public class PlayerVehicleScript : MonoBehaviour
                 savedDirection = Vector3.zero;
                 vehicleMaxSpeed = savedMaxSpeed;
                 desatascador = false;
-                desatascadorCooldown = 0;
             }
             if(vehicleMaxSpeed > savedMaxSpeed)
             {
@@ -620,6 +620,11 @@ public class PlayerVehicleScript : MonoBehaviour
         if (other.tag.Equals("Water") && !hasFloater)
         {
             StartCoroutine(LerpVehicleMaxSpeed(savedMaxSpeed / 3, 3.0f));
+        }
+        if(other.tag.Equals("Respawn") && !other.GetComponent<DeathfallAndCheckpointsSystem>().activated)
+        {
+            GameObject.Find("UI").transform.GetChild(1).GetComponent<UIPosition>().actualCheckpoint++;
+            other.GetComponent<DeathfallAndCheckpointsSystem>().activated = true;
         }
     }
     private void OnTriggerExit(Collider other)
