@@ -12,6 +12,7 @@ public class DecalPaintScript : MonoBehaviour
     private void OnEnable()
     {
         StartCoroutine(DespawnCoroutine());
+        GetComponent<MeshRenderer>().material.renderQueue = 3002;
     }
 
 
