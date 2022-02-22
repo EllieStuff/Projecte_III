@@ -7,6 +7,7 @@ public class DeathfallAndCheckpointsSystem : MonoBehaviour
 {
     public bool finishRaceCP;
     public bool activated;
+    private bool enableMusic;
     [SerializeField] private bool multiplayerMode;
     [SerializeField] private GameObject particlesPrefab;
     PlayerVehicleScript vehicleScript;
@@ -14,6 +15,14 @@ public class DeathfallAndCheckpointsSystem : MonoBehaviour
     GameObject chasis;
     GameObject chasisP2;
 
+    private void Update()
+    {
+        if(enableMusic)
+        {
+            if(GameObject.Find("ParticlesFinish").transform.GetChild(0).GetComponent<AudioSource>().volume < 0.2f)
+            GameObject.Find("ParticlesFinish").transform.GetChild(0).GetComponent<AudioSource>().volume += Time.deltaTime / 50;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -59,8 +68,10 @@ public class DeathfallAndCheckpointsSystem : MonoBehaviour
             GameObject.Find("UI").transform.GetChild(2).gameObject.SetActive(true);
             GameObject.Find("ParticlesFinish").GetComponent<ParticleSystem>().Play();
             GameObject.Find("ParticlesFinish").GetComponent<AudioSource>().Play();
+            GameObject.Find("ParticlesFinish").transform.GetChild(0).GetComponent<AudioSource>().Play();
             AudioManager.Instance.Stop_OST();
 
+            enableMusic = true;
             finishRaceCP = false;
         }
 
