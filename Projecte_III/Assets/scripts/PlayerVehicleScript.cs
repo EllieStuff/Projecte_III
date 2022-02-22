@@ -78,17 +78,19 @@ public class PlayerVehicleScript : MonoBehaviour
     {
         stats.SetStats(new Stats.Data());
 
+        //Wheels stats
         stats.SetStats(stats + wheels.GetComponentInChildren<Stats>());
-        stats.SetStats(stats + GameObject.FindGameObjectWithTag("vehicleElement").transform.GetChild(0).GetChild(0).GetComponent<Stats>());
 
+        //Quad stats
+        stats.SetStats(stats + GameObject.FindGameObjectWithTag("vehicleElement").transform.GetComponentInChildren<Stats>());
+
+        //Modifier Stats
         Transform modfs = GameObject.FindGameObjectWithTag("ModifierSpots").transform;
+        
         for (int i = 0; i < modfs.childCount; i++)
         {
-            Transform child = modfs.GetChild(i);
-            if(child.childCount != 0)
-            {
-                stats.SetStats(stats + child.GetComponentInChildren<Stats>());
-            }    
+            if(modfs.GetChild(i).childCount > 0)
+                stats.SetStats(stats + modfs.GetChild(i).GetComponentInChildren<Stats>());
         }
     }
 

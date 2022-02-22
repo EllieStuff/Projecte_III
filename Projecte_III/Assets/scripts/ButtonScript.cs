@@ -55,6 +55,10 @@ public class ButtonScript: MonoBehaviour
             list.SetActive(active);
             if(modifierSpots != null)
             {
+                Transform target = GameObject.Find("Target").transform;
+                if (!active && target.childCount > 0)
+                    Destroy(target.GetChild(0).gameObject);
+
                 for (int i = 0; i < modifierSpots.transform.childCount; i++)
                 {
                     GameObject child = modifierSpots.transform.GetChild(i).gameObject;

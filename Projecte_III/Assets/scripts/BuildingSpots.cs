@@ -60,6 +60,8 @@ public class BuildingSpots : MonoBehaviour
                     clone.transform.localPosition = Vector3.zero;
 
                     clone.GetComponent<BuildingSpots>().SetPlaced();
+
+                    GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerVehicleScript>().SetStats();
                 }
             }
             else
@@ -71,6 +73,11 @@ public class BuildingSpots : MonoBehaviour
                         if(raycastHit.transform == transform.parent)
                         {
                             raycastHit.transform.GetComponent<MeshRenderer>().enabled = true;
+
+                            transform.parent = null;
+
+                            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerVehicleScript>().SetStats();
+
                             Destroy(gameObject);
                         }
                     }
@@ -102,9 +109,7 @@ public class BuildingSpots : MonoBehaviour
         {
             GameObject currentChild = transform.GetChild(0).gameObject;
             if (obj.name == currentChild.name)
-            {
                 return;
-            }
             Destroy(currentChild);
         }
         

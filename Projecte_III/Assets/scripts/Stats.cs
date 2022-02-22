@@ -11,33 +11,72 @@ public class Stats : MonoBehaviour
         public float acceleration;
         public float maxVelocity;
         public float friction;
+
+        public Data(float value)
+        {
+            weight = value;
+            torque = value;
+            acceleration = value;
+            maxVelocity = value;
+            friction = value;
+        }
+
+        public static Data operator +(Data a, Data b)
+        {
+            Data tmp;
+
+            tmp.weight = a.weight + b.weight;
+            tmp.torque = a.torque + b.torque;
+            tmp.acceleration = a.acceleration + b.acceleration;
+            tmp.maxVelocity = a.maxVelocity + b.maxVelocity;
+            tmp.friction = a.friction + b.friction;
+
+            return tmp;
+        }
+
+        public static Data operator -(Data a, Data b)
+        {
+            Data tmp;
+
+            tmp.weight = a.weight - b.weight;
+            tmp.torque = a.torque - b.torque;
+            tmp.acceleration = a.acceleration - b.acceleration;
+            tmp.maxVelocity = a.maxVelocity - b.maxVelocity;
+            tmp.friction = a.friction - b.friction;
+
+            return tmp;
+        }
+
+        public static bool operator==(Data a, Data b)
+        {
+            return (a.weight == b.weight) && (a.torque == b.torque) && (a.acceleration == b.acceleration) && (a.maxVelocity == b.maxVelocity) && (a.friction == b.friction);
+        }
+
+        public static bool operator !=(Data a, Data b)
+        {
+            return !(a == b);
+        }
     }
     [SerializeField] private Data stats;
 
     public static Data operator +(Stats a, Stats b)
     {
-        Data tmp;
-
-        tmp.weight = a.stats.weight + b.stats.weight;
-        tmp.torque = a.stats.torque + b.stats.torque;
-        tmp.acceleration = a.stats.acceleration + b.stats.acceleration;
-        tmp.maxVelocity = a.stats.maxVelocity + b.stats.maxVelocity;
-        tmp.friction = a.stats.friction + b.stats.friction;
-
-        return tmp;
+        return a.stats + b.stats;
     }
 
     public static Data operator -(Stats a, Stats b)
     {
-        Data tmp;
+        return a.stats - b.stats;
+    }
 
-        tmp.weight = a.stats.weight - b.stats.weight;
-        tmp.torque = a.stats.torque - b.stats.torque;
-        tmp.acceleration = a.stats.acceleration - b.stats.acceleration;
-        tmp.maxVelocity = a.stats.maxVelocity - b.stats.maxVelocity;
-        tmp.friction = a.stats.friction - b.stats.friction;
+    public static bool operator ==(Stats a, Stats b)
+    {
+        return a.stats == b.stats;
+    }
 
-        return tmp;
+    public static bool operator !=(Stats a, Stats b)
+    {
+        return !(a.stats == b.stats);
     }
 
     public Data GetStats() { return stats; }
