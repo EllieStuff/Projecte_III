@@ -22,6 +22,7 @@ public class PlayerVehicleScript : MonoBehaviour
     private float timerReversed;
     private float savedMaxSpeed;
     private bool reduceSpeed;
+    private float savedAngularDrag;
 
     QuadControlSystem controls;
 
@@ -72,6 +73,7 @@ public class PlayerVehicleScript : MonoBehaviour
         vehicleRB = this.GetComponent<Rigidbody>();
         vehicleRB.centerOfMass = centerOfMass;
         savedMaxSpeed = vehicleMaxSpeed;
+        savedAngularDrag = vehicleRB.angularDrag;
 
         wheels = transform.parent.GetChild(1).GetChild(0).gameObject;
     }
@@ -614,6 +616,17 @@ public class PlayerVehicleScript : MonoBehaviour
         {
             vehicleRB.AddForce(other.GetComponent<WaterStreamColliderScript>().Stream, ForceMode.Force);
         }
+
+        if (other.CompareTag("Painting"))
+        {
+            if (vehicleRB.velocity.magnitude > 1.0f)
+            {
+                Debug.Log("slkg");
+                AddFriction(100);
+                vehicleRB.angularDrag = savedAngularDrag * 2.0f;
+            }
+        }
+
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -636,6 +649,11 @@ public class PlayerVehicleScript : MonoBehaviour
         {
             StartCoroutine(LerpVehicleMaxSpeed(savedMaxSpeed, 1.5f));
         }
+        if (other.CompareTag("Painting"))
+        {
+            Debug.Log("aaaaaa2");
+            ResetFriction();
+        }
 
     }
 
@@ -643,6 +661,27 @@ public class PlayerVehicleScript : MonoBehaviour
     {
         vehicleReversed = false;
         timerReversed = 0;
+    }
+
+    //void ChangeFriction(float _dragInc, float _speedDec)
+    //{
+    //    vehicleRB.angularDrag = savedAngularDrag * _dragInc;
+    //    vehicleMaxSpeed = savedMaxSpeed / _speedDec;
+    //    if (_speedDec < 1.0f) vehicleAcceleration /= (_speedDec + (1-_speedDec)*2.0f);
+    //}
+    void ResetFriction()
+    {
+        vehicleRB.angularDrag = savedAngularDrag;
+        //vehicleMaxSpeed = savedMaxSpeed;
+        //vehicleAcceleration = savedAcceleration;
+    }
+    void AddFriction(float _frictionForce)
+    {
+        //Vector3 frictionVec = transform.up * _frictionForce;
+        Vector3 velFrictionVec = -vehicleRB.velocity.normalized * _frictionForce * vehicleRB.velocity.magnitude;
+        vehicleRB.AddForce(velFrictionVec, ForceMode.Force);
+        Vector3 angularFrictionVec = -vehicleRB.angularVelocity.normalized * _frictionForce;
+        vehicleRB.AddForce(angularFrictionVec, ForceMode.Force);
     }
 
     IEnumerator LerpVehicleMaxSpeed(float _targetValue, float _lerpTime)
