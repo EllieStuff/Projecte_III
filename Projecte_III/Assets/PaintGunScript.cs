@@ -5,11 +5,12 @@ using UnityEngine;
 public class PaintGunScript : MonoBehaviour
 {
     [SerializeField] GameObject prefab;
-    [SerializeField] Vector3 dir;
+    //[SerializeField] Vector3 dir;
     [SerializeField] float timeActive = 5;
     [SerializeField] Utils.MinMaxFloat force = new Utils.MinMaxFloat(4, 6);
     [SerializeField] Utils.MinMaxFloat timeDiff = new Utils.MinMaxFloat(0.01f, 0.2f);
-    [SerializeField] Utils.MinMaxFloat size = new Utils.MinMaxFloat(0.1f, 0.5f);
+    [SerializeField] Utils.MinMaxFloat size = new Utils.MinMaxFloat(0.01f, 0.1f);
+    [SerializeField] Utils.MinMaxVec3 dirDiff = new Utils.MinMaxVec3(-Vector3.one, Vector3.one);
 
     bool gunActive = false;
 
@@ -41,11 +42,11 @@ public class PaintGunScript : MonoBehaviour
         while(currTime < timeActive)
         {
             GameObject currBullet = GameObject.Instantiate(prefab, this.transform);
-            float newScale = Random.Range(size.min, size.max);
+            float newScale = size.GetRndValue();
             currBullet.transform.localScale = new Vector3(newScale, newScale, newScale);
-            currBullet.GetComponent<Rigidbody>().AddForce(dir.normalized * Random.Range(force.min, force.max), ForceMode.Impulse);
+            currBullet.GetComponent<Rigidbody>().AddForce((transform.forward + dirDiff.GetRndValue().normalized/10.0f) * force.GetRndValue(), ForceMode.Impulse);
 
-            float timeInc = Random.Range(timeDiff.min, timeDiff.max);
+            float timeInc = timeDiff.GetRndValue();
             currTime += timeInc;
             yield return new WaitForSeconds(timeInc);
         }

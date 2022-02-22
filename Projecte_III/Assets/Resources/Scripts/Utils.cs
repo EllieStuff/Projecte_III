@@ -9,12 +9,40 @@ public class Utils
     {
         public float min, max;
         public MinMaxFloat(float _min, float _max) { min = _min; max = _max; }
+
+        public float GetRndValue() { return Random.Range(min, max); }
+        public static float GetRndValue(MinMaxFloat _minMax) { return Random.Range(_minMax.min, _minMax.max); }
     }
     [System.Serializable]
     public struct MinMaxVec3
     {
         public Vector3 min, max;
         public MinMaxVec3(Vector3 _min, Vector3 _max) { min = _min; max = _max; }
+
+        public Vector3 GetRndValue() { return new Vector3(Random.Range(min.x, max.x), Random.Range(min.y, max.y), Random.Range(min.z, max.z)); }
+        public static Vector3 GetRndValue(MinMaxVec3 _minMax) { return new Vector3(Random.Range(_minMax.min.x, _minMax.max.x), Random.Range(_minMax.min.y, _minMax.max.y), Random.Range(_minMax.min.z, _minMax.max.z)); }
+    }
+
+    public class Misc
+    {
+        public static int RndPositivity()
+        {
+            float value = Random.Range(-1.0f, 1.0f);
+            if (value > 0) return 1;
+            else return -1;
+        }
+
+        public static int FindFrictionIdByName(List<FrictionController.Friction> _list, string _nameToFind)
+        {
+            for(int i = 0; i < _list.Count; i++)
+            {
+                if (_list[i].name == _nameToFind)
+                    return i;
+            }
+
+            return -1;
+        }
+
     }
 
     public class Vectors : MonoBehaviour
