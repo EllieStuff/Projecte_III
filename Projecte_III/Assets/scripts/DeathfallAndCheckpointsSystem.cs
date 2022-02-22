@@ -50,31 +50,34 @@ public class DeathfallAndCheckpointsSystem : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        if(finishRaceCP)
+        if (finishRaceCP)
         {
             try
             {
-                if (!multiplayerMode)
+                if (!multiplayerMode && other.tag.Contains("Player"))
                     other.transform.parent.GetComponent<PlayerVehicleScript>().finishedRace = true;
+
+                GameObject.Find("UI").transform.GetChild(0).GetChild(0).GetComponent<UITimerChrono>().finishedRace = true;
+                GameObject.Find("UI").transform.GetChild(2).gameObject.SetActive(true);
+                GameObject.Find("ParticlesFinish").GetComponent<ParticleSystem>().Play();
+                GameObject.Find("ParticlesFinish").GetComponent<AudioSource>().Play();
+                GameObject.Find("ParticlesFinish").transform.GetChild(0).GetComponent<AudioSource>().Play();
+                AudioManager.Instance.Stop_OST();
+
+                enableMusic = true;
+                finishRaceCP = false;
             }
-            catch(Exception)
+            catch (Exception)
             {
 
             }
-
-            GameObject.Find("UI").transform.GetChild(0).GetChild(0).GetComponent<UITimerChrono>().finishedRace = true;
-            GameObject.Find("UI").transform.GetChild(2).gameObject.SetActive(true);
-            GameObject.Find("ParticlesFinish").GetComponent<ParticleSystem>().Play();
-            GameObject.Find("ParticlesFinish").GetComponent<AudioSource>().Play();
-            GameObject.Find("ParticlesFinish").transform.GetChild(0).GetComponent<AudioSource>().Play();
-            AudioManager.Instance.Stop_OST();
-
-            enableMusic = true;
-            finishRaceCP = false;
         }
+    }
 
+    private void OnTriggerEnter(Collider other)
+    {
         //PLAYER1
         if (gameObject.tag.Equals("Respawn") && chasis == other.gameObject)
         {
