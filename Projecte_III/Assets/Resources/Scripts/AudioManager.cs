@@ -70,6 +70,12 @@ public class AudioManager : MonoBehaviour
         _audioSource.PlayOneShot(clipData.clip);
     }
 
+    public void Stop_OST()
+    {
+        OST_AudioSource.volume = 0.1f;
+        OST_AudioSource.Stop();
+    }
+
     public void Play_OST(string _audioName)
     {
         GameObject loadObject = Resources.Load<GameObject>("Audio/OST/" + _audioName);

@@ -56,6 +56,8 @@ public class PlayerVehicleScript : MonoBehaviour
     [SerializeField] private GameObject desatascadorPrefab;
     private GameObject desatascadorInstance;
 
+    public bool finishedRace;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -166,7 +168,6 @@ public class PlayerVehicleScript : MonoBehaviour
             if((hit.transform.tag.Contains("Player") || hit.transform.tag.Contains("Tree") || hit.transform.tag.Contains("Valla")) && (hit.transform.position - transform.position).magnitude > 1 && hit.transform != transform)
             {
                 savedDirection = (hit.transform.position - transform.position).normalized;
-                Debug.Log(savedDirection);
             }
             else
             {
@@ -251,7 +252,17 @@ public class PlayerVehicleScript : MonoBehaviour
         }
 
         controls.getAllInput(playerNum);
+        if(!finishedRace)
         vehicleMovement();
+        else
+        {
+            if (transform.InverseTransformDirection(vehicleRB.velocity).z > 1)
+                vehicleRB.velocity -= transform.TransformDirection(new Vector3(0, 0, vehicleAcceleration));
+            else if(transform.InverseTransformDirection(vehicleRB.velocity).z < -1)
+                vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, vehicleAcceleration));
+            else
+                vehicleRB.velocity = Vector3.zero;
+        }
     }
 
     void OnCollisionStay(Collision other)

@@ -1,15 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class DeathfallAndCheckpointsSystem : MonoBehaviour
 {
+    public bool finishRaceCP;
     public bool activated;
     [SerializeField] private bool multiplayerMode;
+    [SerializeField] private GameObject particlesPrefab;
     PlayerVehicleScript vehicleScript;
     PlayerVehicleScriptP2 vehicleScriptP2;
     GameObject chasis;
     GameObject chasisP2;
+
 
     // Start is called before the first frame update
     void Start()
@@ -39,6 +43,27 @@ public class DeathfallAndCheckpointsSystem : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if(finishRaceCP)
+        {
+            try
+            {
+                if (!multiplayerMode)
+                    other.transform.parent.GetComponent<PlayerVehicleScript>().finishedRace = true;
+            }
+            catch(Exception)
+            {
+
+            }
+
+            GameObject.Find("UI").transform.GetChild(0).GetChild(0).GetComponent<UITimerChrono>().finishedRace = true;
+            GameObject.Find("UI").transform.GetChild(2).gameObject.SetActive(true);
+            GameObject.Find("ParticlesFinish").GetComponent<ParticleSystem>().Play();
+            GameObject.Find("ParticlesFinish").GetComponent<AudioSource>().Play();
+            AudioManager.Instance.Stop_OST();
+
+            finishRaceCP = false;
+        }
+
         //PLAYER1
         if (gameObject.tag.Equals("Respawn") && chasis == other.gameObject)
         {

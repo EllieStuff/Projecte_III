@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -38,26 +39,32 @@ public class QuadSceneManager : MonoBehaviour
         }
         else if (scene.name != "Menu")
         {
-            Transform initial = GameObject.FindGameObjectWithTag("InitPos").transform;
+            try
+            {
+                Transform initial = GameObject.FindGameObjectWithTag("InitPos").transform;
 
-            gameObject.transform.localPosition = initial.localPosition;
-            gameObject.transform.localRotation = initial.localRotation;
-            gameObject.transform.localScale = initial.localScale;
+                gameObject.transform.localPosition = initial.localPosition;
+                gameObject.transform.localRotation = initial.localRotation;
+                gameObject.transform.localScale = initial.localScale;
 
-            GetComponentInChildren<PlayerVehicleScript>().buildingScene = false;
-            GetComponentInChildren<PlayerVehicleScript>().SetWheels();
+                GetComponentInChildren<PlayerVehicleScript>().buildingScene = false;
+                GetComponentInChildren<PlayerVehicleScript>().SetWheels();
 
-            playerScript.HideVoidModifier();
-            playerScript.SetWheels();
-            playerScript.buildingScene = false;
+                playerScript.HideVoidModifier();
+                playerScript.SetWheels();
+                playerScript.buildingScene = false;
 
-            Rigidbody rb = playerScript.GetComponent<Rigidbody>();
-            rb.constraints = RigidbodyConstraints.None;
-            rb.useGravity = true;
+                Rigidbody rb = playerScript.GetComponent<Rigidbody>();
+                rb.constraints = RigidbodyConstraints.None;
+                rb.useGravity = true;
 
-            SetCarModifiers();
+                SetCarModifiers();
 
-            playerScript.Init();
+                playerScript.Init();
+            }
+            catch(Exception)
+            {
+            }
         }
         
     }
