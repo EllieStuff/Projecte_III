@@ -627,8 +627,6 @@ public class PlayerVehicleScript : MonoBehaviour
 
         if (other.CompareTag("Water"))
         {
-            vehicleRB.velocity += transform.TransformDirection(new Vector3(50, 0, 50));
-            vehicleRB.velocity = new Vector3(vehicleRB.velocity.x, -10, vehicleRB.velocity.z);
             vehicleRB.AddForce(other.GetComponent<WaterStreamColliderScript>().Stream, ForceMode.Force);
         }
 
@@ -654,7 +652,7 @@ public class PlayerVehicleScript : MonoBehaviour
     {
         if (other.tag.Equals("Water") && !hasFloater)
         {
-            StartCoroutine(LerpVehicleMaxSpeed(savedMaxSpeed / 3, 3.0f));
+            StartCoroutine(LerpVehicleMaxSpeed(savedMaxSpeed * 2 / 3, 3.0f));
         }
         if(other.tag.Equals("Respawn") && !other.GetComponent<DeathfallAndCheckpointsSystem>().activated)
         {
