@@ -68,7 +68,7 @@ public class PlayerVehicleScript : MonoBehaviour
 
         vehicleAcceleration = 2;
 
-        savedAcceleration = vehicleAcceleration;
+                savedAcceleration = vehicleAcceleration;
 
         wheelCollider = new WheelCollider[4];
 
@@ -201,13 +201,13 @@ public class PlayerVehicleScript : MonoBehaviour
         RaycastHit hit;
         if (Physics.SphereCast(transform.position, 10, transform.TransformDirection(Vector3.forward), out hit, 30))
         {
-            if((hit.transform.tag.Contains("Player") || hit.transform.tag.Contains("Tree") || hit.transform.tag.Contains("Valla")) && (hit.transform.position - transform.position).magnitude > 1 && hit.transform != transform)
+            if((hit.transform.tag.Contains("Player") || hit.transform.tag.Contains("Tree") || hit.transform.tag.Contains("Valla")) && (hit.transform.position - transform.position).magnitude > 1.5f && hit.transform != transform)
             {
                 savedDirection = (hit.transform.position - transform.position).normalized;
             }
-            else
+            else if((hit.transform.position - transform.position).magnitude >= 5f)
             {
-                //Debug.Log(hit.transform.tag);
+                savedDirection = Vector3.zero;
             }
         }
 

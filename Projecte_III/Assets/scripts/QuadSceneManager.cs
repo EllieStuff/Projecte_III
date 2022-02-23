@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -23,11 +24,18 @@ public class QuadSceneManager : MonoBehaviour
     {
         if (scene.name == "Menu")
         {
-            for (int i = 0; i < transform.childCount; i++)
+            try
             {
-                GameObject child = transform.GetChild(i).gameObject;
-                if (child.activeSelf)
-                    child.SetActive(false);
+                for (int i = 0; i < transform.childCount; i++)
+                {
+                    GameObject child = transform.GetChild(i).gameObject;
+                    if (child.activeSelf)
+                        child.SetActive(false);
+                }
+            }
+            catch(Exception)
+            {
+
             }
         }
         else if (scene.name == "Building Scene")
