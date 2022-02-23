@@ -8,7 +8,7 @@ public class StatsListUI : MonoBehaviour
     Transform[] stats;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         stats = new Transform[transform.childCount];
         for (int i = 0; i < stats.Length; i++)
@@ -19,6 +19,7 @@ public class StatsListUI : MonoBehaviour
 
     public void UpdateStatsUI(Stats.Data values)
     {
+
         stats[0].GetComponentInChildren<TextMeshProUGUI>().text = values.weight.ToString();
         stats[1].GetComponentInChildren<TextMeshProUGUI>().text = values.acceleration.ToString();
         stats[2].GetComponentInChildren<TextMeshProUGUI>().text = values.friction.ToString();
