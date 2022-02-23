@@ -8,7 +8,6 @@ public class ButtonManager : MonoBehaviour
     [SerializeField] private Button[] buttonList;
     [SerializeField] private GameObject[] backgrounds;
 
-
     public void OpenButtons()
     {
         foreach (Button item in buttonList)
