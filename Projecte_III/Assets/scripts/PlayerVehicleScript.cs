@@ -15,11 +15,14 @@ public class PlayerVehicleScript : MonoBehaviour
     [SerializeField] float alaDeltaTimer;
     [SerializeField] float driftTorqueInc = 3.0f;
 
+    Vector3 savedDirection;
+
     private Material chasisMat;
     private Vector3 savedVelocity;
     private float timerReversed;
     private float savedMaxSpeed;
     private bool reduceSpeed;
+    private float savedAngularDrag;
 
     QuadControlSystem controls;
 
@@ -52,10 +55,14 @@ public class PlayerVehicleScript : MonoBehaviour
     [SerializeField] private int desatascadorBaseCooldown = 20;
     [SerializeField] private GameObject desatascadorPrefab;
     private GameObject desatascadorInstance;
+    bool paintingChecked = false, oilChecked = false;
+
+    public bool finishedRace;
 
     // Start is called before the first frame update
     void Start()
     {
+        desatascadorBaseCooldown = 10;
         wheelsPivot = transform.GetChild(1).gameObject;
         alaDeltaDuration = 1;
         alaDeltaTimer = 1;
@@ -69,6 +76,7 @@ public class PlayerVehicleScript : MonoBehaviour
         vehicleRB = this.GetComponent<Rigidbody>();
         vehicleRB.centerOfMass = centerOfMass;
         savedMaxSpeed = vehicleMaxSpeed;
+        savedAngularDrag = vehicleRB.angularDrag;
 
         wheels = transform.parent.GetChild(1).GetChild(0).gameObject;
     }
@@ -95,6 +103,7 @@ public class PlayerVehicleScript : MonoBehaviour
     void Update()
     {
         touchingGround = false;
+        paintingChecked = oilChecked = false;
 
         //HERE WE SET THE POSITION AND ROTATION FROM THE WHEELS RENDERERS
 
@@ -155,12 +164,26 @@ public class PlayerVehicleScript : MonoBehaviour
 
     public void Desatascador()
     {
-        if(controls.Quad.Drift > 0 && !desatascador && desatascadorCooldown <= 0 && desatascadorInstance == null)
+        RaycastHit hit;
+        if (Physics.SphereCast(transform.position, 10, transform.TransformDirection(Vector3.forward), out hit, 30))
+        {
+            if((hit.transform.tag.Contains("Player") || hit.transform.tag.Contains("Tree") || hit.transform.tag.Contains("Valla")) && (hit.transform.position - transform.position).magnitude > 1 && hit.transform != transform)
+            {
+                savedDirection = (hit.transform.position - transform.position).normalized;
+            }
+            else
+            {
+                //Debug.Log(hit.transform.tag);
+            }
+        }
+
+        if (controls.Quad.Drift > 0 && !desatascador && desatascadorCooldown <= 0 && desatascadorInstance == null)
         {
             desatascadorInstance = Instantiate(desatascadorPrefab, this.transform.position, this.transform.rotation);
             Physics.IgnoreCollision(desatascadorInstance.transform.GetChild(0).GetComponent<BoxCollider>(), transform.GetChild(0).GetComponent<BoxCollider>());
             desatascadorInstance.GetComponent<plungerInstance>().playerShotPlunger = this.gameObject;
             desatascadorInstance.GetComponent<plungerInstance>().playerNum = playerNum;
+            desatascadorInstance.GetComponent<plungerInstance>().normalDir = savedDirection;
             desatascador = true;
             desatascadorCooldown = desatascadorBaseCooldown;
         }
@@ -172,15 +195,17 @@ public class PlayerVehicleScript : MonoBehaviour
         {
             if(desatascadorCooldown <= desatascadorBaseCooldown/ 2 && desatascadorInstance != null)
             {
+                savedDirection = Vector3.zero;
                 vehicleMaxSpeed = savedMaxSpeed;
-                Destroy(desatascadorInstance);
+                desatascadorInstance.GetComponent<plungerInstance>().destroyPlunger = true;
+                desatascadorInstance = null;
                 desatascador = false;
             }
             else if(desatascadorInstance == null)
             {
+                savedDirection = Vector3.zero;
                 vehicleMaxSpeed = savedMaxSpeed;
                 desatascador = false;
-                desatascadorCooldown = 0;
             }
             if(vehicleMaxSpeed > savedMaxSpeed)
             {
@@ -229,7 +254,17 @@ public class PlayerVehicleScript : MonoBehaviour
         }
 
         controls.getAllInput(playerNum);
+        if(!finishedRace)
         vehicleMovement();
+        else
+        {
+            if (transform.InverseTransformDirection(vehicleRB.velocity).z > 1)
+                vehicleRB.velocity -= transform.TransformDirection(new Vector3(0, 0, vehicleAcceleration));
+            else if(transform.InverseTransformDirection(vehicleRB.velocity).z < -1)
+                vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, vehicleAcceleration));
+            else
+                vehicleRB.velocity = Vector3.zero;
+        }
     }
 
     void OnCollisionStay(Collision other)
@@ -561,7 +596,7 @@ public class PlayerVehicleScript : MonoBehaviour
 
     void checkFallDeath()
     {
-        if(vehicleRB.velocity.y <= -22)
+        if(vehicleRB.velocity.y <= -100)
         {
             AudioManager.Instance.Play_SFX("Fall_SFX");
             this.transform.position = respawnPosition;
@@ -592,8 +627,28 @@ public class PlayerVehicleScript : MonoBehaviour
 
         if (other.CompareTag("Water"))
         {
+            vehicleRB.velocity += transform.TransformDirection(new Vector3(50, 0, 50));
+            vehicleRB.velocity = new Vector3(vehicleRB.velocity.x, -10, vehicleRB.velocity.z);
             vehicleRB.AddForce(other.GetComponent<WaterStreamColliderScript>().Stream, ForceMode.Force);
         }
+
+        if (!paintingChecked && other.CompareTag("Painting"))
+        {
+            paintingChecked = true;
+            if (vehicleRB.velocity.magnitude > 1.0f)
+            {
+                AddFriction(1000, 2.0f);
+            }
+        }
+        if (!oilChecked && other.CompareTag("Oil"))
+        {
+            oilChecked = true;
+            if (vehicleRB.velocity.magnitude > 1.0f)
+            {
+                AddFriction(-1200, 0.7f);
+            }
+        }
+
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -601,15 +656,24 @@ public class PlayerVehicleScript : MonoBehaviour
         {
             StartCoroutine(LerpVehicleMaxSpeed(savedMaxSpeed / 3, 3.0f));
         }
+        if(other.tag.Equals("Respawn") && !other.GetComponent<DeathfallAndCheckpointsSystem>().activated)
+        {
+            GameObject.Find("UI").transform.GetChild(1).GetComponent<UIPosition>().actualCheckpoint++;
+            other.GetComponent<DeathfallAndCheckpointsSystem>().activated = true;
+        }
     }
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log(vehicleMaxSpeed);
         StartCoroutine(WaitEndBoost());
 
         if(other.tag.Equals("Water") && !hasFloater)
         {
             StartCoroutine(LerpVehicleMaxSpeed(savedMaxSpeed, 1.5f));
+        }
+
+        if (other.CompareTag("Painting") || other.CompareTag("Oil"))
+        {
+            ResetFriction();
         }
 
     }
@@ -618,6 +682,29 @@ public class PlayerVehicleScript : MonoBehaviour
     {
         vehicleReversed = false;
         timerReversed = 0;
+    }
+
+    //void ChangeFriction(float _dragInc, float _speedDec)
+    //{
+    //    vehicleRB.angularDrag = savedAngularDrag * _dragInc;
+    //    vehicleMaxSpeed = savedMaxSpeed / _speedDec;
+    //    if (_speedDec < 1.0f) vehicleAcceleration /= (_speedDec + (1-_speedDec)*2.0f);
+    //}
+    void ResetFriction()
+    {
+        vehicleRB.angularDrag = savedAngularDrag;
+        //vehicleMaxSpeed = savedMaxSpeed;
+        //vehicleAcceleration = savedAcceleration;
+    }
+    void AddFriction(float _frictionForce, float _dragInc)
+    {
+        //Vector3 frictionVec = transform.up * _frictionForce;
+        Vector3 velFrictionVec = -vehicleRB.velocity.normalized * _frictionForce * vehicleRB.velocity.magnitude;
+        vehicleRB.AddForce(velFrictionVec, ForceMode.Force);
+        //Vector3 angularFrictionVec = -vehicleRB.angularVelocity.normalized * _frictionForce;
+        //vehicleRB.AddForce(angularFrictionVec, ForceMode.Force);
+        vehicleRB.angularDrag = savedAngularDrag * _dragInc;
+
     }
 
     IEnumerator LerpVehicleMaxSpeed(float _targetValue, float _lerpTime)

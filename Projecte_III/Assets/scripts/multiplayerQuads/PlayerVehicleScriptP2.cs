@@ -15,6 +15,8 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
     [SerializeField] float alaDeltaTimer;
     [SerializeField] float driftTorqueInc = 3.0f;
 
+    Vector3 savedDirection;
+
     private Material chasisMat;
     private Vector3 savedVelocity;
     private float timerReversed;
@@ -56,6 +58,7 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        desatascadorBaseCooldown = 10;
         wheelsPivot = transform.GetChild(1).gameObject;
         alaDeltaDuration = 1;
         alaDeltaTimer = 1;
@@ -155,12 +158,27 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
 
     public void Desatascador()
     {
+        RaycastHit hit;
+        if (Physics.SphereCast(transform.position, 2, transform.TransformDirection(Vector3.forward), out hit, 30))
+        {
+            if (hit.transform.tag.Contains("Player") && hit.transform != transform)
+            {
+                savedDirection = (hit.transform.position - transform.position).normalized;
+                Debug.Log(savedDirection);
+            }
+            else
+            {
+                Debug.Log(hit.transform.tag);
+            }
+        }
+
         if (controls.QuadP2.Drift > 0 && !desatascador && desatascadorCooldown <= 0 && desatascadorInstance == null)
         {
             desatascadorInstance = Instantiate(desatascadorPrefab, this.transform.position, this.transform.rotation);
             Physics.IgnoreCollision(desatascadorInstance.transform.GetChild(0).GetComponent<BoxCollider>(), transform.GetChild(0).GetComponent<BoxCollider>());
             desatascadorInstance.GetComponent<plungerInstance>().playerShotPlunger = this.gameObject;
             desatascadorInstance.GetComponent<plungerInstance>().playerNum = playerNum;
+            desatascadorInstance.GetComponent<plungerInstance>().normalDir = savedDirection;
             desatascador = true;
             desatascadorCooldown = desatascadorBaseCooldown;
         }
@@ -172,15 +190,17 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
         {
             if (desatascadorCooldown <= desatascadorBaseCooldown / 2 && desatascadorInstance != null)
             {
+                savedDirection = Vector3.zero;
                 vehicleMaxSpeed = savedMaxSpeed;
-                Destroy(desatascadorInstance);
+                desatascadorInstance.GetComponent<plungerInstance>().destroyPlunger = true;
+                desatascadorInstance = null;
                 desatascador = false;
             }
             else if (desatascadorInstance == null)
             {
+                savedDirection = Vector3.zero;
                 vehicleMaxSpeed = savedMaxSpeed;
                 desatascador = false;
-                desatascadorCooldown = 0;
             }
             if (vehicleMaxSpeed > savedMaxSpeed)
             {
@@ -351,6 +371,8 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
             vehicleMaxSpeed = savedMaxSpeed;
             vehicleAcceleration = savedAcceleration;
         }
+
+
 
         //VEHICLE SOUND PITCH SYSTEM
         VehicleSoundPitchFunction();
@@ -591,19 +613,16 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
     {
         if (other.tag.Equals("Water") && !hasFloater)
         {
-            //vehicleMaxSpeed = savedMaxSpeed / 3;
             StartCoroutine(LerpVehicleMaxSpeed(savedMaxSpeed / 3, 3.0f));
         }
     }
     private void OnTriggerExit(Collider other)
     {
         Debug.Log(vehicleMaxSpeed);
-        //vehicleMaxSpeed = savedMaxSpeed;
         StartCoroutine(WaitEndBoost());
 
         if (other.tag.Equals("Water") && !hasFloater)
         {
-            //vehicleMaxSpeed = savedMaxSpeed;
             StartCoroutine(LerpVehicleMaxSpeed(savedMaxSpeed, 1.5f));
         }
 
@@ -628,4 +647,6 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
         }
 
     }
+
 }
+
