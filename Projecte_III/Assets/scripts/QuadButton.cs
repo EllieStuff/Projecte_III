@@ -28,7 +28,7 @@ public class QuadButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             if(quadSpot.transform.childCount > 1 && (currentQuad == null || currentQuad.name != quadModel.name))
             {
                 if (quadSpot.transform.childCount > 2)
-                    Destroy(quadSpot.transform.GetChild(1));
+                    Destroy(quadSpot.transform.GetChild(1).gameObject);
                     
                 currentQuad = quadSpot.transform.GetChild(0).gameObject;
 
