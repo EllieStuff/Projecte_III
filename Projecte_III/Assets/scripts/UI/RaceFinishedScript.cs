@@ -21,6 +21,9 @@ public class RaceFinishedScript : MonoBehaviour
     public TextMeshProUGUI timeText;
     public TextMeshProUGUI timeTextLocal;
     public GameObject newRecord;
+    public GameObject textInstance;
+    public Transform scoresPivot;
+    public GameObject scoreGameObject;
 
     private void Update()
     {
@@ -68,6 +71,35 @@ public class RaceFinishedScript : MonoBehaviour
 
             stream2.Close();
 
+            Array.Sort(scores.seconds);
+            Array.Sort(scores.minutes);
+
+            int index = 0;
+
+            for (int i = 0; i < 100; i++)
+            {
+                if (index >= 8)
+                    break;
+
+                if(scores.seconds[i] != 0)
+                {
+                    GameObject instance = Instantiate(textInstance, scoresPivot);
+
+                    if (scores.minutes[i] < 10 && scores.seconds[i] < 10)
+                        instance.GetComponent<TextMeshProUGUI>().text = "00:0" + scores.minutes[i] + ":0" + (int)scores.seconds[i];
+                    else if (scores.minutes[i] < 10 && scores.seconds[i] >= 10)
+                        instance.GetComponent<TextMeshProUGUI>().text = "00:0" + scores.minutes[i] + ":" + (int)scores.seconds[i];
+                    else if (scores.minutes[i] >= 10 && scores.seconds[i] < 10)
+                        instance.GetComponent<TextMeshProUGUI>().text = "00:0" + scores.minutes[i] + (int)scores.seconds[i];
+                    else if (scores.minutes[i] >= 10 && scores.seconds[i] >= 10)
+                        instance.GetComponent<TextMeshProUGUI>().text = "00:" + scores.minutes[i] + ":" + (int)scores.seconds[i];
+
+                    instance.SetActive(true);
+
+                    index++;
+                }
+            }
+
         }
         catch(Exception)
         {
@@ -95,6 +127,25 @@ public class RaceFinishedScript : MonoBehaviour
             formatter.Serialize(stream, scores);
             stream.Close();
 
+            for (int i = 0; i < 100; i++)
+            {
+                if (scores.seconds[i] != 0)
+                {
+                    GameObject instance = Instantiate(textInstance, scoresPivot);
+
+                    if (scores.minutes[i] < 10 && scores.seconds[i] < 10)
+                        instance.GetComponent<TextMeshProUGUI>().text = "00:0" + scores.minutes[i] + ":0" + (int)scores.seconds[i];
+                    else if (scores.minutes[i] < 10 && scores.seconds[i] >= 10)
+                        instance.GetComponent<TextMeshProUGUI>().text = "00:0" + scores.minutes[i] + ":" + (int)scores.seconds[i];
+                    else if (scores.minutes[i] >= 10 && scores.seconds[i] < 10)
+                        instance.GetComponent<TextMeshProUGUI>().text = "00:0" + scores.minutes[i] + (int)scores.seconds[i];
+                    else if (scores.minutes[i] >= 10 && scores.seconds[i] >= 10)
+                        instance.GetComponent<TextMeshProUGUI>().text = "00:" + scores.minutes[i] + ":" + (int)scores.seconds[i];
+
+                    instance.SetActive(true);
+                }
+            }
+
         }
 
         timeTextLocal.text = timeText.text;
@@ -103,6 +154,14 @@ public class RaceFinishedScript : MonoBehaviour
         {
             newRecord.SetActive(true);
         }
+    }
+
+    public void openScoreMenu()
+    {
+        if(!scoreGameObject.active)
+            scoreGameObject.SetActive(true);
+        else
+            scoreGameObject.SetActive(false);
     }
 
     public void QuitMenu()
