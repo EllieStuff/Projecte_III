@@ -19,6 +19,7 @@ public class QuadControlSystem : MonoBehaviour
         public float LookBackwards;
         public float ChasisElevation;
         public float AlaDelta;
+        public float plunger;
     }
 
     public struct P2
@@ -32,6 +33,7 @@ public class QuadControlSystem : MonoBehaviour
         public float LookBackwards;
         public float ChasisElevation;
         public float AlaDelta;
+        public float plunger;
     }
 
     public void getAllInput(int playerNum)
@@ -40,13 +42,13 @@ public class QuadControlSystem : MonoBehaviour
         {
             case 1:
                 //FORWARD
-                if (Input.GetKey(KeyCode.Joystick1Button5) || Input.GetKey(KeyCode.W))
+                if (Input.GetAxis("ForwardP1") >= 0.5f || Input.GetKey(KeyCode.W))
                     Quad.Forward = 1;
                 else
                     Quad.Forward = 0;
                 //______________________________________________
                 //BACKWARD
-                if (Input.GetKey(KeyCode.Joystick1Button4) || Input.GetKey(KeyCode.S))
+                if (Input.GetAxis("BackwardP1") >= 0.5f || Input.GetKey(KeyCode.S))
                     Quad.Backward = 1;
                 else
                     Quad.Backward = 0;
@@ -64,10 +66,10 @@ public class QuadControlSystem : MonoBehaviour
                     Quad.Right = 0;
                 //______________________________________________
                 //DRIFT
-                if (Input.GetAxis("DriftP1") >= 1 || Input.GetKey(KeyCode.Space))
+                /*if (Input.GetAxis("DriftP1") >= 1 || Input.GetKey(KeyCode.Space))
                     Quad.Drift = 1;
                 else
-                    Quad.Drift = 0;
+                    Quad.Drift = 0;*/
                 //______________________________________________
                 //CHASIS ELEVATION
                 if (Input.GetKey(KeyCode.Joystick1Button1) || Input.GetKey(KeyCode.LeftControl))
@@ -87,16 +89,22 @@ public class QuadControlSystem : MonoBehaviour
                 else
                     Quad.LookBackwards = 0;
                 //______________________________________________
+                //PLUNGER
+                if(Input.GetKey(KeyCode.Joystick1Button4) || Input.GetKey(KeyCode.Q))
+                    Quad.plunger = 1;
+                else
+                    Quad.plunger = 0;
+                //______________________________________________
                 break;
             case 2:
                 //FORWARD
-                if (Input.GetKey(KeyCode.Joystick2Button5))
+                if (Input.GetAxis("ForwardP2") >= 0.5f)
                     QuadP2.Forward = 1;
                 else
                     QuadP2.Forward = 0;
                 //______________________________________________
                 //BACKWARD
-                if (Input.GetKey(KeyCode.Joystick2Button4))
+                if (Input.GetAxis("BackwardP2") >= 0.5f)
                     QuadP2.Backward = 1;
                 else
                     QuadP2.Backward = 0;
@@ -114,10 +122,10 @@ public class QuadControlSystem : MonoBehaviour
                     QuadP2.Right = 0;
                 //______________________________________________
                 //DRIFT
-                if (Input.GetAxis("DriftP2") >= 1)
+                /*if (Input.GetAxis("DriftP2") >= 1)
                     QuadP2.Drift = 1;
                 else
-                    QuadP2.Drift = 0;
+                    QuadP2.Drift = 0;*/
                 //______________________________________________
                 //CHASIS ELEVATION
                 if (Input.GetKey(KeyCode.Joystick2Button1))
@@ -138,6 +146,12 @@ public class QuadControlSystem : MonoBehaviour
                     QuadP2.LookBackwards = 0;
                 //______________________________________________
                 break;
+                //PLUNGER
+                if (Input.GetKey(KeyCode.Joystick2Button4))
+                    QuadP2.plunger = 1;
+                else
+                    QuadP2.plunger = 0;
+                //______________________________________________
         }
     }
 }
