@@ -22,9 +22,9 @@ public class QuadSceneManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "Menu")
+        try
         {
-            try
+            if (scene.name == "Menu")
             {
                 for (int i = 0; i < transform.childCount; i++)
                 {
@@ -33,72 +33,71 @@ public class QuadSceneManager : MonoBehaviour
                         child.SetActive(false);
                 }
             }
-            catch(Exception)
+            else if (scene.name == "Building Scene")
             {
+                for (int i = 0; i < transform.childCount; i++)
+                {
+                    GameObject child = transform.GetChild(i).gameObject;
+                    if (!child.activeSelf)
+                        child.SetActive(true);
+                }
 
+                Transform initial = GameObject.FindGameObjectWithTag("InitPos").transform;
+
+                gameObject.transform.localPosition = initial.localPosition;
+                gameObject.transform.localRotation = initial.localRotation;
+                gameObject.transform.localScale = initial.localScale;
+
+                for (int i = 0; i < transform.childCount; i++)
+                {
+                    Transform child = transform.GetChild(i);
+                    child.localPosition = Vector3.zero;
+                    if (child.name == "Player")
+                        child.localRotation = new Quaternion(0, 180, 0, 0);
+                    else
+                        child.localRotation = Quaternion.identity;
+
+                }
+
+                Rigidbody rb = playerScript.GetComponent<Rigidbody>();
+                rb.constraints = RigidbodyConstraints.FreezeAll;
+                rb.useGravity = false;
+
+                playerScript.buildingScene = true;
+                GameObject[] objs = GameObject.FindGameObjectsWithTag("VehicleSet");
+                if (objs.Length > 1)
+                {
+                    Destroy(objs[1]);
+                }
+            }
+            else if (scene.name != "Menu")
+            {
+                Transform initial = GameObject.FindGameObjectWithTag("InitPos").transform;
+
+                gameObject.transform.localPosition = initial.localPosition;
+                gameObject.transform.localRotation = initial.localRotation;
+                gameObject.transform.localScale = initial.localScale;
+
+                GetComponentInChildren<PlayerVehicleScript>().buildingScene = false;
+                GetComponentInChildren<PlayerVehicleScript>().SetWheels();
+
+                playerScript.HideVoidModifier();
+                playerScript.SetWheels();
+                playerScript.buildingScene = false;
+
+                Rigidbody rb = playerScript.GetComponent<Rigidbody>();
+                rb.constraints = RigidbodyConstraints.None;
+                rb.useGravity = true;
+
+                SetCarModifiers();
+
+                playerScript.Init();
             }
         }
-        else if (scene.name == "Building Scene")
+        catch(Exception)
         {
-            for (int i = 0; i < transform.childCount; i++)
-            {
-                GameObject child = transform.GetChild(i).gameObject;
-                if (!child.activeSelf)
-                    child.SetActive(true);
-            }
 
-            Transform initial = GameObject.FindGameObjectWithTag("InitPos").transform;
-
-            gameObject.transform.localPosition = initial.localPosition;
-            gameObject.transform.localRotation = initial.localRotation;
-            gameObject.transform.localScale = initial.localScale;
-
-            for (int i = 0; i < transform.childCount; i++)
-            {
-                Transform child = transform.GetChild(i);
-                child.localPosition = Vector3.zero;
-                if(child.name == "Player")
-                    child.localRotation = new Quaternion(0, 180, 0, 0);
-                else
-                    child.localRotation = Quaternion.identity;
-
-            }
-
-            Rigidbody rb = playerScript.GetComponent<Rigidbody>();
-            rb.constraints = RigidbodyConstraints.FreezeAll;
-            rb.useGravity = false;
-
-            playerScript.buildingScene = true;
-            GameObject[] objs = GameObject.FindGameObjectsWithTag("VehicleSet");
-            if (objs.Length > 1)
-            {
-                Destroy(objs[1]);
-            }
         }
-        else if (scene.name != "Menu")
-        {
-            Transform initial = GameObject.FindGameObjectWithTag("InitPos").transform;
-
-            gameObject.transform.localPosition = initial.localPosition;
-            gameObject.transform.localRotation = initial.localRotation;
-            gameObject.transform.localScale = initial.localScale;
-
-            GetComponentInChildren<PlayerVehicleScript>().buildingScene = false;
-            GetComponentInChildren<PlayerVehicleScript>().SetWheels();
-
-            playerScript.HideVoidModifier();
-            playerScript.SetWheels();
-            playerScript.buildingScene = false;
-
-            Rigidbody rb = playerScript.GetComponent<Rigidbody>();
-            rb.constraints = RigidbodyConstraints.None;
-            rb.useGravity = true;
-
-            SetCarModifiers();
-
-            playerScript.Init();
-        }
-
     }
 
     void SetCarModifiers()
