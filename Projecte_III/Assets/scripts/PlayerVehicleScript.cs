@@ -103,7 +103,7 @@ public class PlayerVehicleScript : MonoBehaviour
         stats.SetStats(stats + wheels.GetComponentInChildren<Stats>());
 
         //Quad stats
-        stats.SetStats(stats + GameObject.FindGameObjectWithTag("vehicleElement").transform.GetComponentInChildren<Stats>());
+        stats.SetStats(stats + GameObject.FindGameObjectWithTag("PlayerVehicle").transform.GetComponentInChildren<Stats>());
 
         //Modifier Stats
         Transform modfs = GameObject.FindGameObjectWithTag("ModifierSpots").transform;
@@ -148,15 +148,14 @@ public class PlayerVehicleScript : MonoBehaviour
             Quaternion wheelRotation;
             for (int i = 0; i < wheelsPivot.transform.childCount; i++)
             {
-                Transform wheel = wheels.transform.GetChild(i);
-                WheelCollider wheelCol = wheelsPivot.transform.GetChild(i).GetComponent<WheelCollider>();
-                wheelCol.GetWorldPose(out wheelPosition, out wheelRotation);
-                if (wheelCol.GetGroundHit(out var touchingGroundV))
+                Transform wheel = wheels.transform.GetChild(0).GetChild(i);
+                wheelCollider[i].GetWorldPose(out wheelPosition, out wheelRotation);
+                if (wheelCollider[i].GetGroundHit(out var touchingGroundV))
                 {
                     touchingGround = true;
                 }
 
-                wheel.transform.position = wheelPosition;
+                wheel.position = wheelPosition;
 
                 if (wheel.tag.Equals("front") && (controls.Quad.Right == 1 || controls.Quad.Left == 1))
                     wheel.transform.localRotation = Quaternion.Lerp(wheel.transform.localRotation, new Quaternion(0, (controls.Quad.Right / 5) - (controls.Quad.Left / 5), 0, 1), Time.deltaTime * 3);
@@ -190,7 +189,6 @@ public class PlayerVehicleScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F))
         {
-            //Debug.LogWarning("quitar en vFinal");
             Physics.IgnoreLayerCollision(3, 4, hasFloater);
             hasFloater = !hasFloater;
         }

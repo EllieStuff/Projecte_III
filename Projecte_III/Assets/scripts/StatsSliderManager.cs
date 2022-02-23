@@ -39,10 +39,7 @@ public class StatsSliderManager : MonoBehaviour
         {
             statsValue = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>().GetStats();
 
-
             first = true;
         }
-
-
     }
 }
