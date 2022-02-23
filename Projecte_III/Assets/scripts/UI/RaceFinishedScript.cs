@@ -86,13 +86,13 @@ public class RaceFinishedScript : MonoBehaviour
                     GameObject instance = Instantiate(textInstance, scoresPivot);
 
                     if (scores.minutes[i] < 10 && scores.seconds[i] < 10)
-                        instance.GetComponent<TextMeshProUGUI>().text = "00:0" + scores.minutes[i] + ":0" + (int)scores.seconds[i];
+                        instance.GetComponent<TextMeshProUGUI>().text = "0" + scores.minutes[i] + ":0" + Mathf.Round(scores.seconds[i] * 100) * 0.01f;
                     else if (scores.minutes[i] < 10 && scores.seconds[i] >= 10)
-                        instance.GetComponent<TextMeshProUGUI>().text = "00:0" + scores.minutes[i] + ":" + (int)scores.seconds[i];
+                        instance.GetComponent<TextMeshProUGUI>().text = "0" + scores.minutes[i] + ":" + Mathf.Round(scores.seconds[i] * 100) * 0.01f;
                     else if (scores.minutes[i] >= 10 && scores.seconds[i] < 10)
-                        instance.GetComponent<TextMeshProUGUI>().text = "00:0" + scores.minutes[i] + (int)scores.seconds[i];
+                        instance.GetComponent<TextMeshProUGUI>().text = "0" + scores.minutes[i] + Mathf.Round(scores.seconds[i] * 100) * 0.01f;
                     else if (scores.minutes[i] >= 10 && scores.seconds[i] >= 10)
-                        instance.GetComponent<TextMeshProUGUI>().text = "00:" + scores.minutes[i] + ":" + (int)scores.seconds[i];
+                        instance.GetComponent<TextMeshProUGUI>().text = scores.minutes[i] + ":" + Mathf.Round(scores.seconds[i] * 100) * 0.01f;
 
                     instance.SetActive(true);
 
@@ -134,13 +134,13 @@ public class RaceFinishedScript : MonoBehaviour
                     GameObject instance = Instantiate(textInstance, scoresPivot);
 
                     if (scores.minutes[i] < 10 && scores.seconds[i] < 10)
-                        instance.GetComponent<TextMeshProUGUI>().text = "00:0" + scores.minutes[i] + ":0" + (int)scores.seconds[i];
+                        instance.GetComponent<TextMeshProUGUI>().text = "0" + scores.minutes[i] + ":0" + Mathf.Round(scores.seconds[i] * 100) * 0.01f;
                     else if (scores.minutes[i] < 10 && scores.seconds[i] >= 10)
-                        instance.GetComponent<TextMeshProUGUI>().text = "00:0" + scores.minutes[i] + ":" + (int)scores.seconds[i];
+                        instance.GetComponent<TextMeshProUGUI>().text = "0" + scores.minutes[i] + ":" + Mathf.Round(scores.seconds[i] * 100) * 0.01f;
                     else if (scores.minutes[i] >= 10 && scores.seconds[i] < 10)
-                        instance.GetComponent<TextMeshProUGUI>().text = "00:0" + scores.minutes[i] + (int)scores.seconds[i];
+                        instance.GetComponent<TextMeshProUGUI>().text = "0" + scores.minutes[i] + Mathf.Round(scores.seconds[i] * 100) * 0.01f;
                     else if (scores.minutes[i] >= 10 && scores.seconds[i] >= 10)
-                        instance.GetComponent<TextMeshProUGUI>().text = "00:" + scores.minutes[i] + ":" + (int)scores.seconds[i];
+                        instance.GetComponent<TextMeshProUGUI>().text = scores.minutes[i] + ":" + Mathf.Round(scores.seconds[i] * 100) * 0.01f;
 
                     instance.SetActive(true);
                 }

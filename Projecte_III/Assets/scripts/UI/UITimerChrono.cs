@@ -12,14 +12,17 @@ public class UITimerChrono : MonoBehaviour
 
     void Update()
     {
-        if (minute < 10 && second < 10)
-            GetComponent<TextMeshProUGUI>().text = "00:0" + minute + ":0" + (int)second;
-        else if (minute < 10 && second >= 10)
-            GetComponent<TextMeshProUGUI>().text = "00:0" + minute + ":" + (int)second;
-        else if (minute >= 10 && second < 10)
-            GetComponent<TextMeshProUGUI>().text = "00:0" + minute + (int)second;
-        else if (minute >= 10 && second >= 10)
-            GetComponent<TextMeshProUGUI>().text = "00:" + minute + ":" + (int)second;
+        if((Mathf.Round(second * 100) * 0.01f).ToString().Length <= 6)
+        {
+            if (minute < 10 && second < 10)
+                GetComponent<TextMeshProUGUI>().text = "0" + minute + ":0" + Mathf.Round(second * 100) * 0.01f;
+            else if (minute < 10 && second >= 10)
+                GetComponent<TextMeshProUGUI>().text = "0" + minute + ":" + Mathf.Round(second * 100) * 0.01f;
+            else if (minute >= 10 && second < 10)
+                GetComponent<TextMeshProUGUI>().text = "0" + minute + ":0" + Mathf.Round(second * 100) * 0.01f;
+            else if (minute >= 10 && second >= 10)
+                GetComponent<TextMeshProUGUI>().text = minute + ":" + Mathf.Round(second * 100) * 0.01f;
+        }
 
         if (!finishedRace)
             {
