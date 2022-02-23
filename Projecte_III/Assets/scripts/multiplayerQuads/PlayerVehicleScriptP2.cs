@@ -58,6 +58,7 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        savedAcceleration = vehicleAcceleration;
         desatascadorBaseCooldown = 10;
         wheelsPivot = transform.GetChild(1).gameObject;
         alaDeltaDuration = 1;
@@ -82,7 +83,6 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
         respawnPosition = new Vector3(0, 0, 0);
         respawnRotation = new Vector3(0, 0, 0);
         respawnVelocity = new Vector3(0, 0, 0);
-        savedAcceleration = vehicleAcceleration;
         buildingScene = SceneManager.GetActiveScene().name == "Building Scene";
     }
 

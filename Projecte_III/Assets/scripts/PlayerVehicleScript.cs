@@ -68,6 +68,8 @@ public class PlayerVehicleScript : MonoBehaviour
 
         vehicleAcceleration = 2;
 
+        savedAcceleration = vehicleAcceleration;
+
         wheelCollider = new WheelCollider[4];
 
         Transform _wheels = transform.GetChild(1);
@@ -123,7 +125,6 @@ public class PlayerVehicleScript : MonoBehaviour
         respawnPosition = new Vector3(0, 0, 0);
         respawnRotation = new Vector3(0, 0, 0);
         respawnVelocity = new Vector3(0, 0, 0);
-        savedAcceleration = vehicleAcceleration;
         buildingScene = SceneManager.GetActiveScene().name == "Building Scene";
     }
 
