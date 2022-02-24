@@ -158,7 +158,7 @@ public class PlayerVehicleScript : MonoBehaviour
 
                 wheel.position = wheelPosition;
 
-                if (wheel.tag.Equals("front") && (controls.Quad.Right == 1 || controls.Quad.Left == 1))
+                if (wheel.tag.Equals("front") && (controls.Quad.Right >= 0.2f || controls.Quad.Left >= 0.2f))
                     wheel.transform.localRotation = Quaternion.Lerp(wheel.transform.localRotation, new Quaternion(0, (controls.Quad.Right / 5) - (controls.Quad.Left / 5), 0, 1), Time.deltaTime * 3);
                 else
                     wheel.transform.rotation = wheelRotation;
@@ -196,16 +196,40 @@ public class PlayerVehicleScript : MonoBehaviour
 
     }
 
+    Transform localTransform;
+    Vector3 VectorLerp;
+
     public void Desatascador()
     {
         RaycastHit hit;
-        if (Physics.SphereCast(transform.position, 10, transform.TransformDirection(Vector3.forward), out hit, 30))
+        if (Physics.SphereCast(transform.position, 10, transform.TransformDirection(Vector3.forward), out hit, 10))
         {
-            if((hit.transform.tag.Contains("Player") || hit.transform.tag.Contains("Tree") || hit.transform.tag.Contains("Valla")) && (hit.transform.position - transform.position).magnitude > 1.5f && hit.transform != transform)
+            if ((hit.transform.tag.Contains("Player") || hit.transform.tag.Contains("Tree") || hit.transform.tag.Contains("Valla")) && (hit.transform.position - transform.position).magnitude > 5 && hit.transform != transform)
+                localTransform = hit.transform;
+        }
+
+        if(localTransform != null)
+            savedDirection = (localTransform.position - transform.position).normalized;
+
+        LineRenderer line = GetComponent<LineRenderer>();
+
+        line.SetPosition(0, Vector3.zero);
+        line.SetPosition(1, Vector3.zero);
+
+        if (savedDirection != Vector3.zero && desatascadorCooldown <= 0)
+        {
+            Vector3 sum = (transform.position + savedDirection * 3);
+
+            Debug.Log(transform.InverseTransformDirection(savedDirection).z);
+
+            bool isCorrect = transform.InverseTransformDirection(savedDirection).z > 0.75;
+
+            if (isCorrect)
             {
-                savedDirection = (hit.transform.position - transform.position).normalized;
+                line.SetPosition(0, transform.position);
+                line.SetPosition(1, sum);
             }
-            else if((hit.transform.position - transform.position).magnitude >= 5f)
+            else
             {
                 savedDirection = Vector3.zero;
             }
@@ -344,13 +368,11 @@ public class PlayerVehicleScript : MonoBehaviour
                 //LEFT
                 if (controls.Quad.Left > 0)
                 {
-                    Debug.Log(controls.Quad.Left);
                     vehicleRB.AddTorque(new Vector3(0, -vehicleTorque * controls.Quad.Left, 0));
                 }
                 //RIGHT
                 else if (controls.Quad.Right > 0)
                 {
-                    Debug.Log(controls.Quad.Right);
                     vehicleRB.AddTorque(new Vector3(0, vehicleTorque * controls.Quad.Right, 0));
                 }
             }
