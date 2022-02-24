@@ -18,19 +18,24 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
     Vector3 savedDirection;
 
     private Material chasisMat;
+    //Vehicle Stats
+    Stats stats;
+
     private Vector3 savedVelocity;
     private float timerReversed;
     private float savedMaxSpeed;
     private bool reduceSpeed;
+    private float savedAngularDrag;
 
     QuadControlSystem controls;
 
     public Rigidbody vehicleRB;
-    public float vehicleAcceleration;
+    private float vehicleAcceleration;
     public float vehicleTorque;
     public float vehicleMaxSpeed;
     public float vehicleMaxTorque;
-    public GameObject wheels;
+    private WheelCollider[] wheelCollider;
+    private GameObject wheels;
     public int lifeVehicle;
     public bool touchingGround;
     public bool vehicleReversed;
@@ -54,32 +59,71 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
     [SerializeField] private int desatascadorBaseCooldown = 20;
     [SerializeField] private GameObject desatascadorPrefab;
     private GameObject desatascadorInstance;
+    bool paintingChecked = false, oilChecked = false;
+
+    public bool finishedRace;
 
     // Start is called before the first frame update
     void Start()
     {
-        savedAcceleration = vehicleAcceleration;
+        stats = gameObject.AddComponent<Stats>();
+
+        vehicleAcceleration = 2;
+
+                savedAcceleration = vehicleAcceleration;
+
+        wheelCollider = new WheelCollider[4];
+
+        Transform _wheels = transform.GetChild(1);
+
+        for (int i = 0; i < wheelCollider.Length; i++)
+        {
+            wheelCollider[i] = _wheels.GetChild(i).GetComponent<WheelCollider>();
+        }
+
         desatascadorBaseCooldown = 10;
         wheelsPivot = transform.GetChild(1).gameObject;
         alaDeltaDuration = 1;
         alaDeltaTimer = 1;
         controls = new QuadControlSystem();
 
-        this.GetComponent<AudioSource>().enabled = false;
-        chasisMat = new Material(this.transform.GetChild(0).GetComponent<MeshRenderer>().material);
-        this.transform.GetChild(0).GetComponent<MeshRenderer>().material = chasisMat;
-        chasisMat.color = Color.red;
+        GetComponent<AudioSource>().enabled = false;
         Physics.gravity = new Vector3(0, -9.8f * 2, 0);
-        vehicleRB = this.GetComponent<Rigidbody>();
+        vehicleRB = GetComponent<Rigidbody>();
         vehicleRB.centerOfMass = centerOfMass;
         savedMaxSpeed = vehicleMaxSpeed;
+        savedAngularDrag = vehicleRB.angularDrag;
 
-        wheels = transform.parent.GetChild(1).GetChild(0).gameObject;
+        wheels = transform.parent.GetChild(1).gameObject;
+
+        SetStats();
+    }
+
+    public void SetStats()
+    {
+        stats.SetStats(new Stats.Data());
+
+        //Wheels stats
+        stats.SetStats(stats + wheels.GetComponentInChildren<Stats>());
+
+        //Quad stats
+        stats.SetStats(stats + GameObject.FindGameObjectWithTag("PlayerVehicle").transform.GetComponentInChildren<Stats>());
+
+        //Modifier Stats
+        Transform modfs = GameObject.FindGameObjectWithTag("ModifierSpots").transform;
+        
+        for (int i = 0; i < modfs.childCount; i++)
+        {
+            if(modfs.GetChild(i).childCount > 0)
+                stats.SetStats(stats + modfs.GetChild(i).GetComponentInChildren<Stats>());
+        }
+
+        GameObject.FindGameObjectWithTag("StatsManager").GetComponentInChildren<StatsListUI>().UpdateStatsUI(stats.GetStats());
     }
 
     private void Awake()
     {
-        this.transform.name = "Player";
+        transform.name = "Player";
         respawnPosition = new Vector3(0, 0, 0);
         respawnRotation = new Vector3(0, 0, 0);
         respawnVelocity = new Vector3(0, 0, 0);
@@ -92,33 +136,32 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
         {
             Physics.IgnoreLayerCollision(3, 4, true);
         }
-
     }
 
     void Update()
     {
         touchingGround = false;
+        paintingChecked = oilChecked = false;
 
         //HERE WE SET THE POSITION AND ROTATION FROM THE WHEELS RENDERERS
 
-        if (!buildingScene)
+        if(!buildingScene)
         {
             Vector3 wheelPosition;
             Quaternion wheelRotation;
             for (int i = 0; i < wheelsPivot.transform.childCount; i++)
             {
-                Transform wheel = wheels.transform.GetChild(i);
-                WheelCollider wheelCol = wheelsPivot.transform.GetChild(i).GetComponent<WheelCollider>();
-                wheelCol.GetWorldPose(out wheelPosition, out wheelRotation);
-                if (wheelCol.GetGroundHit(out var touchingGroundV))
+                Transform wheel = wheels.transform.GetChild(0).GetChild(i);
+                wheelCollider[i].GetWorldPose(out wheelPosition, out wheelRotation);
+                if (wheelCollider[i].GetGroundHit(out var touchingGroundV))
                 {
                     touchingGround = true;
                 }
 
-                wheel.transform.position = wheelPosition;
+                wheel.position = wheelPosition;
 
-                if (wheel.tag.Equals("front") && (controls.QuadP2.Right == 1 || controls.QuadP2.Left == 1))
-                    wheel.transform.localRotation = Quaternion.Lerp(wheel.transform.localRotation, new Quaternion(0, (controls.QuadP2.Right / 5) - (controls.QuadP2.Left / 5), 0, 1), Time.deltaTime * 3);
+                if (wheel.tag.Equals("front") && (controls.Quad.Right == 1 || controls.Quad.Left == 1))
+                    wheel.transform.localRotation = Quaternion.Lerp(wheel.transform.localRotation, new Quaternion(0, (controls.Quad.Right / 5) - (controls.Quad.Left / 5), 0, 1), Time.deltaTime * 3);
                 else
                     wheel.transform.rotation = wheelRotation;
 
@@ -136,7 +179,7 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
             }
         }
 
-        if (touchingGround && vehicleRB.constraints != RigidbodyConstraints.None)
+        if(touchingGround && vehicleRB.constraints != RigidbodyConstraints.None)
 
         {
 
@@ -149,7 +192,6 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F))
         {
-            //Debug.LogWarning("quitar en vFinal");
             Physics.IgnoreLayerCollision(3, 4, hasFloater);
             hasFloater = !hasFloater;
         }
@@ -159,20 +201,19 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
     public void Desatascador()
     {
         RaycastHit hit;
-        if (Physics.SphereCast(transform.position, 2, transform.TransformDirection(Vector3.forward), out hit, 30))
+        if (Physics.SphereCast(transform.position, 10, transform.TransformDirection(Vector3.forward), out hit, 30))
         {
-            if (hit.transform.tag.Contains("Player") && hit.transform != transform)
+            if((hit.transform.tag.Contains("Player") || hit.transform.tag.Contains("Tree") || hit.transform.tag.Contains("Valla")) && (hit.transform.position - transform.position).magnitude > 1.5f && hit.transform != transform)
             {
                 savedDirection = (hit.transform.position - transform.position).normalized;
-                Debug.Log(savedDirection);
             }
-            else
+            else if((hit.transform.position - transform.position).magnitude >= 5f)
             {
-                Debug.Log(hit.transform.tag);
+                savedDirection = Vector3.zero;
             }
         }
 
-        if (controls.QuadP2.Drift > 0 && !desatascador && desatascadorCooldown <= 0 && desatascadorInstance == null)
+        if (controls.Quad.plunger && !desatascador && desatascadorCooldown <= 0 && desatascadorInstance == null)
         {
             desatascadorInstance = Instantiate(desatascadorPrefab, this.transform.position, this.transform.rotation);
             Physics.IgnoreCollision(desatascadorInstance.transform.GetChild(0).GetComponent<BoxCollider>(), transform.GetChild(0).GetComponent<BoxCollider>());
@@ -186,9 +227,9 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
         if (desatascadorCooldown > 0)
             desatascadorCooldown -= Time.deltaTime;
 
-        if (desatascador)
+        if(desatascador)
         {
-            if (desatascadorCooldown <= desatascadorBaseCooldown / 2 && desatascadorInstance != null)
+            if(desatascadorCooldown <= desatascadorBaseCooldown/ 2 && desatascadorInstance != null)
             {
                 savedDirection = Vector3.zero;
                 vehicleMaxSpeed = savedMaxSpeed;
@@ -196,13 +237,13 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
                 desatascadorInstance = null;
                 desatascador = false;
             }
-            else if (desatascadorInstance == null)
+            else if(desatascadorInstance == null)
             {
                 savedDirection = Vector3.zero;
                 vehicleMaxSpeed = savedMaxSpeed;
                 desatascador = false;
             }
-            if (vehicleMaxSpeed > savedMaxSpeed)
+            if(vehicleMaxSpeed > savedMaxSpeed)
             {
                 vehicleMaxSpeed -= 0.5f;
             }
@@ -234,16 +275,30 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
     public void SetWheels()
 
     {
-
-        wheels = gameObject.transform.parent.GetChild(1).GetChild(0).gameObject;
-
+        wheels = gameObject.transform.parent.GetChild(1).gameObject;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        if(playerNum == 2 && !SceneManager.GetActiveScene().name.Equals("Building Scene Multiplayer"))
+        {
+            this.GetComponent<PlayerVehicleScriptP2>().enabled = true;
+            this.GetComponent<PlayerVehicleScript>().enabled = false;
+        }
+
         controls.getAllInput(playerNum);
+        if(!finishedRace)
         vehicleMovement();
+        else
+        {
+            if (transform.InverseTransformDirection(vehicleRB.velocity).z > 1)
+                vehicleRB.velocity -= transform.TransformDirection(new Vector3(0, 0, vehicleAcceleration));
+            else if(transform.InverseTransformDirection(vehicleRB.velocity).z < -1)
+                vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, vehicleAcceleration));
+            else
+                vehicleRB.velocity = Vector3.zero;
+        }
     }
 
     void OnCollisionStay(Collision other)
@@ -256,61 +311,61 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
     {
         var locVel = transform.InverseTransformDirection(vehicleRB.velocity);
 
-        if (touchingGround && (vehicleRB.transform.rotation.x >= maxClimbingAngle || vehicleRB.transform.rotation.y >= maxClimbingAngle || vehicleRB.transform.rotation.z >= maxClimbingAngle))
+        if(touchingGround && (vehicleRB.transform.rotation.x >= maxClimbingAngle || vehicleRB.transform.rotation.y >= maxClimbingAngle || vehicleRB.transform.rotation.z >= maxClimbingAngle))
             touchingGround = false;
 
         if (touchingGround && lifeVehicle > 0)
         {
             //MAIN MOVEMENT KEYS______________________________________________________________________________________________________________________
             //FORWARD
-            if (controls.QuadP2.Forward > 0 && controls.QuadP2.Backward == 0 && transform.rotation.ToEulerAngles().x > -1)
+            if(controls.Quad.Forward && !controls.Quad.Backward && transform.rotation.ToEulerAngles().x > -1)
             {
-                if (controls.QuadP2.Right == 0 && controls.QuadP2.Left == 0)
+                if (controls.Quad.Right == 0 && controls.Quad.Left == 0)
                 {
-                    if (vehicleRB.velocity.y <= vehicleMaxSpeed / 2 && controls.QuadP2.Drift == 0)
+                    if (vehicleRB.velocity.y <= vehicleMaxSpeed / 2 && !controls.Quad.Drift)
                         vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, vehicleAcceleration));
                 }
-                else if (controls.QuadP2.Right == 0 && controls.QuadP2.Left > 0)
+                else if (controls.Quad.Right == 0 && controls.Quad.Left > 0)
                 {
-                    if (vehicleRB.velocity.y <= vehicleMaxSpeed / 2 && controls.QuadP2.Drift == 0)
+                    if (vehicleRB.velocity.y <= vehicleMaxSpeed / 2 && !controls.Quad.Drift)
                         vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, vehicleAcceleration));
 
                     vehicleRB.AddTorque(new Vector3(0, -vehicleTorque, 0));
                 }
-                else if (controls.QuadP2.Right > 0 && controls.QuadP2.Left == 0)
+                else if (controls.Quad.Right > 0 && controls.Quad.Left == 0)
                 {
-                    if (vehicleRB.velocity.y <= vehicleMaxSpeed / 2 && controls.QuadP2.Drift == 0)
+                    if (vehicleRB.velocity.y <= vehicleMaxSpeed / 2 && !controls.Quad.Drift)
                         vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, vehicleAcceleration));
 
                     vehicleRB.AddTorque(new Vector3(0, vehicleTorque, 0));
                 }
             }
             //LEFT OR RIGHT
-            if (controls.QuadP2.Forward == 0 && controls.QuadP2.Backward == 0)
+            if (!controls.Quad.Forward && !controls.Quad.Backward)
             {
                 //LEFT
-                if (controls.QuadP2.Left > 0)
+                if (controls.Quad.Left > 0)
                 {
                     vehicleRB.AddTorque(new Vector3(0, -vehicleTorque, 0));
                 }
                 //RIGHT
-                else if (controls.QuadP2.Right > 0)
+                else if (controls.Quad.Right > 0)
                 {
                     vehicleRB.AddTorque(new Vector3(0, vehicleTorque, 0));
                 }
             }
 
             //BACKWARDS
-            if (controls.QuadP2.Backward > 0 && controls.QuadP2.Forward == 0 && transform.rotation.ToEulerAngles().x > -1)
+            if(controls.Quad.Backward && !controls.Quad.Forward && transform.rotation.ToEulerAngles().x > -1)
             {
-                if (controls.QuadP2.Left == 0 && controls.QuadP2.Right == 0)
+                if (controls.Quad.Left == 0 && controls.Quad.Right == 0)
                 {
                     if (vehicleRB.velocity.y > -minDriftSpeed / 2 && vehicleRB.velocity.y <= vehicleMaxSpeed / 2)
                         vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, -vehicleAcceleration));
                     else if (vehicleRB.velocity.y <= vehicleMaxSpeed / 2)
                         vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, -vehicleAcceleration / 10));
                 }
-                else if (controls.QuadP2.Left > 0 && controls.QuadP2.Right == 0)
+                else if (controls.Quad.Left > 0 && controls.Quad.Right == 0)
                 {
                     if (vehicleRB.velocity.y > -minDriftSpeed / 2 && vehicleRB.velocity.y <= vehicleMaxSpeed / 2)
                         vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, -vehicleAcceleration));
@@ -319,7 +374,7 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
 
                     vehicleRB.AddTorque(new Vector3(0, vehicleTorque, 0));
                 }
-                else if (controls.QuadP2.Left == 0 && controls.QuadP2.Right > 0)
+                else if (controls.Quad.Left == 0 && controls.Quad.Right > 0)
                 {
                     if (vehicleRB.velocity.y > -minDriftSpeed / 2 && vehicleRB.velocity.y <= vehicleMaxSpeed / 2)
                         vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, -vehicleAcceleration));
@@ -365,7 +420,7 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
         {
             vehicleMaxSpeed -= Time.deltaTime * 10;
         }
-        else if (reduceSpeed && vehicleMaxSpeed <= savedMaxSpeed)
+        else if(reduceSpeed && vehicleMaxSpeed <= savedMaxSpeed)
         {
             reduceSpeed = false;
             vehicleMaxSpeed = savedMaxSpeed;
@@ -381,12 +436,12 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
     void VehicleRecoverFunction()
     {
         timerReversed += Time.deltaTime;
-        if (timerReversed >= 1)
+        if(timerReversed >= 1)
         {
             AudioManager.Instance.Play_SFX("Fall_SFX");
-            this.transform.position = respawnPosition;
-            this.transform.localEulerAngles = respawnRotation;
-            this.transform.localEulerAngles += new Vector3(0, 90, 0);
+            transform.position = respawnPosition;
+            transform.localEulerAngles = respawnRotation;
+            transform.localEulerAngles += new Vector3(0, 90, 0);
             vehicleRB.velocity = new Vector3(respawnVelocity.x, respawnVelocity.y, respawnVelocity.z);
             timerReversed = 0;
         }
@@ -394,9 +449,9 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
 
     void ChasisElevationFunction()
     {
-        Transform chasisTransform = this.transform.GetChild(0);
+        Transform chasisTransform = transform.GetChild(0);
 
-        if (controls.QuadP2.ChasisElevation > 0 && !chasisElevation && chasisTransform.localPosition.y <= 0)
+        if (controls.Quad.ChasisElevation && !chasisElevation && chasisTransform.localPosition.y <= 0)
         {
             chasisElevation = true;
             chasisElevationTimer = 2;
@@ -423,11 +478,11 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
     {
         if (vehicleRB.velocity.magnitude >= minDriftSpeed)
         {
-            if (controls.QuadP2.Left > 0 && controls.QuadP2.Drift > 0)
+            if (controls.Quad.Left > 0 && controls.Quad.Drift)
             {
                 vehicleRB.AddTorque(new Vector3(0, -vehicleTorque * driftTorqueInc, 0));
             }
-            else if (controls.QuadP2.Right > 0 && controls.QuadP2.Drift > 0)
+            else if (controls.Quad.Right > 0 && controls.Quad.Drift)
             {
                 vehicleRB.AddTorque(new Vector3(0, vehicleTorque * driftTorqueInc, 0));
             }
@@ -436,16 +491,16 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
 
     void VehicleSoundPitchFunction()
     {
-        if ((vehicleRB.velocity.magnitude > 1 || vehicleRB.velocity.magnitude < -1) && !this.GetComponent<AudioSource>().enabled && lifeVehicle > 0)
+        if ((vehicleRB.velocity.magnitude > 1 || vehicleRB.velocity.magnitude < -1) && !GetComponent<AudioSource>().enabled && lifeVehicle > 0)
         {
             this.GetComponent<AudioSource>().enabled = true;
         }
-        else if ((vehicleRB.velocity.magnitude <= 1 && vehicleRB.velocity.magnitude >= -1) && this.GetComponent<AudioSource>().enabled && lifeVehicle > 0)
+        else if ((vehicleRB.velocity.magnitude <= 1 && vehicleRB.velocity.magnitude >= -1) && GetComponent<AudioSource>().enabled && lifeVehicle > 0)
             this.GetComponent<AudioSource>().enabled = false;
 
         if (this.GetComponent<AudioSource>().enabled)
         {
-            this.GetComponent<AudioSource>().pitch = (vehicleRB.velocity.magnitude * 1) / vehicleMaxSpeed / 2;
+            this.GetComponent<AudioSource>().pitch = (vehicleRB.velocity.magnitude * 1) / vehicleMaxSpeed/2;
         }
     }
 
@@ -468,7 +523,7 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
 
     void SpeedRegulation()
     {
-        if (controls.QuadP2.Left == 0 && controls.QuadP2.Right == 0)
+        if (controls.Quad.Left == 0 && controls.Quad.Right == 0)
             vehicleRB.angularVelocity = new Vector3(vehicleRB.angularVelocity.x, 0, vehicleRB.angularVelocity.z);
 
         if (vehicleRB.angularVelocity.y > vehicleMaxTorque)
@@ -484,17 +539,17 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
             if (vehicleRB.velocity.x > vehicleMaxSpeed && vehicleRB.velocity.z < vehicleMaxSpeed)
             {
                 vehicleRB.velocity = transform.TransformDirection(new Vector3(0, 0, vehicleMaxSpeed));
-                if (controls.QuadP2.Backward > 0 && vehicleRB.velocity.x < 0)
+                if (controls.Quad.Backward && vehicleRB.velocity.x < 0)
                     vehicleRB.velocity = transform.TransformDirection(new Vector3(0, 0, -vehicleMaxSpeed));
             }
             if (vehicleRB.velocity.z > vehicleMaxSpeed)
                 vehicleRB.velocity = transform.TransformDirection(new Vector3(0, 0, vehicleMaxSpeed));
-            if (controls.QuadP2.Backward > 0 && vehicleRB.velocity.z < 0)
+            if (controls.Quad.Backward && vehicleRB.velocity.z < 0)
                 vehicleRB.velocity = transform.TransformDirection(new Vector3(0, 0, -vehicleMaxSpeed));
         }
         else if (vehicleRB.velocity.z < -vehicleMaxSpeed || vehicleRB.velocity.x < -vehicleMaxSpeed)
         {
-            if (controls.QuadP2.Backward == 0)
+            if (!controls.Quad.Backward)
                 vehicleRB.velocity = transform.TransformDirection(new Vector3(0, 0, vehicleMaxSpeed));
             else
             {
@@ -505,32 +560,32 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
         }
     }
 
-    void AlaDeltaFunction()
+    void AlaDeltaFunction() 
     {
-        if (!alaDelta && touchingGround && controls.QuadP2.AlaDelta == 1)
+        if (!alaDelta && touchingGround && controls.Quad.AlaDelta)
             alaDelta = true;
 
-        if (alaDelta && alaDeltaTimer >= 0)
+        if(alaDelta && alaDeltaTimer >= 0)
         {
             alaDeltaTimer -= Time.deltaTime;
             if (alaDeltaTimer >= alaDeltaDuration - 0.6f)
             {
-                this.transform.rotation = new Quaternion(0, this.transform.rotation.y, 0, this.transform.rotation.w);
+                this.transform.rotation = new Quaternion(0, transform.rotation.y, 0, transform.rotation.w);
                 vehicleRB.velocity += new Vector3(0, 1, 0);
             }
             else
             {
                 this.transform.rotation = new Quaternion(0, this.transform.rotation.y, 0, this.transform.rotation.w);
-                if (controls.QuadP2.Right == 1)
+                if (controls.Quad.Right == 1)
                     vehicleRB.AddTorque(new Vector3(0, vehicleTorque, 0));
-                else if (controls.QuadP2.Left == 1)
+                else if (controls.Quad.Left == 1)
                     vehicleRB.AddTorque(new Vector3(0, -vehicleTorque, 0));
 
                 savedVelocity = transform.TransformDirection(new Vector3(0, 0, 25));
 
                 vehicleRB.velocity = new Vector3(savedVelocity.x, -5, savedVelocity.z);
             }
-            if (alaDeltaTimer <= 0)
+            if(alaDeltaTimer <= 0)
             {
                 alaDeltaTimer = alaDeltaDuration;
                 alaDelta = false;
@@ -540,7 +595,7 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
 
     internal void SetCarModifiers()
     {
-        for (int i = 0; i < listOfModifiers.Count; i++)
+        for(int i = 0; i < listOfModifiers.Count; i++)
         {
             switch (listOfModifiers[i])
             {
@@ -563,7 +618,7 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
             switch (listOfModifiers[i])
             {
                 //case "Floater":
-
+                    
 
                 //    break;
 
@@ -575,12 +630,12 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
 
     void checkFallDeath()
     {
-        if (vehicleRB.velocity.y <= -22)
+        if(vehicleRB.velocity.y <= -100)
         {
             AudioManager.Instance.Play_SFX("Fall_SFX");
-            this.transform.position = respawnPosition;
-            this.transform.localEulerAngles = respawnRotation;
-            this.transform.localEulerAngles += new Vector3(0, 90, 0);
+            transform.position = respawnPosition;
+            transform.localEulerAngles = respawnRotation;
+            transform.localEulerAngles += new Vector3(0, 90, 0);
             vehicleRB.velocity = new Vector3(respawnVelocity.x, respawnVelocity.y, respawnVelocity.z);
         }
     }
@@ -595,7 +650,7 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Boost Pad"))
         {
-            float angle = Vector3.Angle(this.transform.forward, other.transform.forward);
+            float angle = Vector3.Angle(transform.forward, other.transform.forward);
             angle *= Mathf.Deg2Rad;
             angle = Mathf.Cos(angle);
             vehicleAcceleration = 2;
@@ -608,22 +663,49 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
         {
             vehicleRB.AddForce(other.GetComponent<WaterStreamColliderScript>().Stream, ForceMode.Force);
         }
+
+        if (!paintingChecked && other.CompareTag("Painting"))
+        {
+            paintingChecked = true;
+            if (vehicleRB.velocity.magnitude > 1.0f)
+            {
+                AddFriction(1000, 2.0f);
+            }
+        }
+        if (!oilChecked && other.CompareTag("Oil"))
+        {
+            oilChecked = true;
+            if (vehicleRB.velocity.magnitude > 1.0f)
+            {
+                AddFriction(-1200, 0.7f);
+            }
+        }
+
     }
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag.Equals("Water") && !hasFloater)
         {
-            StartCoroutine(LerpVehicleMaxSpeed(savedMaxSpeed / 3, 3.0f));
+            StartCoroutine(LerpVehicleMaxSpeed(savedMaxSpeed * 2 / 3, 3.0f));
+        }
+        if(other.tag.Equals("Respawn") && !other.GetComponent<DeathfallAndCheckpointsSystem>().activated)
+        {
+            GameObject.Find("UI").transform.GetChild(1).GetComponent<UIPosition>().actualCheckpoint++;
+            other.GetComponent<DeathfallAndCheckpointsSystem>().activated = true;
         }
     }
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log(vehicleMaxSpeed);
         StartCoroutine(WaitEndBoost());
 
-        if (other.tag.Equals("Water") && !hasFloater)
+        if(other.tag.Equals("Water") && !hasFloater)
         {
             StartCoroutine(LerpVehicleMaxSpeed(savedMaxSpeed, 1.5f));
+        }
+
+        if (other.CompareTag("Painting") || other.CompareTag("Oil"))
+        {
+            ResetFriction();
         }
 
     }
@@ -632,6 +714,29 @@ public class PlayerVehicleScriptP2 : MonoBehaviour
     {
         vehicleReversed = false;
         timerReversed = 0;
+    }
+
+    //void ChangeFriction(float _dragInc, float _speedDec)
+    //{
+    //    vehicleRB.angularDrag = savedAngularDrag * _dragInc;
+    //    vehicleMaxSpeed = savedMaxSpeed / _speedDec;
+    //    if (_speedDec < 1.0f) vehicleAcceleration /= (_speedDec + (1-_speedDec)*2.0f);
+    //}
+    void ResetFriction()
+    {
+        vehicleRB.angularDrag = savedAngularDrag;
+        //vehicleMaxSpeed = savedMaxSpeed;
+        //vehicleAcceleration = savedAcceleration;
+    }
+    void AddFriction(float _frictionForce, float _dragInc)
+    {
+        //Vector3 frictionVec = transform.up * _frictionForce;
+        Vector3 velFrictionVec = -vehicleRB.velocity.normalized * _frictionForce * vehicleRB.velocity.magnitude;
+        vehicleRB.AddForce(velFrictionVec, ForceMode.Force);
+        //Vector3 angularFrictionVec = -vehicleRB.angularVelocity.normalized * _frictionForce;
+        //vehicleRB.AddForce(angularFrictionVec, ForceMode.Force);
+        vehicleRB.angularDrag = savedAngularDrag * _dragInc;
+
     }
 
     IEnumerator LerpVehicleMaxSpeed(float _targetValue, float _lerpTime)

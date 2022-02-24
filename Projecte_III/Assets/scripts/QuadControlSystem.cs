@@ -5,35 +5,21 @@ using UnityEngine;
 public class QuadControlSystem : MonoBehaviour
 {
 
-    public P1 Quad = new P1();
-    public P2 QuadP2 = new P2();
+    public QuadStruct Quad = new QuadStruct();
+    public QuadStruct QuadP2 = new QuadStruct();
 
-    public struct P1
+    public struct QuadStruct
     {
-        public float Forward;
-        public float Backward;
+        public bool Forward;
+        public bool Backward;
         public float Left;
         public float Right;
-        public float Drift;
-        public float UseActualGadget;
-        public float LookBackwards;
-        public float ChasisElevation;
-        public float AlaDelta;
-        public float plunger;
-    }
-
-    public struct P2
-    {
-        public float Forward;
-        public float Backward;
-        public float Left;
-        public float Right;
-        public float Drift;
-        public float UseActualGadget;
-        public float LookBackwards;
-        public float ChasisElevation;
-        public float AlaDelta;
-        public float plunger;
+        public bool Drift;
+        public bool UseActualGadget;
+        public bool LookBackwards;
+        public bool ChasisElevation;
+        public bool AlaDelta;
+        public bool plunger;
     }
 
     public void getAllInput(int playerNum)
@@ -42,116 +28,74 @@ public class QuadControlSystem : MonoBehaviour
         {
             case 1:
                 //FORWARD
-                if (Input.GetAxis("ForwardP1") >= 0.5f || Input.GetKey(KeyCode.W))
-                    Quad.Forward = 1;
-                else
-                    Quad.Forward = 0;
+                    Quad.Forward = (Input.GetAxis("ForwardP1") >= 0.5f || Input.GetKey(KeyCode.W));
                 //______________________________________________
                 //BACKWARD
-                if (Input.GetAxis("BackwardP1") >= 0.5f || Input.GetKey(KeyCode.S))
-                    Quad.Backward = 1;
-                else
-                    Quad.Backward = 0;
+                    Quad.Backward = (Input.GetAxis("BackwardP1") >= 0.5f || Input.GetKey(KeyCode.S));
                 //______________________________________________
                 //LEFT
-                if (Input.GetAxis("HorizontalP1") <= -1 || Input.GetKey(KeyCode.A))
-                    Quad.Left = 1;
+                if (Input.GetAxis("HorizontalP1") <= -0.2f || Input.GetKey(KeyCode.A))
+                    Quad.Left = -Input.GetAxis("HorizontalP1");
                 else
                     Quad.Left = 0;
                 //______________________________________________
                 //RIGHT
-                if (Input.GetAxis("HorizontalP1") >= 1 || Input.GetKey(KeyCode.D))
-                    Quad.Right = 1;
+                if (Input.GetAxis("HorizontalP1") >= 0.2f || Input.GetKey(KeyCode.D))
+                    Quad.Right = Input.GetAxis("HorizontalP1");
                 else
                     Quad.Right = 0;
                 //______________________________________________
                 //DRIFT
-                /*if (Input.GetAxis("DriftP1") >= 1 || Input.GetKey(KeyCode.Space))
-                    Quad.Drift = 1;
-                else
-                    Quad.Drift = 0;*/
+                /*Quad.Drift = (Input.GetAxis("DriftP1") >= 1 || Input.GetKey(KeyCode.Space));*/
                 //______________________________________________
                 //CHASIS ELEVATION
-                if (Input.GetKey(KeyCode.Joystick1Button1) || Input.GetKey(KeyCode.LeftControl))
-                    Quad.ChasisElevation = 1;
-                else
-                    Quad.ChasisElevation = 0;
+                Quad.ChasisElevation = (Input.GetKey(KeyCode.Joystick1Button1) || Input.GetKey(KeyCode.LeftControl));
                 //______________________________________________
                 //ALADELTA
-                if (Input.GetKey(KeyCode.Joystick1Button0) || Input.GetKey(KeyCode.LeftShift))
-                    Quad.AlaDelta = 1;
-                else
-                    Quad.AlaDelta = 0;
+                    Quad.AlaDelta = (Input.GetKey(KeyCode.Joystick1Button0) || Input.GetKey(KeyCode.LeftShift));
                 //______________________________________________
                 //SWITCH CAMERA
-                if (Input.GetKey(KeyCode.Joystick1Button3) || Input.GetKey(KeyCode.Mouse1))
-                    Quad.LookBackwards = 1;
-                else
-                    Quad.LookBackwards = 0;
+                    Quad.LookBackwards = (Input.GetKey(KeyCode.Joystick1Button3) || Input.GetKey(KeyCode.Mouse1));
                 //______________________________________________
                 //PLUNGER
-                if(Input.GetKey(KeyCode.Joystick1Button4) || Input.GetKey(KeyCode.Q))
-                    Quad.plunger = 1;
-                else
-                    Quad.plunger = 0;
+                    Quad.plunger = (Input.GetKey(KeyCode.Joystick1Button4) || Input.GetKey(KeyCode.Q));
                 //______________________________________________
                 break;
             case 2:
                 //FORWARD
-                if (Input.GetAxis("ForwardP2") >= 0.5f)
-                    QuadP2.Forward = 1;
-                else
-                    QuadP2.Forward = 0;
+                QuadP2.Forward = (Input.GetAxis("ForwardP2") >= 0.5f);
                 //______________________________________________
                 //BACKWARD
-                if (Input.GetAxis("BackwardP2") >= 0.5f)
-                    QuadP2.Backward = 1;
-                else
-                    QuadP2.Backward = 0;
+                QuadP2.Backward = (Input.GetAxis("BackwardP2") >= 0.5f);
                 //______________________________________________
                 //LEFT
-                if (Input.GetAxis("HorizontalP2") <= -1)
-                    QuadP2.Left = 1;
+                if (Input.GetAxis("HorizontalP2") <= -0.2f)
+                    QuadP2.Left = -Input.GetAxis("HorizontalP2");
                 else
                     QuadP2.Left = 0;
                 //______________________________________________
                 //RIGHT
-                if (Input.GetAxis("HorizontalP2") >= 1)
-                    QuadP2.Right = 1;
+                if (Input.GetAxis("HorizontalP2") >= 0.2f)
+                    QuadP2.Right = Input.GetAxis("HorizontalP2");
                 else
                     QuadP2.Right = 0;
                 //______________________________________________
                 //DRIFT
-                /*if (Input.GetAxis("DriftP2") >= 1)
-                    QuadP2.Drift = 1;
-                else
-                    QuadP2.Drift = 0;*/
+                /*QuadP2.Drift = (Input.GetAxis("DriftP2") >= 1);*/
                 //______________________________________________
                 //CHASIS ELEVATION
-                if (Input.GetKey(KeyCode.Joystick2Button1))
-                    QuadP2.ChasisElevation = 1;
-                else
-                    QuadP2.ChasisElevation = 0;
+                QuadP2.ChasisElevation = (Input.GetKey(KeyCode.Joystick2Button1));
                 //______________________________________________
                 //ALADELTA
-                if (Input.GetKey(KeyCode.Joystick2Button0))
-                    QuadP2.AlaDelta = 1;
-                else
-                    QuadP2.AlaDelta = 0;
+                QuadP2.AlaDelta = (Input.GetKey(KeyCode.Joystick2Button0));
                 //______________________________________________
                 //SWITCH CAMERA
-                if (Input.GetKey(KeyCode.Joystick2Button3))
-                    QuadP2.LookBackwards = 1;
-                else
-                    QuadP2.LookBackwards = 0;
+                QuadP2.LookBackwards = (Input.GetKey(KeyCode.Joystick2Button3));
+                //______________________________________________
+                //PLUNGER
+                QuadP2.plunger = (Input.GetKey(KeyCode.Joystick2Button4));
                 //______________________________________________
                 break;
-                //PLUNGER
-                if (Input.GetKey(KeyCode.Joystick2Button4))
-                    QuadP2.plunger = 1;
-                else
-                    QuadP2.plunger = 0;
-                //______________________________________________
         }
     }
 }
