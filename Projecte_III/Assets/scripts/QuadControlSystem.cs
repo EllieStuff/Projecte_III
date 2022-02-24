@@ -63,10 +63,10 @@ public class QuadControlSystem : MonoBehaviour
                 break;
             case 2:
                 //FORWARD
-                QuadP2.Forward = (Input.GetAxis("ForwardP2") >= 0.5f);
+                    QuadP2.Forward = (Input.GetAxis("ForwardP2") >= 0.5f);
                 //______________________________________________
                 //BACKWARD
-                QuadP2.Backward = (Input.GetAxis("BackwardP2") >= 0.5f);
+                    QuadP2.Backward = (Input.GetAxis("BackwardP2") >= 0.5f);
                 //______________________________________________
                 //LEFT
                 if (Input.GetAxis("HorizontalP2") <= -0.2f)
@@ -84,16 +84,16 @@ public class QuadControlSystem : MonoBehaviour
                 /*QuadP2.Drift = (Input.GetAxis("DriftP2") >= 1);*/
                 //______________________________________________
                 //CHASIS ELEVATION
-                QuadP2.ChasisElevation = (Input.GetKey(KeyCode.Joystick2Button1));
+                    QuadP2.ChasisElevation = (Input.GetKey(KeyCode.Joystick2Button1));
                 //______________________________________________
                 //ALADELTA
-                QuadP2.AlaDelta = (Input.GetKey(KeyCode.Joystick2Button0));
+                    QuadP2.AlaDelta = (Input.GetKey(KeyCode.Joystick2Button0));
                 //______________________________________________
                 //SWITCH CAMERA
-                QuadP2.LookBackwards = (Input.GetKey(KeyCode.Joystick2Button3));
+                    QuadP2.LookBackwards = (Input.GetKey(KeyCode.Joystick2Button3));
                 //______________________________________________
                 //PLUNGER
-                QuadP2.plunger = (Input.GetKey(KeyCode.Joystick2Button4));
+                    QuadP2.plunger = (Input.GetKey(KeyCode.Joystick2Button4));
                 //______________________________________________
                 break;
         }
