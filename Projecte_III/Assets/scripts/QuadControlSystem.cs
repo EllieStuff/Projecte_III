@@ -38,12 +38,18 @@ public class QuadControlSystem : MonoBehaviour
                     Quad.Left = -Input.GetAxis("HorizontalP1");
                 else
                     Quad.Left = 0;
+
+                if (Input.GetKey(KeyCode.A))
+                    Quad.Left = 1;
                 //______________________________________________
                 //RIGHT
                 if (Input.GetAxis("HorizontalP1") >= 0.2f || Input.GetKey(KeyCode.D))
                     Quad.Right = Input.GetAxis("HorizontalP1");
                 else
                     Quad.Right = 0;
+
+                if (Input.GetKey(KeyCode.D))
+                    Quad.Right = 1;
                 //______________________________________________
                 //DRIFT
                 /*Quad.Drift = (Input.GetAxis("DriftP1") >= 1 || Input.GetKey(KeyCode.Space));*/

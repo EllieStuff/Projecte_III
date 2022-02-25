@@ -198,6 +198,8 @@ public class PlayerVehicleScript : MonoBehaviour
 
     Transform localTransform;
     Vector3 VectorLerp;
+    float timerPoint;
+    bool createMaterial;
 
     public void Desatascador()
     {
@@ -216,18 +218,25 @@ public class PlayerVehicleScript : MonoBehaviour
         line.SetPosition(0, Vector3.zero);
         line.SetPosition(1, Vector3.zero);
 
+        bool isCorrect = transform.InverseTransformDirection(savedDirection).z > 0.75;
+
         if (savedDirection != Vector3.zero && desatascadorCooldown <= 0)
         {
             Vector3 sum = (transform.position + savedDirection * 3);
 
-            Debug.Log(transform.InverseTransformDirection(savedDirection).z);
-
-            bool isCorrect = transform.InverseTransformDirection(savedDirection).z > 0.75;
-
             if (isCorrect)
             {
+                line.material.color = Color.green;
+                timerPoint = 2;
                 line.SetPosition(0, transform.position);
                 line.SetPosition(1, sum);
+            }
+            else if(timerPoint > 0)
+            {
+                line.material.color = Color.red;
+                line.SetPosition(0, transform.position);
+                line.SetPosition(1, sum);
+                timerPoint -= Time.deltaTime;
             }
             else
             {
@@ -237,6 +246,12 @@ public class PlayerVehicleScript : MonoBehaviour
 
         if (controls.Quad.plunger && !desatascador && desatascadorCooldown <= 0 && desatascadorInstance == null)
         {
+            if (!createMaterial)
+            {
+                line.material = new Material(line.material);
+                createMaterial = true;
+            }
+
             desatascadorInstance = Instantiate(desatascadorPrefab, this.transform.position, this.transform.rotation);
             Physics.IgnoreCollision(desatascadorInstance.transform.GetChild(0).GetComponent<BoxCollider>(), transform.GetChild(0).GetComponent<BoxCollider>());
             desatascadorInstance.GetComponent<plungerInstance>().playerShotPlunger = this.gameObject;
