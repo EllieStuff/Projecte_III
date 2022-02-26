@@ -8,6 +8,9 @@ public class DeathfallAndCheckpointsSystem : MonoBehaviour
     public bool finishRaceCP;
     public bool activated;
     private bool enableMusic;
+    private GameObject particlesFinish;
+    private AudioSource fireworkEffectSound;
+    private AudioSource finishAudio;
     [SerializeField] private bool multiplayerMode;
     [SerializeField] private GameObject particlesPrefab;
     PlayerVehicleScript vehicleScript;
@@ -19,14 +22,21 @@ public class DeathfallAndCheckpointsSystem : MonoBehaviour
     {
         if(enableMusic)
         {
-            if(GameObject.Find("ParticlesFinish").transform.GetChild(0).GetComponent<AudioSource>().volume < 0.2f)
-            GameObject.Find("ParticlesFinish").transform.GetChild(0).GetComponent<AudioSource>().volume += Time.deltaTime / 50;
+            if(finishAudio.volume < 0.2f)
+                finishAudio.volume += Time.deltaTime / 50;
         }
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        if(finishRaceCP)
+        {
+            particlesFinish = GameObject.Find("ParticlesFinish");
+            finishAudio = particlesFinish.transform.GetChild(0).GetComponent<AudioSource>();
+            fireworkEffectSound = particlesFinish.GetComponent<AudioSource>();
+        }
+       
         vehicleScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerVehicleScript>();
         if(multiplayerMode)
         vehicleScriptP2 = GameObject.FindGameObjectWithTag("Player2").GetComponent<PlayerVehicleScriptP2>();
@@ -34,6 +44,8 @@ public class DeathfallAndCheckpointsSystem : MonoBehaviour
         chasis = vehicleScript.transform.Find("vehicleChasis").gameObject;
         if(multiplayerMode)
         chasisP2 = vehicleScriptP2.transform.Find("vehicleChasis").gameObject;
+
+
         //Set default checkpoint (should be the first of the level)
         if (name.Equals("Checkpoint"))
         {
@@ -54,16 +66,21 @@ public class DeathfallAndCheckpointsSystem : MonoBehaviour
     {
         if (finishRaceCP)
         {
+            GameObject UI = GameObject.Find("UI");
+
             try
             {
                 if (!multiplayerMode)
                     other.transform.parent.GetComponent<PlayerVehicleScript>().finishedRace = true;
 
-                GameObject.Find("UI").transform.GetChild(0).GetChild(0).GetComponent<UITimerChrono>().finishedRace = true;
-                GameObject.Find("UI").transform.GetChild(2).gameObject.SetActive(true);
-                GameObject.Find("ParticlesFinish").GetComponent<ParticleSystem>().Play();
-                GameObject.Find("ParticlesFinish").GetComponent<AudioSource>().Play();
-                GameObject.Find("ParticlesFinish").transform.GetChild(0).GetComponent<AudioSource>().Play();
+                UI.transform.GetChild(0).GetChild(0).GetComponent<UITimerChrono>().finishedRace = true;
+                UI.transform.GetChild(2).gameObject.SetActive(true);
+
+                particlesFinish.GetComponent<ParticleSystem>().Play();
+                finishAudio.Play();
+                fireworkEffectSound.Play();
+                
+                particlesFinish.transform.GetChild(0).GetComponent<AudioSource>().Play();
                 AudioManager.Instance.Stop_OST();
 
                 enableMusic = true;
@@ -105,7 +122,6 @@ public class DeathfallAndCheckpointsSystem : MonoBehaviour
             vehicleScriptP2.respawnPosition = transform.position;
             vehicleScriptP2.respawnRotation = transform.localEulerAngles;
             vehicleScriptP2.respawnVelocity = Vector3.zero;
-            //Debug.Log(chasis.GetComponentInParent<PlayerVehicleScript>().respawnPosition);
         }
         if (multiplayerMode && gameObject.tag.Equals("Death Zone") && chasisP2 == other.gameObject)
         {
@@ -118,10 +134,6 @@ public class DeathfallAndCheckpointsSystem : MonoBehaviour
             other.GetComponentInParent<PlayerVehicleScript>().vehicleRB.constraints = RigidbodyConstraints.FreezePositionZ;
             other.GetComponentInParent<Transform>().parent.localEulerAngles = vehicleScriptP2.respawnRotation;
             other.GetComponentInParent<Transform>().parent.localEulerAngles += new Vector3(0, 90, 0);
-
-
-
-            //Debug.Log(other.GetComponentInParent<Transform>().parent.position);
         }
         //____________________________________________________________________________________________________________________________
     }

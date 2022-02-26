@@ -24,17 +24,19 @@ public class RaceFinishedScript : MonoBehaviour
     public GameObject textInstance;
     public Transform scoresPivot;
     public GameObject scoreGameObject;
+    private Image bgEndGame;
 
     private void Update()
     {
-        if(GetComponent<Image>().color.a < 1)
+        if(bgEndGame.color.a < 1)
         {
-            GetComponent<Image>().color += new Color(0, 0, 0, Time.deltaTime / 2);
+            bgEndGame.color += new Color(0, 0, 0, Time.deltaTime / 2);
         }    
     }
 
     void Start()
     {
+        bgEndGame = GetComponent<Image>();
         bool newMaxScore = true;
         try
         {
@@ -43,9 +45,11 @@ public class RaceFinishedScript : MonoBehaviour
             Stream stream = new FileStream(@"Scores.dat", FileMode.Open, FileAccess.Read);
             Scores scores = (Scores)formatter.Deserialize(stream);
 
+            UITimerChrono timerChronoUI = timeText.GetComponent<UITimerChrono>();
+
             for (int i = 0; i < scores.minutes.Length; i++)
             {
-                if (scores.seconds[i] != 0 && scores.minutes[i] <= timeText.GetComponent<UITimerChrono>().minute && scores.seconds[i] < timeText.GetComponent<UITimerChrono>().second)
+                if (scores.seconds[i] != 0 && scores.minutes[i] <= timerChronoUI.minute && scores.seconds[i] < timerChronoUI.second)
                 {
                     newMaxScore = false;
                     break;
@@ -56,9 +60,8 @@ public class RaceFinishedScript : MonoBehaviour
             {
                 if(scores.minutes[i] == 0 && scores.seconds[i] == 0)
                 {
-                    scores.minutes[i] = timeText.GetComponent<UITimerChrono>().minute;
-                    scores.seconds[i] = timeText.GetComponent<UITimerChrono>().second;
-                    Debug.Log(scores.seconds[i]);
+                    scores.minutes[i] = timerChronoUI.minute;
+                    scores.seconds[i] = timerChronoUI.second;
                     break;
                 }
             }
@@ -84,15 +87,16 @@ public class RaceFinishedScript : MonoBehaviour
                 if(scores.seconds[i] != 0)
                 {
                     GameObject instance = Instantiate(textInstance, scoresPivot);
+                    TextMeshProUGUI text = instance.GetComponent<TextMeshProUGUI>();
 
                     if (scores.minutes[i] < 10 && scores.seconds[i] < 10)
-                        instance.GetComponent<TextMeshProUGUI>().text = "0" + scores.minutes[i] + ":0" + Mathf.Round(scores.seconds[i] * 100) * 0.01f;
+                        text.text = "0" + scores.minutes[i] + ":0" + Mathf.Round(scores.seconds[i] * 100) * 0.01f;
                     else if (scores.minutes[i] < 10 && scores.seconds[i] >= 10)
-                        instance.GetComponent<TextMeshProUGUI>().text = "0" + scores.minutes[i] + ":" + Mathf.Round(scores.seconds[i] * 100) * 0.01f;
+                        text.text = "0" + scores.minutes[i] + ":" + Mathf.Round(scores.seconds[i] * 100) * 0.01f;
                     else if (scores.minutes[i] >= 10 && scores.seconds[i] < 10)
-                        instance.GetComponent<TextMeshProUGUI>().text = "0" + scores.minutes[i] + Mathf.Round(scores.seconds[i] * 100) * 0.01f;
+                        text.text = "0" + scores.minutes[i] + Mathf.Round(scores.seconds[i] * 100) * 0.01f;
                     else if (scores.minutes[i] >= 10 && scores.seconds[i] >= 10)
-                        instance.GetComponent<TextMeshProUGUI>().text = scores.minutes[i] + ":" + Mathf.Round(scores.seconds[i] * 100) * 0.01f;
+                        text.text = scores.minutes[i] + ":" + Mathf.Round(scores.seconds[i] * 100) * 0.01f;
 
                     instance.SetActive(true);
 
@@ -110,12 +114,14 @@ public class RaceFinishedScript : MonoBehaviour
             scores.minutes = new int[100];
             scores.seconds = new float[100];
 
+            UITimerChrono timerChronoUI = timeText.GetComponent<UITimerChrono>();
+
             for (int i = 0; i < scores.minutes.Length; i++)
             {
                 if(i == 0)
                 {
-                    scores.minutes[i] = timeText.GetComponent<UITimerChrono>().minute;
-                    scores.seconds[i] = timeText.GetComponent<UITimerChrono>().second;
+                    scores.minutes[i] = timerChronoUI.minute;
+                    scores.seconds[i] = timerChronoUI.second;
                 }
                 else
                 {
@@ -127,25 +133,19 @@ public class RaceFinishedScript : MonoBehaviour
             formatter.Serialize(stream, scores);
             stream.Close();
 
-            for (int i = 0; i < 100; i++)
-            {
-                if (scores.seconds[i] != 0)
-                {
-                    GameObject instance = Instantiate(textInstance, scoresPivot);
+            GameObject instance = Instantiate(textInstance, scoresPivot);
+            TextMeshProUGUI text = instance.GetComponent<TextMeshProUGUI>();
 
-                    if (scores.minutes[i] < 10 && scores.seconds[i] < 10)
-                        instance.GetComponent<TextMeshProUGUI>().text = "0" + scores.minutes[i] + ":0" + Mathf.Round(scores.seconds[i] * 100) * 0.01f;
-                    else if (scores.minutes[i] < 10 && scores.seconds[i] >= 10)
-                        instance.GetComponent<TextMeshProUGUI>().text = "0" + scores.minutes[i] + ":" + Mathf.Round(scores.seconds[i] * 100) * 0.01f;
-                    else if (scores.minutes[i] >= 10 && scores.seconds[i] < 10)
-                        instance.GetComponent<TextMeshProUGUI>().text = "0" + scores.minutes[i] + Mathf.Round(scores.seconds[i] * 100) * 0.01f;
-                    else if (scores.minutes[i] >= 10 && scores.seconds[i] >= 10)
-                        instance.GetComponent<TextMeshProUGUI>().text = scores.minutes[i] + ":" + Mathf.Round(scores.seconds[i] * 100) * 0.01f;
+            if (scores.minutes[0] < 10 && scores.seconds[0] < 10)
+                text.text = "0" + scores.minutes[0] + ":0" + Mathf.Round(scores.seconds[0] * 100) * 0.01f;
+            else if (scores.minutes[0] < 10 && scores.seconds[0] >= 10)
+                text.text = "0" + scores.minutes[0] + ":" + Mathf.Round(scores.seconds[0] * 100) * 0.01f;
+            else if (scores.minutes[0] >= 10 && scores.seconds[0] < 10)
+                text.text = "0" + scores.minutes[0] + Mathf.Round(scores.seconds[0] * 100) * 0.01f;
+            else if (scores.minutes[0] >= 10 && scores.seconds[0] >= 10)
+                text.text = scores.minutes[0] + ":" + Mathf.Round(scores.seconds[0] * 100) * 0.01f;
 
-                    instance.SetActive(true);
-                }
-            }
-
+            instance.SetActive(true);
         }
 
         timeTextLocal.text = timeText.text;

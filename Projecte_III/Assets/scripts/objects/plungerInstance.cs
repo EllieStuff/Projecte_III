@@ -18,32 +18,39 @@ public class plungerInstance : MonoBehaviour
     float timerDestroy = 5;
     private bool prepareToDestroy;
     private string collisionTag;
+    private LineRenderer line;
 
     private void Start()
     {
+        line = GetComponent<LineRenderer>();
         AudioManager.Instance.Play_SFX("Plunger_Hit_SFX");
         startRot = new Quaternion(0, this.transform.rotation.y, 0, this.transform.rotation.w);
+        
         if(normalDir != Vector3.zero)
             body.velocity = new Vector3(plungerVelocity * normalDir.x, normalDir.y, plungerVelocity * normalDir.z);
         else
             body.velocity = transform.TransformDirection(new Vector3(0, 0.5f, plungerVelocity));
+        
         if (transform.InverseTransformDirection(body.velocity).z < 0)
             Destroy(gameObject);
     }
 
     private void Update()
     {
-        GetComponent<LineRenderer>().SetPosition(0, transform.GetChild(1).position);
-        GetComponent<LineRenderer>().SetPosition(1, playerShotPlunger.transform.position);
+        line.SetPosition(0, transform.GetChild(1).position);
+        line.SetPosition(1, playerShotPlunger.transform.position);
 
         if (plungerHit && !destroyPlunger)
         {
             if (otherQuad != null)
             {
+                Rigidbody otherQuadRB = otherQuad.GetComponent<Rigidbody>();
                 transform.position = otherQuad.transform.position;
-                Vector3 inverseTransformDir = otherQuad.transform.InverseTransformDirection(otherQuad.GetComponent<Rigidbody>().velocity);
-                if (inverseTransformDir.z >= -5 && otherQuad.GetComponent<Rigidbody>().velocity.y < 1)
-                    otherQuad.GetComponent<Rigidbody>().velocity += otherQuad.transform.TransformDirection(new Vector3(0, 0, -0.5f));
+                Vector3 inverseTransformDir = otherQuad.transform.InverseTransformDirection(otherQuadRB.velocity);
+                
+                if (inverseTransformDir.z >= -5 && otherQuadRB.velocity.y < 1)
+                    otherQuadRB.velocity += otherQuad.transform.TransformDirection(new Vector3(0, 0, -0.5f));
+                
                 if (Vector3.Distance(transform.position, playerShotPlunger.transform.position) <= 5)
                     Destroy(gameObject);
                 else if (Vector3.Distance(transform.position, playerShotPlunger.transform.position) >= 25)
@@ -52,19 +59,23 @@ public class plungerInstance : MonoBehaviour
 
             if (Vector3.Distance(transform.position, playerShotPlunger.transform.position) > 5 && !collisionTag.Equals("ground"))
             {
+                Rigidbody playerRB = playerShotPlunger.GetComponent<Rigidbody>();
                 timerDestroy -= Time.deltaTime;
+                
                 if (timerDestroy <= 0 || prepareToDestroy || Vector3.Distance(transform.position, playerShotPlunger.transform.position) >= 25)
                     destroyPlunger = true;
-                float oldSpeedY = playerShotPlunger.GetComponent<Rigidbody>().velocity.y;
-                if (Mathf.Abs(transform.TransformDirection(playerShotPlunger.GetComponent<Rigidbody>().velocity).z) > 0 && playerShotPlunger.GetComponent<Rigidbody>().velocity.y < 5)
+
+                float oldSpeedY = playerRB.velocity.y;
+
+                if (Mathf.Abs(transform.TransformDirection(playerRB.velocity).z) > 0 && playerRB.velocity.y < 5)
                 {
                     if (playerNum == 1 && !prepareToDestroy)
                         playerShotPlunger.GetComponent<PlayerVehicleScript>().vehicleMaxSpeed = 30;
                     if (playerNum == 2 && !prepareToDestroy)
                         playerShotPlunger.GetComponent<PlayerVehicleScriptP2>().vehicleMaxSpeed = 30;
 
-                    playerShotPlunger.GetComponent<Rigidbody>().velocity += playerShotPlunger.transform.TransformDirection(new Vector3(0, 0, 0.5f));
-                    playerShotPlunger.GetComponent<Rigidbody>().velocity = new Vector3(playerShotPlunger.GetComponent<Rigidbody>().velocity.x, oldSpeedY, playerShotPlunger.GetComponent<Rigidbody>().velocity.z);
+                    playerRB.velocity += playerShotPlunger.transform.TransformDirection(new Vector3(0, 0, 0.5f));
+                    playerRB.velocity = new Vector3(playerRB.velocity.x, oldSpeedY, playerRB.velocity.z);
                 }
                 Debug.Log(playerShotPlunger.GetComponent<Rigidbody>().velocity);
             }
@@ -108,7 +119,8 @@ public class plungerInstance : MonoBehaviour
                 AudioManager.Instance.Play_SFX("Plunger_Arrived_SFX");
             }
 
-            this.transform.parent = collision.transform;
+            transform.parent = collision.transform;
+
             if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out RaycastHit raycastHit, 100))
             {
                 float angle = Vector3.Dot(raycastHit.point.normalized, transform.position.normalized);
