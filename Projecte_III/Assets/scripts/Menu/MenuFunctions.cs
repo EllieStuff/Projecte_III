@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class menuFunctions : MonoBehaviour
+public class MenuFunctions : MonoBehaviour
 {
     public GameObject settingsMenu;
     public Slider localVoiceValue;
