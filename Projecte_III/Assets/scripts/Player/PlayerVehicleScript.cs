@@ -143,7 +143,9 @@ public class PlayerVehicleScript : MonoBehaviour
 
         //HERE WE SET THE POSITION AND ROTATION FROM THE WHEELS RENDERERS
 
-        if(!buildingScene)
+        //------Movement------
+
+        if (!buildingScene)
         {
             Vector3 wheelPosition;
             Quaternion wheelRotation;
@@ -165,6 +167,11 @@ public class PlayerVehicleScript : MonoBehaviour
 
                 wheels.transform.localPosition = transform.localPosition;
                 wheels.transform.localRotation = transform.localRotation;
+
+        //------------------
+
+                //-----Modifiers-----
+
                 //FALLDEATH CHECK
                 if (!alaDelta)
                     checkFallDeath();
@@ -174,25 +181,28 @@ public class PlayerVehicleScript : MonoBehaviour
                     alaDeltaTimer = alaDeltaDuration;
                     alaDelta = false;
                 }
+
+                //--------------------
             }
         }
 
         if(touchingGround && vehicleRB.constraints != RigidbodyConstraints.None)
-
         {
-
             vehicleRB.constraints = RigidbodyConstraints.None;
-
         }
 
         transform.parent.GetChild(2).localPosition = transform.localPosition;
         //_______________________________________________________________
+
+        //-----Temporal-----
 
         if (Input.GetKeyDown(KeyCode.F))
         {
             Physics.IgnoreLayerCollision(3, 4, hasFloater);
             hasFloater = !hasFloater;
         }
+
+        //--------------------
 
     }
 
@@ -288,45 +298,42 @@ public class PlayerVehicleScript : MonoBehaviour
     }
 
     public void HideVoidModifier()
-
     {
-
         for (int i = 0; i < transform.parent.GetChild(2).childCount; i++)
-
         {
-
             GameObject child = transform.parent.GetChild(2).GetChild(i).gameObject;
 
             if (child.transform.childCount <= 0)
-
             {
-
                 child.SetActive(false);
-
             }
-
         }
-
     }
 
-    public void SetWheels()
+    //------Wheels------
 
+    public void SetWheels()
     {
         wheels = gameObject.transform.parent.GetChild(1).gameObject;
     }
+
+    //------------------
 
     // Update is called once per frame
     void FixedUpdate()
     {
         if(playerNum == 2 && !SceneManager.GetActiveScene().name.Equals("Building Scene Multiplayer"))
         {
-            this.GetComponent<PlayerVehicleScriptP2>().enabled = true;
-            this.GetComponent<PlayerVehicleScript>().enabled = false;
+            GetComponent<PlayerVehicleScriptP2>().enabled = true;
+            GetComponent<PlayerVehicleScript>().enabled = false;
         }
 
         controls.getAllInput(playerNum);
-        if(!finishedRace)
-        vehicleMovement();
+
+        //------Movement------
+
+        if (!finishedRace)
+            vehicleMovement();
         else
         {
             if (transform.InverseTransformDirection(vehicleRB.velocity).z > 1)
@@ -336,12 +343,17 @@ public class PlayerVehicleScript : MonoBehaviour
             else
                 vehicleRB.velocity = Vector3.zero;
         }
+        //------------------------
     }
 
     void OnCollisionStay(Collision other)
     {
+        //------Player Death------
+
         if (other.gameObject.tag.Equals("ground"))
             vehicleReversed = true;
+
+        //------------------------
     }
 
     void vehicleMovement()
@@ -529,16 +541,12 @@ public class PlayerVehicleScript : MonoBehaviour
     void VehicleSoundPitchFunction()
     {
         if ((vehicleRB.velocity.magnitude > 1 || vehicleRB.velocity.magnitude < -1) && !GetComponent<AudioSource>().enabled && lifeVehicle > 0)
-        {
-            this.GetComponent<AudioSource>().enabled = true;
-        }
+            GetComponent<AudioSource>().enabled = true;
         else if ((vehicleRB.velocity.magnitude <= 1 && vehicleRB.velocity.magnitude >= -1) && GetComponent<AudioSource>().enabled && lifeVehicle > 0)
-            this.GetComponent<AudioSource>().enabled = false;
+            GetComponent<AudioSource>().enabled = false;
 
-        if (this.GetComponent<AudioSource>().enabled)
-        {
-            this.GetComponent<AudioSource>().pitch = (vehicleRB.velocity.magnitude * 1) / vehicleMaxSpeed/2;
-        }
+        if (GetComponent<AudioSource>().enabled)
+            GetComponent<AudioSource>().pitch = (vehicleRB.velocity.magnitude * 1) / vehicleMaxSpeed/2;
     }
 
     void FallFunction()
@@ -571,6 +579,7 @@ public class PlayerVehicleScript : MonoBehaviour
         {
             vehicleRB.angularVelocity = new Vector3(vehicleRB.angularVelocity.x, -vehicleMaxTorque, vehicleRB.angularVelocity.z);
         }
+
         if (vehicleRB.velocity.z > vehicleMaxSpeed || vehicleRB.velocity.x > vehicleMaxSpeed)
         {
             if (vehicleRB.velocity.x > vehicleMaxSpeed && vehicleRB.velocity.z < vehicleMaxSpeed)
@@ -607,12 +616,12 @@ public class PlayerVehicleScript : MonoBehaviour
             alaDeltaTimer -= Time.deltaTime;
             if (alaDeltaTimer >= alaDeltaDuration - 0.6f)
             {
-                this.transform.rotation = new Quaternion(0, transform.rotation.y, 0, transform.rotation.w);
+                transform.rotation = new Quaternion(0, transform.rotation.y, 0, transform.rotation.w);
                 vehicleRB.velocity += new Vector3(0, 1, 0);
             }
             else
             {
-                this.transform.rotation = new Quaternion(0, this.transform.rotation.y, 0, this.transform.rotation.w);
+                transform.rotation = new Quaternion(0, transform.rotation.y, 0, transform.rotation.w);
                 if (controls.Quad.Right == 1)
                     vehicleRB.AddTorque(new Vector3(0, vehicleTorque, 0));
                 else if (controls.Quad.Left == 1)
