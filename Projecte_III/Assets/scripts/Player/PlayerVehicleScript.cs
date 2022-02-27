@@ -56,6 +56,8 @@ public class PlayerVehicleScript : MonoBehaviour
     private float savedAcceleration;
     [SerializeField] private int desatascadorBaseCooldown = 20;
     [SerializeField] private GameObject desatascadorPrefab;
+    [SerializeField] private Material particleMat;
+    private Color defaultColorMat;
     private GameObject desatascadorInstance;
     bool paintingChecked = false, oilChecked = false;
 
@@ -64,6 +66,8 @@ public class PlayerVehicleScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        defaultColorMat = Color.white;
+        particleMat.color = defaultColorMat;
         stats = gameObject.AddComponent<Stats>();
 
         vehicleAcceleration = 2;
@@ -561,7 +565,12 @@ public class PlayerVehicleScript : MonoBehaviour
                     driftRight = false;
                 }
                 if (driftTimer > 0)
+                {
                     driftTimer -= Time.deltaTime;
+                    particleMat.color = Color.yellow;
+                }
+                else
+                    particleMat.color = Color.red;
             }
             else if (controls.Quad.Right > 0 && controls.Quad.Drift)
             {
@@ -591,10 +600,16 @@ public class PlayerVehicleScript : MonoBehaviour
                 }
 
                 if (driftTimer > 0)
+                {
                     driftTimer -= Time.deltaTime;
+                    particleMat.color = Color.yellow;
+                }
+                else
+                    particleMat.color = Color.red;
             }
             else if (driftTimer <= 0 && !controls.Quad.Drift)
             {
+                particleMat.color = defaultColorMat;
                 vehicleAcceleration = 2;
                 vehicleMaxSpeed = 25;
                 driftTimer = 1.5f;
@@ -602,7 +617,8 @@ public class PlayerVehicleScript : MonoBehaviour
             }
             else
             {
-                if(driftTimer != 1.5f)
+                particleMat.color = defaultColorMat;
+                if (driftTimer != 1.5f)
                     driftTimer = 1.5f;
                 driftLeft = false;
                 driftRight = false;
@@ -610,6 +626,7 @@ public class PlayerVehicleScript : MonoBehaviour
         }
         else
         {
+            particleMat.color = defaultColorMat;
             if(driftTimer != 1.5f)
                 driftTimer = 1.5f;
             driftLeft = false;
