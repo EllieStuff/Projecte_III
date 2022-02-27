@@ -64,7 +64,7 @@ public class QuadControlSystem : MonoBehaviour
                     Quad.LookBackwards = (Input.GetKey(KeyCode.Joystick1Button3) || Input.GetKey(KeyCode.Mouse1));
                 //______________________________________________
                 //PLUNGER
-                    Quad.plunger = (Input.GetKey(KeyCode.Joystick1Button4) || Input.GetKey(KeyCode.Q));
+                    Quad.plunger = (Input.GetKey(KeyCode.Joystick1Button5) || Input.GetKey(KeyCode.Q));
                 //______________________________________________
                 break;
             case 2:
