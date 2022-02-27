@@ -524,7 +524,7 @@ public class PlayerVehicleScript : MonoBehaviour
     }
 
 
-    public float driftTimer = 0;
+    float driftTimer = 0;
     bool driftLeft;
     bool driftRight;
     Vector3 savedDir;
