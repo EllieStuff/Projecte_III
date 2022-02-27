@@ -68,7 +68,7 @@ public class PlayerVehicleScript : MonoBehaviour
 
         vehicleAcceleration = 2;
 
-                savedAcceleration = vehicleAcceleration;
+        savedAcceleration = vehicleAcceleration;
 
         wheelCollider = new WheelCollider[4];
 
@@ -158,7 +158,7 @@ public class PlayerVehicleScript : MonoBehaviour
                     touchingGround = true;
                 }
 
-                wheel.position = wheelPosition;
+                wheel.position = Vector3.Lerp(wheel.position, wheelPosition, Time.deltaTime * 2);
 
                 if (wheel.tag.Equals("front") && (controls.Quad.Right >= 0.2f || controls.Quad.Left >= 0.2f))
                     wheel.transform.localRotation = Quaternion.Lerp(wheel.transform.localRotation, new Quaternion(0, (controls.Quad.Right / 5) - (controls.Quad.Left / 5), 0, 1), Time.deltaTime * 3);
@@ -371,19 +371,19 @@ public class PlayerVehicleScript : MonoBehaviour
             {
                 if (controls.Quad.Right == 0 && controls.Quad.Left == 0)
                 {
-                    if (vehicleRB.velocity.y <= vehicleMaxSpeed / 2 && !controls.Quad.Drift)
+                    if (vehicleRB.velocity.y <= vehicleMaxSpeed / 2)
                         vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, vehicleAcceleration));
                 }
                 else if (controls.Quad.Right == 0 && controls.Quad.Left > 0)
                 {
-                    if (vehicleRB.velocity.y <= vehicleMaxSpeed / 2 && !controls.Quad.Drift)
+                    if (vehicleRB.velocity.y <= vehicleMaxSpeed / 2)
                         vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, vehicleAcceleration));
 
                     vehicleRB.AddTorque(new Vector3(0, -vehicleTorque * controls.Quad.Left, 0));
                 }
                 else if (controls.Quad.Right > 0 && controls.Quad.Left == 0)
                 {
-                    if (vehicleRB.velocity.y <= vehicleMaxSpeed / 2 && !controls.Quad.Drift)
+                    if (vehicleRB.velocity.y <= vehicleMaxSpeed / 2)
                         vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, vehicleAcceleration));
 
                     vehicleRB.AddTorque(new Vector3(0, vehicleTorque * controls.Quad.Right, 0));
@@ -523,18 +523,97 @@ public class PlayerVehicleScript : MonoBehaviour
         }
     }
 
+
+    public float driftTimer = 0;
+    bool driftLeft;
+    bool driftRight;
+    Vector3 savedDir;
+    Quaternion savedRot;
+
     void DriftFunction()
     {
         if (vehicleRB.velocity.magnitude >= minDriftSpeed)
         {
             if (controls.Quad.Left > 0 && controls.Quad.Drift)
             {
-                vehicleRB.AddTorque(new Vector3(0, -vehicleTorque * driftTorqueInc, 0));
+                if(!driftLeft)
+                {
+                    vehicleRB.AddTorque(0, -vehicleTorque * driftTorqueInc, 0);
+                    savedDir = vehicleRB.velocity;
+                    vehicleRB.velocity += new Vector3(0, 5, 0);
+                    vehicleRB.rotation *= new Quaternion(0, -0.2f, 0, 1).normalized;
+                    savedRot = vehicleRB.rotation;
+                }
+
+                driftLeft = true;
+
+                savedDir += transform.TransformDirection(-0.2f, 0, 0);
+                savedRot *= new Quaternion(0, -0.006f, 0, 1).normalized;
+
+                vehicleRB.velocity = new Vector3(savedDir.x, vehicleRB.velocity.y, savedDir.z);
+                vehicleRB.rotation = savedRot;
+
+                //vehicleRB.AddTorque(new Vector3(0, vehicleTorque * driftTorqueInc, 0));
+
+                if (driftRight)
+                {
+                    driftTimer = 1.5f;
+                    driftRight = false;
+                }
+                if (driftTimer > 0)
+                    driftTimer -= Time.deltaTime;
             }
             else if (controls.Quad.Right > 0 && controls.Quad.Drift)
             {
-                vehicleRB.AddTorque(new Vector3(0, vehicleTorque * driftTorqueInc, 0));
+                if (!driftRight)
+                {
+                    vehicleRB.AddTorque(0, vehicleTorque * driftTorqueInc, 0);
+                    savedDir = vehicleRB.velocity;
+                    vehicleRB.velocity += new Vector3(0, 5, 0);
+                    vehicleRB.rotation *= new Quaternion(0, 0.2f, 0, 1).normalized;
+                    savedRot = vehicleRB.rotation;
+                }
+
+                driftRight = true;
+
+                savedDir += transform.TransformDirection(0.2f, 0, 0);
+                savedRot *= new Quaternion(0, 0.006f, 0, 1).normalized;
+
+                vehicleRB.velocity = new Vector3(savedDir.x, vehicleRB.velocity.y, savedDir.z);
+                vehicleRB.rotation = savedRot;
+
+                //vehicleRB.AddTorque(new Vector3(0, -vehicleTorque * driftTorqueInc, 0));
+
+                if (driftLeft)
+                {
+                    driftTimer = 1.5f;
+                    driftLeft = false;
+                }
+
+                if (driftTimer > 0)
+                    driftTimer -= Time.deltaTime;
             }
+            else if (driftTimer <= 0 && !controls.Quad.Drift)
+            {
+                vehicleAcceleration = 2;
+                vehicleMaxSpeed = 25;
+                driftTimer = 1.5f;
+                StartCoroutine(WaitEndBoost());
+            }
+            else
+            {
+                if(driftTimer != 1.5f)
+                    driftTimer = 1.5f;
+                driftLeft = false;
+                driftRight = false;
+            }
+        }
+        else
+        {
+            if(driftTimer != 1.5f)
+                driftTimer = 1.5f;
+            driftLeft = false;
+            driftRight = false;
         }
     }
 

@@ -53,6 +53,7 @@ public class QuadControlSystem : MonoBehaviour
                 //______________________________________________
                 //DRIFT
                 /*Quad.Drift = (Input.GetAxis("DriftP1") >= 1 || Input.GetKey(KeyCode.Space));*/
+                    Quad.Drift = (Input.GetKey(KeyCode.Space));
                 //______________________________________________
                 //CHASIS ELEVATION
                 Quad.ChasisElevation = (Input.GetKey(KeyCode.Joystick1Button1) || Input.GetKey(KeyCode.LeftControl));
