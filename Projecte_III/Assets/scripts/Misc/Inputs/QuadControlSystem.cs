@@ -83,7 +83,7 @@ public class QuadControlSystem : MonoBehaviour
 
 
         /// Drift
-        /*Quad.Drift = (Input.GetAxis("DriftP1") >= 1 || Input.GetKey(KeyCode.Space));*/
+        Quad.Drift = Input.GetKey(KeyCode.Space);
 
         //______________________________________________
 
