@@ -611,7 +611,7 @@ public class PlayerVehicleScript : MonoBehaviour
             {
                 particleMat.color = defaultColorMat;
                 vehicleAcceleration = 2;
-                vehicleMaxSpeed = 28;
+                vehicleMaxSpeed = 30;
                 driftTimer = 1.5f;
                 StartCoroutine(WaitEndBoost());
             }
@@ -628,7 +628,7 @@ public class PlayerVehicleScript : MonoBehaviour
         {
             particleMat.color = defaultColorMat;
             vehicleAcceleration = 2;
-            vehicleMaxSpeed = 28;
+            vehicleMaxSpeed = 30;
             driftTimer = 1.5f;
             StartCoroutine(WaitEndBoost());
         }
