@@ -49,7 +49,7 @@ public class RaceFinishedScript : MonoBehaviour
 
             for (int i = 0; i < scores.minutes.Length; i++)
             {
-                if (scores.seconds[i] != 0 && scores.minutes[i] <= timerChronoUI.minute && scores.seconds[i] < timerChronoUI.second)
+                if (scores.seconds[i] != 0 && (scores.minutes[i] <= timerChronoUI.minute && scores.seconds[i] <= timerChronoUI.second) || (scores.minutes[i] < timerChronoUI.minute && scores.seconds[i] >= timerChronoUI.second))
                 {
                     newMaxScore = false;
                     break;
