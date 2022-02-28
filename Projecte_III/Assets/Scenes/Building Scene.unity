@@ -6492,6 +6492,11 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!4 &1101118842 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3490947353090283006, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+  m_PrefabInstance: {fileID: 6089789507022749367}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1110088808
 GameObject:
   m_ObjectHideFlags: 0
@@ -11278,6 +11283,10 @@ PrefabInstance:
       propertyPath: driftTorqueInc
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 38654283868662907, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+      propertyPath: quadChasisShake
+      value: 
+      objectReference: {fileID: 1101118842}
     - target: {fileID: 38654283868662907, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: vehicleMaxSpeed
       value: 17.55

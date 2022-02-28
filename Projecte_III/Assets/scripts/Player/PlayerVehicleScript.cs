@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -57,6 +58,8 @@ public class PlayerVehicleScript : MonoBehaviour
     [SerializeField] private int desatascadorBaseCooldown = 20;
     [SerializeField] private GameObject desatascadorPrefab;
     [SerializeField] private Material particleMat;
+    [SerializeField] private Transform quadChasisShake;
+    private float timerShake;
     private Color defaultColorMat;
     private GameObject desatascadorInstance;
     bool paintingChecked = false, oilChecked = false;
@@ -144,6 +147,20 @@ public class PlayerVehicleScript : MonoBehaviour
     {
         touchingGround = false;
         paintingChecked = oilChecked = false;
+
+        if (timerShake < 10000)
+            timerShake += Time.deltaTime;
+        else
+            timerShake = 0;
+
+        try
+        {
+            quadChasisShake.localPosition += new Vector3(0, Mathf.Sin(timerShake * 75) / 400, 0);
+        }
+        catch(Exception ex)
+        {
+            quadChasisShake = transform.GetChild(0).GetChild(0);
+        }
 
         //HERE WE SET THE POSITION AND ROTATION FROM THE WHEELS RENDERERS
 
