@@ -25,7 +25,8 @@ public class PlayerVehicleScript : MonoBehaviour
     private bool reduceSpeed;
     private float savedAngularDrag;
 
-    QuadControlSystem controls;
+    [HideInInspector]
+    public QuadControlSystem controls;
 
     public Rigidbody vehicleRB;
     private float vehicleAcceleration;
