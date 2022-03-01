@@ -56,7 +56,6 @@ public class QuadSceneManager : MonoBehaviour
                         child.localRotation = new Quaternion(0, 180, 0, 0);
                     else
                         child.localRotation = Quaternion.identity;
-
                 }
 
                 Rigidbody rb = playerScript.GetComponent<Rigidbody>();
@@ -74,7 +73,7 @@ public class QuadSceneManager : MonoBehaviour
             {
                 Transform initial = GameObject.FindGameObjectWithTag("InitPos").transform;
 
-                gameObject.transform.localPosition = initial.localPosition;
+                gameObject.transform.position = initial.position;
                 gameObject.transform.localRotation = initial.localRotation;
                 gameObject.transform.localScale = initial.localScale;
 
