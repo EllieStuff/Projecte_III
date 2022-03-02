@@ -20,11 +20,11 @@ MonoBehaviour:
     min: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0.5
     min: 0
   scatter:
-    m_OverrideState: 0
-    m_Value: 0.7
+    m_OverrideState: 1
+    m_Value: 0.062
     min: 0
     max: 1
   clamp:
@@ -105,7 +105,7 @@ MonoBehaviour:
   rounded:
     m_OverrideState: 0
     m_Value: 0
---- !u!114 &-4978872996342498777
+--- !u!114 &-3899390379763958387
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -114,26 +114,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70afe9e12c7a7ed47911bb608a23a8ff, type: 3}
-  m_Name: SplitToning
+  m_Script: {fileID: 11500000, guid: 66f335fb1ffd8684294ad653bf1c7564, type: 3}
+  m_Name: ColorAdjustments
   m_EditorClassIdentifier: 
   active: 1
   m_AdvancedMode: 0
-  shadows:
-    m_OverrideState: 1
-    m_Value: {r: 0.9245283, g: 0.8416696, b: 0.8416696, a: 1}
-    hdr: 0
-    showAlpha: 0
-    showEyeDropper: 1
-  highlights:
+  postExposure:
     m_OverrideState: 0
-    m_Value: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-    hdr: 0
+    m_Value: 0
+  contrast:
+    m_OverrideState: 1
+    m_Value: 16.5
+    min: -100
+    max: 100
+  colorFilter:
+    m_OverrideState: 1
+    m_Value: {r: 1, g: 0.99072486, b: 0.90588236, a: 1}
+    hdr: 1
     showAlpha: 0
     showEyeDropper: 1
-  balance:
+  hueShift:
+    m_OverrideState: 0
+    m_Value: 0
+    min: -180
+    max: 180
+  saturation:
     m_OverrideState: 1
-    m_Value: 51
+    m_Value: 5
     min: -100
     max: 100
 --- !u!114 &-2385776964754340874
@@ -177,4 +184,4 @@ MonoBehaviour:
   - {fileID: -8517133339426735896}
   - {fileID: -2385776964754340874}
   - {fileID: -8716640772406436361}
-  - {fileID: -4978872996342498777}
+  - {fileID: -3899390379763958387}
