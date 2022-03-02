@@ -54,10 +54,50 @@
                     "interactions": ""
                 },
                 {
-                    "name": "LookBackwards",
+                    "name": "ChooseItemRight",
                     "type": "Value",
                     "id": "c6e2a57c-8d40-4cc3-b771-3ed9d07e62dd",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "ChooseItemLeft",
+                    "type": "Value",
+                    "id": "2dfa6c52-0c96-43be-b22a-c14da96c4794",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "ChooseItemUp",
+                    "type": "Value",
+                    "id": "24d55a77-66ad-4eb1-bfdb-c70ebbea374a",
                     "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "ChooseItemDown",
+                    "type": "Value",
+                    "id": "372df455-a740-4a03-8304-850a210c50a1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "ChooseItemMouse",
+                    "type": "Value",
+                    "id": "0e21cede-741e-4272-8417-554d5ec16a3c",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "ConfirmChosenGadget",
+                    "type": "Value",
+                    "id": "2432c0d6-0af4-491a-918f-b73ac6447bec",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
                 },
@@ -73,6 +113,14 @@
                     "name": "AlaDelta",
                     "type": "Button",
                     "id": "183df223-cdd4-4beb-9465-d9577c47fd7c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "ActivateController",
+                    "type": "Button",
+                    "id": "ba62cb60-1e68-40a5-8c3c-955a12901a36",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -213,23 +261,12 @@
                 },
                 {
                     "name": "",
-                    "id": "867fe093-8aba-4c9b-a12d-a9513e45c799",
-                    "path": "<Keyboard>/tab",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Player1",
-                    "action": "LookBackwards",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "f682c0ab-6282-4936-80d1-6d6785fced7f",
-                    "path": "<Gamepad>/buttonNorth",
+                    "path": "<Gamepad>/rightStick/right",
                     "interactions": "",
                     "processors": "",
                     "groups": "Player1",
-                    "action": "LookBackwards",
+                    "action": "ChooseItemRight",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -274,6 +311,105 @@
                     "processors": "",
                     "groups": "Player1",
                     "action": "AlaDelta",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "722faaad-4800-4f0e-b11c-c30ea0062dcb",
+                    "path": "<Gamepad>/rightStick/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ChooseItemUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9dd957aa-244e-476b-a588-e3c7bfd27693",
+                    "path": "<Gamepad>/rightStick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Player1",
+                    "action": "ChooseItemLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a27f3a91-d0ba-4232-b5c7-a2f8f5d1be8e",
+                    "path": "<Gamepad>/rightStick/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ChooseItemDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fd334b8b-53aa-4305-9124-e1a02563c448",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ChooseItemMouse",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6a617234-c963-4eba-9851-440ce266d55f",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ConfirmChosenGadget",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "93546f0a-5d3a-49e9-a23b-a03e1cd442c4",
+                    "path": "<Mouse>/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ConfirmChosenGadget",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "55ed1674-51b1-4522-8461-c067731b3b2b",
+                    "path": "<Keyboard>/anyKey",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ConfirmChosenGadget",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "21f87173-a435-424c-9663-fe2eaf3ea964",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ActivateController",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0709a77f-765b-461e-bfa8-bcd7b6b21072",
+                    "path": "<Mouse>/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ActivateController",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
