@@ -7,6 +7,7 @@ public class RadialMenuScript : MonoBehaviour
 {
     [SerializeField] RadialMenuPieceScript rmPiecePrefab;
     [SerializeField] int modifiersNum = 3;
+    [SerializeField] bool usesController = true;
 
     PlayerVehicleScript player;
     RadialMenuPieceScript[] rmPieces;
@@ -63,15 +64,21 @@ public class RadialMenuScript : MonoBehaviour
 
     private int GetActiveElement()
     {
-        //Vector3 screenCenter = new Vector3(Screen.width / 2.0f, Screen.height / 2.0f);
-        //Vector3 cursorVector = Input.mousePosition - screenCenter;
+        float finalAngle;
+        if (!usesController)
+        {
+            Vector3 screenCenter = new Vector3(Screen.width / 2.0f, Screen.height / 2.0f);
+            Vector3 cursorVector = Input.mousePosition - screenCenter;
 
-        //float mouseAngle = NormalizeAngle(Vector3.SignedAngle(Vector3.up, cursorVector, Vector3.forward) + degreesPerPiece / 2.0f);
+            finalAngle = NormalizeAngle(Vector3.SignedAngle(Vector3.up, cursorVector, Vector3.forward) + degreesPerPiece / 2.0f);
+        }
+        else
+        {
+            if (player.controls.Quad.j2Axis == Vector2.zero) return -1;
+            finalAngle = NormalizeAngle(Vector3.SignedAngle(Vector3.up, player.controls.Quad.j2Axis, Vector3.forward) + degreesPerPiece / 2.0f);
+        }
 
-        if (player.controls.Quad.j2Axis == Vector2.zero) return -1;
-        float mouseAngle = NormalizeAngle(Vector3.SignedAngle(Vector3.up, player.controls.Quad.j2Axis, Vector3.forward) + degreesPerPiece / 2.0f);
-
-        return (int)(mouseAngle / degreesPerPiece);
+        return (int)(finalAngle / degreesPerPiece);
     }
 
     private float NormalizeAngle(float _angle) => (_angle + 360.0f) % 360.0f;
