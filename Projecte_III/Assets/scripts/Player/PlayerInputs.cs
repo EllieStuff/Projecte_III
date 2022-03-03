@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class PlayerInputs : MonoBehaviour
 {
-    public enum GameModes { MONO, MULTI_LOCAL /*, MULTI_ONLINE*/ };
-
-    GameModes gameMode = GameModes.MONO;
+    PlayerVehicleScript.GameModes gameMode = PlayerVehicleScript.GameModes.MONO;
     InputSystem inputSystem;
-    InputSystem.ControlData controlData = null;    // ToDo: Adapatar-ho a array
+    InputSystem.ControlData[] controlData = new InputSystem.ControlData[1];
 
     // Keys
     [HideInInspector] 
@@ -21,12 +19,13 @@ public class PlayerInputs : MonoBehaviour
     public Vector2
         chooseItem;
 
-    public InputSystem.ControlData ControlData { get { return controlData; } }
+    public InputSystem.ControlData[] ControlData { get { return controlData; } }
 
     // Start is called before the first frame update
     void Awake()
     {
         inputSystem = GameObject.FindGameObjectWithTag("InputSystem").GetComponent<InputSystem>();
+        controlData[0] = null;
     }
 
     // Update is called once per frame
@@ -34,9 +33,9 @@ public class PlayerInputs : MonoBehaviour
     {
         switch (gameMode)
         {
-            case GameModes.MONO:
-                if (controlData == null)
-                    controlData = inputSystem.GetActiveControllerData();
+            case PlayerVehicleScript.GameModes.MONO:
+                if(controlData == null || controlData[0] == null)
+                    controlData = inputSystem.GetAllControllersData();
                 else
                 {
                     UpdateInputs();
@@ -44,7 +43,13 @@ public class PlayerInputs : MonoBehaviour
 
                 break;
 
-            case GameModes.MULTI_LOCAL:
+            case PlayerVehicleScript.GameModes.MULTI_LOCAL:
+                if (controlData[0] == null)
+                    controlData[0] = inputSystem.GetActiveControllerData();
+                else
+                {
+                    UpdateInputs();
+                }
 
                 break;
 
@@ -55,7 +60,7 @@ public class PlayerInputs : MonoBehaviour
 
     void UpdateInputs()
     {
-        // Keys
+        //Keys
         forward = inputSystem.GetKey(InputSystem.KeyCodes.FORWARD, controlData);
         backward = inputSystem.GetKey(InputSystem.KeyCodes.BACKWARD, controlData);
         right = inputSystem.GetKey(InputSystem.KeyCodes.RIGHT, controlData);
@@ -70,7 +75,7 @@ public class PlayerInputs : MonoBehaviour
 
 
 
-    public void SetGameMode(GameModes _gameMode)
+    public void SetGameMode(PlayerVehicleScript.GameModes _gameMode)
     {
         gameMode = _gameMode;
     }

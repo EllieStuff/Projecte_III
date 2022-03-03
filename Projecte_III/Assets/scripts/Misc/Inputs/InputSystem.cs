@@ -12,67 +12,32 @@ public class InputSystem : MonoBehaviour
 
     public class ControlData
     {
-        public int controlId = -1, deviceId = -1;
-        public DeviceTypes deviceType = DeviceTypes.DEFAULT;
+        public int mainDeviceId, mouseDeviceId;
+        public DeviceTypes deviceType;
+
         public ControlData() { }
-        public ControlData(int _controlId, int _deviceId, string _path)
+
+        public void InitKeyboard(QuadControls _controls, int _keyboardIdx, int _mouseIdx)
         {
-            controlId = _controlId;
-            deviceId = _deviceId;
-            if (_path.Contains("Mouse") || _path.Contains("Keyboard")) deviceType = DeviceTypes.KEYBOARD;
-            else deviceType = DeviceTypes.CONTROLLER;
+            deviceType = DeviceTypes.KEYBOARD;
+
+            mouseDeviceId = _controls.Quad.ActivateController.controls[_mouseIdx].device.deviceId;
+            mainDeviceId = _controls.Quad.Forward.controls[0].device.deviceId;
+
         }
+        public void InitController(QuadControls _controls, int _controllerIdx)
+        {
+            deviceType = DeviceTypes.CONTROLLER;
+
+            mainDeviceId = _controls.Quad.ActivateController.controls[_controllerIdx].device.deviceId;
+
+        }
+
     }
-    //public class ControlData
-    //{
-    //    public int mainControlId, mouseControlId;
-    //    public int mainDeviceId, mouseDeviceId;
-    //    public DeviceTypes deviceType;
-
-    //    public ControlData() { }
-    //    public ControlData(string _path)
-    //    {
-    //        if (_path.Contains("Mouse") || _path.Contains("Keyboard")) deviceType = DeviceTypes.KEYBOARD;
-    //        else deviceType = DeviceTypes.CONTROLLER;
-    //    }
-
-    //    public void InitKeyboard(QuadControls _controls, int _mouseIdx, int _keyboardIdx)
-    //    {
-    //        //if(deviceType != DeviceTypes.KEYBOARD)
-    //        //{
-    //        //    Debug.LogError("Device Type wasn't assigned properly or Wrong function called");
-    //        //    return;
-    //        //}
 
 
-    //        deviceType = DeviceTypes.KEYBOARD;
-
-    //        mouseControlId = _mouseIdx;
-    //        mouseDeviceId = _controls.Quad.ActivateController.controls[_mouseIdx].device.deviceId;
-    //        mainControlId = _keyboardIdx;
-    //        mainDeviceId = _controls.Quad.Forward.controls[0].device.deviceId;
-
-    //    }
-    //    public void InitController(QuadControls _controls, int _controllerIdx)
-    //    {
-    //        //if (deviceType != DeviceTypes.CONTROLLER)
-    //        //{
-    //        //    Debug.LogError("Device Type wasn't assigned properly or Wrong function called");
-    //        //    return;
-    //        //}
-
-
-    //        deviceType = DeviceTypes.CONTROLLER;
-
-    //        mainControlId = _controllerIdx;
-    //        mainDeviceId = _controls.Quad.ActivateController.controls[_controllerIdx].device.deviceId;
-
-    //    }
-
-    //}
-
-    [HideInInspector]
-    public QuadControls controls;
+    static QuadControls controls;
+    
     Dictionary<int, Vector2> j2Dirs = new Dictionary<int, Vector2>();
     Dictionary<int, Vector2> lateJ2Dirs = new Dictionary<int, Vector2>();
 
@@ -85,25 +50,6 @@ public class InputSystem : MonoBehaviour
 
         controls = new QuadControls();
         controls.Enable();
-
-        //controllers = GetAllControllersData();
-    }
-
-    private void Update()
-    {
-        ControlData controller = GetActiveControllerData();
-        Debug.Log("Control Active: " + controller.deviceId);
-
-        //GetAxis(AxisCodes.CHOOSE_ITEM, controllers[i]);
-        //Debug.Log("Controller " + i + ": " + GetKey(KeyCodes.CONFIRM_GADGET, controllers[i]));
-
-        //GetAxis(AxisCodes.CHOOSE_ITEM, controllers[i]);
-        //Debug.Log("Controller " + 0 + ": " + GetAxis(AxisCodes.CHOOSE_ITEM, new ControlData(0, 2, "Mouse")));
-        //Debug.Log("Controller " + 1 + ": " + GetAxis(AxisCodes.CHOOSE_ITEM, new ControlData(0, 15, "Controller")));
-
-        //Debug.Log("Controller " + 0 + ": " + GetAxis(AxisCodes.CHOOSE_ITEM, new ControlData(0, 15)));
-        //Debug.Log("Controller " + 0 + ": " + GetKey(KeyCodes.CONFIRM_GADGET, controllers[i]));
-
     }
 
     private void LateUpdate()
@@ -114,25 +60,41 @@ public class InputSystem : MonoBehaviour
     // Plantejat perque puguis fer inputs amb tots el devices en el mode d'un jugador
     public ControlData[] GetAllControllersData()
     {
-        ControlData[] controllers = new ControlData[controls.Quad.ActivateController.controls.Count];
-        for (int i = 0; i < controllers.Length; i++)
+        List<ControlData> controllers = new List<ControlData>();
+        int keyboardIdx = -1, mouseIdx = -1;
+        for (int i = 0; i < controls.Quad.ActivateController.controls.Count; i++)
         {
             Debug.Log("Path " + i + ": " + controls.Quad.ActivateController.controls[i].path);
-            controllers[i] = new ControlData(i, controls.Quad.ActivateController.controls[i].device.deviceId, controls.Quad.ActivateController.controls[i].path);
+            if (controls.Quad.ActivateController.controls[i].path.Contains("Keyboard"))
+                keyboardIdx = i;
+            else if (controls.Quad.ActivateController.controls[i].path.Contains("Mouse"))
+                mouseIdx = i;
+            else
+            {
+                controllers.Add(new ControlData());
+                controllers[controllers.Count - 1].InitController(controls, i);
+            }
+
         }
 
-        return controllers;
+        if (keyboardIdx >= 0 && mouseIdx >= 0)
+        {
+            controllers.Add(new ControlData());
+            controllers[controllers.Count - 1].InitKeyboard(controls, keyboardIdx, mouseIdx);
+        }
+
+        return controllers.ToArray();
     }
 
     // Plantejat pel mode multijugador
     public ControlData GetActiveControllerData()
     {
         if (controls.Quad.ActivateController.activeControl == null) 
-            return new ControlData();
+            return null;
 
         int deviceId = controls.Quad.ActivateController.activeControl.device.deviceId;
-        if (activatedControllers.Find(_control => _control.deviceId == deviceId) != null)
-            return new ControlData();
+        if (activatedControllers.Find(_control => _control.mainDeviceId == deviceId) != null)
+            return null;
 
         for (int i = 0; i < controls.Quad.ActivateController.controls.Count; i++)
         {
@@ -140,9 +102,41 @@ public class InputSystem : MonoBehaviour
             {
                 if (controls.Quad.ActivateController.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD)
                 {
-                    ControlData control = new ControlData(i, deviceId, controls.Quad.ActivateController.controls[i].path);
-                    activatedControllers.Add(control);
-                    return control;
+                    ControlData control = new ControlData();
+                    if (deviceId == 1)  // Search from Keyboard
+                    {
+                        for (int j = 0; j < controls.Quad.ActivateController.controls.Count; j++)
+                        {
+                            if (controls.Quad.ActivateController.controls[j].device.deviceId == 2)
+                            {
+                                control.InitKeyboard(controls, i, j);
+                                activatedControllers.Add(control);
+                                Debug.Log("Added " + control.deviceType + " " + control.mainDeviceId);
+                                return control;
+                            }
+                        }
+                    }
+                    else if (deviceId == 2) // Search From Mouse
+                    {
+                        for (int j = 0; j < controls.Quad.ActivateController.controls.Count; j++)
+                        {
+                            if (controls.Quad.ActivateController.controls[j].device.deviceId == 1)
+                            {
+                                control.InitKeyboard(controls, j, i);
+                                activatedControllers.Add(control);
+                                Debug.Log("Added " + control.deviceType + " " + control.mainDeviceId);
+                                return control;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        control.InitController(controls, i);
+                        activatedControllers.Add(control);
+                        Debug.Log("Added " + control.deviceType + " " + control.mainDeviceId);
+                        return control;
+                    }
+
                 }
             }
 
@@ -152,109 +146,172 @@ public class InputSystem : MonoBehaviour
     }
 
 
-    public bool GetKey(KeyCodes _key, ControlData _controlData)
+    public bool GetKey(KeyCodes _key, ControlData[] _controlData)
     {
-        int ctrIdx = _controlData.controlId;
-        switch (_key)
+        for (int idx = 0; idx < _controlData.Length; idx++)
         {
-            case KeyCodes.FORWARD:
-                return controls.Quad.Forward.controls[ctrIdx].EvaluateMagnitude() > INPUT_THRESHOLD;
-
-            case KeyCodes.BACKWARD:
-                return controls.Quad.Backward.controls[ctrIdx].EvaluateMagnitude() > INPUT_THRESHOLD;
-
-            case KeyCodes.LEFT:
-                return controls.Quad.Left.controls[ctrIdx].EvaluateMagnitude() > INPUT_THRESHOLD;
-
-            case KeyCodes.RIGHT:
-                return controls.Quad.Right.controls[ctrIdx].EvaluateMagnitude() > INPUT_THRESHOLD;
-
-            case KeyCodes.DRIFT:
-                return controls.Quad.Drift.controls[ctrIdx].EvaluateMagnitude() > INPUT_THRESHOLD;
-
-            case KeyCodes.OPEN_GADGET_MENU:
-                return controls.Quad.UseActualGadget.controls[ctrIdx].EvaluateMagnitude() > INPUT_THRESHOLD;
-
-            case KeyCodes.CONFIRM_GADGET:
-                // If using Keyboard
-                if (_controlData.deviceType == DeviceTypes.KEYBOARD)
-                {
-                    for (int i = 0; i < controls.Quad.ConfirmChosenGadget.controls.Count; i++)
+            int mainDeviceId = _controlData[idx].mainDeviceId;
+            switch (_key)
+            {
+                case KeyCodes.FORWARD:
+                    for (int i = 0; i < controls.Quad.Forward.controls.Count; i++)
                     {
-                        if (controls.Quad.ConfirmChosenGadget.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD 
-                            && controls.Quad.ConfirmChosenGadget.controls[i].device.deviceId == _controlData.deviceId)
-                            return true;
-                    }
-                }
-
-                for (int i = 0; i < controls.Quad.ConfirmChosenGadget.controls.Count; i++)
-                {
-                    if (_controlData.deviceType == DeviceTypes.CONTROLLER && controls.Quad.ConfirmChosenGadget.controls[i].device.deviceId == _controlData.deviceId)
-                    {
-                        if(lateJ2Dirs.ContainsKey(_controlData.deviceId))
+                        if (controls.Quad.Forward.controls[i].device.deviceId == mainDeviceId)
                         {
-                            return !IsInThreshold(j2Dirs[_controlData.deviceId]) && IsInThreshold(lateJ2Dirs[_controlData.deviceId]);
+                            //Debug.Log("Forward is " + controls.Quad.Forward.controls[i].EvaluateMagnitude());
+                            if (controls.Quad.Forward.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return true;
                         }
                     }
-                }
 
-                break;
+                    break;
 
-            default:
-                break;
+                case KeyCodes.BACKWARD:
+                    for (int i = 0; i < controls.Quad.Backward.controls.Count; i++)
+                    {
+                        if (controls.Quad.Backward.controls[i].device.deviceId == mainDeviceId)
+                        {
+                            //Debug.Log("Backward is " + controls.Quad.Backward.controls[i].EvaluateMagnitude());
+                            if (controls.Quad.Backward.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return true;
+                        }
+                    }
+
+                    break;
+
+                case KeyCodes.LEFT:
+                    for (int i = 0; i < controls.Quad.Left.controls.Count; i++)
+                    {
+                        if (controls.Quad.Left.controls[i].device.deviceId == mainDeviceId)
+                        {
+                            //Debug.Log("Left is " + controls.Quad.Left.controls[i].EvaluateMagnitude());
+                            if (controls.Quad.Left.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return true;
+                        }
+                    }
+
+                    break;
+
+                case KeyCodes.RIGHT:
+                    for (int i = 0; i < controls.Quad.Right.controls.Count; i++)
+                    {
+                        if (controls.Quad.Right.controls[i].device.deviceId == mainDeviceId)
+                        {
+                            //Debug.Log("Right is " + controls.Quad.Right.controls[i].EvaluateMagnitude());
+                            if (controls.Quad.Right.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return true;
+                        }
+                    }
+
+                    break;
+
+                case KeyCodes.DRIFT:
+                    for (int i = 0; i < controls.Quad.Drift.controls.Count; i++)
+                    {
+                        if (controls.Quad.Drift.controls[i].device.deviceId == mainDeviceId)
+                        {
+                            //Debug.Log("Drift is " + controls.Quad.Drift.controls[i].EvaluateMagnitude());
+                            if (controls.Quad.Drift.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return true;
+                        }
+                    }
+
+                    break;
+
+                case KeyCodes.OPEN_GADGET_MENU:
+                    for (int i = 0; i < controls.Quad.UseActualGadget.controls.Count; i++)
+                    {
+                        if (controls.Quad.UseActualGadget.controls[i].device.deviceId == mainDeviceId)
+                        {
+                            //Debug.Log("UseActualGadget is " + controls.Quad.UseActualGadget.controls[i].EvaluateMagnitude());
+                            if (controls.Quad.UseActualGadget.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return true;
+                        }
+                    }
+
+                    break;
+
+                case KeyCodes.CONFIRM_GADGET:
+                    // If using Keyboard
+                    if (_controlData[idx].deviceType == DeviceTypes.KEYBOARD)
+                    {
+                        for (int i = 0; i < controls.Quad.ConfirmChosenGadget.controls.Count; i++)
+                        {
+                            if (controls.Quad.ConfirmChosenGadget.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD
+                                && controls.Quad.ConfirmChosenGadget.controls[i].device.deviceId == _controlData[idx].mouseDeviceId)
+                                return true;
+                        }
+                    }
+
+                    for (int i = 0; i < controls.Quad.ConfirmChosenGadget.controls.Count; i++)
+                    {
+                        if (_controlData[idx].deviceType == DeviceTypes.CONTROLLER && controls.Quad.ConfirmChosenGadget.controls[i].device.deviceId == mainDeviceId)
+                        {
+                            if (lateJ2Dirs.ContainsKey(mainDeviceId))
+                            {
+                                return !IsInThreshold(j2Dirs[mainDeviceId]) && IsInThreshold(lateJ2Dirs[mainDeviceId]);
+                            }
+                        }
+                    }
+
+                    break;
+
+                default:
+                    break;
+            }
+
         }
-
 
         return false;
 
     }
 
-    public Vector2 GetAxis(AxisCodes _joystick, ControlData _controlData)
+    public Vector2 GetAxis(AxisCodes _joystick, ControlData[] _controlData)
     {
-        switch (_joystick)
+        for (int idx = 0; idx < _controlData.Length; idx++)
         {
-            case AxisCodes.CHOOSE_ITEM:
-                // If using Keyboard
-                if(_controlData.deviceType == DeviceTypes.KEYBOARD){
-                    for (int i = 0; i < controls.Quad.ChooseItemMouse.controls.Count; i++)
+            int mainDeviceId = _controlData[idx].mainDeviceId;
+            switch (_joystick)
+            {
+                case AxisCodes.CHOOSE_ITEM:
+                    // If using Keyboard
+                    if (_controlData[idx].deviceType == DeviceTypes.KEYBOARD)
                     {
-                        if (controls.Quad.ChooseItemMouse.controls[i].device.deviceId == _controlData.deviceId)
+                        for (int i = 0; i < controls.Quad.ChooseItemMouse.controls.Count; i++)
                         {
-                            Vector3 screenCenter = new Vector3(Screen.width / 2.0f, Screen.height / 2.0f);
-                            return (Input.mousePosition - screenCenter).normalized;
+                            if (controls.Quad.ChooseItemMouse.controls[i].device.deviceId == _controlData[idx].mouseDeviceId)
+                            {
+                                Vector3 screenCenter = new Vector3(Screen.width / 2.0f, Screen.height / 2.0f);
+                                return (Input.mousePosition - screenCenter).normalized;
+                            }
                         }
                     }
-                }
 
-                // If using Controller
-                for (int i = 0; i < controls.Quad.ChooseItemRight.controls.Count; i++)
-                {
-                    if (controls.Quad.ChooseItemRight.controls[i].device.deviceId == _controlData.deviceId)
+                    // If using Controller
+                    for (int i = 0; i < controls.Quad.ChooseItemRight.controls.Count; i++)
                     {
-                        Vector2 tmpVec = new Vector2(
-                            controls.Quad.ChooseItemRight.controls[i].EvaluateMagnitude() - controls.Quad.ChooseItemLeft.controls[i].EvaluateMagnitude(),
-                            controls.Quad.ChooseItemUp.controls[i].EvaluateMagnitude() - controls.Quad.ChooseItemDown.controls[i].EvaluateMagnitude()
-                        );
-                        RefreshJ2Dirs(_controlData.deviceId, tmpVec);
+                        if (controls.Quad.ChooseItemRight.controls[i].device.deviceId == mainDeviceId)
+                        {
+                            Vector2 tmpVec = new Vector2(
+                                controls.Quad.ChooseItemRight.controls[i].EvaluateMagnitude() - controls.Quad.ChooseItemLeft.controls[i].EvaluateMagnitude(),
+                                controls.Quad.ChooseItemUp.controls[i].EvaluateMagnitude() - controls.Quad.ChooseItemDown.controls[i].EvaluateMagnitude()
+                            );
+                            RefreshJ2Dirs(mainDeviceId, tmpVec);
 
-                        if (!IsInThreshold(tmpVec))
-                            return tmpVec;
+                            if (!IsInThreshold(tmpVec))
+                                return tmpVec;
 
+                        }
                     }
-                }
 
-                break;
+                    break;
 
 
-            default:
-                break;
+                default:
+                    break;
+            }
+
         }
 
 
         return new Vector2();
     }
 
-    public QuadControls.QuadActions GetQuadActions()
+    public static QuadControls.QuadActions GetQuadActions()
     {
         return controls.Quad;
     }

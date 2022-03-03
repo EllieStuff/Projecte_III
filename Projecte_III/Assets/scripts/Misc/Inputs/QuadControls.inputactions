@@ -6,6 +6,14 @@
             "id": "5920d9fb-cb81-4def-9171-362e9a51f3e8",
             "actions": [
                 {
+                    "name": "ActivateController",
+                    "type": "Button",
+                    "id": "ba62cb60-1e68-40a5-8c3c-955a12901a36",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
                     "name": "Forward",
                     "type": "Button",
                     "id": "69e866fe-1932-48de-b9fe-259104c7fafc",
@@ -113,14 +121,6 @@
                     "name": "AlaDelta",
                     "type": "Button",
                     "id": "183df223-cdd4-4beb-9465-d9577c47fd7c",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "ActivateController",
-                    "type": "Button",
-                    "id": "ba62cb60-1e68-40a5-8c3c-955a12901a36",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -382,17 +382,6 @@
                 },
                 {
                     "name": "",
-                    "id": "55ed1674-51b1-4522-8461-c067731b3b2b",
-                    "path": "<Keyboard>/anyKey",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "ConfirmChosenGadget",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "21f87173-a435-424c-9663-fe2eaf3ea964",
                     "path": "<Gamepad>/start",
                     "interactions": "",
@@ -406,6 +395,17 @@
                     "name": "",
                     "id": "0709a77f-765b-461e-bfa8-bcd7b6b21072",
                     "path": "<Mouse>/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ActivateController",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5dff272f-460c-4948-b068-9a4f1709646e",
+                    "path": "<Keyboard>/anyKey",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/scripts/Misc/Inputs/QuadControls.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/Scripts/Misc/Inputs/QuadControls.inputactions'
 
 using System;
 using System.Collections;
@@ -18,6 +18,14 @@ public class @QuadControls : IInputActionCollection, IDisposable
             ""name"": ""Quad"",
             ""id"": ""5920d9fb-cb81-4def-9171-362e9a51f3e8"",
             ""actions"": [
+                {
+                    ""name"": ""ActivateController"",
+                    ""type"": ""Button"",
+                    ""id"": ""ba62cb60-1e68-40a5-8c3c-955a12901a36"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
                 {
                     ""name"": ""Forward"",
                     ""type"": ""Button"",
@@ -126,14 +134,6 @@ public class @QuadControls : IInputActionCollection, IDisposable
                     ""name"": ""AlaDelta"",
                     ""type"": ""Button"",
                     ""id"": ""183df223-cdd4-4beb-9465-d9577c47fd7c"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""ActivateController"",
-                    ""type"": ""Button"",
-                    ""id"": ""ba62cb60-1e68-40a5-8c3c-955a12901a36"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -395,17 +395,6 @@ public class @QuadControls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""55ed1674-51b1-4522-8461-c067731b3b2b"",
-                    ""path"": ""<Keyboard>/anyKey"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""ConfirmChosenGadget"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""21f87173-a435-424c-9663-fe2eaf3ea964"",
                     ""path"": ""<Gamepad>/start"",
                     ""interactions"": """",
@@ -419,6 +408,17 @@ public class @QuadControls : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""0709a77f-765b-461e-bfa8-bcd7b6b21072"",
                     ""path"": ""<Mouse>/press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ActivateController"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5dff272f-460c-4948-b068-9a4f1709646e"",
+                    ""path"": ""<Keyboard>/anyKey"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -691,6 +691,7 @@ public class @QuadControls : IInputActionCollection, IDisposable
 }");
         // Quad
         m_Quad = asset.FindActionMap("Quad", throwIfNotFound: true);
+        m_Quad_ActivateController = m_Quad.FindAction("ActivateController", throwIfNotFound: true);
         m_Quad_Forward = m_Quad.FindAction("Forward", throwIfNotFound: true);
         m_Quad_Backward = m_Quad.FindAction("Backward", throwIfNotFound: true);
         m_Quad_Left = m_Quad.FindAction("Left", throwIfNotFound: true);
@@ -705,7 +706,6 @@ public class @QuadControls : IInputActionCollection, IDisposable
         m_Quad_ConfirmChosenGadget = m_Quad.FindAction("ConfirmChosenGadget", throwIfNotFound: true);
         m_Quad_ChasisElevation = m_Quad.FindAction("ChasisElevation", throwIfNotFound: true);
         m_Quad_AlaDelta = m_Quad.FindAction("AlaDelta", throwIfNotFound: true);
-        m_Quad_ActivateController = m_Quad.FindAction("ActivateController", throwIfNotFound: true);
         // QuadP2
         m_QuadP2 = asset.FindActionMap("QuadP2", throwIfNotFound: true);
         m_QuadP2_Forward = m_QuadP2.FindAction("Forward", throwIfNotFound: true);
@@ -770,6 +770,7 @@ public class @QuadControls : IInputActionCollection, IDisposable
     // Quad
     private readonly InputActionMap m_Quad;
     private IQuadActions m_QuadActionsCallbackInterface;
+    private readonly InputAction m_Quad_ActivateController;
     private readonly InputAction m_Quad_Forward;
     private readonly InputAction m_Quad_Backward;
     private readonly InputAction m_Quad_Left;
@@ -784,11 +785,11 @@ public class @QuadControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Quad_ConfirmChosenGadget;
     private readonly InputAction m_Quad_ChasisElevation;
     private readonly InputAction m_Quad_AlaDelta;
-    private readonly InputAction m_Quad_ActivateController;
     public struct QuadActions
     {
         private @QuadControls m_Wrapper;
         public QuadActions(@QuadControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @ActivateController => m_Wrapper.m_Quad_ActivateController;
         public InputAction @Forward => m_Wrapper.m_Quad_Forward;
         public InputAction @Backward => m_Wrapper.m_Quad_Backward;
         public InputAction @Left => m_Wrapper.m_Quad_Left;
@@ -803,7 +804,6 @@ public class @QuadControls : IInputActionCollection, IDisposable
         public InputAction @ConfirmChosenGadget => m_Wrapper.m_Quad_ConfirmChosenGadget;
         public InputAction @ChasisElevation => m_Wrapper.m_Quad_ChasisElevation;
         public InputAction @AlaDelta => m_Wrapper.m_Quad_AlaDelta;
-        public InputAction @ActivateController => m_Wrapper.m_Quad_ActivateController;
         public InputActionMap Get() { return m_Wrapper.m_Quad; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -813,6 +813,9 @@ public class @QuadControls : IInputActionCollection, IDisposable
         {
             if (m_Wrapper.m_QuadActionsCallbackInterface != null)
             {
+                @ActivateController.started -= m_Wrapper.m_QuadActionsCallbackInterface.OnActivateController;
+                @ActivateController.performed -= m_Wrapper.m_QuadActionsCallbackInterface.OnActivateController;
+                @ActivateController.canceled -= m_Wrapper.m_QuadActionsCallbackInterface.OnActivateController;
                 @Forward.started -= m_Wrapper.m_QuadActionsCallbackInterface.OnForward;
                 @Forward.performed -= m_Wrapper.m_QuadActionsCallbackInterface.OnForward;
                 @Forward.canceled -= m_Wrapper.m_QuadActionsCallbackInterface.OnForward;
@@ -855,13 +858,13 @@ public class @QuadControls : IInputActionCollection, IDisposable
                 @AlaDelta.started -= m_Wrapper.m_QuadActionsCallbackInterface.OnAlaDelta;
                 @AlaDelta.performed -= m_Wrapper.m_QuadActionsCallbackInterface.OnAlaDelta;
                 @AlaDelta.canceled -= m_Wrapper.m_QuadActionsCallbackInterface.OnAlaDelta;
-                @ActivateController.started -= m_Wrapper.m_QuadActionsCallbackInterface.OnActivateController;
-                @ActivateController.performed -= m_Wrapper.m_QuadActionsCallbackInterface.OnActivateController;
-                @ActivateController.canceled -= m_Wrapper.m_QuadActionsCallbackInterface.OnActivateController;
             }
             m_Wrapper.m_QuadActionsCallbackInterface = instance;
             if (instance != null)
             {
+                @ActivateController.started += instance.OnActivateController;
+                @ActivateController.performed += instance.OnActivateController;
+                @ActivateController.canceled += instance.OnActivateController;
                 @Forward.started += instance.OnForward;
                 @Forward.performed += instance.OnForward;
                 @Forward.canceled += instance.OnForward;
@@ -904,9 +907,6 @@ public class @QuadControls : IInputActionCollection, IDisposable
                 @AlaDelta.started += instance.OnAlaDelta;
                 @AlaDelta.performed += instance.OnAlaDelta;
                 @AlaDelta.canceled += instance.OnAlaDelta;
-                @ActivateController.started += instance.OnActivateController;
-                @ActivateController.performed += instance.OnActivateController;
-                @ActivateController.canceled += instance.OnActivateController;
             }
         }
     }
@@ -1069,6 +1069,7 @@ public class @QuadControls : IInputActionCollection, IDisposable
     }
     public interface IQuadActions
     {
+        void OnActivateController(InputAction.CallbackContext context);
         void OnForward(InputAction.CallbackContext context);
         void OnBackward(InputAction.CallbackContext context);
         void OnLeft(InputAction.CallbackContext context);
@@ -1083,7 +1084,6 @@ public class @QuadControls : IInputActionCollection, IDisposable
         void OnConfirmChosenGadget(InputAction.CallbackContext context);
         void OnChasisElevation(InputAction.CallbackContext context);
         void OnAlaDelta(InputAction.CallbackContext context);
-        void OnActivateController(InputAction.CallbackContext context);
     }
     public interface IQuadP2Actions
     {

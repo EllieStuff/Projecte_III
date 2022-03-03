@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class PlayerVehicleScript : MonoBehaviour
 {
+    public enum GameModes { MONO, MULTI_LOCAL /*, MULTI_ONLINE*/ };
+    [SerializeField] GameModes gameMode = GameModes.MONO;
+
     [SerializeField] private int playerNum;
 
     [SerializeField] Vector3 centerOfMass = new Vector3(0.0f, -0.7f, 0.0f);
@@ -74,7 +77,7 @@ public class PlayerVehicleScript : MonoBehaviour
         controls = new QuadControlSystem();
         //inputSystem = GameObject.FindGameObjectWithTag("InputSystem").GetComponent<InputSystem>();
         inputs = GetComponent<PlayerInputs>();
-        inputs.SetGameMode(PlayerInputs.GameModes.MONO);
+        inputs.SetGameMode(gameMode);
 
         defaultColorMat = Color.white;
         particleMat.color = defaultColorMat;
