@@ -550,6 +550,7 @@ public class PlayerVehicleScript : MonoBehaviour
     bool driftRight;
     Vector3 savedDir;
     Quaternion savedRot;
+    Quaternion driftRot;
 
     void DriftFunction()
     {
@@ -562,23 +563,23 @@ public class PlayerVehicleScript : MonoBehaviour
                     vehicleRB.AddTorque(0, -vehicleTorque * driftTorqueInc, 0);
                     savedDir = vehicleRB.velocity;
                     vehicleRB.velocity += new Vector3(0, 5, 0);
-                    vehicleRB.rotation *= new Quaternion(0, -0.2f, 0, 1).normalized;
+                    driftRot = vehicleRB.rotation * new Quaternion(0, -0.2f * controls.Quad.Left, 0, 1).normalized;
                     savedRot = vehicleRB.rotation;
                 }
+                else if (driftRot.y <= savedRot.y)
+                    savedRot *= new Quaternion(0, -0.002f * controls.Quad.Right, 0, 1);
 
                 driftLeft = true;
 
-                savedDir += transform.TransformDirection(-0.2f, 0, 0);
-                savedRot *= new Quaternion(0, -0.006f, 0, 1).normalized;
+                savedDir += transform.TransformDirection(-0.4f * controls.Quad.Left, 0, 0);
+                savedRot *= new Quaternion(0, -0.012f * controls.Quad.Left, 0, 1).normalized;
 
                 vehicleRB.velocity = new Vector3(savedDir.x, vehicleRB.velocity.y, savedDir.z);
                 vehicleRB.rotation = savedRot;
 
-                //vehicleRB.AddTorque(new Vector3(0, vehicleTorque * driftTorqueInc, 0));
-
                 if (driftRight)
                 {
-                    driftTimer = 1.5f;
+                    driftTimer = 1;
                     driftRight = false;
                 }
                 if (driftTimer > 0)
@@ -596,23 +597,23 @@ public class PlayerVehicleScript : MonoBehaviour
                     vehicleRB.AddTorque(0, vehicleTorque * driftTorqueInc, 0);
                     savedDir = vehicleRB.velocity;
                     vehicleRB.velocity += new Vector3(0, 5, 0);
-                    vehicleRB.rotation *= new Quaternion(0, 0.2f, 0, 1).normalized;
+                    driftRot = vehicleRB.rotation * new Quaternion(0, 0.2f * controls.Quad.Right, 0, 1).normalized;
                     savedRot = vehicleRB.rotation;
                 }
+                else if (driftRot.y >= savedRot.y)
+                    savedRot *= new Quaternion(0, 0.002f * controls.Quad.Right, 0, 1);
 
                 driftRight = true;
 
-                savedDir += transform.TransformDirection(0.2f, 0, 0);
-                savedRot *= new Quaternion(0, 0.006f, 0, 1).normalized;
+                savedDir += transform.TransformDirection(0.4f * controls.Quad.Right, 0, 0);
+                savedRot *= new Quaternion(0, 0.012f * controls.Quad.Right, 0, 1).normalized;
 
                 vehicleRB.velocity = new Vector3(savedDir.x, vehicleRB.velocity.y, savedDir.z);
                 vehicleRB.rotation = savedRot;
 
-                //vehicleRB.AddTorque(new Vector3(0, -vehicleTorque * driftTorqueInc, 0));
-
                 if (driftLeft)
                 {
-                    driftTimer = 1.5f;
+                    driftTimer = 1;
                     driftLeft = false;
                 }
 
@@ -624,36 +625,36 @@ public class PlayerVehicleScript : MonoBehaviour
                 else
                     particleMat.color = Color.red;
             }
-            else if (driftTimer <= 0 && !controls.Quad.Drift)
+            else if (driftTimer <= 0)
             {
                 particleMat.color = defaultColorMat;
                 vehicleAcceleration = 2;
-                vehicleMaxSpeed = 30;
-                driftTimer = 1.5f;
+                vehicleMaxSpeed = 28.5f;
+                driftTimer = 1;
                 StartCoroutine(WaitEndBoost());
             }
             else
             {
                 particleMat.color = defaultColorMat;
-                if (driftTimer != 1.5f)
-                    driftTimer = 1.5f;
+                if (driftTimer != 1)
+                    driftTimer = 1;
                 driftLeft = false;
                 driftRight = false;
             }
         }
-        else if (driftTimer <= 0 && !controls.Quad.Drift)
+        else if (driftTimer <= 0)
         {
             particleMat.color = defaultColorMat;
             vehicleAcceleration = 2;
-            vehicleMaxSpeed = 30;
-            driftTimer = 1.5f;
+            vehicleMaxSpeed = 28.5f;
+            driftTimer = 1;
             StartCoroutine(WaitEndBoost());
         }
         else
         {
             particleMat.color = defaultColorMat;
-            if(driftTimer != 1.5f)
-                driftTimer = 1.5f;
+            if(driftTimer != 1)
+                driftTimer = 1;
             driftLeft = false;
             driftRight = false;
         }
