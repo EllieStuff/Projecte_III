@@ -19,6 +19,14 @@ public class @QuadControls : IInputActionCollection, IDisposable
             ""id"": ""5920d9fb-cb81-4def-9171-362e9a51f3e8"",
             ""actions"": [
                 {
+                    ""name"": ""ActivateController"",
+                    ""type"": ""Button"",
+                    ""id"": ""ba62cb60-1e68-40a5-8c3c-955a12901a36"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
                     ""name"": ""Forward"",
                     ""type"": ""Button"",
                     ""id"": ""69e866fe-1932-48de-b9fe-259104c7fafc"",
@@ -67,10 +75,50 @@ public class @QuadControls : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""LookBackwards"",
+                    ""name"": ""ChooseItemRight"",
                     ""type"": ""Value"",
                     ""id"": ""c6e2a57c-8d40-4cc3-b771-3ed9d07e62dd"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""ChooseItemLeft"",
+                    ""type"": ""Value"",
+                    ""id"": ""2dfa6c52-0c96-43be-b22a-c14da96c4794"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""ChooseItemUp"",
+                    ""type"": ""Value"",
+                    ""id"": ""24d55a77-66ad-4eb1-bfdb-c70ebbea374a"",
                     ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""ChooseItemDown"",
+                    ""type"": ""Value"",
+                    ""id"": ""372df455-a740-4a03-8304-850a210c50a1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""ChooseItemMouse"",
+                    ""type"": ""Value"",
+                    ""id"": ""0e21cede-741e-4272-8417-554d5ec16a3c"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""ConfirmChosenGadget"",
+                    ""type"": ""Value"",
+                    ""id"": ""2432c0d6-0af4-491a-918f-b73ac6447bec"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
                 },
@@ -226,23 +274,12 @@ public class @QuadControls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""867fe093-8aba-4c9b-a12d-a9513e45c799"",
-                    ""path"": ""<Keyboard>/tab"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Player1"",
-                    ""action"": ""LookBackwards"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""f682c0ab-6282-4936-80d1-6d6785fced7f"",
-                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""path"": ""<Gamepad>/rightStick/right"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Player1"",
-                    ""action"": ""LookBackwards"",
+                    ""action"": ""ChooseItemRight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -287,6 +324,105 @@ public class @QuadControls : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Player1"",
                     ""action"": ""AlaDelta"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""722faaad-4800-4f0e-b11c-c30ea0062dcb"",
+                    ""path"": ""<Gamepad>/rightStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChooseItemUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9dd957aa-244e-476b-a588-e3c7bfd27693"",
+                    ""path"": ""<Gamepad>/rightStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Player1"",
+                    ""action"": ""ChooseItemLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a27f3a91-d0ba-4232-b5c7-a2f8f5d1be8e"",
+                    ""path"": ""<Gamepad>/rightStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChooseItemDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fd334b8b-53aa-4305-9124-e1a02563c448"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChooseItemMouse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6a617234-c963-4eba-9851-440ce266d55f"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ConfirmChosenGadget"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""93546f0a-5d3a-49e9-a23b-a03e1cd442c4"",
+                    ""path"": ""<Mouse>/press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ConfirmChosenGadget"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""21f87173-a435-424c-9663-fe2eaf3ea964"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ActivateController"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0709a77f-765b-461e-bfa8-bcd7b6b21072"",
+                    ""path"": ""<Mouse>/press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ActivateController"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5dff272f-460c-4948-b068-9a4f1709646e"",
+                    ""path"": ""<Keyboard>/anyKey"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ActivateController"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -555,13 +691,19 @@ public class @QuadControls : IInputActionCollection, IDisposable
 }");
         // Quad
         m_Quad = asset.FindActionMap("Quad", throwIfNotFound: true);
+        m_Quad_ActivateController = m_Quad.FindAction("ActivateController", throwIfNotFound: true);
         m_Quad_Forward = m_Quad.FindAction("Forward", throwIfNotFound: true);
         m_Quad_Backward = m_Quad.FindAction("Backward", throwIfNotFound: true);
         m_Quad_Left = m_Quad.FindAction("Left", throwIfNotFound: true);
         m_Quad_Right = m_Quad.FindAction("Right", throwIfNotFound: true);
         m_Quad_Drift = m_Quad.FindAction("Drift", throwIfNotFound: true);
         m_Quad_UseActualGadget = m_Quad.FindAction("UseActualGadget", throwIfNotFound: true);
-        m_Quad_LookBackwards = m_Quad.FindAction("LookBackwards", throwIfNotFound: true);
+        m_Quad_ChooseItemRight = m_Quad.FindAction("ChooseItemRight", throwIfNotFound: true);
+        m_Quad_ChooseItemLeft = m_Quad.FindAction("ChooseItemLeft", throwIfNotFound: true);
+        m_Quad_ChooseItemUp = m_Quad.FindAction("ChooseItemUp", throwIfNotFound: true);
+        m_Quad_ChooseItemDown = m_Quad.FindAction("ChooseItemDown", throwIfNotFound: true);
+        m_Quad_ChooseItemMouse = m_Quad.FindAction("ChooseItemMouse", throwIfNotFound: true);
+        m_Quad_ConfirmChosenGadget = m_Quad.FindAction("ConfirmChosenGadget", throwIfNotFound: true);
         m_Quad_ChasisElevation = m_Quad.FindAction("ChasisElevation", throwIfNotFound: true);
         m_Quad_AlaDelta = m_Quad.FindAction("AlaDelta", throwIfNotFound: true);
         // QuadP2
@@ -628,26 +770,38 @@ public class @QuadControls : IInputActionCollection, IDisposable
     // Quad
     private readonly InputActionMap m_Quad;
     private IQuadActions m_QuadActionsCallbackInterface;
+    private readonly InputAction m_Quad_ActivateController;
     private readonly InputAction m_Quad_Forward;
     private readonly InputAction m_Quad_Backward;
     private readonly InputAction m_Quad_Left;
     private readonly InputAction m_Quad_Right;
     private readonly InputAction m_Quad_Drift;
     private readonly InputAction m_Quad_UseActualGadget;
-    private readonly InputAction m_Quad_LookBackwards;
+    private readonly InputAction m_Quad_ChooseItemRight;
+    private readonly InputAction m_Quad_ChooseItemLeft;
+    private readonly InputAction m_Quad_ChooseItemUp;
+    private readonly InputAction m_Quad_ChooseItemDown;
+    private readonly InputAction m_Quad_ChooseItemMouse;
+    private readonly InputAction m_Quad_ConfirmChosenGadget;
     private readonly InputAction m_Quad_ChasisElevation;
     private readonly InputAction m_Quad_AlaDelta;
     public struct QuadActions
     {
         private @QuadControls m_Wrapper;
         public QuadActions(@QuadControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @ActivateController => m_Wrapper.m_Quad_ActivateController;
         public InputAction @Forward => m_Wrapper.m_Quad_Forward;
         public InputAction @Backward => m_Wrapper.m_Quad_Backward;
         public InputAction @Left => m_Wrapper.m_Quad_Left;
         public InputAction @Right => m_Wrapper.m_Quad_Right;
         public InputAction @Drift => m_Wrapper.m_Quad_Drift;
         public InputAction @UseActualGadget => m_Wrapper.m_Quad_UseActualGadget;
-        public InputAction @LookBackwards => m_Wrapper.m_Quad_LookBackwards;
+        public InputAction @ChooseItemRight => m_Wrapper.m_Quad_ChooseItemRight;
+        public InputAction @ChooseItemLeft => m_Wrapper.m_Quad_ChooseItemLeft;
+        public InputAction @ChooseItemUp => m_Wrapper.m_Quad_ChooseItemUp;
+        public InputAction @ChooseItemDown => m_Wrapper.m_Quad_ChooseItemDown;
+        public InputAction @ChooseItemMouse => m_Wrapper.m_Quad_ChooseItemMouse;
+        public InputAction @ConfirmChosenGadget => m_Wrapper.m_Quad_ConfirmChosenGadget;
         public InputAction @ChasisElevation => m_Wrapper.m_Quad_ChasisElevation;
         public InputAction @AlaDelta => m_Wrapper.m_Quad_AlaDelta;
         public InputActionMap Get() { return m_Wrapper.m_Quad; }
@@ -659,6 +813,9 @@ public class @QuadControls : IInputActionCollection, IDisposable
         {
             if (m_Wrapper.m_QuadActionsCallbackInterface != null)
             {
+                @ActivateController.started -= m_Wrapper.m_QuadActionsCallbackInterface.OnActivateController;
+                @ActivateController.performed -= m_Wrapper.m_QuadActionsCallbackInterface.OnActivateController;
+                @ActivateController.canceled -= m_Wrapper.m_QuadActionsCallbackInterface.OnActivateController;
                 @Forward.started -= m_Wrapper.m_QuadActionsCallbackInterface.OnForward;
                 @Forward.performed -= m_Wrapper.m_QuadActionsCallbackInterface.OnForward;
                 @Forward.canceled -= m_Wrapper.m_QuadActionsCallbackInterface.OnForward;
@@ -677,9 +834,24 @@ public class @QuadControls : IInputActionCollection, IDisposable
                 @UseActualGadget.started -= m_Wrapper.m_QuadActionsCallbackInterface.OnUseActualGadget;
                 @UseActualGadget.performed -= m_Wrapper.m_QuadActionsCallbackInterface.OnUseActualGadget;
                 @UseActualGadget.canceled -= m_Wrapper.m_QuadActionsCallbackInterface.OnUseActualGadget;
-                @LookBackwards.started -= m_Wrapper.m_QuadActionsCallbackInterface.OnLookBackwards;
-                @LookBackwards.performed -= m_Wrapper.m_QuadActionsCallbackInterface.OnLookBackwards;
-                @LookBackwards.canceled -= m_Wrapper.m_QuadActionsCallbackInterface.OnLookBackwards;
+                @ChooseItemRight.started -= m_Wrapper.m_QuadActionsCallbackInterface.OnChooseItemRight;
+                @ChooseItemRight.performed -= m_Wrapper.m_QuadActionsCallbackInterface.OnChooseItemRight;
+                @ChooseItemRight.canceled -= m_Wrapper.m_QuadActionsCallbackInterface.OnChooseItemRight;
+                @ChooseItemLeft.started -= m_Wrapper.m_QuadActionsCallbackInterface.OnChooseItemLeft;
+                @ChooseItemLeft.performed -= m_Wrapper.m_QuadActionsCallbackInterface.OnChooseItemLeft;
+                @ChooseItemLeft.canceled -= m_Wrapper.m_QuadActionsCallbackInterface.OnChooseItemLeft;
+                @ChooseItemUp.started -= m_Wrapper.m_QuadActionsCallbackInterface.OnChooseItemUp;
+                @ChooseItemUp.performed -= m_Wrapper.m_QuadActionsCallbackInterface.OnChooseItemUp;
+                @ChooseItemUp.canceled -= m_Wrapper.m_QuadActionsCallbackInterface.OnChooseItemUp;
+                @ChooseItemDown.started -= m_Wrapper.m_QuadActionsCallbackInterface.OnChooseItemDown;
+                @ChooseItemDown.performed -= m_Wrapper.m_QuadActionsCallbackInterface.OnChooseItemDown;
+                @ChooseItemDown.canceled -= m_Wrapper.m_QuadActionsCallbackInterface.OnChooseItemDown;
+                @ChooseItemMouse.started -= m_Wrapper.m_QuadActionsCallbackInterface.OnChooseItemMouse;
+                @ChooseItemMouse.performed -= m_Wrapper.m_QuadActionsCallbackInterface.OnChooseItemMouse;
+                @ChooseItemMouse.canceled -= m_Wrapper.m_QuadActionsCallbackInterface.OnChooseItemMouse;
+                @ConfirmChosenGadget.started -= m_Wrapper.m_QuadActionsCallbackInterface.OnConfirmChosenGadget;
+                @ConfirmChosenGadget.performed -= m_Wrapper.m_QuadActionsCallbackInterface.OnConfirmChosenGadget;
+                @ConfirmChosenGadget.canceled -= m_Wrapper.m_QuadActionsCallbackInterface.OnConfirmChosenGadget;
                 @ChasisElevation.started -= m_Wrapper.m_QuadActionsCallbackInterface.OnChasisElevation;
                 @ChasisElevation.performed -= m_Wrapper.m_QuadActionsCallbackInterface.OnChasisElevation;
                 @ChasisElevation.canceled -= m_Wrapper.m_QuadActionsCallbackInterface.OnChasisElevation;
@@ -690,6 +862,9 @@ public class @QuadControls : IInputActionCollection, IDisposable
             m_Wrapper.m_QuadActionsCallbackInterface = instance;
             if (instance != null)
             {
+                @ActivateController.started += instance.OnActivateController;
+                @ActivateController.performed += instance.OnActivateController;
+                @ActivateController.canceled += instance.OnActivateController;
                 @Forward.started += instance.OnForward;
                 @Forward.performed += instance.OnForward;
                 @Forward.canceled += instance.OnForward;
@@ -708,9 +883,24 @@ public class @QuadControls : IInputActionCollection, IDisposable
                 @UseActualGadget.started += instance.OnUseActualGadget;
                 @UseActualGadget.performed += instance.OnUseActualGadget;
                 @UseActualGadget.canceled += instance.OnUseActualGadget;
-                @LookBackwards.started += instance.OnLookBackwards;
-                @LookBackwards.performed += instance.OnLookBackwards;
-                @LookBackwards.canceled += instance.OnLookBackwards;
+                @ChooseItemRight.started += instance.OnChooseItemRight;
+                @ChooseItemRight.performed += instance.OnChooseItemRight;
+                @ChooseItemRight.canceled += instance.OnChooseItemRight;
+                @ChooseItemLeft.started += instance.OnChooseItemLeft;
+                @ChooseItemLeft.performed += instance.OnChooseItemLeft;
+                @ChooseItemLeft.canceled += instance.OnChooseItemLeft;
+                @ChooseItemUp.started += instance.OnChooseItemUp;
+                @ChooseItemUp.performed += instance.OnChooseItemUp;
+                @ChooseItemUp.canceled += instance.OnChooseItemUp;
+                @ChooseItemDown.started += instance.OnChooseItemDown;
+                @ChooseItemDown.performed += instance.OnChooseItemDown;
+                @ChooseItemDown.canceled += instance.OnChooseItemDown;
+                @ChooseItemMouse.started += instance.OnChooseItemMouse;
+                @ChooseItemMouse.performed += instance.OnChooseItemMouse;
+                @ChooseItemMouse.canceled += instance.OnChooseItemMouse;
+                @ConfirmChosenGadget.started += instance.OnConfirmChosenGadget;
+                @ConfirmChosenGadget.performed += instance.OnConfirmChosenGadget;
+                @ConfirmChosenGadget.canceled += instance.OnConfirmChosenGadget;
                 @ChasisElevation.started += instance.OnChasisElevation;
                 @ChasisElevation.performed += instance.OnChasisElevation;
                 @ChasisElevation.canceled += instance.OnChasisElevation;
@@ -879,13 +1069,19 @@ public class @QuadControls : IInputActionCollection, IDisposable
     }
     public interface IQuadActions
     {
+        void OnActivateController(InputAction.CallbackContext context);
         void OnForward(InputAction.CallbackContext context);
         void OnBackward(InputAction.CallbackContext context);
         void OnLeft(InputAction.CallbackContext context);
         void OnRight(InputAction.CallbackContext context);
         void OnDrift(InputAction.CallbackContext context);
         void OnUseActualGadget(InputAction.CallbackContext context);
-        void OnLookBackwards(InputAction.CallbackContext context);
+        void OnChooseItemRight(InputAction.CallbackContext context);
+        void OnChooseItemLeft(InputAction.CallbackContext context);
+        void OnChooseItemUp(InputAction.CallbackContext context);
+        void OnChooseItemDown(InputAction.CallbackContext context);
+        void OnChooseItemMouse(InputAction.CallbackContext context);
+        void OnConfirmChosenGadget(InputAction.CallbackContext context);
         void OnChasisElevation(InputAction.CallbackContext context);
         void OnAlaDelta(InputAction.CallbackContext context);
     }
