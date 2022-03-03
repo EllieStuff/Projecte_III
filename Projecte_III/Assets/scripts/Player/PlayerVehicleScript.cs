@@ -352,7 +352,7 @@ public class PlayerVehicleScript : MonoBehaviour
             if (controls == null)
                 controls = new QuadControlSystem();
 
-            Debug.Log(controls);
+            //Debug.Log(controls);
             controls.getAllInput(playerNum);
 
             //------Movement------
