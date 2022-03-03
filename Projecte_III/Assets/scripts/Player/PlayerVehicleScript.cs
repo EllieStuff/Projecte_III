@@ -67,6 +67,9 @@ public class PlayerVehicleScript : MonoBehaviour
 
     public bool finishedRace;
 
+    private Transform outTransform;
+    private Rigidbody outVehicleRB;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -190,13 +193,17 @@ public class PlayerVehicleScript : MonoBehaviour
                 wheels.transform.localPosition = transform.localPosition;
                 wheels.transform.localRotation = transform.localRotation;
 
-        //------------------
+                //------------------
 
                 //-----Modifiers-----
 
                 //FALLDEATH CHECK
-                if (!alaDelta)
-                    checkFallDeath();
+                if (DeathScript.DeathByFalling(alaDelta, transform, vehicleRB, respawnPosition, respawnRotation, respawnVelocity, out outTransform, out outVehicleRB))
+                {
+                    transform.position = outTransform.position;
+                    transform.rotation = outTransform.rotation;
+                    vehicleRB.velocity = outVehicleRB.velocity;
+                }
                 //RESETTING ALADELTA VARIABLES
                 if (touchingGround)
                 {
@@ -375,9 +382,7 @@ public class PlayerVehicleScript : MonoBehaviour
     void OnCollisionStay(Collision other)
     {
         //------Player Death------
-
-        if (other.gameObject.tag.Equals("ground"))
-            vehicleReversed = true;
+        vehicleReversed = DeathScript.CheckIfDeathByFlipping(vehicleReversed, other);
 
         //------------------------
     }
@@ -479,7 +484,14 @@ public class PlayerVehicleScript : MonoBehaviour
         else if (vehicleReversed && lifeVehicle > 0)
         {
             //WHEN THE VEHICLE IS REVERSED YOU CAN ROTATE THE QUAD LEFT AND RIGHT UNTIL THE VEHICLE STANDS UP
-            VehicleRecoverFunction();
+            timerReversed += Time.deltaTime;
+            if(DeathScript.DeathByFlipping(timerReversed, transform, vehicleRB, respawnPosition, respawnRotation, respawnVelocity, out outTransform, out outVehicleRB))
+            {
+                transform.position = outTransform.position;
+                transform.rotation = outTransform.rotation;
+                vehicleRB.velocity = outVehicleRB.velocity;
+            }
+
         }
         else
         {
@@ -506,20 +518,6 @@ public class PlayerVehicleScript : MonoBehaviour
 
         //VEHICLE SOUND PITCH SYSTEM
         VehicleSoundPitchFunction();
-    }
-
-    void VehicleRecoverFunction()
-    {
-        timerReversed += Time.deltaTime;
-        if(timerReversed >= 1)
-        {
-            AudioManager.Instance.Play_SFX("Fall_SFX");
-            transform.position = respawnPosition;
-            transform.localEulerAngles = respawnRotation;
-            transform.localEulerAngles += new Vector3(0, 90, 0);
-            vehicleRB.velocity = new Vector3(respawnVelocity.x, respawnVelocity.y, respawnVelocity.z);
-            timerReversed = 0;
-        }
     }
 
     void ChasisElevationFunction()
