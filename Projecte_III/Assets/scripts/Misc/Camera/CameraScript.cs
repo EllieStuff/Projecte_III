@@ -13,7 +13,7 @@ public class CameraScript : MonoBehaviour
     public QuadControls controls;
 
     float camPosSpeed = 5.0f;
-    float camRotSpeed = 1.1f;
+    [SerializeField] float camRotSpeed = 1.1f;
     Quaternion rotOffsetQuat, lookBackRotOffset;
 
     private void Start()

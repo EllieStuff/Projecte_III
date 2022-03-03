@@ -11,7 +11,7 @@ public class ChangeCameraRot : MonoBehaviour
     {
         if (other.CompareTag("PlayerVehicle"))
         {
-            Debug.Log("In");
+            //Debug.Log("In");
             CameraScript camera = Camera.main.GetComponentInParent<CameraScript>();
             camera.ChangeRotation(newRot);
         }
@@ -22,7 +22,7 @@ public class ChangeCameraRot : MonoBehaviour
     {
         if (other.CompareTag("PlayerVehicle"))
         {
-            Debug.Log("Out");
+            //Debug.Log("Out");
             CameraScript camera = Camera.main.GetComponentInParent<CameraScript>();
             camera.ResetRotation();
         }
