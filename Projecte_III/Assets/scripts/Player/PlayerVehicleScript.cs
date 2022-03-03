@@ -89,8 +89,8 @@ public class PlayerVehicleScript : MonoBehaviour
 
         desatascadorBaseCooldown = 10;
         wheelsPivot = transform.GetChild(1).gameObject;
-        alaDeltaDuration = 1;
-        alaDeltaTimer = 1;
+        alaDeltaDuration = 5;
+        alaDeltaTimer = 5;
         //controls = new QuadControlSystem();
 
         GetComponent<AudioSource>().enabled = false;
@@ -198,7 +198,7 @@ public class PlayerVehicleScript : MonoBehaviour
                 if (!alaDelta)
                     checkFallDeath();
                 //RESETTING ALADELTA VARIABLES
-                if (alaDeltaTimer <= alaDeltaDuration - 0.8f)
+                if (touchingGround)
                 {
                     alaDeltaTimer = alaDeltaDuration;
                     alaDelta = false;
@@ -750,9 +750,9 @@ public class PlayerVehicleScript : MonoBehaviour
             {
                 transform.rotation = new Quaternion(0, transform.rotation.y, 0, transform.rotation.w);
                 if (controls.Quad.Right == 1)
-                    vehicleRB.AddTorque(new Vector3(0, vehicleTorque, 0));
+                    vehicleRB.AddTorque(new Vector3(0, vehicleTorque / 5, 0));
                 else if (controls.Quad.Left == 1)
-                    vehicleRB.AddTorque(new Vector3(0, -vehicleTorque, 0));
+                    vehicleRB.AddTorque(new Vector3(0, -vehicleTorque / 5, 0));
 
                 savedVelocity = transform.TransformDirection(new Vector3(0, 0, 25));
 
