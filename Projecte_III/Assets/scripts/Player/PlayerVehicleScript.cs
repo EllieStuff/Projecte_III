@@ -26,7 +26,8 @@ public class PlayerVehicleScript : MonoBehaviour
     private bool reduceSpeed;
     private float savedAngularDrag;
 
-    QuadControlSystem controls;
+    [HideInInspector]
+    public QuadControlSystem controls;
 
     public Rigidbody vehicleRB;
     private float vehicleAcceleration;
@@ -90,7 +91,7 @@ public class PlayerVehicleScript : MonoBehaviour
         wheelsPivot = transform.GetChild(1).gameObject;
         alaDeltaDuration = 1;
         alaDeltaTimer = 1;
-        controls = new QuadControlSystem();
+        //controls = new QuadControlSystem();
 
         GetComponent<AudioSource>().enabled = false;
         Physics.gravity = new Vector3(0, -9.8f * 2, 0);
@@ -343,28 +344,32 @@ public class PlayerVehicleScript : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(playerNum == 2 && !SceneManager.GetActiveScene().name.Equals("Building Scene Multiplayer"))
+        if(!SceneManager.GetActiveScene().name.Equals("Building Scene Multiplayer"))
         {
-            GetComponent<PlayerVehicleScriptP2>().enabled = true;
-            GetComponent<PlayerVehicleScript>().enabled = false;
-        }
+            //GetComponent<PlayerVehicleScriptP2>().enabled = true;
+            //GetComponent<PlayerVehicleScript>().enabled = false;
 
-        controls.getAllInput(playerNum);
+            if (controls == null)
+                controls = new QuadControlSystem();
 
-        //------Movement------
+            Debug.Log(controls);
+            controls.getAllInput(playerNum);
 
-        if (!finishedRace)
-            vehicleMovement();
-        else
-        {
-            if (transform.InverseTransformDirection(vehicleRB.velocity).z > 1)
-                vehicleRB.velocity -= transform.TransformDirection(new Vector3(0, 0, vehicleAcceleration));
-            else if(transform.InverseTransformDirection(vehicleRB.velocity).z < -1)
-                vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, vehicleAcceleration));
+            //------Movement------
+
+            if (!finishedRace)
+                vehicleMovement();
             else
-                vehicleRB.velocity = Vector3.zero;
+            {
+                if (transform.InverseTransformDirection(vehicleRB.velocity).z > 1)
+                    vehicleRB.velocity -= transform.TransformDirection(new Vector3(0, 0, vehicleAcceleration));
+                else if(transform.InverseTransformDirection(vehicleRB.velocity).z < -1)
+                    vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, vehicleAcceleration));
+                else
+                    vehicleRB.velocity = Vector3.zero;
+            }
+            //------------------------
         }
-        //------------------------
     }
 
     void OnCollisionStay(Collision other)
