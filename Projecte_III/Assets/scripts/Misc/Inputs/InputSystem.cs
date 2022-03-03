@@ -21,8 +21,8 @@ public class InputSystem : MonoBehaviour
         {
             deviceType = DeviceTypes.KEYBOARD;
 
+            mainDeviceId = _controls.Quad.ActivateController.controls[_keyboardIdx].device.deviceId;
             mouseDeviceId = _controls.Quad.ActivateController.controls[_mouseIdx].device.deviceId;
-            mainDeviceId = _controls.Quad.Forward.controls[0].device.deviceId;
 
         }
         public void InitController(QuadControls _controls, int _controllerIdx)
@@ -40,6 +40,7 @@ public class InputSystem : MonoBehaviour
     
     Dictionary<int, Vector2> j2Dirs = new Dictionary<int, Vector2>();
     Dictionary<int, Vector2> lateJ2Dirs = new Dictionary<int, Vector2>();
+    int notUpdatedIts = 0, itsToUpdate = 4;
 
     List<ControlData> activatedControllers = new List<ControlData>();
 
@@ -54,7 +55,13 @@ public class InputSystem : MonoBehaviour
 
     private void LateUpdate()
     {
-        lateJ2Dirs = new Dictionary<int, Vector2>(j2Dirs);
+        if (notUpdatedIts < itsToUpdate)
+            notUpdatedIts++;
+        else
+        {
+            notUpdatedIts = 0;
+            lateJ2Dirs = new Dictionary<int, Vector2>(j2Dirs);
+        }
     }
 
     // Plantejat perque puguis fer inputs amb tots el devices en el mode d'un jugador
@@ -236,14 +243,17 @@ public class InputSystem : MonoBehaviour
                                 return true;
                         }
                     }
-
-                    for (int i = 0; i < controls.Quad.ConfirmChosenGadget.controls.Count; i++)
+                    else
                     {
-                        if (_controlData[idx].deviceType == DeviceTypes.CONTROLLER && controls.Quad.ConfirmChosenGadget.controls[i].device.deviceId == mainDeviceId)
+                        for (int i = 0; i < controls.Quad.ConfirmChosenGadget.controls.Count; i++)
                         {
-                            if (lateJ2Dirs.ContainsKey(mainDeviceId))
+                            if (_controlData[idx].deviceType == DeviceTypes.CONTROLLER && controls.Quad.ConfirmChosenGadget.controls[i].device.deviceId == mainDeviceId)
                             {
-                                return !IsInThreshold(j2Dirs[mainDeviceId]) && IsInThreshold(lateJ2Dirs[mainDeviceId]);
+                                if (lateJ2Dirs.ContainsKey(mainDeviceId))
+                                {
+                                    //Debug.Log("works: " + (IsInThreshold(j2Dirs[mainDeviceId]) && !IsInThreshold(lateJ2Dirs[mainDeviceId])).ToString());
+                                    return IsInThreshold(j2Dirs[mainDeviceId]) && !IsInThreshold(lateJ2Dirs[mainDeviceId]);
+                                }
                             }
                         }
                     }
@@ -280,21 +290,22 @@ public class InputSystem : MonoBehaviour
                             }
                         }
                     }
-
-                    // If using Controller
-                    for (int i = 0; i < controls.Quad.ChooseItemRight.controls.Count; i++)
+                    else    // If using Controller
                     {
-                        if (controls.Quad.ChooseItemRight.controls[i].device.deviceId == mainDeviceId)
+                        for (int i = 0; i < controls.Quad.ChooseItemRight.controls.Count; i++)
                         {
-                            Vector2 tmpVec = new Vector2(
-                                controls.Quad.ChooseItemRight.controls[i].EvaluateMagnitude() - controls.Quad.ChooseItemLeft.controls[i].EvaluateMagnitude(),
-                                controls.Quad.ChooseItemUp.controls[i].EvaluateMagnitude() - controls.Quad.ChooseItemDown.controls[i].EvaluateMagnitude()
-                            );
-                            RefreshJ2Dirs(mainDeviceId, tmpVec);
+                            if (controls.Quad.ChooseItemRight.controls[i].device.deviceId == mainDeviceId)
+                            {
+                                Vector2 tmpVec = new Vector2(
+                                    controls.Quad.ChooseItemRight.controls[i].EvaluateMagnitude() - controls.Quad.ChooseItemLeft.controls[i].EvaluateMagnitude(),
+                                    controls.Quad.ChooseItemUp.controls[i].EvaluateMagnitude() - controls.Quad.ChooseItemDown.controls[i].EvaluateMagnitude()
+                                );
+                                RefreshJ2Dirs(mainDeviceId, tmpVec);
 
-                            if (!IsInThreshold(tmpVec))
-                                return tmpVec;
+                                if (!IsInThreshold(tmpVec))
+                                    return tmpVec;
 
+                            }
                         }
                     }
 
@@ -318,7 +329,7 @@ public class InputSystem : MonoBehaviour
 
 
 
-    bool IsInThreshold(Vector2 _v) => Mathf.Abs(_v.x) > INPUT_THRESHOLD || Mathf.Abs(_v.y) > INPUT_THRESHOLD;
+    bool IsInThreshold(Vector2 _v) => !(Mathf.Abs(_v.x) > INPUT_THRESHOLD || Mathf.Abs(_v.y) > INPUT_THRESHOLD);
 
 
     void RefreshJ2Dirs(int _key, Vector2 _v)

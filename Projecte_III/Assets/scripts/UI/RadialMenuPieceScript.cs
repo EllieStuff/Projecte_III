@@ -8,14 +8,14 @@ public class RadialMenuPieceScript : MonoBehaviour
     public Image backGround;
     public Image icon;
     
-    Color targetBgColor;
+    Color targetBgColor, initColor;
     float lerpBgColorTime = 0.1f;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        targetBgColor = backGround.color;
+        targetBgColor = initColor = backGround.color;
     }
 
     // Update is called once per frame
@@ -32,6 +32,10 @@ public class RadialMenuPieceScript : MonoBehaviour
             targetBgColor = _color;
             StartCoroutine(LerpBgColorCoroutine(_color));
         }
+    }
+    public void ReinitColor()
+    {
+        backGround.color = initColor;
     }
 
     IEnumerator LerpBgColorCoroutine(Color _color)
