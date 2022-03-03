@@ -284,6 +284,7 @@ GameObject:
   - component: {fileID: 38654283868662907}
   - component: {fileID: 38654283868662906}
   - component: {fileID: 38654283868662902}
+  - component: {fileID: 7591572402878244577}
   m_Layer: 0
   m_Name: vehicleTest Variant
   m_TagString: Player
@@ -360,6 +361,8 @@ MonoBehaviour:
   wheelsPivot: {fileID: 0}
   desatascadorBaseCooldown: 20
   desatascadorPrefab: {fileID: 0}
+  particleMat: {fileID: 0}
+  quadChasisShake: {fileID: 0}
   finishedRace: 0
 --- !u!82 &38654283868662906
 AudioSource:
@@ -519,6 +522,26 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &7591572402878244577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 38654283868662901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ad6a96777174ae4ba055677777357f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  forward: 0
+  backward: 0
+  right: 0
+  left: 0
+  drift: 0
+  openGadgetMenu: 0
+  confirmGadget: 0
+  chooseItem: {x: 0, y: 0}
 --- !u!1 &38654284546717500
 GameObject:
   m_ObjectHideFlags: 0
@@ -669,7 +692,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d0bf596029f16364daa1628c0d9a6ac9, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

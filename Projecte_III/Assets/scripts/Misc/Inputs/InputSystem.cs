@@ -71,7 +71,8 @@ public class InputSystem : MonoBehaviour
 
     //}
 
-    QuadControls controls;
+    [HideInInspector]
+    public QuadControls controls;
     Dictionary<int, Vector2> j2Dirs = new Dictionary<int, Vector2>();
     Dictionary<int, Vector2> lateJ2Dirs = new Dictionary<int, Vector2>();
 
@@ -80,6 +81,8 @@ public class InputSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        DontDestroyOnLoad(gameObject);
+
         controls = new QuadControls();
         controls.Enable();
 
@@ -88,7 +91,7 @@ public class InputSystem : MonoBehaviour
 
     private void Update()
     {
-        ControlData controller = GetActiveControlData();
+        ControlData controller = GetActiveControllerData();
         Debug.Log("Control Active: " + controller.deviceId);
 
         //GetAxis(AxisCodes.CHOOSE_ITEM, controllers[i]);
@@ -122,7 +125,7 @@ public class InputSystem : MonoBehaviour
     }
 
     // Plantejat pel mode multijugador
-    public ControlData GetActiveControlData()
+    public ControlData GetActiveControllerData()
     {
         if (controls.Quad.ActivateController.activeControl == null) 
             return new ControlData();
@@ -250,6 +253,12 @@ public class InputSystem : MonoBehaviour
 
         return new Vector2();
     }
+
+    public QuadControls.QuadActions GetQuadActions()
+    {
+        return controls.Quad;
+    }
+
 
 
     bool IsInThreshold(Vector2 _v) => Mathf.Abs(_v.x) > INPUT_THRESHOLD || Mathf.Abs(_v.y) > INPUT_THRESHOLD;
