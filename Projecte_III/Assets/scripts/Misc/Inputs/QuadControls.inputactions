@@ -54,9 +54,9 @@
                     "interactions": ""
                 },
                 {
-                    "name": "UseActualGadget",
+                    "name": "EnableRadialMenu",
                     "type": "Button",
-                    "id": "18a3717e-c594-4bc1-bbf4-027d623bade9",
+                    "id": "83fc756a-9a53-4a35-b665-2493fde591c5",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -121,6 +121,14 @@
                     "name": "AlaDelta",
                     "type": "Button",
                     "id": "183df223-cdd4-4beb-9465-d9577c47fd7c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "UseActualGadget",
+                    "type": "Button",
+                    "id": "18a3717e-c594-4bc1-bbf4-027d623bade9",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -234,28 +242,6 @@
                     "processors": "",
                     "groups": "Player1",
                     "action": "Drift",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "fad30964-d4dc-4650-a5da-3909c606e34b",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Player1",
-                    "action": "UseActualGadget",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "c584fdd9-1d0f-4884-b9b5-164e6bf0f467",
-                    "path": "<Gamepad>/buttonSouth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Player1",
-                    "action": "UseActualGadget",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -410,6 +396,50 @@
                     "processors": "",
                     "groups": "",
                     "action": "ActivateController",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5bf001bc-b172-421b-a77c-36c9be0abc7b",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "EnableRadialMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "edf4c836-59be-4f53-a4ad-6ff7c2c40380",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "EnableRadialMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fad30964-d4dc-4650-a5da-3909c606e34b",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Player1",
+                    "action": "UseActualGadget",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c584fdd9-1d0f-4884-b9b5-164e6bf0f467",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Player1",
+                    "action": "UseActualGadget",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

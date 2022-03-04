@@ -6,19 +6,28 @@ public class RadialMenuManager : MonoBehaviour
 {
     [SerializeField] GameObject radialMenu;
 
+    PlayerInputs playerInputs;
+    bool triggered = false;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        playerInputs = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInputs>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tab) || Input.GetKeyDown(KeyCode.Joystick1Button4))
+        if (playerInputs.enableGadgetMenu && !triggered)
+        {
+            triggered = true;
             radialMenu.SetActive(true);
-        else if (Input.GetKeyUp(KeyCode.Tab) || Input.GetKeyUp(KeyCode.Joystick1Button4))
+        }
+        else if (!playerInputs.enableGadgetMenu && triggered)
+        {
+            triggered = false;
             radialMenu.SetActive(false);
+        }
 
     }
 

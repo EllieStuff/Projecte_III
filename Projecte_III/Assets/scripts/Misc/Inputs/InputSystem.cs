@@ -6,7 +6,7 @@ public class InputSystem : MonoBehaviour
 {
     const float INPUT_THRESHOLD = 0.3f;
 
-    public enum KeyCodes { FORWARD, BACKWARD, LEFT, RIGHT, DRIFT, OPEN_GADGET_MENU, CONFIRM_GADGET };
+    public enum KeyCodes { FORWARD, BACKWARD, LEFT, RIGHT, DRIFT, ENABLE_GADGET_MENU, CONFIRM_GADGET };
     public enum AxisCodes { CHOOSE_ITEM };
     public enum DeviceTypes { DEFAULT, KEYBOARD, CONTROLLER };
 
@@ -71,7 +71,6 @@ public class InputSystem : MonoBehaviour
         int keyboardIdx = -1, mouseIdx = -1;
         for (int i = 0; i < controls.Quad.ActivateController.controls.Count; i++)
         {
-            Debug.Log("Path " + i + ": " + controls.Quad.ActivateController.controls[i].path);
             if (controls.Quad.ActivateController.controls[i].path.Contains("Keyboard"))
                 keyboardIdx = i;
             else if (controls.Quad.ActivateController.controls[i].path.Contains("Mouse"))
@@ -153,8 +152,9 @@ public class InputSystem : MonoBehaviour
     }
 
 
-    public bool GetKey(KeyCodes _key, ControlData[] _controlData)
+    public bool GetKey(KeyCodes _key, ControlData[] _controlData)   // Si dones problemes, adaptar tots perque vagin amb la "complexCasesReturnAux" en contres de amb returns
     {
+        bool complexCasesReturnAux = false;
         for (int idx = 0; idx < _controlData.Length; idx++)
         {
             int mainDeviceId = _controlData[idx].mainDeviceId;
@@ -220,13 +220,13 @@ public class InputSystem : MonoBehaviour
 
                     break;
 
-                case KeyCodes.OPEN_GADGET_MENU:
-                    for (int i = 0; i < controls.Quad.UseActualGadget.controls.Count; i++)
+                case KeyCodes.ENABLE_GADGET_MENU:
+                    for (int i = 0; i < controls.Quad.EnableRadialMenu.controls.Count; i++)
                     {
-                        if (controls.Quad.UseActualGadget.controls[i].device.deviceId == mainDeviceId)
+                        if (controls.Quad.EnableRadialMenu.controls[i].device.deviceId == mainDeviceId)
                         {
-                            //Debug.Log("UseActualGadget is " + controls.Quad.UseActualGadget.controls[i].EvaluateMagnitude());
-                            if (controls.Quad.UseActualGadget.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return true;
+                            //Debug.Log("EnableRadialMenu is " + controls.Quad.EnableRadialMenu.controls[i].EvaluateMagnitude());
+                            if (controls.Quad.EnableRadialMenu.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return true;
                         }
                     }
 
@@ -240,19 +240,20 @@ public class InputSystem : MonoBehaviour
                         {
                             if (controls.Quad.ConfirmChosenGadget.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD
                                 && controls.Quad.ConfirmChosenGadget.controls[i].device.deviceId == _controlData[idx].mouseDeviceId)
-                                return true;
+                                complexCasesReturnAux = true;
+                                //return true;
                         }
                     }
+                    // If using Controller
                     else
                     {
                         for (int i = 0; i < controls.Quad.ConfirmChosenGadget.controls.Count; i++)
                         {
-                            if (_controlData[idx].deviceType == DeviceTypes.CONTROLLER && controls.Quad.ConfirmChosenGadget.controls[i].device.deviceId == mainDeviceId)
+                            if (controls.Quad.ConfirmChosenGadget.controls[i].device.deviceId == mainDeviceId)
                             {
                                 if (lateJ2Dirs.ContainsKey(mainDeviceId))
                                 {
-                                    //Debug.Log("works: " + (IsInThreshold(j2Dirs[mainDeviceId]) && !IsInThreshold(lateJ2Dirs[mainDeviceId])).ToString());
-                                    return IsInThreshold(j2Dirs[mainDeviceId]) && !IsInThreshold(lateJ2Dirs[mainDeviceId]);
+                                    complexCasesReturnAux = IsInThreshold(j2Dirs[mainDeviceId]) && !IsInThreshold(lateJ2Dirs[mainDeviceId]);
                                 }
                             }
                         }
@@ -265,6 +266,9 @@ public class InputSystem : MonoBehaviour
             }
 
         }
+
+        if (_key == KeyCodes.CONFIRM_GADGET)
+            return complexCasesReturnAux;
 
         return false;
 
