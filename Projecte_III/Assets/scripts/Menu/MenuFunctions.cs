@@ -19,7 +19,7 @@ public class MenuFunctions : MonoBehaviour
     {
         if (menuCutSceneTimer > 0)
             menuCutSceneTimer -= Time.deltaTime;
-        else
+        else if(menuCutScene != null)
             Destroy(menuCutScene);
 
         if(changeSceneToBuilding)
