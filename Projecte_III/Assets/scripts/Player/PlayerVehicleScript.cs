@@ -722,9 +722,9 @@ public class PlayerVehicleScript : MonoBehaviour
         }
         else if (timerStart <= 0)
         {
+            audio.pitch = 1;
             if (audio.clip != boostClip && vehicleMaxSpeed > savedMaxSpeed)
             {
-                audio.pitch = 1;
                 audio.volume = 0.2f;
                 audio.clip = boostClip;
                 audio.enabled = false;
