@@ -71,6 +71,10 @@ public class PlayerVehicleScript : MonoBehaviour
 
     public bool finishedRace;
 
+    [SerializeField] private AudioClip driftClip;
+    [SerializeField] private AudioClip normalClip;
+    [SerializeField] private AudioClip boostClip;
+
     private Transform outTransform;
     private Rigidbody outVehicleRB;
 
@@ -683,13 +687,48 @@ public class PlayerVehicleScript : MonoBehaviour
 
     void VehicleSoundPitchFunction()
     {
-        if ((vehicleRB.velocity.magnitude > 1 || vehicleRB.velocity.magnitude < -1) && !GetComponent<AudioSource>().enabled && lifeVehicle > 0)
-            GetComponent<AudioSource>().enabled = true;
-        else if ((vehicleRB.velocity.magnitude <= 1 && vehicleRB.velocity.magnitude >= -1) && GetComponent<AudioSource>().enabled && lifeVehicle > 0)
-            GetComponent<AudioSource>().enabled = false;
+        AudioSource audio = GetComponent<AudioSource>();
 
-        if (GetComponent<AudioSource>().enabled)
-            GetComponent<AudioSource>().pitch = (vehicleRB.velocity.magnitude * 1) / vehicleMaxSpeed/2;
+        if ((vehicleRB.velocity.magnitude > 1 || vehicleRB.velocity.magnitude < -1) && !GetComponent<AudioSource>().enabled && lifeVehicle > 0)
+            audio.enabled = true;
+        else if ((vehicleRB.velocity.magnitude <= 1 && vehicleRB.velocity.magnitude >= -1) && GetComponent<AudioSource>().enabled && lifeVehicle > 0)
+            audio.enabled = false;
+
+        if (audio.enabled)
+           audio.pitch = (vehicleRB.velocity.magnitude * 1) / vehicleMaxSpeed/2;
+
+        if (inputs.drift && vehicleMaxSpeed <= savedMaxSpeed)
+        {
+            audio.pitch = 1;
+            if(audio.clip != driftClip)
+            {
+                audio.volume = 0.05f;
+                audio.clip = driftClip;
+                audio.enabled = false;
+                audio.enabled = true;
+            }
+        }
+        else if(vehicleMaxSpeed <= savedMaxSpeed)
+        {
+            if(audio.clip != normalClip)
+            {
+                audio.volume = 0.5f;
+                audio.clip = normalClip;
+                audio.enabled = false;
+                audio.enabled = true;
+            }
+        }
+        else
+        {
+            if (audio.clip != boostClip && vehicleMaxSpeed > savedMaxSpeed)
+            {
+                audio.pitch = 1;
+                audio.volume = 0.2f;
+                audio.clip = boostClip;
+                audio.enabled = false;
+                audio.enabled = true;
+            }
+        }
     }
 
     void FallFunction()
@@ -885,7 +924,7 @@ public class PlayerVehicleScript : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        StartCoroutine(WaitEndBoost());
+        //StartCoroutine(WaitEndBoost());
 
         if(other.tag.Equals("Water") && !hasFloater)
         {

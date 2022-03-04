@@ -49,6 +49,9 @@ public class MenuFunctions : MonoBehaviour
         {
             for(int i = 0; i < 2; i++)
             {
+                AudioSource audio = vehicles[i].GetChild(0).GetComponent<AudioSource>();
+                if (audio != null && !audio.enabled)
+                    audio.enabled = true;
                 vehicles[i].position += vehicles[i].TransformDirection(0, 0, Time.deltaTime * 50);
             }
         }
