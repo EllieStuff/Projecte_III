@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class BuildingSpots : MonoBehaviour
 {
-    private ModifiersManager modifiers;
+    private Transform modifiers;
     [SerializeField] private bool placed;
 
     [SerializeField] private LayerMask layerMask;
@@ -29,14 +29,11 @@ public class BuildingSpots : MonoBehaviour
         controls = new QuadControls();
         controls.Enable();
 
-        modifiers = GameObject.FindGameObjectWithTag("ModifierSpots").GetComponent<ModifiersManager>();
+        modifiers = GameObject.FindGameObjectWithTag("ModifierSpots").transform;
     }
 
     private void Update()
     {
-        if(modifiers == null)
-            modifiers = GameObject.FindGameObjectWithTag("ModifierSpots").GetComponent<ModifiersManager>();
-
         transform.localScale = new Vector3(1,1,1);
 
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
@@ -76,7 +73,7 @@ public class BuildingSpots : MonoBehaviour
 
                     clone.GetComponent<BuildingSpots>().SetPlaced();
 
-                    GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerVehicleScript>().SetStats();
+                    GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStatsManager>().SetStats();
                 }
             }
             else
@@ -91,7 +88,7 @@ public class BuildingSpots : MonoBehaviour
 
                             transform.parent = null;
 
-                            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerVehicleScript>().SetStats();
+                            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStatsManager>().SetStats();
 
                             Destroy(gameObject);
                         }
@@ -103,7 +100,7 @@ public class BuildingSpots : MonoBehaviour
         {
             if(!placed)
             {
-                Vector3 newPos = ray.origin + ray.direction * (modifiers.transform.position.z + Mathf.Abs(Camera.main.transform.position.z));
+                Vector3 newPos = ray.origin + ray.direction * (modifiers.position.z + Mathf.Abs(Camera.main.transform.position.z));
                 //newPos.z = modifiers.transform.parent.transform.localPosition.z;
 
                 //Debug.Log(Camera.main.nearClipPlane);

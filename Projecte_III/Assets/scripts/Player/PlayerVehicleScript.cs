@@ -21,7 +21,7 @@ public class PlayerVehicleScript : MonoBehaviour
 
     private Material chasisMat;
     //Vehicle Stats
-    Stats stats;
+    //Stats stats;
 
     private Vector3 savedVelocity;
     private float timerReversed;
@@ -84,8 +84,7 @@ public class PlayerVehicleScript : MonoBehaviour
 
         defaultColorMat = Color.white;
         particleMat.color = defaultColorMat;
-        stats = gameObject.AddComponent<Stats>();
-
+        
         vehicleAcceleration = 2;
 
         savedAcceleration = vehicleAcceleration;
@@ -113,29 +112,6 @@ public class PlayerVehicleScript : MonoBehaviour
 
         wheels = transform.parent.GetChild(1).gameObject;
 
-        SetStats();
-    }
-
-    public void SetStats()
-    {
-        stats.SetStats(new Stats.Data());
-
-        //Wheels stats
-        stats.SetStats(stats + wheels.GetComponentInChildren<Stats>());
-
-        //Quad stats
-        stats.SetStats(stats + GameObject.FindGameObjectWithTag("PlayerVehicle").transform.GetComponentInChildren<Stats>());
-
-        //Modifier Stats
-        Transform modfs = GameObject.FindGameObjectWithTag("ModifierSpots").transform;
-        
-        for (int i = 0; i < modfs.childCount; i++)
-        {
-            if(modfs.GetChild(i).childCount > 0)
-                stats.SetStats(stats + modfs.GetChild(i).GetComponentInChildren<Stats>());
-        }
-
-        GameObject.FindGameObjectWithTag("StatsManager").GetComponentInChildren<StatsListUI>().UpdateStatsUI(stats.GetStats());
     }
 
     private void Awake()
@@ -349,21 +325,6 @@ public class PlayerVehicleScript : MonoBehaviour
             }
         }
     }
-
-    public void HideVoidModifier()
-    {
-        for (int i = 0; i < transform.parent.GetChild(2).childCount; i++)
-        {
-            GameObject child = transform.parent.GetChild(2).GetChild(i).gameObject;
-
-            if (child.transform.childCount <= 0)
-            {
-                child.SetActive(false);
-            }
-        }
-    }
-
-    //------Wheels------
 
     public void SetWheels()
     {

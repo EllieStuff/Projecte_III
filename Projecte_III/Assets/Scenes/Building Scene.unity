@@ -1863,7 +1863,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   quadModel: {fileID: 4684633852648962810, guid: 47e6adaa497632b44aa9fcdce1764fbc, type: 3}
-  quadSpot: {fileID: 6398345437843588813}
+  quadSpot: {fileID: 0}
   currentQuad: {fileID: 0}
 --- !u!1 &227252754
 GameObject:
@@ -3147,7 +3147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   quadModel: {fileID: 1717090858726819795, guid: 3f936fea7ec9e664cba7671810ba4e3c, type: 3}
-  quadSpot: {fileID: 6398345437843588813}
+  quadSpot: {fileID: 0}
   currentQuad: {fileID: 0}
 --- !u!1 &387717340
 GameObject:
@@ -7929,7 +7929,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   quadModel: {fileID: 8719106313004478114, guid: fbc311ca41a702543a23d01b3c2ef353, type: 3}
-  quadSpot: {fileID: 6398345437843588813}
+  quadSpot: {fileID: 0}
   currentQuad: {fileID: 0}
 --- !u!1 &1429818029
 GameObject:
@@ -8285,7 +8285,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   quadModel: {fileID: 2043901934774427347, guid: 5828e9ef0b1553448b511149cb106688, type: 3}
-  quadSpot: {fileID: 6398345437843588813}
+  quadSpot: {fileID: 0}
   currentQuad: {fileID: 0}
 --- !u!1 &1472064848
 GameObject:
@@ -9906,7 +9906,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   quadModel: {fileID: 1610054654033917338, guid: 64e74c5a04678344d83c0f85092f2156, type: 3}
-  quadSpot: {fileID: 6398345437843588813}
+  quadSpot: {fileID: 0}
   currentQuad: {fileID: 0}
 --- !u!1 &1774247870
 GameObject:
@@ -11620,6 +11620,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5550834918872379202, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+      propertyPath: m_TagString
+      value: Wheels
+      objectReference: {fileID: 0}
     - target: {fileID: 6089789508452674747, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -11647,11 +11651,6 @@ PrefabInstance:
     - {fileID: 38654283663855624, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
     - {fileID: 38654283041918289, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
---- !u!1 &6398345437843588813 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 885021151033915514, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
-  m_PrefabInstance: {fileID: 6089789507022749367}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8159467656508277071
 PrefabInstance:
   m_ObjectHideFlags: 0

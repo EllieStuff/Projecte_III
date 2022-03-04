@@ -6,22 +6,25 @@ using UnityEngine.UI;
 public class ButtonScript: MonoBehaviour
 {
     [SerializeField] private ButtonManager manager;
-    [SerializeField] private GameObject modifierSpots = null;
+    [SerializeField] private Transform modifierSpots = null;
     [SerializeField] private GameObject list;
     private Button bttn;
 
     private void Start()
     {
         bttn = GetComponent<Button>();
-
+        Transform modfs = null;
         if (list.name == "Modifiers Objs" && modifierSpots == null)
-            modifierSpots = GameObject.FindGameObjectWithTag("ModifierSpots").gameObject;
-
-        if (modifierSpots != null && modifierSpots.activeSelf)
         {
-            for (int i = 0; i < modifierSpots.transform.childCount; i++)
+            modifierSpots = GameObject.FindGameObjectWithTag("ModifierSpots").transform;
+            modfs = modifierSpots.GetChild(0);
+        }
+
+        if (modifierSpots != null && modfs.gameObject.activeSelf)
+        {
+            for (int i = 0; i < modfs.childCount; i++)
             {
-                modifierSpots.transform.GetChild(i).gameObject.SetActive(false);
+                modfs.GetChild(i).gameObject.SetActive(false);
             }
         }
     }
@@ -29,7 +32,7 @@ public class ButtonScript: MonoBehaviour
     private void Update()
     {
         if (list.name == "Modifiers Objs" && modifierSpots == null)
-            modifierSpots = GameObject.FindGameObjectWithTag("ModifierSpots").gameObject;
+            modifierSpots = GameObject.FindGameObjectWithTag("ModifierSpots").transform;
     }
 
     public void ChangeList()
@@ -59,12 +62,14 @@ public class ButtonScript: MonoBehaviour
                 if (!active && target.childCount > 0)
                     Destroy(target.GetChild(0).gameObject);
 
-                for (int i = 0; i < modifierSpots.transform.childCount; i++)
+                Transform modfs = modifierSpots.GetChild(0);
+
+                for (int i = 0; i < modfs.childCount; i++)
                 {
-                    GameObject child = modifierSpots.transform.GetChild(i).gameObject;
-                    if (child.transform.childCount <= 0)
+                    Transform child = modfs.GetChild(i);
+                    if (child.childCount <= 0)
                     {
-                        child.SetActive(active);
+                        child.gameObject.SetActive(active);
                     }
                 }
             }

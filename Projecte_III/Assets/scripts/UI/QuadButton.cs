@@ -16,21 +16,27 @@ public class QuadButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         sliderData = quadModel.GetComponent<Stats>().GetStats();
 
         if (quadSpot == null)
-            quadSpot = GameObject.FindGameObjectWithTag("vehicleElement").transform.GetChild(0).gameObject;
+        {
+            quadSpot = GameObject.FindGameObjectWithTag("PlayerVehicle");
+            currentQuad = quadSpot.transform.GetChild(0).gameObject;
+        }
     }
 
     public void OnPointerEnter(PointerEventData data)
     {
-        if(quadModel != null)
+        if(currentQuad == null)
+            currentQuad = quadSpot.transform.GetChild(0).gameObject;
+
+        if (quadModel.name == currentQuad.name || quadModel.name + "(Clone)" == currentQuad.name) return;
+
+        if (quadModel != null)
         {
             Instantiate(quadModel, quadSpot.transform);
             
-            if(quadSpot.transform.childCount > 1 && (currentQuad == null || currentQuad.name != quadModel.name))
+            if(quadSpot.transform.childCount > 1)
             {
                 if (quadSpot.transform.childCount > 2)
                     Destroy(quadSpot.transform.GetChild(1).gameObject);
-                    
-                currentQuad = quadSpot.transform.GetChild(0).gameObject;
 
                 currentQuad.SetActive(false);
             }
@@ -41,34 +47,42 @@ public class QuadButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     public void OnPointerExit(PointerEventData data)
     {
-        if(quadModel != null && quadSpot.transform.childCount > 1)
+        if (currentQuad == null)
+            currentQuad = quadSpot.transform.GetChild(0).gameObject;
+
+        if (quadModel.name == currentQuad.name || quadModel.name + "(Clone)" == currentQuad.name) return;
+
+        if (quadModel != null && quadSpot.transform.childCount > 1)
         {
             Destroy(quadSpot.transform.GetChild(1).gameObject);
         }
-        else if(quadModel != null && !placed)
+        else if (quadModel != null && !placed)
         {
             Destroy(quadSpot.transform.GetChild(0).gameObject);
         }
 
-        if(currentQuad != null && !currentQuad.activeSelf)
+        if (!currentQuad.activeSelf)
         {
             currentQuad.SetActive(true);
         }
-
         //SetNewValues();
     }
 
     public void SetQuad()
     {
-        if (quadSpot.transform.childCount > 0 && quadSpot.transform.GetChild(0).name != quadModel.name)
+        if (currentQuad == null)
+            currentQuad = quadSpot.transform.GetChild(0).gameObject;
+
+        if (quadModel.name == currentQuad.name || quadModel.name + "(Clone)" == currentQuad.name) return;
+
+        if (quadSpot.transform.childCount > 0)
         {
             Destroy(quadSpot.transform.GetChild(0).gameObject);
         }
-        //SetNewValues();
 
         Instantiate(quadModel, quadSpot.transform);
 
-        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerVehicleScript>().SetStats();
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStatsManager>().SetStats();
 
         placed = true;
     }
