@@ -74,7 +74,27 @@ public class PlayerVehicleScript : MonoBehaviour
     private Transform outTransform;
     private Rigidbody outVehicleRB;
 
-    // Start is called before the first frame update
+    //Modifiers
+    private bool plungerEnabled;
+    private bool chasisEnabled;
+    private bool alaDeltaEnabled;
+    //____________________________________
+
+    public void ActivatePlunger()
+    {
+        plungerEnabled = true;
+    }
+
+    public void ActivateChasis()
+    {
+        chasisEnabled = true;
+    }
+
+    public void ActivateAlaDelta()
+    {
+        alaDeltaEnabled = true;
+    }
+
     void Start()
     {
         controls = new QuadControlSystem();
@@ -156,6 +176,7 @@ public class PlayerVehicleScript : MonoBehaviour
 
             //------Movement------
 
+            if (!buildingScene)
             if (!buildingScene)
             {
                 Vector3 wheelPosition;
@@ -460,10 +481,12 @@ public class PlayerVehicleScript : MonoBehaviour
             DriftFunction();
 
             //CHASIS ELEVATION FUNCTION
-            ChasisElevationFunction();
+            if(chasisEnabled)
+                ChasisElevationFunction();
 
             //PLUNGER FUNCTION
-            Desatascador();
+            if (plungerEnabled)
+                Desatascador();
 
 
             savedVelocity = vehicleRB.velocity;
@@ -495,7 +518,8 @@ public class PlayerVehicleScript : MonoBehaviour
         }
 
         //ALADELTA FUNCTION
-        AlaDeltaFunction();
+        if(alaDeltaEnabled)
+            AlaDeltaFunction();
 
         if (reduceSpeed && vehicleMaxSpeed > savedMaxSpeed)
         {

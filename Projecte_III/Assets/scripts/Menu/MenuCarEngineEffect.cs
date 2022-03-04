@@ -10,7 +10,7 @@ public class MenuCarEngineEffect : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        quadChasisShake = transform.GetChild(0).GetChild(0);
+        quadChasisShake = transform.GetChild(0);
     }
 
     // Update is called once per frame
