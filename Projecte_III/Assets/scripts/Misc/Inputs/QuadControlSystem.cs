@@ -78,7 +78,17 @@ public class QuadControlSystem : MonoBehaviour
 
 
         /// Joystick 2
-        if (Input.GetAxis("HorizontalJ2" + _quadId) > H_SENSIBILITY) { }
+        //HORIZONTAL
+        if (Mathf.Abs(Input.GetAxis("HorizontalJ2" + _quadId)) >= H_SENSIBILITY)
+            _quad.j2Axis.x = Input.GetAxis("HorizontalJ2" + _quadId);
+        else
+            _quad.j2Axis.x = 0;
+        //______________________________________________
+        //HORIZONTAL
+        if (Mathf.Abs(Input.GetAxis("VerticalJ2" + _quadId)) >= V_SENSIBILITY)
+            _quad.j2Axis.y = -Input.GetAxis("VerticalJ2" + _quadId);
+        else
+            _quad.j2Axis.y = 0;
 
         //______________________________________________
 

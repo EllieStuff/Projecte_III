@@ -12,7 +12,7 @@ public class PlayerInputs : MonoBehaviour
     [HideInInspector] 
     public bool
         forward, backward, right, left,
-        drift, openGadgetMenu, confirmGadget;
+        drift, enableGadgetMenu, confirmGadget;
 
     // Axis
     [HideInInspector] 
@@ -66,7 +66,7 @@ public class PlayerInputs : MonoBehaviour
         right = inputSystem.GetKey(InputSystem.KeyCodes.RIGHT, controlData);
         left = inputSystem.GetKey(InputSystem.KeyCodes.LEFT, controlData);
         drift = inputSystem.GetKey(InputSystem.KeyCodes.DRIFT, controlData);
-        openGadgetMenu = inputSystem.GetKey(InputSystem.KeyCodes.OPEN_GADGET_MENU, controlData);
+        enableGadgetMenu = inputSystem.GetKey(InputSystem.KeyCodes.ENABLE_GADGET_MENU, controlData);
         confirmGadget = inputSystem.GetKey(InputSystem.KeyCodes.CONFIRM_GADGET, controlData);
 
         // Axis

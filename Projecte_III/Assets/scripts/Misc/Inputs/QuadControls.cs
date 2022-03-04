@@ -67,9 +67,9 @@ public class @QuadControls : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""UseActualGadget"",
+                    ""name"": ""EnableRadialMenu"",
                     ""type"": ""Button"",
-                    ""id"": ""18a3717e-c594-4bc1-bbf4-027d623bade9"",
+                    ""id"": ""83fc756a-9a53-4a35-b665-2493fde591c5"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -134,6 +134,14 @@ public class @QuadControls : IInputActionCollection, IDisposable
                     ""name"": ""AlaDelta"",
                     ""type"": ""Button"",
                     ""id"": ""183df223-cdd4-4beb-9465-d9577c47fd7c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""UseActualGadget"",
+                    ""type"": ""Button"",
+                    ""id"": ""18a3717e-c594-4bc1-bbf4-027d623bade9"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -247,28 +255,6 @@ public class @QuadControls : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Player1"",
                     ""action"": ""Drift"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""fad30964-d4dc-4650-a5da-3909c606e34b"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Player1"",
-                    ""action"": ""UseActualGadget"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""c584fdd9-1d0f-4884-b9b5-164e6bf0f467"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Player1"",
-                    ""action"": ""UseActualGadget"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -423,6 +409,50 @@ public class @QuadControls : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""ActivateController"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5bf001bc-b172-421b-a77c-36c9be0abc7b"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EnableRadialMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""edf4c836-59be-4f53-a4ad-6ff7c2c40380"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EnableRadialMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fad30964-d4dc-4650-a5da-3909c606e34b"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Player1"",
+                    ""action"": ""UseActualGadget"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c584fdd9-1d0f-4884-b9b5-164e6bf0f467"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Player1"",
+                    ""action"": ""UseActualGadget"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -697,7 +727,7 @@ public class @QuadControls : IInputActionCollection, IDisposable
         m_Quad_Left = m_Quad.FindAction("Left", throwIfNotFound: true);
         m_Quad_Right = m_Quad.FindAction("Right", throwIfNotFound: true);
         m_Quad_Drift = m_Quad.FindAction("Drift", throwIfNotFound: true);
-        m_Quad_UseActualGadget = m_Quad.FindAction("UseActualGadget", throwIfNotFound: true);
+        m_Quad_EnableRadialMenu = m_Quad.FindAction("EnableRadialMenu", throwIfNotFound: true);
         m_Quad_ChooseItemRight = m_Quad.FindAction("ChooseItemRight", throwIfNotFound: true);
         m_Quad_ChooseItemLeft = m_Quad.FindAction("ChooseItemLeft", throwIfNotFound: true);
         m_Quad_ChooseItemUp = m_Quad.FindAction("ChooseItemUp", throwIfNotFound: true);
@@ -706,6 +736,7 @@ public class @QuadControls : IInputActionCollection, IDisposable
         m_Quad_ConfirmChosenGadget = m_Quad.FindAction("ConfirmChosenGadget", throwIfNotFound: true);
         m_Quad_ChasisElevation = m_Quad.FindAction("ChasisElevation", throwIfNotFound: true);
         m_Quad_AlaDelta = m_Quad.FindAction("AlaDelta", throwIfNotFound: true);
+        m_Quad_UseActualGadget = m_Quad.FindAction("UseActualGadget", throwIfNotFound: true);
         // QuadP2
         m_QuadP2 = asset.FindActionMap("QuadP2", throwIfNotFound: true);
         m_QuadP2_Forward = m_QuadP2.FindAction("Forward", throwIfNotFound: true);
@@ -776,7 +807,7 @@ public class @QuadControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Quad_Left;
     private readonly InputAction m_Quad_Right;
     private readonly InputAction m_Quad_Drift;
-    private readonly InputAction m_Quad_UseActualGadget;
+    private readonly InputAction m_Quad_EnableRadialMenu;
     private readonly InputAction m_Quad_ChooseItemRight;
     private readonly InputAction m_Quad_ChooseItemLeft;
     private readonly InputAction m_Quad_ChooseItemUp;
@@ -785,6 +816,7 @@ public class @QuadControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Quad_ConfirmChosenGadget;
     private readonly InputAction m_Quad_ChasisElevation;
     private readonly InputAction m_Quad_AlaDelta;
+    private readonly InputAction m_Quad_UseActualGadget;
     public struct QuadActions
     {
         private @QuadControls m_Wrapper;
@@ -795,7 +827,7 @@ public class @QuadControls : IInputActionCollection, IDisposable
         public InputAction @Left => m_Wrapper.m_Quad_Left;
         public InputAction @Right => m_Wrapper.m_Quad_Right;
         public InputAction @Drift => m_Wrapper.m_Quad_Drift;
-        public InputAction @UseActualGadget => m_Wrapper.m_Quad_UseActualGadget;
+        public InputAction @EnableRadialMenu => m_Wrapper.m_Quad_EnableRadialMenu;
         public InputAction @ChooseItemRight => m_Wrapper.m_Quad_ChooseItemRight;
         public InputAction @ChooseItemLeft => m_Wrapper.m_Quad_ChooseItemLeft;
         public InputAction @ChooseItemUp => m_Wrapper.m_Quad_ChooseItemUp;
@@ -804,6 +836,7 @@ public class @QuadControls : IInputActionCollection, IDisposable
         public InputAction @ConfirmChosenGadget => m_Wrapper.m_Quad_ConfirmChosenGadget;
         public InputAction @ChasisElevation => m_Wrapper.m_Quad_ChasisElevation;
         public InputAction @AlaDelta => m_Wrapper.m_Quad_AlaDelta;
+        public InputAction @UseActualGadget => m_Wrapper.m_Quad_UseActualGadget;
         public InputActionMap Get() { return m_Wrapper.m_Quad; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -831,9 +864,9 @@ public class @QuadControls : IInputActionCollection, IDisposable
                 @Drift.started -= m_Wrapper.m_QuadActionsCallbackInterface.OnDrift;
                 @Drift.performed -= m_Wrapper.m_QuadActionsCallbackInterface.OnDrift;
                 @Drift.canceled -= m_Wrapper.m_QuadActionsCallbackInterface.OnDrift;
-                @UseActualGadget.started -= m_Wrapper.m_QuadActionsCallbackInterface.OnUseActualGadget;
-                @UseActualGadget.performed -= m_Wrapper.m_QuadActionsCallbackInterface.OnUseActualGadget;
-                @UseActualGadget.canceled -= m_Wrapper.m_QuadActionsCallbackInterface.OnUseActualGadget;
+                @EnableRadialMenu.started -= m_Wrapper.m_QuadActionsCallbackInterface.OnEnableRadialMenu;
+                @EnableRadialMenu.performed -= m_Wrapper.m_QuadActionsCallbackInterface.OnEnableRadialMenu;
+                @EnableRadialMenu.canceled -= m_Wrapper.m_QuadActionsCallbackInterface.OnEnableRadialMenu;
                 @ChooseItemRight.started -= m_Wrapper.m_QuadActionsCallbackInterface.OnChooseItemRight;
                 @ChooseItemRight.performed -= m_Wrapper.m_QuadActionsCallbackInterface.OnChooseItemRight;
                 @ChooseItemRight.canceled -= m_Wrapper.m_QuadActionsCallbackInterface.OnChooseItemRight;
@@ -858,6 +891,9 @@ public class @QuadControls : IInputActionCollection, IDisposable
                 @AlaDelta.started -= m_Wrapper.m_QuadActionsCallbackInterface.OnAlaDelta;
                 @AlaDelta.performed -= m_Wrapper.m_QuadActionsCallbackInterface.OnAlaDelta;
                 @AlaDelta.canceled -= m_Wrapper.m_QuadActionsCallbackInterface.OnAlaDelta;
+                @UseActualGadget.started -= m_Wrapper.m_QuadActionsCallbackInterface.OnUseActualGadget;
+                @UseActualGadget.performed -= m_Wrapper.m_QuadActionsCallbackInterface.OnUseActualGadget;
+                @UseActualGadget.canceled -= m_Wrapper.m_QuadActionsCallbackInterface.OnUseActualGadget;
             }
             m_Wrapper.m_QuadActionsCallbackInterface = instance;
             if (instance != null)
@@ -880,9 +916,9 @@ public class @QuadControls : IInputActionCollection, IDisposable
                 @Drift.started += instance.OnDrift;
                 @Drift.performed += instance.OnDrift;
                 @Drift.canceled += instance.OnDrift;
-                @UseActualGadget.started += instance.OnUseActualGadget;
-                @UseActualGadget.performed += instance.OnUseActualGadget;
-                @UseActualGadget.canceled += instance.OnUseActualGadget;
+                @EnableRadialMenu.started += instance.OnEnableRadialMenu;
+                @EnableRadialMenu.performed += instance.OnEnableRadialMenu;
+                @EnableRadialMenu.canceled += instance.OnEnableRadialMenu;
                 @ChooseItemRight.started += instance.OnChooseItemRight;
                 @ChooseItemRight.performed += instance.OnChooseItemRight;
                 @ChooseItemRight.canceled += instance.OnChooseItemRight;
@@ -907,6 +943,9 @@ public class @QuadControls : IInputActionCollection, IDisposable
                 @AlaDelta.started += instance.OnAlaDelta;
                 @AlaDelta.performed += instance.OnAlaDelta;
                 @AlaDelta.canceled += instance.OnAlaDelta;
+                @UseActualGadget.started += instance.OnUseActualGadget;
+                @UseActualGadget.performed += instance.OnUseActualGadget;
+                @UseActualGadget.canceled += instance.OnUseActualGadget;
             }
         }
     }
@@ -1075,7 +1114,7 @@ public class @QuadControls : IInputActionCollection, IDisposable
         void OnLeft(InputAction.CallbackContext context);
         void OnRight(InputAction.CallbackContext context);
         void OnDrift(InputAction.CallbackContext context);
-        void OnUseActualGadget(InputAction.CallbackContext context);
+        void OnEnableRadialMenu(InputAction.CallbackContext context);
         void OnChooseItemRight(InputAction.CallbackContext context);
         void OnChooseItemLeft(InputAction.CallbackContext context);
         void OnChooseItemUp(InputAction.CallbackContext context);
@@ -1084,6 +1123,7 @@ public class @QuadControls : IInputActionCollection, IDisposable
         void OnConfirmChosenGadget(InputAction.CallbackContext context);
         void OnChasisElevation(InputAction.CallbackContext context);
         void OnAlaDelta(InputAction.CallbackContext context);
+        void OnUseActualGadget(InputAction.CallbackContext context);
     }
     public interface IQuadP2Actions
     {

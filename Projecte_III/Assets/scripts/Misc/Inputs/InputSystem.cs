@@ -6,7 +6,7 @@ public class InputSystem : MonoBehaviour
 {
     const float INPUT_THRESHOLD = 0.3f;
 
-    public enum KeyCodes { FORWARD, BACKWARD, LEFT, RIGHT, DRIFT, OPEN_GADGET_MENU, CONFIRM_GADGET };
+    public enum KeyCodes { FORWARD, BACKWARD, LEFT, RIGHT, DRIFT, ENABLE_GADGET_MENU, CONFIRM_GADGET };
     public enum AxisCodes { CHOOSE_ITEM };
     public enum DeviceTypes { DEFAULT, KEYBOARD, CONTROLLER };
 
@@ -21,8 +21,8 @@ public class InputSystem : MonoBehaviour
         {
             deviceType = DeviceTypes.KEYBOARD;
 
+            mainDeviceId = _controls.Quad.ActivateController.controls[_keyboardIdx].device.deviceId;
             mouseDeviceId = _controls.Quad.ActivateController.controls[_mouseIdx].device.deviceId;
-            mainDeviceId = _controls.Quad.Forward.controls[0].device.deviceId;
 
         }
         public void InitController(QuadControls _controls, int _controllerIdx)
@@ -40,6 +40,7 @@ public class InputSystem : MonoBehaviour
     
     Dictionary<int, Vector2> j2Dirs = new Dictionary<int, Vector2>();
     Dictionary<int, Vector2> lateJ2Dirs = new Dictionary<int, Vector2>();
+    int notUpdatedIts = 0, itsToUpdate = 4;
 
     List<ControlData> activatedControllers = new List<ControlData>();
 
@@ -54,7 +55,13 @@ public class InputSystem : MonoBehaviour
 
     private void LateUpdate()
     {
-        lateJ2Dirs = new Dictionary<int, Vector2>(j2Dirs);
+        if (notUpdatedIts < itsToUpdate)
+            notUpdatedIts++;
+        else
+        {
+            notUpdatedIts = 0;
+            lateJ2Dirs = new Dictionary<int, Vector2>(j2Dirs);
+        }
     }
 
     // Plantejat perque puguis fer inputs amb tots el devices en el mode d'un jugador
@@ -64,7 +71,6 @@ public class InputSystem : MonoBehaviour
         int keyboardIdx = -1, mouseIdx = -1;
         for (int i = 0; i < controls.Quad.ActivateController.controls.Count; i++)
         {
-            Debug.Log("Path " + i + ": " + controls.Quad.ActivateController.controls[i].path);
             if (controls.Quad.ActivateController.controls[i].path.Contains("Keyboard"))
                 keyboardIdx = i;
             else if (controls.Quad.ActivateController.controls[i].path.Contains("Mouse"))
@@ -146,8 +152,9 @@ public class InputSystem : MonoBehaviour
     }
 
 
-    public bool GetKey(KeyCodes _key, ControlData[] _controlData)
+    public bool GetKey(KeyCodes _key, ControlData[] _controlData)   // Si dones problemes, adaptar tots perque vagin amb la "complexCasesReturnAux" en contres de amb returns
     {
+        bool complexCasesReturnAux = false;
         for (int idx = 0; idx < _controlData.Length; idx++)
         {
             int mainDeviceId = _controlData[idx].mainDeviceId;
@@ -213,13 +220,13 @@ public class InputSystem : MonoBehaviour
 
                     break;
 
-                case KeyCodes.OPEN_GADGET_MENU:
-                    for (int i = 0; i < controls.Quad.UseActualGadget.controls.Count; i++)
+                case KeyCodes.ENABLE_GADGET_MENU:
+                    for (int i = 0; i < controls.Quad.EnableRadialMenu.controls.Count; i++)
                     {
-                        if (controls.Quad.UseActualGadget.controls[i].device.deviceId == mainDeviceId)
+                        if (controls.Quad.EnableRadialMenu.controls[i].device.deviceId == mainDeviceId)
                         {
-                            //Debug.Log("UseActualGadget is " + controls.Quad.UseActualGadget.controls[i].EvaluateMagnitude());
-                            if (controls.Quad.UseActualGadget.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return true;
+                            //Debug.Log("EnableRadialMenu is " + controls.Quad.EnableRadialMenu.controls[i].EvaluateMagnitude());
+                            if (controls.Quad.EnableRadialMenu.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return true;
                         }
                     }
 
@@ -233,17 +240,21 @@ public class InputSystem : MonoBehaviour
                         {
                             if (controls.Quad.ConfirmChosenGadget.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD
                                 && controls.Quad.ConfirmChosenGadget.controls[i].device.deviceId == _controlData[idx].mouseDeviceId)
-                                return true;
+                                complexCasesReturnAux = true;
+                                //return true;
                         }
                     }
-
-                    for (int i = 0; i < controls.Quad.ConfirmChosenGadget.controls.Count; i++)
+                    // If using Controller
+                    else
                     {
-                        if (_controlData[idx].deviceType == DeviceTypes.CONTROLLER && controls.Quad.ConfirmChosenGadget.controls[i].device.deviceId == mainDeviceId)
+                        for (int i = 0; i < controls.Quad.ConfirmChosenGadget.controls.Count; i++)
                         {
-                            if (lateJ2Dirs.ContainsKey(mainDeviceId))
+                            if (controls.Quad.ConfirmChosenGadget.controls[i].device.deviceId == mainDeviceId)
                             {
-                                return !IsInThreshold(j2Dirs[mainDeviceId]) && IsInThreshold(lateJ2Dirs[mainDeviceId]);
+                                if (lateJ2Dirs.ContainsKey(mainDeviceId))
+                                {
+                                    complexCasesReturnAux = IsInThreshold(j2Dirs[mainDeviceId]) && !IsInThreshold(lateJ2Dirs[mainDeviceId]);
+                                }
                             }
                         }
                     }
@@ -255,6 +266,9 @@ public class InputSystem : MonoBehaviour
             }
 
         }
+
+        if (_key == KeyCodes.CONFIRM_GADGET)
+            return complexCasesReturnAux;
 
         return false;
 
@@ -280,21 +294,22 @@ public class InputSystem : MonoBehaviour
                             }
                         }
                     }
-
-                    // If using Controller
-                    for (int i = 0; i < controls.Quad.ChooseItemRight.controls.Count; i++)
+                    else    // If using Controller
                     {
-                        if (controls.Quad.ChooseItemRight.controls[i].device.deviceId == mainDeviceId)
+                        for (int i = 0; i < controls.Quad.ChooseItemRight.controls.Count; i++)
                         {
-                            Vector2 tmpVec = new Vector2(
-                                controls.Quad.ChooseItemRight.controls[i].EvaluateMagnitude() - controls.Quad.ChooseItemLeft.controls[i].EvaluateMagnitude(),
-                                controls.Quad.ChooseItemUp.controls[i].EvaluateMagnitude() - controls.Quad.ChooseItemDown.controls[i].EvaluateMagnitude()
-                            );
-                            RefreshJ2Dirs(mainDeviceId, tmpVec);
+                            if (controls.Quad.ChooseItemRight.controls[i].device.deviceId == mainDeviceId)
+                            {
+                                Vector2 tmpVec = new Vector2(
+                                    controls.Quad.ChooseItemRight.controls[i].EvaluateMagnitude() - controls.Quad.ChooseItemLeft.controls[i].EvaluateMagnitude(),
+                                    controls.Quad.ChooseItemUp.controls[i].EvaluateMagnitude() - controls.Quad.ChooseItemDown.controls[i].EvaluateMagnitude()
+                                );
+                                RefreshJ2Dirs(mainDeviceId, tmpVec);
 
-                            if (!IsInThreshold(tmpVec))
-                                return tmpVec;
+                                if (!IsInThreshold(tmpVec))
+                                    return tmpVec;
 
+                            }
                         }
                     }
 
@@ -318,7 +333,7 @@ public class InputSystem : MonoBehaviour
 
 
 
-    bool IsInThreshold(Vector2 _v) => Mathf.Abs(_v.x) > INPUT_THRESHOLD || Mathf.Abs(_v.y) > INPUT_THRESHOLD;
+    bool IsInThreshold(Vector2 _v) => !(Mathf.Abs(_v.x) > INPUT_THRESHOLD || Mathf.Abs(_v.y) > INPUT_THRESHOLD);
 
 
     void RefreshJ2Dirs(int _key, Vector2 _v)
