@@ -685,6 +685,8 @@ public class PlayerVehicleScript : MonoBehaviour
         }
     }
 
+    float timerStart = 2;
+
     void VehicleSoundPitchFunction()
     {
         AudioSource audio = GetComponent<AudioSource>();
@@ -700,7 +702,7 @@ public class PlayerVehicleScript : MonoBehaviour
         if (inputs.drift && vehicleMaxSpeed <= savedMaxSpeed)
         {
             audio.pitch = 1;
-            if(audio.clip != driftClip)
+            if (audio.clip != driftClip)
             {
                 audio.volume = 0.05f;
                 audio.clip = driftClip;
@@ -708,9 +710,9 @@ public class PlayerVehicleScript : MonoBehaviour
                 audio.enabled = true;
             }
         }
-        else if(vehicleMaxSpeed <= savedMaxSpeed)
+        else if (vehicleMaxSpeed <= savedMaxSpeed)
         {
-            if(audio.clip != normalClip)
+            if (audio.clip != normalClip)
             {
                 audio.volume = 0.5f;
                 audio.clip = normalClip;
@@ -718,7 +720,7 @@ public class PlayerVehicleScript : MonoBehaviour
                 audio.enabled = true;
             }
         }
-        else
+        else if (timerStart <= 0)
         {
             if (audio.clip != boostClip && vehicleMaxSpeed > savedMaxSpeed)
             {
@@ -729,6 +731,8 @@ public class PlayerVehicleScript : MonoBehaviour
                 audio.enabled = true;
             }
         }
+        else
+            timerStart -= Time.deltaTime;
     }
 
     void FallFunction()
