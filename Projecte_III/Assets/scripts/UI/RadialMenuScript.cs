@@ -10,6 +10,7 @@ public class RadialMenuScript : MonoBehaviour
     [SerializeField] bool usesController = true;
 
     PlayerVehicleScript player;
+    PlayerInputs playerInputs;
     RadialMenuPieceScript[] rmPieces;
     float degreesPerPiece;
     float gapDegrees = 3.0f;
@@ -17,13 +18,13 @@ public class RadialMenuScript : MonoBehaviour
     float 
         selectedAlpha = 0.75f,
         nonSelectedAlpha = 0.5f;
-    Vector2 lastJoystickCoordinate = Vector2.zero;
-    int activeElement;
+    int activeElement, lastActiveElement;
 
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerVehicleScript>();
+        playerInputs = player.GetComponent<PlayerInputs>();
 
         degreesPerPiece = 360.0f / modifiersNum;
         distToIcon = Vector3.Distance(rmPiecePrefab.icon.transform.position, rmPiecePrefab.backGround.transform.position);
@@ -56,7 +57,7 @@ public class RadialMenuScript : MonoBehaviour
             HighlightActiveElement(activeElement);
             GetInput();
 
-            lastJoystickCoordinate = player.controls.Quad.j2Axis;
+            lastActiveElement = activeElement;
             activeElement = GetActiveElement();
         }
 
@@ -64,19 +65,7 @@ public class RadialMenuScript : MonoBehaviour
 
     private int GetActiveElement()
     {
-        float finalAngle;
-        if (!usesController)
-        {
-            Vector3 screenCenter = new Vector3(Screen.width / 2.0f, Screen.height / 2.0f);
-            Vector3 cursorVector = Input.mousePosition - screenCenter;
-
-            finalAngle = NormalizeAngle(Vector3.SignedAngle(Vector3.up, cursorVector, Vector3.forward) + degreesPerPiece / 2.0f);
-        }
-        else
-        {
-            if (player.controls.Quad.j2Axis == Vector2.zero) return -1;
-            finalAngle = NormalizeAngle(Vector3.SignedAngle(Vector3.up, player.controls.Quad.j2Axis, Vector3.forward) + degreesPerPiece / 2.0f);
-        }
+        float finalAngle = NormalizeAngle(Vector3.SignedAngle(Vector3.up, playerInputs.chooseItem, Vector3.forward) + degreesPerPiece / 2.0f);
 
         return (int)(finalAngle / degreesPerPiece);
     }
@@ -100,11 +89,11 @@ public class RadialMenuScript : MonoBehaviour
 
     private void GetInput() // Treballar amb lastActiveElement
     {
-        // Adaptar inputs a mando
-        if (Input.GetKeyDown(KeyCode.Mouse0) || (player.controls.Quad.j2Axis == Vector2.zero && lastJoystickCoordinate != Vector2.zero))
+        if (playerInputs.confirmGadget)
         {
             //Do action from each modifier
 
+            rmPieces[lastActiveElement].ReinitColor();
             gameObject.SetActive(false);
         }
     }

@@ -6,6 +6,14 @@
             "id": "5920d9fb-cb81-4def-9171-362e9a51f3e8",
             "actions": [
                 {
+                    "name": "ActivateController",
+                    "type": "Button",
+                    "id": "ba62cb60-1e68-40a5-8c3c-955a12901a36",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
                     "name": "Forward",
                     "type": "Button",
                     "id": "69e866fe-1932-48de-b9fe-259104c7fafc",
@@ -46,18 +54,58 @@
                     "interactions": ""
                 },
                 {
-                    "name": "UseActualGadget",
+                    "name": "EnableRadialMenu",
                     "type": "Button",
-                    "id": "18a3717e-c594-4bc1-bbf4-027d623bade9",
+                    "id": "83fc756a-9a53-4a35-b665-2493fde591c5",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
                 },
                 {
-                    "name": "LookBackwards",
+                    "name": "ChooseItemRight",
                     "type": "Value",
                     "id": "c6e2a57c-8d40-4cc3-b771-3ed9d07e62dd",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "ChooseItemLeft",
+                    "type": "Value",
+                    "id": "2dfa6c52-0c96-43be-b22a-c14da96c4794",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "ChooseItemUp",
+                    "type": "Value",
+                    "id": "24d55a77-66ad-4eb1-bfdb-c70ebbea374a",
                     "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "ChooseItemDown",
+                    "type": "Value",
+                    "id": "372df455-a740-4a03-8304-850a210c50a1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "ChooseItemMouse",
+                    "type": "Value",
+                    "id": "0e21cede-741e-4272-8417-554d5ec16a3c",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "ConfirmChosenGadget",
+                    "type": "Value",
+                    "id": "2432c0d6-0af4-491a-918f-b73ac6447bec",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
                 },
@@ -73,6 +121,14 @@
                     "name": "AlaDelta",
                     "type": "Button",
                     "id": "183df223-cdd4-4beb-9465-d9577c47fd7c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "UseActualGadget",
+                    "type": "Button",
+                    "id": "18a3717e-c594-4bc1-bbf4-027d623bade9",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -191,45 +247,12 @@
                 },
                 {
                     "name": "",
-                    "id": "fad30964-d4dc-4650-a5da-3909c606e34b",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Player1",
-                    "action": "UseActualGadget",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "c584fdd9-1d0f-4884-b9b5-164e6bf0f467",
-                    "path": "<Gamepad>/buttonSouth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Player1",
-                    "action": "UseActualGadget",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "867fe093-8aba-4c9b-a12d-a9513e45c799",
-                    "path": "<Keyboard>/tab",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Player1",
-                    "action": "LookBackwards",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "f682c0ab-6282-4936-80d1-6d6785fced7f",
-                    "path": "<Gamepad>/buttonNorth",
+                    "path": "<Gamepad>/rightStick/right",
                     "interactions": "",
                     "processors": "",
                     "groups": "Player1",
-                    "action": "LookBackwards",
+                    "action": "ChooseItemRight",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -274,6 +297,149 @@
                     "processors": "",
                     "groups": "Player1",
                     "action": "AlaDelta",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "722faaad-4800-4f0e-b11c-c30ea0062dcb",
+                    "path": "<Gamepad>/rightStick/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ChooseItemUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9dd957aa-244e-476b-a588-e3c7bfd27693",
+                    "path": "<Gamepad>/rightStick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Player1",
+                    "action": "ChooseItemLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a27f3a91-d0ba-4232-b5c7-a2f8f5d1be8e",
+                    "path": "<Gamepad>/rightStick/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ChooseItemDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fd334b8b-53aa-4305-9124-e1a02563c448",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ChooseItemMouse",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6a617234-c963-4eba-9851-440ce266d55f",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ConfirmChosenGadget",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "93546f0a-5d3a-49e9-a23b-a03e1cd442c4",
+                    "path": "<Mouse>/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ConfirmChosenGadget",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "21f87173-a435-424c-9663-fe2eaf3ea964",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ActivateController",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0709a77f-765b-461e-bfa8-bcd7b6b21072",
+                    "path": "<Mouse>/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ActivateController",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5dff272f-460c-4948-b068-9a4f1709646e",
+                    "path": "<Keyboard>/anyKey",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ActivateController",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5bf001bc-b172-421b-a77c-36c9be0abc7b",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "EnableRadialMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "edf4c836-59be-4f53-a4ad-6ff7c2c40380",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "EnableRadialMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fad30964-d4dc-4650-a5da-3909c606e34b",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Player1",
+                    "action": "UseActualGadget",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c584fdd9-1d0f-4884-b9b5-164e6bf0f467",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Player1",
+                    "action": "UseActualGadget",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

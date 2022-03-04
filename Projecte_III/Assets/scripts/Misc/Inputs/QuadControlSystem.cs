@@ -24,11 +24,12 @@ public class QuadControlSystem : MonoBehaviour
         public bool ChasisElevation;
         public bool AlaDelta;
         public bool plunger;
-    }
+    };
+
 
     public void getAllInput(int playerNum)
     {
-        switch(playerNum)
+        switch (playerNum)
         {
             case 1:
                 GetInputFrom(out Quad, "P1");
@@ -42,7 +43,7 @@ public class QuadControlSystem : MonoBehaviour
                 break;
         }
     }
-    
+
 
     void GetInputFrom(out QuadStruct _quad, string _quadId) //_quadId seria P1, P2, etc.
     {
