@@ -704,6 +704,7 @@ public class PlayerVehicleScript : MonoBehaviour
             audio.pitch = 1;
             if (audio.clip != driftClip)
             {
+                audio.loop = true;
                 audio.volume = 0.05f;
                 audio.clip = driftClip;
                 audio.enabled = false;
@@ -714,6 +715,7 @@ public class PlayerVehicleScript : MonoBehaviour
         {
             if (audio.clip != normalClip)
             {
+                audio.loop = true;
                 audio.volume = 0.5f;
                 audio.clip = normalClip;
                 audio.enabled = false;
@@ -723,12 +725,13 @@ public class PlayerVehicleScript : MonoBehaviour
         else if (timerStart <= 0)
         {
             audio.pitch = 1;
-            if (audio.clip != boostClip && vehicleMaxSpeed > savedMaxSpeed)
+            if (audio.clip != boostClip && vehicleMaxSpeed > savedMaxSpeed + 5)
             {
                 audio.volume = 0.2f;
                 audio.clip = boostClip;
                 audio.enabled = false;
                 audio.enabled = true;
+                audio.loop = false;
             }
         }
         else
