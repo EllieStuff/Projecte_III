@@ -200,49 +200,64 @@ public class PlayerVehicleScript : MonoBehaviour
                     else
                         wheel.transform.rotation = wheelRotation;
 
-                wheels.transform.localPosition = transform.localPosition;
-                wheels.transform.localRotation = transform.localRotation;
-
-                //------------------
-
-                //-----Modifiers-----
-
-                //FALLDEATH CHECK
-                if (DeathScript.DeathByFalling(alaDelta, transform, vehicleRB, respawnPosition, respawnRotation, respawnVelocity, out outTransform, out outVehicleRB))
-                {
-                    transform.position = outTransform.position;
-                    transform.rotation = outTransform.rotation;
-                    vehicleRB.velocity = outVehicleRB.velocity;
+                    wheels.transform.localPosition = transform.localPosition;
+                    wheels.transform.localRotation = transform.localRotation;
+
+
+
+                    //------------------
+
+
+
+                    //-----Modifiers-----
+
+
+
+                    //FALLDEATH CHECK
+
+                    if (DeathScript.DeathByFalling(alaDelta, transform, vehicleRB, respawnPosition, respawnRotation, respawnVelocity, out outTransform, out outVehicleRB))
+
+                    {
+
+                        transform.position = outTransform.position;
+
+                        transform.rotation = outTransform.rotation;
+
+                        vehicleRB.velocity = outVehicleRB.velocity;
+
+                    }
+                    //RESETTING ALADELTA VARIABLES
+                    if (touchingGround)
+                    {
+                        alaDeltaTimer = alaDeltaDuration;
+                        alaDelta = false;
+                    }
                 }
-                //RESETTING ALADELTA VARIABLES
-                if (touchingGround)
+
+                if (touchingGround && vehicleRB.constraints != RigidbodyConstraints.None)
                 {
-                    alaDeltaTimer = alaDeltaDuration;
-                    alaDelta = false;
+                    vehicleRB.constraints = RigidbodyConstraints.None;
                 }
+
+                transform.parent.GetChild(2).localPosition = transform.localPosition;
+                //_______________________________________________________________
+
+                //-----Temporal-----
+
+                if (Input.GetKeyDown(KeyCode.F))
+                {
+                    Physics.IgnoreLayerCollision(3, 4, hasFloater);
+                    hasFloater = !hasFloater;
+                }
+
+                //--------------------
+
             }
-
-            if (touchingGround && vehicleRB.constraints != RigidbodyConstraints.None)
-            {
-                vehicleRB.constraints = RigidbodyConstraints.None;
-            }
-
-            transform.parent.GetChild(2).localPosition = transform.localPosition;
-            //_______________________________________________________________
-
-            //-----Temporal-----
-
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                Physics.IgnoreLayerCollision(3, 4, hasFloater);
-                hasFloater = !hasFloater;
-            }
-
-            //--------------------
 
         }
 
     }
+
 
     Transform localTransform;
     Vector3 VectorLerp;
@@ -493,14 +508,21 @@ public class PlayerVehicleScript : MonoBehaviour
             savedVelocity = vehicleRB.velocity;
         }
         else if (vehicleReversed && lifeVehicle > 0)
-        {
-            //WHEN THE VEHICLE IS REVERSED YOU CAN ROTATE THE QUAD LEFT AND RIGHT UNTIL THE VEHICLE STANDS UP
+        {
+
+            //WHEN THE VEHICLE IS REVERSED YOU CAN ROTATE THE QUAD LEFT AND RIGHT UNTIL THE VEHICLE STANDS UP
+
             timerReversed += Time.deltaTime;
-            if(DeathScript.DeathByFlipping(timerReversed, transform, vehicleRB, respawnPosition, respawnRotation, respawnVelocity, out outTransform, out outVehicleRB))
-            {
-                transform.position = outTransform.position;
-                transform.rotation = outTransform.rotation;
-                vehicleRB.velocity = outVehicleRB.velocity;
+            if(DeathScript.DeathByFlipping(timerReversed, transform, vehicleRB, respawnPosition, respawnRotation, respawnVelocity, out outTransform, out outVehicleRB))
+
+            {
+
+                transform.position = outTransform.position;
+
+                transform.rotation = outTransform.rotation;
+
+                vehicleRB.velocity = outVehicleRB.velocity;
+
             }
 
         }
