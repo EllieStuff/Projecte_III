@@ -11,10 +11,17 @@ public class MenuFunctions : MonoBehaviour
     public Slider localVoiceValue;
     private bool changeSceneToBuilding;
     private float timerChangeScene = 5;
+    private float menuCutSceneTimer = 10;
     [SerializeField] Transform[] vehicles;
+    [SerializeField] GameObject menuCutScene;
 
     private void Update()
     {
+        if (menuCutSceneTimer > 0)
+            menuCutSceneTimer -= Time.deltaTime;
+        else
+            Destroy(menuCutScene);
+
         if(changeSceneToBuilding)
         {
             timerChangeScene -= Time.deltaTime;
