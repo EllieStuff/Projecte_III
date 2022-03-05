@@ -7,7 +7,6 @@ public class RadialMenuScript : MonoBehaviour
 {
     [SerializeField] RadialMenuPieceScript rmPiecePrefab;
     [SerializeField] int modifiersNum = 3;
-    [SerializeField] bool usesController = true;
 
     PlayerVehicleScript player;
     PlayerInputs playerInputs;
@@ -34,6 +33,7 @@ public class RadialMenuScript : MonoBehaviour
         for(int i = 0; i < rmPieces.Length; i++)
         {
             rmPieces[i] = Instantiate(rmPiecePrefab, this.transform);
+            //Vector3 posDiff = rmPieces[i].backGround.transform.localPosition - rmPieces[i].icon.transform.localPosition;
             if (rmPieces.Length > 1)
             {
                 rmPieces[i].backGround.fillAmount = (1.0f / modifiersNum) - (gapDegrees / 360.0f);
@@ -42,9 +42,12 @@ public class RadialMenuScript : MonoBehaviour
             else
                 rmPieces[i].backGround.fillAmount = 360.0f;
 
+
+            //rmPieces[i].icon.transform.RotateAround(rmPieces[i].transform.position, Vector3.forward, degreesPerPiece / 2.0f + gapDegrees / 2.0f + i * degreesPerPiece + );
             Vector3 dirVector = Quaternion.AngleAxis(i * degreesPerPiece, Vector3.forward) * Vector3.up;
             Vector3 movVector = dirVector * distToIcon;
             rmPieces[i].icon.transform.localPosition = rmPieces[i].backGround.transform.localPosition + movVector;
+            rmPieces[i].icon.transform.RotateAround(rmPieces[i].transform.position, Vector3.forward, rmPieces[i].iconRotDiff);
         }
 
     }
@@ -92,6 +95,35 @@ public class RadialMenuScript : MonoBehaviour
         if (playerInputs.confirmGadget)
         {
             //Do action from each modifier
+            switch (rmPieces[lastActiveElement].tag)
+            {
+                case "OilGun":
+                    //player.ActivateOilGun();  // ToDo
+                    break;
+
+                case "PaintGun":
+                    //player.ActivatePaintGun();   // ToDo
+                    break;
+
+                case "Plunger":
+                    player.ActivatePlunger();
+                    break;
+
+                case "AlaDelta":
+                    player.ActivateAlaDelta();
+                    break;
+
+                case "ChasisElevation":
+                    player.ActivateChasis();
+                    break;
+
+                ///Prolly should make an exception for this, since it's automatic
+                //case "Floater":
+                //    break;
+
+                default:
+                    break;
+            }
 
             rmPieces[lastActiveElement].ReinitColor();
             gameObject.SetActive(false);

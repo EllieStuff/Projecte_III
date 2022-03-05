@@ -79,9 +79,9 @@ public class PlayerVehicleScript : MonoBehaviour
     private Rigidbody outVehicleRB;
 
     //Modifiers
-    private bool plungerEnabled;
-    private bool chasisEnabled;
-    private bool alaDeltaEnabled;
+    private bool plungerEnabled = false;
+    private bool chasisEnabled = false;
+    private bool alaDeltaEnabled = false;
     //____________________________________
 
     public void ActivatePlunger()
@@ -308,7 +308,7 @@ public class PlayerVehicleScript : MonoBehaviour
             }
         }
 
-        if (controls.Quad.plunger && !desatascador && desatascadorCooldown <= 0 && desatascadorInstance == null)
+        if (plungerEnabled && !desatascador && desatascadorCooldown <= 0 && desatascadorInstance == null)
         {
             if (!createMaterial)
             {
@@ -324,6 +324,8 @@ public class PlayerVehicleScript : MonoBehaviour
             desatascador = true;
             desatascadorCooldown = desatascadorBaseCooldown;
         }
+        else
+            plungerEnabled = false;
 
         if (desatascadorCooldown > 0)
             desatascadorCooldown -= Time.deltaTime;
@@ -337,6 +339,7 @@ public class PlayerVehicleScript : MonoBehaviour
                 desatascadorInstance.GetComponent<plungerInstance>().destroyPlunger = true;
                 desatascadorInstance = null;
                 desatascador = false;
+                plungerEnabled = false;
             }
             else if(desatascadorInstance == null)
             {
@@ -489,8 +492,7 @@ public class PlayerVehicleScript : MonoBehaviour
                 ChasisElevationFunction();
 
             //PLUNGER FUNCTION
-            if (plungerEnabled)
-                Desatascador();
+            Desatascador();  // El plungerEnabled hauria d'anar en lloc de l'input
 
 
             savedVelocity = vehicleRB.velocity;
