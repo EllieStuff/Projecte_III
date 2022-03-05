@@ -24,6 +24,7 @@ public class PlayerInputs : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        if(GameObject.FindGameObjectWithTag("InputSystem") != null)
         inputSystem = GameObject.FindGameObjectWithTag("InputSystem").GetComponent<InputSystem>();
         controlData[0] = null;
     }

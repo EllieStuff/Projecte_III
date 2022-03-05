@@ -5,14 +5,16 @@ using UnityEngine.SceneManagement;
 
 public class QuadSceneManager : MonoBehaviour
 {
+    GameObject player;
     PlayerVehicleScript playerScript;
-
 
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
 
-        playerScript = GetComponentInChildren<PlayerVehicleScript>();
+        player = GameObject.FindGameObjectWithTag("Player");
+        playerScript = player.GetComponent<PlayerVehicleScript>();
+
         GameObject[] objs = GameObject.FindGameObjectsWithTag("VehicleSet");
         if (objs.Length < 2)
         {
@@ -56,10 +58,9 @@ public class QuadSceneManager : MonoBehaviour
                         child.localRotation = new Quaternion(0, 180, 0, 0);
                     else
                         child.localRotation = Quaternion.identity;
-
                 }
 
-                Rigidbody rb = playerScript.GetComponent<Rigidbody>();
+                Rigidbody rb = player.GetComponent<Rigidbody>();
                 rb.constraints = RigidbodyConstraints.FreezeAll;
                 rb.useGravity = false;
 
@@ -74,14 +75,14 @@ public class QuadSceneManager : MonoBehaviour
             {
                 Transform initial = GameObject.FindGameObjectWithTag("InitPos").transform;
 
-                gameObject.transform.localPosition = initial.localPosition;
+                gameObject.transform.position = initial.position;
                 gameObject.transform.localRotation = initial.localRotation;
                 gameObject.transform.localScale = initial.localScale;
 
                 GetComponentInChildren<PlayerVehicleScript>().buildingScene = false;
                 GetComponentInChildren<PlayerVehicleScript>().SetWheels();
 
-                playerScript.HideVoidModifier();
+                player.GetComponent<PlayerStatsManager>().HideVoidModifier();
                 playerScript.SetWheels();
                 playerScript.buildingScene = false;
 
@@ -102,7 +103,7 @@ public class QuadSceneManager : MonoBehaviour
 
     void SetCarModifiers()
     {
-        Transform modifiers = transform.Find("Modifiers");
+        Transform modifiers = GameObject.FindGameObjectWithTag("ModifierSpots").transform;
         playerScript.listOfModifiers = new List<string>(modifiers.childCount);
         for (int i = 0; i < modifiers.childCount; i++)
         {

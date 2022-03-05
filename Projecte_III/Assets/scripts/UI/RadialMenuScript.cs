@@ -18,7 +18,6 @@ public class RadialMenuScript : MonoBehaviour
     float 
         selectedAlpha = 0.75f,
         nonSelectedAlpha = 0.5f;
-    //Vector2 lastJoystickCoordinate = Vector2.zero;
     int activeElement, lastActiveElement;
 
     // Start is called before the first frame update
@@ -58,7 +57,6 @@ public class RadialMenuScript : MonoBehaviour
             HighlightActiveElement(activeElement);
             GetInput();
 
-            //lastJoystickCoordinate = player.controls.Quad.j2Axis;
             lastActiveElement = activeElement;
             activeElement = GetActiveElement();
         }
@@ -68,18 +66,6 @@ public class RadialMenuScript : MonoBehaviour
     private int GetActiveElement()
     {
         float finalAngle = NormalizeAngle(Vector3.SignedAngle(Vector3.up, playerInputs.chooseItem, Vector3.forward) + degreesPerPiece / 2.0f);
-        //if (!usesController)
-        //{
-        //    Vector3 screenCenter = new Vector3(Screen.width / 2.0f, Screen.height / 2.0f);
-        //    Vector3 cursorVector = Input.mousePosition - screenCenter;
-
-        //    finalAngle = NormalizeAngle(Vector3.SignedAngle(Vector3.up, cursorVector, Vector3.forward) + degreesPerPiece / 2.0f);
-        //}
-        //else
-        //{
-        //    if (playerInputs.chooseItem == Vector2.zero) return -1;
-        //    finalAngle = NormalizeAngle(Vector3.SignedAngle(Vector3.up, playerInputs.chooseItem, Vector3.forward) + degreesPerPiece / 2.0f);
-        //}
 
         return (int)(finalAngle / degreesPerPiece);
     }
@@ -103,7 +89,6 @@ public class RadialMenuScript : MonoBehaviour
 
     private void GetInput() // Treballar amb lastActiveElement
     {
-        // ToDo: Fer que funcioni amb el ratoli
         if (playerInputs.confirmGadget)
         {
             //Do action from each modifier
