@@ -25,7 +25,7 @@ public class PlayerVehicleScript : MonoBehaviour
 
     private Vector3 savedVelocity;
     private float timerReversed;
-    private float savedMaxSpeed;
+    public float savedMaxSpeed;
     private bool reduceSpeed;
     private float savedAngularDrag;
 

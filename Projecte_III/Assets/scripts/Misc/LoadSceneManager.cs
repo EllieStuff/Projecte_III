@@ -21,4 +21,6 @@ public class LoadSceneManager : MonoBehaviour
             SceneManager.LoadScene(_newScene);
         }
     }
+
+    public string GetSceneName() { return currentSceneName; }
 }

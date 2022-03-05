@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2449384592322717582}
+  - component: {fileID: 3791885302335748894}
   m_Layer: 0
   m_Name: Flotador
   m_TagString: Floater
@@ -31,6 +32,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3791885302335748894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3077690154790796596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d4a226dff8b8b14481af57adaa99e7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats:
+    weight: 0
+    torque: 0
+    acceleration: 0
+    maxVelocity: 0
+    friction: 0
 --- !u!1 &5354217118598623702
 GameObject:
   m_ObjectHideFlags: 0
