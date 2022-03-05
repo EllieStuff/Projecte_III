@@ -7,6 +7,7 @@ public class QuadSceneManager : MonoBehaviour
 {
     GameObject player;
     PlayerVehicleScript playerScript;
+    string[] listOfAllModifiers = { "Floater", "PaintGun", "OilGun", "Plunger", "AlaDelta", "ChasisElevation" };
 
     private void Awake()
     {
@@ -104,14 +105,56 @@ public class QuadSceneManager : MonoBehaviour
     void SetCarModifiers()
     {
         Transform modifiers = GameObject.FindGameObjectWithTag("ModifierSpots").transform;
-        playerScript.listOfModifiers = new List<string>(modifiers.childCount);
+        playerScript.listOfModifiers = new List<Transform>(modifiers.childCount);
         for (int i = 0; i < modifiers.childCount; i++)
         {
-            if(modifiers.GetChild(i).childCount > 0)
-                playerScript.listOfModifiers.Add(modifiers.GetChild(i).GetChild(0).GetChild(0).tag);
+            if (modifiers.GetChild(i).childCount > 0)
+            {
+                Transform currModifier = modifiers.GetChild(i).GetChild(0).GetChild(0);
+                playerScript.listOfModifiers.Add(currModifier);
+            }
         }
-        playerScript.SetCarModifiers();
+        //playerScript.SetCarModifiers();
+        for(int i = 0; i < listOfAllModifiers.Length; i++)
+        {
+            Transform currModifier = playerScript.listOfModifiers.Find(_modifier => _modifier.tag == listOfAllModifiers[i]);
+            bool hasModifier = currModifier != null;
+            InitModifierInPlayer(currModifier, hasModifier);
+        }
 
+    }
+
+    void InitModifierInPlayer(Transform _modifier, bool _active)
+    {
+        switch (_modifier.tag)
+        {
+            case "OilGun":
+
+                break;
+
+            case "PaintGun":
+                player.GetComponent<PlayerPaintGun>().Init(_modifier, _active);
+                break;
+
+            case "Plunger":
+
+                break;
+
+            case "AlaDelta":
+
+                break;
+
+            case "ChasisElevation":
+
+                break;
+
+            case "Floater":
+                player.GetComponent<PlayerFloater>().Init(_active);
+                break;
+
+            default:
+                break;
+        }
     }
 
 }

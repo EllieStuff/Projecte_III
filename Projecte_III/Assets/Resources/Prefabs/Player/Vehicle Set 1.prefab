@@ -284,6 +284,7 @@ GameObject:
   - component: {fileID: 1082010707954979873}
   - component: {fileID: 38654283868662907}
   - component: {fileID: 7591572402878244577}
+  - component: {fileID: 7535793092823729197}
   - component: {fileID: 38654283868662906}
   - component: {fileID: 38654283868662902}
   m_Layer: 0
@@ -359,6 +360,7 @@ MonoBehaviour:
   alaDeltaDuration: 0
   alaDeltaTimer: 0
   driftTorqueInc: 3
+  savedMaxSpeed: 0
   vehicleRB: {fileID: 38654283868662908}
   vehicleTorque: 6000
   vehicleMaxSpeed: 16
@@ -379,6 +381,9 @@ MonoBehaviour:
   particleMat: {fileID: 0}
   quadChasisShake: {fileID: 0}
   finishedRace: 0
+  driftClip: {fileID: 0}
+  normalClip: {fileID: 0}
+  boostClip: {fileID: 0}
 --- !u!114 &7591572402878244577
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -399,6 +404,18 @@ MonoBehaviour:
   enableGadgetMenu: 0
   confirmGadget: 0
   chooseItem: {x: 0, y: 0}
+--- !u!114 &7535793092823729197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 38654283868662901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb9f7f742dea281478cd6f9be8ac5477, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!82 &38654283868662906
 AudioSource:
   m_ObjectHideFlags: 0
