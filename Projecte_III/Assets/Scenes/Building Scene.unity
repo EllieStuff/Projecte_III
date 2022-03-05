@@ -7280,7 +7280,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1232199302}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1823983637}
+        m_TargetAssemblyTypeName: BuildingSpots, Assembly-CSharp
+        m_MethodName: ChangeGameObject
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1621495200553532331, guid: d584bcd656d57064bb982ea01939edbf, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1232199302
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10822,7 +10834,7 @@ MonoBehaviour:
         m_MethodName: ChangeGameObject
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 7775757212781498214, guid: 3bf9a90c20456a54e8ef6500c5fad959, type: 3}
+          m_ObjectArgument: {fileID: 7475119761178636492, guid: 744c3d4e107cc6f40ae6cf58296d8924, type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
