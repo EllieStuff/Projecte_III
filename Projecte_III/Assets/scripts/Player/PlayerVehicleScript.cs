@@ -392,8 +392,7 @@ public class PlayerVehicleScript : MonoBehaviour
     void OnCollisionStay(Collision other)
     {
         //------Player Death------
-        vehicleReversed = DeathScript.CheckIfDeathByFlipping(vehicleReversed, other);
-
+        vehicleReversed = true;
         //------------------------
     }
 
@@ -495,7 +494,14 @@ public class PlayerVehicleScript : MonoBehaviour
 
             savedVelocity = vehicleRB.velocity;
         }
-        else if (vehicleReversed && lifeVehicle > 0)
+        else
+        {
+            //FALL FUNCTION
+            if (!alaDelta)
+                FallFunction();
+        }
+
+        if (vehicleReversed && lifeVehicle > 0)
         {
 
             //WHEN THE VEHICLE IS REVERSED YOU CAN ROTATE THE QUAD LEFT AND RIGHT UNTIL THE VEHICLE STANDS UP
@@ -513,12 +519,6 @@ public class PlayerVehicleScript : MonoBehaviour
 
             }
 
-        }
-        else
-        {
-            //FALL FUNCTION
-            if (!alaDelta)
-                FallFunction();
         }
 
         //ALADELTA FUNCTION
