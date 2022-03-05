@@ -23,8 +23,15 @@ public class PaintGunScript : MonoBehaviour
     {
         model = transform.GetChild(0).gameObject;
         originalModelSize = model.transform.localScale;
-        model.transform.localScale = Vector3.zero;
-        model.SetActive(false);
+        //model.transform.localScale = Vector3.zero;
+        //model.SetActive(false);
+
+        LoadSceneManager scene = GameObject.Find("SceneManager").GetComponent<LoadSceneManager>();
+        if(scene == null || scene.GetSceneName() != "Building Scene")
+        {
+            model.transform.localScale = Vector3.zero;
+            model.SetActive(false);
+        }
     }
 
     // Update is called once per frame
