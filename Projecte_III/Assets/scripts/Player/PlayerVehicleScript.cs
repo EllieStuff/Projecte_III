@@ -579,7 +579,7 @@ public class PlayerVehicleScript : MonoBehaviour
 
     void DriftFunction()
     {
-        if (vehicleRB.velocity.magnitude >= minDriftSpeed)
+        if (vehicleRB.velocity.magnitude >= minDriftSpeed && inputs.forward && !inputs.backward)
         {
             if (inputs.left && controls.Quad.Drift)
             {
@@ -588,7 +588,7 @@ public class PlayerVehicleScript : MonoBehaviour
                     vehicleRB.AddTorque(0, -vehicleTorque * driftTorqueInc, 0);
                     savedDir = vehicleRB.velocity;
                     vehicleRB.velocity += new Vector3(0, 5, 0);
-                    driftRot = vehicleRB.rotation * new Quaternion(0, -0.2f * controls.Quad.Left, 0, 1).normalized;
+                    driftRot = vehicleRB.rotation * new Quaternion(0, -0.5f * controls.Quad.Left, 0, 1).normalized;
                     savedRot = vehicleRB.rotation;
                 }
                 else if (driftRot.y <= savedRot.y)
@@ -597,7 +597,7 @@ public class PlayerVehicleScript : MonoBehaviour
                 driftLeft = true;
 
                 savedDir += transform.TransformDirection(-0.4f * controls.Quad.Left, 0, 0);
-                savedRot *= new Quaternion(0, -0.012f * controls.Quad.Left, 0, 1).normalized;
+                savedRot *= new Quaternion(0, -0.015f * controls.Quad.Left, 0, 1).normalized;
 
                 vehicleRB.velocity = new Vector3(savedDir.x, vehicleRB.velocity.y, savedDir.z);
                 vehicleRB.rotation = savedRot;
@@ -622,7 +622,7 @@ public class PlayerVehicleScript : MonoBehaviour
                     vehicleRB.AddTorque(0, vehicleTorque * driftTorqueInc, 0);
                     savedDir = vehicleRB.velocity;
                     vehicleRB.velocity += new Vector3(0, 5, 0);
-                    driftRot = vehicleRB.rotation * new Quaternion(0, 0.2f * controls.Quad.Right, 0, 1).normalized;
+                    driftRot = vehicleRB.rotation * new Quaternion(0, 0.5f * controls.Quad.Right, 0, 1).normalized;
                     savedRot = vehicleRB.rotation;
                 }
                 else if (driftRot.y >= savedRot.y)
@@ -631,7 +631,7 @@ public class PlayerVehicleScript : MonoBehaviour
                 driftRight = true;
 
                 savedDir += transform.TransformDirection(0.4f * controls.Quad.Right, 0, 0);
-                savedRot *= new Quaternion(0, 0.012f * controls.Quad.Right, 0, 1).normalized;
+                savedRot *= new Quaternion(0, 0.015f * controls.Quad.Right, 0, 1).normalized;
 
                 vehicleRB.velocity = new Vector3(savedDir.x, vehicleRB.velocity.y, savedDir.z);
                 vehicleRB.rotation = savedRot;
