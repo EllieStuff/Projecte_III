@@ -71,10 +71,34 @@ public class PlayerVehicleScript : MonoBehaviour
 
     public bool finishedRace;
 
+    [SerializeField] private AudioClip driftClip;
+    [SerializeField] private AudioClip normalClip;
+    [SerializeField] private AudioClip boostClip;
+
     private Transform outTransform;
     private Rigidbody outVehicleRB;
 
-    // Start is called before the first frame update
+    //Modifiers
+    private bool plungerEnabled;
+    private bool chasisEnabled;
+    private bool alaDeltaEnabled;
+    //____________________________________
+
+    public void ActivatePlunger()
+    {
+        plungerEnabled = true;
+    }
+
+    public void ActivateChasis()
+    {
+        chasisEnabled = true;
+    }
+
+    public void ActivateAlaDelta()
+    {
+        alaDeltaEnabled = true;
+    }
+
     void Start()
     {
         controls = new QuadControlSystem();
@@ -156,6 +180,7 @@ public class PlayerVehicleScript : MonoBehaviour
 
             //------Movement------
 
+            if (!buildingScene)
             if (!buildingScene)
             {
                 Vector3 wheelPosition;
@@ -460,10 +485,12 @@ public class PlayerVehicleScript : MonoBehaviour
             DriftFunction();
 
             //CHASIS ELEVATION FUNCTION
-            ChasisElevationFunction();
+            if(chasisEnabled)
+                ChasisElevationFunction();
 
             //PLUNGER FUNCTION
-            Desatascador();
+            if (plungerEnabled)
+                Desatascador();
 
 
             savedVelocity = vehicleRB.velocity;
@@ -495,7 +522,8 @@ public class PlayerVehicleScript : MonoBehaviour
         }
 
         //ALADELTA FUNCTION
-        AlaDeltaFunction();
+        if(alaDeltaEnabled)
+            AlaDeltaFunction();
 
         if (reduceSpeed && vehicleMaxSpeed > savedMaxSpeed)
         {
@@ -657,15 +685,57 @@ public class PlayerVehicleScript : MonoBehaviour
         }
     }
 
+    float timerStart = 2;
+
     void VehicleSoundPitchFunction()
     {
-        if ((vehicleRB.velocity.magnitude > 1 || vehicleRB.velocity.magnitude < -1) && !GetComponent<AudioSource>().enabled && lifeVehicle > 0)
-            GetComponent<AudioSource>().enabled = true;
-        else if ((vehicleRB.velocity.magnitude <= 1 && vehicleRB.velocity.magnitude >= -1) && GetComponent<AudioSource>().enabled && lifeVehicle > 0)
-            GetComponent<AudioSource>().enabled = false;
+        AudioSource audio = GetComponent<AudioSource>();
 
-        if (GetComponent<AudioSource>().enabled)
-            GetComponent<AudioSource>().pitch = (vehicleRB.velocity.magnitude * 1) / vehicleMaxSpeed/2;
+        if ((vehicleRB.velocity.magnitude > 1 || vehicleRB.velocity.magnitude < -1) && !GetComponent<AudioSource>().enabled && lifeVehicle > 0)
+            audio.enabled = true;
+        else if ((vehicleRB.velocity.magnitude <= 1 && vehicleRB.velocity.magnitude >= -1) && GetComponent<AudioSource>().enabled && lifeVehicle > 0)
+            audio.enabled = false;
+
+        if (audio.enabled)
+           audio.pitch = (vehicleRB.velocity.magnitude * 1) / vehicleMaxSpeed/2;
+
+        if (inputs.drift && vehicleMaxSpeed <= savedMaxSpeed)
+        {
+            audio.pitch = 1;
+            if (audio.clip != driftClip)
+            {
+                audio.loop = true;
+                audio.volume = 0.05f;
+                audio.clip = driftClip;
+                audio.enabled = false;
+                audio.enabled = true;
+            }
+        }
+        else if (vehicleMaxSpeed <= savedMaxSpeed)
+        {
+            if (audio.clip != normalClip)
+            {
+                audio.loop = true;
+                audio.volume = 0.5f;
+                audio.clip = normalClip;
+                audio.enabled = false;
+                audio.enabled = true;
+            }
+        }
+        else if (timerStart <= 0)
+        {
+            audio.pitch = 1;
+            if (audio.clip != boostClip && vehicleMaxSpeed > savedMaxSpeed + 5)
+            {
+                audio.volume = 0.2f;
+                audio.clip = boostClip;
+                audio.enabled = false;
+                audio.enabled = true;
+                audio.loop = false;
+            }
+        }
+        else
+            timerStart -= Time.deltaTime;
     }
 
     void FallFunction()
@@ -861,7 +931,7 @@ public class PlayerVehicleScript : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        StartCoroutine(WaitEndBoost());
+        //StartCoroutine(WaitEndBoost());
 
         if(other.tag.Equals("Water") && !hasFloater)
         {
