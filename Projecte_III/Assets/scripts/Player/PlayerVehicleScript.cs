@@ -313,7 +313,7 @@ public class PlayerVehicleScript : MonoBehaviour
             }
         }
 
-        if (plungerEnabled && !desatascador && desatascadorCooldown <= 0 && desatascadorInstance == null)
+        if ((controls.Quad.plunger || plungerEnabled) && !desatascador && desatascadorCooldown <= 0 && desatascadorInstance == null)
         {
             if (!createMaterial)
             {
@@ -493,8 +493,7 @@ public class PlayerVehicleScript : MonoBehaviour
             DriftFunction();
 
             //CHASIS ELEVATION FUNCTION
-            if(chasisEnabled)
-                ChasisElevationFunction();
+            ChasisElevationFunction();
 
             //PLUNGER FUNCTION
             Desatascador();  // El plungerEnabled hauria d'anar en lloc de l'input
@@ -529,8 +528,7 @@ public class PlayerVehicleScript : MonoBehaviour
         }
 
         //ALADELTA FUNCTION
-        if(alaDeltaEnabled)
-            AlaDeltaFunction();
+        AlaDeltaFunction();
 
         if (reduceSpeed && vehicleMaxSpeed > savedMaxSpeed)
         {
@@ -553,11 +551,13 @@ public class PlayerVehicleScript : MonoBehaviour
     {
         Transform chasisTransform = transform.GetChild(0);
 
-        if (controls.Quad.ChasisElevation && !chasisElevation && chasisTransform.localPosition.y <= 0)
+        if ((controls.Quad.ChasisElevation || chasisEnabled) && !chasisElevation && chasisTransform.localPosition.y <= 0)
         {
             chasisElevation = true;
             chasisElevationTimer = 2;
         }
+        else
+            chasisEnabled = false;
 
         if (chasisElevation)
         {
@@ -804,8 +804,10 @@ public class PlayerVehicleScript : MonoBehaviour
 
     void AlaDeltaFunction() 
     {
-        if (!alaDelta && touchingGround && controls.Quad.AlaDelta)
+        if (!alaDelta && touchingGround && (alaDeltaEnabled || controls.Quad.AlaDelta))
             alaDelta = true;
+        else
+            alaDeltaEnabled = false;
 
         if(alaDelta && alaDeltaTimer >= 0)
         {
@@ -853,22 +855,22 @@ public class PlayerVehicleScript : MonoBehaviour
 
     //}
 
-    void UpdateCarModifiers()
-    {
-        for (int i = 0; i < listOfModifiers.Count; i++)
-        {
-            switch (listOfModifiers[i])
-            {
-                //case "Floater":
+    //void UpdateCarModifiers()
+    //{
+    //    for (int i = 0; i < listOfModifiers.Count; i++)
+    //    {
+    //        switch (listOfModifiers[i])
+    //        {
+    //            //case "Floater":
                     
 
-                //    break;
+    //            //    break;
 
-                default:
-                    break;
-            }
-        }
-    }
+    //            default:
+    //                break;
+    //        }
+    //    }
+    //}
 
     void checkFallDeath()
     {

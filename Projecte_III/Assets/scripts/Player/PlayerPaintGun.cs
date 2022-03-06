@@ -18,6 +18,7 @@ public class PlayerPaintGun : MonoBehaviour
     }
     internal void Init(Transform _modifier, bool _active)
     {
+        Debug.Log("Inited paintGun");
         hasPaintGun = _active;
         if (_active)
             paintGun = _modifier.GetComponent<PaintGunScript>();
@@ -35,6 +36,7 @@ public class PlayerPaintGun : MonoBehaviour
 
     public void Activate()
     {
+        Debug.Log("in paint gun, " + hasPaintGun.ToString());
         if(hasPaintGun)
             paintGun.Activate();
     }
