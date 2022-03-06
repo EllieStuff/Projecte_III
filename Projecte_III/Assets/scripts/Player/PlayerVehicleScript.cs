@@ -301,7 +301,7 @@ public class PlayerVehicleScript : MonoBehaviour
             }
             //Main Movements Keys______________________________________________________________________________________________________________________
 
-            //Speed Regulayion Function
+            //Speed Regulation Function
             SpeedRegulation();
 
             //Drift Function
