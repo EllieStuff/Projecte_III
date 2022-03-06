@@ -319,6 +319,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 17415734}
   m_CullTransparentMesh: 1
+--- !u!1 &21911380 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8114660769760056783, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+  m_PrefabInstance: {fileID: 6089789507022749367}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &21911382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 21911380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc434e7fd01d97b44937ffa4c492f05a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &39191897
 GameObject:
   m_ObjectHideFlags: 0
@@ -1015,8 +1032,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1823983637}
-        m_TargetAssemblyTypeName: BuildingSpots, Assembly-CSharp
+      - m_Target: {fileID: 21911382}
+        m_TargetAssemblyTypeName: ModifierManager, Assembly-CSharp
         m_MethodName: ChangeGameObject
         m_Mode: 2
         m_Arguments:
@@ -5769,7 +5786,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &924631603
 GameObject:
@@ -7204,7 +7221,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1197780771
 GameObject:
@@ -7326,8 +7343,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1823983637}
-        m_TargetAssemblyTypeName: BuildingSpots, Assembly-CSharp
+      - m_Target: {fileID: 21911382}
+        m_TargetAssemblyTypeName: ModifierManager, Assembly-CSharp
         m_MethodName: ChangeGameObject
         m_Mode: 2
         m_Arguments:
@@ -7564,7 +7581,7 @@ Transform:
   m_LocalScale: {x: 3.500001, y: 3.5, z: 3.500001}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1292168003
 GameObject:
@@ -9632,8 +9649,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1823983637}
-        m_TargetAssemblyTypeName: BuildingSpots, Assembly-CSharp
+      - m_Target: {fileID: 21911382}
+        m_TargetAssemblyTypeName: ModifierManager, Assembly-CSharp
         m_MethodName: ChangeGameObject
         m_Mode: 2
         m_Arguments:
@@ -10099,56 +10116,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1774247870}
   m_CullTransparentMesh: 1
---- !u!1 &1823983636
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1823983638}
-  - component: {fileID: 1823983637}
-  m_Layer: 0
-  m_Name: Target
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1823983637
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1823983636}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf1b37f7f6679b14db66239ed1901cd1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  placed: 0
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 64
-  playerCamP1: {fileID: 0}
-  playerCamP2: {fileID: 0}
-  multiplayerMode: 0
---- !u!4 &1823983638
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1823983636}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 11
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1847126981
 GameObject:
   m_ObjectHideFlags: 0
@@ -10874,8 +10841,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1823983637}
-        m_TargetAssemblyTypeName: BuildingSpots, Assembly-CSharp
+      - m_Target: {fileID: 21911382}
+        m_TargetAssemblyTypeName: ModifierManager, Assembly-CSharp
         m_MethodName: ChangeGameObject
         m_Mode: 2
         m_Arguments:
