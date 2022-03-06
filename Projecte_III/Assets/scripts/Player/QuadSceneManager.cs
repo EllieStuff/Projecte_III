@@ -90,8 +90,6 @@ public class QuadSceneManager : MonoBehaviour
             rb.useGravity = true;
 
             SetCarModifiers();
-
-            playerScript.Init();
         }
 
     }

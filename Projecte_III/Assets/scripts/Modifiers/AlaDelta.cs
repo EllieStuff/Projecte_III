@@ -42,9 +42,9 @@ public class AlaDelta : MonoBehaviour
             {
                 transform.rotation = new Quaternion(0, transform.rotation.y, 0, transform.rotation.w);
                 if (inputs.Right)
-                    player.vehicleRB.AddTorque(new Vector3(0, player.vehicleTorque, 0));
+                    player.vehicleRB.AddTorque(new Vector3(0, player.vehicleTorque / 10, 0));
                 else if (inputs.Left)
-                    player.vehicleRB.AddTorque(new Vector3(0, -player.vehicleTorque, 0));
+                    player.vehicleRB.AddTorque(new Vector3(0, -player.vehicleTorque / 10, 0));
 
                 player.savedVelocity = transform.TransformDirection(new Vector3(0, 0, 25));
 
