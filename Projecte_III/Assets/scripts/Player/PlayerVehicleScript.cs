@@ -311,7 +311,7 @@ public class PlayerVehicleScript : MonoBehaviour
             chasisElevation.ChasisElevationFunction(controls, chasisEnabled);
 
             //Plunger Function
-            plunger.Desatascador(controls, this, plungerEnabled, playerNum);  // El plungerEnabled hauria d'anar en lloc de l'input
+            plunger.Desatascador(controls, this, plungerEnabled, playerNum);
 
 
             savedVelocity = vehicleRB.velocity;
