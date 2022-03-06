@@ -677,7 +677,6 @@ public class PlayerVehicleScript : MonoBehaviour
         Vector3 velFrictionVec = -vehicleRB.velocity.normalized * _frictionForce * vehicleRB.velocity.magnitude;
         vehicleRB.AddForce(velFrictionVec, ForceMode.Force);
         vehicleRB.angularDrag = savedAngularDrag * _dragInc;
-
     }
 
     internal IEnumerator LerpVehicleMaxSpeed(float _targetValue, float _lerpTime)
@@ -689,7 +688,6 @@ public class PlayerVehicleScript : MonoBehaviour
             lerpTimer += Time.deltaTime;
             vehicleMaxSpeed = Mathf.Lerp(vehicleMaxSpeed, _targetValue, lerpTimer / _lerpTime);
         }
-
     }
 
 }
