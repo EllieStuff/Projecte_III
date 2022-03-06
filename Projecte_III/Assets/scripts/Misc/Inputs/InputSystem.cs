@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InputSystem : MonoBehaviour
 {
-    const float INPUT_THRESHOLD = 0.3f;
+    public const float INPUT_THRESHOLD = 0.3f;
 
     public enum KeyCodes { FORWARD, BACKWARD, LEFT, RIGHT, DRIFT, ENABLE_GADGET_MENU, CONFIRM_GADGET };
     public enum AxisCodes { CHOOSE_ITEM };
@@ -151,6 +151,87 @@ public class InputSystem : MonoBehaviour
         return null;
     }
 
+    public float GetKeyFloat(KeyCodes _key, ControlData[] _controlData)   // Si dones problemes, adaptar tots perque vagin amb la "complexCasesReturnAux" en contres de amb returns
+    {
+        for (int idx = 0; idx < _controlData.Length; idx++)
+        {
+            int mainDeviceId = _controlData[idx].mainDeviceId;
+            switch (_key)
+            {
+                case KeyCodes.FORWARD:
+                    for (int i = 0; i < controls.Quad.Forward.controls.Count; i++)
+                    {
+                        if (controls.Quad.Forward.controls[i].device.deviceId == mainDeviceId)
+                        {
+                            //Debug.Log("Forward is " + controls.Quad.Forward.controls[i].EvaluateMagnitude());
+                            if (controls.Quad.Forward.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD)
+                                return controls.Quad.Forward.controls[i].EvaluateMagnitude();
+                        }
+                    }
+
+                    break;
+
+                case KeyCodes.BACKWARD:
+                    for (int i = 0; i < controls.Quad.Backward.controls.Count; i++)
+                    {
+                        if (controls.Quad.Backward.controls[i].device.deviceId == mainDeviceId)
+                        {
+                            //Debug.Log("Backward is " + controls.Quad.Backward.controls[i].EvaluateMagnitude());
+                            if (controls.Quad.Backward.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD)
+                                return controls.Quad.Backward.controls[i].EvaluateMagnitude();
+                        }
+                    }
+
+                    break;
+
+                case KeyCodes.LEFT:
+                    for (int i = 0; i < controls.Quad.Left.controls.Count; i++)
+                    {
+                        if (controls.Quad.Left.controls[i].device.deviceId == mainDeviceId)
+                        {
+                            //Debug.Log("Left is " + controls.Quad.Left.controls[i].EvaluateMagnitude());
+                            if (controls.Quad.Left.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD)
+                                return controls.Quad.Left.controls[i].EvaluateMagnitude();
+                        }
+                    }
+
+                    break;
+
+                case KeyCodes.RIGHT:
+                    for (int i = 0; i < controls.Quad.Right.controls.Count; i++)
+                    {
+                        if (controls.Quad.Right.controls[i].device.deviceId == mainDeviceId)
+                        {
+                            //Debug.Log("Right is " + controls.Quad.Right.controls[i].EvaluateMagnitude());
+                            if (controls.Quad.Right.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD)
+                                return controls.Quad.Right.controls[i].EvaluateMagnitude();
+                        }
+                    }
+
+                    break;
+
+                case KeyCodes.DRIFT:
+                    for (int i = 0; i < controls.Quad.Drift.controls.Count; i++)
+                    {
+                        if (controls.Quad.Drift.controls[i].device.deviceId == mainDeviceId)
+                        {
+                            //Debug.Log("Drift is " + controls.Quad.Drift.controls[i].EvaluateMagnitude());
+                            if (controls.Quad.Drift.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD)
+                                return controls.Quad.Drift.controls[i].EvaluateMagnitude();
+                        }
+                    }
+
+                    break;
+
+                default:
+                    break;
+            }
+
+        }
+
+        return 0.0f;
+
+    }
 
     public bool GetKey(KeyCodes _key, ControlData[] _controlData)   // Si dones problemes, adaptar tots perque vagin amb la "complexCasesReturnAux" en contres de amb returns
     {

@@ -9,17 +9,34 @@ public class PlayerInputs : MonoBehaviour
     InputSystem.ControlData[] controlData = new InputSystem.ControlData[1];
 
     // Keys
-    [HideInInspector] 
-    public bool
-        forward, backward, right, left,
-        drift, enableGadgetMenu, confirmGadget;
+    float
+        forward, backward, right, left, drift;
+    bool
+        enableGadgetMenu, confirmGadget;
 
     // Axis
-    [HideInInspector] 
-    public Vector2
+    Vector2
         chooseItem;
 
     public InputSystem.ControlData[] ControlData { get { return controlData; } }
+
+
+    public float ForwardFloat { get { return forward; } }
+    public float BackwardFloat { get { return forward; } }
+    public float RightFloat { get { return forward; } }
+    public float LeftFloat { get { return forward; } }
+    public float DriftFloat { get { return forward; } }
+
+    public bool Forward { get { return forward > InputSystem.INPUT_THRESHOLD; } }
+    public bool Backward { get { return backward > InputSystem.INPUT_THRESHOLD; } }
+    public bool Right { get { return right > InputSystem.INPUT_THRESHOLD; } }
+    public bool Left { get { return left > InputSystem.INPUT_THRESHOLD; } }
+    public bool Drift { get { return drift > InputSystem.INPUT_THRESHOLD; } }
+    public bool EnableGadgetMenu { get { return enableGadgetMenu; } }
+    public bool ConfirmGadget { get { return confirmGadget; } }
+
+    public Vector2 ChooseItem { get { return chooseItem; } }
+
 
     // Start is called before the first frame update
     void Awake()
@@ -62,11 +79,11 @@ public class PlayerInputs : MonoBehaviour
     void UpdateInputs()
     {
         //Keys
-        forward = inputSystem.GetKey(InputSystem.KeyCodes.FORWARD, controlData);
-        backward = inputSystem.GetKey(InputSystem.KeyCodes.BACKWARD, controlData);
-        right = inputSystem.GetKey(InputSystem.KeyCodes.RIGHT, controlData);
-        left = inputSystem.GetKey(InputSystem.KeyCodes.LEFT, controlData);
-        drift = inputSystem.GetKey(InputSystem.KeyCodes.DRIFT, controlData);
+        forward = inputSystem.GetKeyFloat(InputSystem.KeyCodes.FORWARD, controlData);
+        backward = inputSystem.GetKeyFloat(InputSystem.KeyCodes.BACKWARD, controlData);
+        right = inputSystem.GetKeyFloat(InputSystem.KeyCodes.RIGHT, controlData);
+        left = inputSystem.GetKeyFloat(InputSystem.KeyCodes.LEFT, controlData);
+        drift = inputSystem.GetKeyFloat(InputSystem.KeyCodes.DRIFT, controlData);
         enableGadgetMenu = inputSystem.GetKey(InputSystem.KeyCodes.ENABLE_GADGET_MENU, controlData);
         confirmGadget = inputSystem.GetKey(InputSystem.KeyCodes.CONFIRM_GADGET, controlData);
 
