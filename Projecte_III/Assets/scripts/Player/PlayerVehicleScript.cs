@@ -588,7 +588,7 @@ public class PlayerVehicleScript : MonoBehaviour
     {
         if (vehicleRB.velocity.magnitude >= minDriftSpeed && inputs.forward && !inputs.backward)
         {
-            if (inputs.left && controls.Quad.Drift)
+            if (inputs.left && inputs.drift)
             {
                 if(!driftLeft)
                 {
@@ -622,7 +622,7 @@ public class PlayerVehicleScript : MonoBehaviour
                 else
                     particleMat.color = Color.red;
             }
-            else if (inputs.right && controls.Quad.Drift)
+            else if (inputs.right && inputs.drift)
             {
                 if (!driftRight)
                 {
