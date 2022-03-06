@@ -2719,6 +2719,47 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!114 &345607905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 345607903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcfcf08551a62874c86d3129f17ada2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  desatascadorPrefab: {fileID: 5119215797378497723, guid: b174012fb8007ab43a6bf4d2e5b25a5c, type: 3}
+--- !u!114 &345607906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 345607903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4663d450108c35c4d86ed01054d297f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chasisElevation: 0
+--- !u!114 &345607915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 345607903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b36f1107a8d76d34bb8cc7df83933b0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  alaDelta: 0
+  alaDeltaDuration: 0
+  alaDeltaTimer: 0
 --- !u!1 &371426908
 GameObject:
   m_ObjectHideFlags: 0
