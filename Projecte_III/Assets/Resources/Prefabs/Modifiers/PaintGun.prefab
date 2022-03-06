@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 7475119761178636491}
   - component: {fileID: 7475119761178636488}
   - component: {fileID: 7475119761178636489}
+  - component: {fileID: 862569374059247265}
   m_Layer: 0
   m_Name: PaintGun
-  m_TagString: Untagged
+  m_TagString: PaintGun
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -48,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 4230321271944233719, guid: c0dd1246af7eda34ea8028f2db735f66, type: 3}
   timeActive: 0.5
+  rechargeTime: 5
   force:
     min: 20
     max: 26
@@ -109,6 +111,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &862569374059247265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7475119761178636492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d4a226dff8b8b14481af57adaa99e7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats:
+    weight: 0
+    torque: 0
+    acceleration: 0
+    maxVelocity: 0
+    friction: 0
 --- !u!1001 &8159467656655694532
 PrefabInstance:
   m_ObjectHideFlags: 0

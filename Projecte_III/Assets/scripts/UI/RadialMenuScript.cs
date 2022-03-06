@@ -5,11 +5,10 @@ using UnityEngine;
 
 public class RadialMenuScript : MonoBehaviour
 {
-    [SerializeField] RadialMenuPieceScript rmPiecePrefab;
-    [SerializeField] int modifiersNum = 3;
-    [SerializeField] bool usesController = true;
+    [SerializeField] List<RadialMenuPieceScript> rmPiecesPrefabs;
+    //int modifiersNum;
 
-    PlayerVehicleScript player;
+    Transform player;
     PlayerInputs playerInputs;
     RadialMenuPieceScript[] rmPieces;
     float degreesPerPiece;
@@ -18,34 +17,51 @@ public class RadialMenuScript : MonoBehaviour
     float 
         selectedAlpha = 0.75f,
         nonSelectedAlpha = 0.5f;
-    //Vector2 lastJoystickCoordinate = Vector2.zero;
     int activeElement, lastActiveElement;
 
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerVehicleScript>();
+        player = GameObject.FindGameObjectWithTag("Player").transform;
         playerInputs = player.GetComponent<PlayerInputs>();
 
-        degreesPerPiece = 360.0f / modifiersNum;
-        distToIcon = Vector3.Distance(rmPiecePrefab.icon.transform.position, rmPiecePrefab.backGround.transform.position);
-        transform.Rotate(0, 0, -gapDegrees);
-        
-        rmPieces = new RadialMenuPieceScript[modifiersNum];
-        for(int i = 0; i < rmPieces.Length; i++)
+        //modifiersNum = rmPiecesPrefabs.Count;
+        for(int i = 0; i < rmPiecesPrefabs.Count; i++)
         {
-            rmPieces[i] = Instantiate(rmPiecePrefab, this.transform);
-            if (rmPieces.Length > 1)
+            if (rmPiecesPrefabs[i].tag == "Floater")
             {
-                rmPieces[i].backGround.fillAmount = (1.0f / modifiersNum) - (gapDegrees / 360.0f);
-                rmPieces[i].backGround.transform.localRotation = Quaternion.Euler(0, 0, degreesPerPiece / 2.0f + gapDegrees / 2.0f + i * degreesPerPiece);
+                rmPiecesPrefabs.RemoveAt(i);
+                //modifiersNum--;
             }
-            else
-                rmPieces[i].backGround.fillAmount = 360.0f;
+        }
 
-            Vector3 dirVector = Quaternion.AngleAxis(i * degreesPerPiece, Vector3.forward) * Vector3.up;
-            Vector3 movVector = dirVector * distToIcon;
-            rmPieces[i].icon.transform.localPosition = rmPieces[i].backGround.transform.localPosition + movVector;
+        if (rmPiecesPrefabs.Count > 0)
+        {
+            degreesPerPiece = 360.0f / rmPiecesPrefabs.Count;
+            distToIcon = Vector3.Distance(rmPiecesPrefabs[0].icon.transform.position, rmPiecesPrefabs[0].backGround.transform.position);
+            transform.Rotate(0, 0, -gapDegrees);
+
+            rmPieces = new RadialMenuPieceScript[rmPiecesPrefabs.Count];
+            for (int i = 0; i < rmPieces.Length; i++)
+            {
+                rmPieces[i] = Instantiate(rmPiecesPrefabs[i], this.transform);
+                //Vector3 posDiff = rmPieces[i].backGround.transform.localPosition - rmPieces[i].icon.transform.localPosition;
+                if (rmPieces.Length > 1)
+                {
+                    rmPieces[i].backGround.fillAmount = (1.0f / rmPieces.Length) - (gapDegrees / 360.0f);
+                    rmPieces[i].backGround.transform.localRotation = Quaternion.Euler(0, 0, degreesPerPiece / 2.0f + gapDegrees / 2.0f + i * degreesPerPiece);
+                }
+                else
+                    rmPieces[i].backGround.fillAmount = 360.0f;
+
+
+                //rmPieces[i].icon.transform.RotateAround(rmPieces[i].transform.position, Vector3.forward, degreesPerPiece / 2.0f + gapDegrees / 2.0f + i * degreesPerPiece + );
+                Vector3 dirVector = Quaternion.AngleAxis(i * degreesPerPiece, Vector3.forward) * Vector3.up;
+                Vector3 movVector = dirVector * distToIcon;
+                rmPieces[i].icon.transform.localPosition = rmPieces[i].backGround.transform.localPosition + movVector;
+                rmPieces[i].icon.transform.RotateAround(rmPieces[i].transform.position, Vector3.forward, rmPieces[i].iconRotDiff);
+            }
+
         }
 
     }
@@ -58,7 +74,6 @@ public class RadialMenuScript : MonoBehaviour
             HighlightActiveElement(activeElement);
             GetInput();
 
-            //lastJoystickCoordinate = player.controls.Quad.j2Axis;
             lastActiveElement = activeElement;
             activeElement = GetActiveElement();
         }
@@ -68,18 +83,6 @@ public class RadialMenuScript : MonoBehaviour
     private int GetActiveElement()
     {
         float finalAngle = NormalizeAngle(Vector3.SignedAngle(Vector3.up, playerInputs.chooseItem, Vector3.forward) + degreesPerPiece / 2.0f);
-        //if (!usesController)
-        //{
-        //    Vector3 screenCenter = new Vector3(Screen.width / 2.0f, Screen.height / 2.0f);
-        //    Vector3 cursorVector = Input.mousePosition - screenCenter;
-
-        //    finalAngle = NormalizeAngle(Vector3.SignedAngle(Vector3.up, cursorVector, Vector3.forward) + degreesPerPiece / 2.0f);
-        //}
-        //else
-        //{
-        //    if (playerInputs.chooseItem == Vector2.zero) return -1;
-        //    finalAngle = NormalizeAngle(Vector3.SignedAngle(Vector3.up, playerInputs.chooseItem, Vector3.forward) + degreesPerPiece / 2.0f);
-        //}
 
         return (int)(finalAngle / degreesPerPiece);
     }
@@ -101,12 +104,47 @@ public class RadialMenuScript : MonoBehaviour
 
     }
 
-    private void GetInput() // Treballar amb lastActiveElement
+    private void GetInput()
     {
-        // ToDo: Fer que funcioni amb el ratoli
         if (playerInputs.confirmGadget)
         {
             //Do action from each modifier
+            switch (rmPieces[lastActiveElement].tag)
+            {
+                case "OilGun":
+                    player.GetComponent<PlayerOilGun>().Activate();
+                    break;
+
+                case "PaintGun":
+                    player.GetComponent<PlayerPaintGun>().Activate();
+                    break;
+
+                case "Plunger":
+                    // ToDo: Adaptar amb els nous scripts
+                    player.GetComponent<PlayerVehicleScript>().ActivatePlunger();
+                    break;
+
+                case "AlaDelta":
+                    // ToDo: Adaptar amb els nous scripts
+                    player.GetComponent<PlayerVehicleScript>().ActivateAlaDelta();
+                    break;
+
+                case "ChasisElevation":
+                    // ToDo: Adaptar amb els nous scripts
+                    player.GetComponent<PlayerVehicleScript>().ActivateChasis();
+                    break;
+
+                case "Umbrella":
+                    // ToDo: Fer
+                    break;
+
+                ///Prolly should make an exception for this, since it's automatic
+                //case "Floater":
+                //    break;
+
+                default:
+                    break;
+            }
 
             rmPieces[lastActiveElement].ReinitColor();
             gameObject.SetActive(false);

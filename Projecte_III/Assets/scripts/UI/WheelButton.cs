@@ -70,9 +70,11 @@ public class WheelButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
         //SetNewValues();
 
-        Instantiate(wheelsModel, wheelSpot.transform);
+        GameObject instance = Instantiate(wheelsModel, wheelSpot.transform);
 
-        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerVehicleScript>().SetStats();
+        instance.GetComponent<AudioSource>().enabled = true;
+
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStatsManager>().SetStats();
 
         placed = true;
     }

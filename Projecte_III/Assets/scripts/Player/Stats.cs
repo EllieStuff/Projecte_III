@@ -82,4 +82,13 @@ public class Stats : MonoBehaviour
     public Data GetStats() { return stats; }
 
     public void SetStats(Data s) { stats = s; }
+
+    public void ResetStats()
+    {
+        stats.weight = 0;
+        stats.torque = 0;
+        stats.acceleration = 0;
+        stats.maxVelocity = 0;
+        stats.friction = 0;
+    }
 };

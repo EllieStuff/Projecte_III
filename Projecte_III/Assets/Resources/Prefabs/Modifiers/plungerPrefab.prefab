@@ -30,6 +30,19 @@ Transform:
   m_Father: {fileID: 5494614787086116353}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &4569914630596325991
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4217287097237849186}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.2, y: 0.5, z: 0.2}
+  m_Center: {x: -0.014967125, y: 0.038002312, z: -0.013160273}
 --- !u!54 &1701954889910864321
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -144,6 +157,24 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!114 &2974946656333265437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5119215797378497723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d4a226dff8b8b14481af57adaa99e7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats:
+    weight: 0
+    torque: 0
+    acceleration: 0
+    maxVelocity: 0
+    friction: 0
 --- !u!114 &3998260308002091930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,19 +195,6 @@ MonoBehaviour:
   plungerSpeedLerp: 5
   plungerHit: 0
   playerShotPlunger: {fileID: 0}
---- !u!65 &4569914630596325991
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4217287097237849186}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.2, y: 0.5, z: 0.2}
-  m_Center: {x: -0.014967125, y: 0.038002312, z: -0.013160273}
 --- !u!1001 &5461303344966205930
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -235,6 +253,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 91243635285357843a8484018d1a01f9, type: 3}
       propertyPath: m_Name
       value: plungerPrefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 91243635285357843a8484018d1a01f9, type: 3}
+      propertyPath: m_TagString
+      value: Plunger
       objectReference: {fileID: 0}
     - target: {fileID: 1151388028547126963, guid: 91243635285357843a8484018d1a01f9, type: 3}
       propertyPath: m_LocalScale.x

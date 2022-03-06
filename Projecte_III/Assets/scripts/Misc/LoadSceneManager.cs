@@ -14,11 +14,13 @@ public class LoadSceneManager : MonoBehaviour
 
     public void ChangeScene(string _newScene)
     {
-        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerVehicleScript>().SetStats();
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStatsManager>().SetStats();
 
         if(_newScene != currentSceneName)
         {
             SceneManager.LoadScene(_newScene);
         }
     }
+
+    public string GetSceneName() { return currentSceneName; }
 }
