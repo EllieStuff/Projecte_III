@@ -82,7 +82,7 @@ public class RadialMenuScript : MonoBehaviour
 
     private int GetActiveElement()
     {
-        float finalAngle = NormalizeAngle(Vector3.SignedAngle(Vector3.up, playerInputs.chooseItem, Vector3.forward) + degreesPerPiece / 2.0f);
+        float finalAngle = NormalizeAngle(Vector3.SignedAngle(Vector3.up, playerInputs.ChooseItem, Vector3.forward) + degreesPerPiece / 2.0f);
 
         return (int)(finalAngle / degreesPerPiece);
     }
@@ -106,7 +106,7 @@ public class RadialMenuScript : MonoBehaviour
 
     private void GetInput()
     {
-        if (playerInputs.confirmGadget)
+        if (playerInputs.ConfirmGadget)
         {
             //Do action from each modifier
             switch (rmPieces[lastActiveElement].tag)

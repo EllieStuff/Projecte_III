@@ -18,12 +18,12 @@ public class RadialMenuManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerInputs.enableGadgetMenu && !triggered)
+        if (playerInputs.EnableGadgetMenu && !triggered)
         {
             triggered = true;
             radialMenu.SetActive(true);
         }
-        else if (!playerInputs.enableGadgetMenu && triggered)
+        else if (!playerInputs.EnableGadgetMenu && triggered)
         {
             triggered = false;
             radialMenu.SetActive(false);
