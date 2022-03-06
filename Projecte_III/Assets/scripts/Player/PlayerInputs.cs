@@ -23,8 +23,8 @@ public class PlayerInputs : MonoBehaviour
 
     public float ForwardFloat { get { return forward; } }
     public float BackwardFloat { get { return forward; } }
-    public float RightFloat { get { return forward; } }
-    public float LeftFloat { get { return forward; } }
+    public float RightFloat { get { return forward + backward; } }
+    public float LeftFloat { get { return forward + backward; } }
     public float DriftFloat { get { return forward; } }
 
     public bool Forward { get { return forward > InputSystem.INPUT_THRESHOLD; } }

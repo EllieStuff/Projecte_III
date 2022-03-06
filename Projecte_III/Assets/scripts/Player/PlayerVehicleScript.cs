@@ -400,7 +400,7 @@ public class PlayerVehicleScript : MonoBehaviour
     void OnCollisionStay(Collision other)
     {
         //------Player Death------
-        vehicleReversed = true;
+        vehicleReversed = (other.gameObject.tag.Equals("ground"));
         //------------------------
     }
 
