@@ -16,8 +16,6 @@ public class PlayerVehicleScript : MonoBehaviour
     [SerializeField] float driftTorqueInc = 3.0f;
 
     private Material chasisMat;
-    //Vehicle Stats
-    //Stats stats;
 
     private float timerReversed;
     public float savedMaxSpeed;
@@ -25,7 +23,6 @@ public class PlayerVehicleScript : MonoBehaviour
     private float savedAngularDrag;
 
     QuadControlSystem controls;
-    //InputSystem inputSystem;
     PlayerInputs inputs;
 
     public Rigidbody vehicleRB;
@@ -71,9 +68,6 @@ public class PlayerVehicleScript : MonoBehaviour
     private bool plungerEnabled = false;
     private bool chasisEnabled = false;
     private bool alaDeltaEnabled = false;
-
-    //internal PlayerFloater floater;
-    //internal PlayerPaintGun paintGun;
     //____________________________________
 
     public void ActivatePlunger()
@@ -142,15 +136,6 @@ public class PlayerVehicleScript : MonoBehaviour
         buildingScene = SceneManager.GetActiveScene().name == "Building Scene";
     }
 
-    internal void Init()
-    {
-        //Physics.IgnoreLayerCollision(3, 4, !hasFloater);
-        //if (!hasFloater)
-        //{
-        //    Physics.IgnoreLayerCollision(3, 4, true);
-        //}
-    }
-
     void Update()
     {
         if (inputs.ControlData != null)
@@ -172,9 +157,7 @@ public class PlayerVehicleScript : MonoBehaviour
                 quadChasisShake = transform.GetChild(0).GetChild(0);
             }
 
-            //HERE WE SET THE POSITION AND ROTATION FROM THE WHEELS RENDERERS
-
-            //------Movement------
+            //Here we set the position and rotation from the wheel renderers
 
             if (!buildingScene)
             if (!buildingScene)
@@ -192,7 +175,7 @@ public class PlayerVehicleScript : MonoBehaviour
 
                     wheel.position = Vector3.Lerp(wheel.position, wheelPosition, Time.deltaTime * 2);
 
-                    if (wheel.tag.Equals("front") && (inputs.Right || inputs.Left) /*(controls.Quad.Right >= 0.2f || controls.Quad.Left >= 0.2f)*/)
+                    if (wheel.tag.Equals("front") && (inputs.Right || inputs.Left))
                         wheel.transform.localRotation = Quaternion.Lerp(wheel.transform.localRotation, new Quaternion(0, (inputs.RightFloat / 5) - (inputs.LeftFloat / 5), 0, 1), Time.deltaTime * 3);
                     else
                         wheel.transform.rotation = wheelRotation;
@@ -200,17 +183,7 @@ public class PlayerVehicleScript : MonoBehaviour
                     wheels.transform.localPosition = transform.localPosition;
                     wheels.transform.localRotation = transform.localRotation;
 
-
-
-                    //------------------
-
-
-
-                    //-----Modifiers-----
-
-
-
-                    //FALLDEATH CHECK
+                    //Falldeath Check
 
                     if (DeathScript.DeathByFalling(alaDeltaClass.alaDelta, transform, vehicleRB, respawnPosition, respawnRotation, respawnVelocity, out outTransform, out outVehicleRB))
 
@@ -223,7 +196,7 @@ public class PlayerVehicleScript : MonoBehaviour
                         vehicleRB.velocity = outVehicleRB.velocity;
 
                     }
-                    //RESETTING ALADELTA VARIABLES
+                    //Checking if Aladelta is touching ground to disable it
                     if (touchingGround)
                     {
                         alaDeltaClass.CheckAlaDeltaGround(touchingGround);
@@ -236,18 +209,6 @@ public class PlayerVehicleScript : MonoBehaviour
                 }
 
                 transform.parent.GetChild(2).localPosition = transform.localPosition;
-                //_______________________________________________________________
-
-                //-----Temporal-----
-
-                //if (Input.GetKeyDown(KeyCode.F))
-                //{
-                //    Physics.IgnoreLayerCollision(3, 4, hasFloater);
-                //    hasFloater = !hasFloater;
-                //}
-
-                //--------------------
-
             }
 
         }
@@ -259,9 +220,6 @@ public class PlayerVehicleScript : MonoBehaviour
         wheels = gameObject.transform.parent.GetChild(1).gameObject;
     }
 
-    //------------------
-
-    // Update is called once per frame
     void FixedUpdate()
     {
         if(!SceneManager.GetActiveScene().name.Equals("Building Scene Multiplayer"))
@@ -632,41 +590,6 @@ public class PlayerVehicleScript : MonoBehaviour
         }
     }
 
-    //internal void SetCarModifiers()
-    //{
-    //    for(int i = 0; i < listOfModifiers.Count; i++)
-    //    {
-    //        switch (listOfModifiers[i])
-    //        {
-    //            case "Floater":
-    //                hasFloater = true;
-
-    //                break;
-
-    //            default:
-    //                break;
-    //        }
-    //    }
-
-    //}
-
-    //void UpdateCarModifiers()
-    //{
-    //    for (int i = 0; i < listOfModifiers.Count; i++)
-    //    {
-    //        switch (listOfModifiers[i])
-    //        {
-    //            //case "Floater":
-                    
-
-    //            //    break;
-
-    //            default:
-    //                break;
-    //        }
-    //    }
-    //}
-
     void checkFallDeath()
     {
         if(vehicleRB.velocity.y <= -100)
@@ -745,13 +668,6 @@ public class PlayerVehicleScript : MonoBehaviour
         vehicleReversed = false;
         timerReversed = 0;
     }
-
-    //void ChangeFriction(float _dragInc, float _speedDec)
-    //{
-    //    vehicleRB.angularDrag = savedAngularDrag * _dragInc;
-    //    vehicleMaxSpeed = savedMaxSpeed / _speedDec;
-    //    if (_speedDec < 1.0f) vehicleAcceleration /= (_speedDec + (1-_speedDec)*2.0f);
-    //}
     void ResetFriction()
     {
         vehicleRB.angularDrag = savedAngularDrag;
