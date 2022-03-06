@@ -4,10 +4,35 @@ using UnityEngine;
 
 public class ChasisElevation : MonoBehaviour
 {
-    private float chasisElevationTimer;
+    float chasisElevationTimer;
     [SerializeField] private bool chasisElevation;
+    QuadControlSystem controls;
+    bool chasisEnabled;
+    bool hasChasis;
 
-    public void ChasisElevationFunction(QuadControlSystem controls, bool chasisEnabled)
+    public void Init(bool _active)
+    {
+        hasChasis = _active;
+    }
+
+    public void Activate()
+    {
+        if (hasChasis)
+            chasisEnabled = true;
+    }
+
+    private void Start()
+    {
+        controls = GetComponent<PlayerVehicleScript>().controls;
+    }
+
+    private void Update()
+    {
+        if (hasChasis)
+            Chasis();
+    }
+
+    public void Chasis()
     {
         Transform chasisTransform = transform.GetChild(0);
 

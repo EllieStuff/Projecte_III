@@ -9,7 +9,7 @@ public class PlayerVehicleScript : MonoBehaviour
     public enum GameModes { MONO, MULTI_LOCAL /*, MULTI_ONLINE*/ };
     [SerializeField] GameModes gameMode = GameModes.MONO;
 
-    [SerializeField] private int playerNum;
+    internal int playerNum;
 
     [SerializeField] Vector3 centerOfMass = new Vector3(0.0f, -0.7f, 0.0f);
     [SerializeField] float boostPadDuration;
@@ -22,7 +22,7 @@ public class PlayerVehicleScript : MonoBehaviour
     private bool reduceSpeed;
     private float savedAngularDrag;
 
-    QuadControlSystem controls;
+    internal QuadControlSystem controls;
     PlayerInputs inputs;
 
     public Rigidbody vehicleRB;
@@ -57,43 +57,16 @@ public class PlayerVehicleScript : MonoBehaviour
     [SerializeField] private AudioClip normalClip;
     [SerializeField] private AudioClip boostClip;
 
+    private AlaDelta alaDelta;
+
     private Transform outTransform;
     private Rigidbody outVehicleRB;
 
-    //Modifiers
-    private PlayerThrowPlunger plunger;
-    private AlaDelta alaDeltaClass;
-    private ChasisElevation chasisElevation;
-
-    private bool plungerEnabled = false;
-    private bool chasisEnabled = false;
-    private bool alaDeltaEnabled = false;
-    //____________________________________
-
-    public void ActivatePlunger()
-    {
-        plungerEnabled = true;
-    }
-
-    public void ActivateChasis()
-    {
-        chasisEnabled = true;
-    }
-
-    public void ActivateAlaDelta()
-    {
-        alaDeltaEnabled = true;
-    }
-
     void Start()
     {
+        alaDelta = GetComponent<AlaDelta>();
+
         controls = new QuadControlSystem();
-        
-        //Initializing modifiers
-        plunger = GetComponent<PlayerThrowPlunger>();
-        alaDeltaClass = GetComponent<AlaDelta>();
-        chasisElevation = GetComponent<ChasisElevation>();
-        //___________________________________
 
         inputs = GetComponent<PlayerInputs>();
         inputs.SetGameMode(gameMode);
@@ -185,7 +158,7 @@ public class PlayerVehicleScript : MonoBehaviour
 
                     //Falldeath Check
 
-                    if (DeathScript.DeathByFalling(alaDeltaClass.alaDelta, transform, vehicleRB, respawnPosition, respawnRotation, respawnVelocity, out outTransform, out outVehicleRB))
+                    if (DeathScript.DeathByFalling(alaDelta.usingAlaDelta, transform, vehicleRB, respawnPosition, respawnRotation, respawnVelocity, out outTransform, out outVehicleRB))
 
                     {
 
@@ -195,11 +168,6 @@ public class PlayerVehicleScript : MonoBehaviour
 
                         vehicleRB.velocity = outVehicleRB.velocity;
 
-                    }
-                    //Checking if Aladelta is touching ground to disable it
-                    if (touchingGround)
-                    {
-                        alaDeltaClass.CheckAlaDeltaGround(touchingGround);
                     }
                 }
 
@@ -307,19 +275,12 @@ public class PlayerVehicleScript : MonoBehaviour
             //Drift Function
             DriftFunction();
 
-            //Chasis Elevation Function
-            chasisElevation.ChasisElevationFunction(controls, chasisEnabled);
-
-            //Plunger Function
-            plunger.Desatascador(controls, this, plungerEnabled, playerNum);
-
-
             savedVelocity = vehicleRB.velocity;
         }
         else
         {
             //Fall Function
-            if (!alaDeltaClass.alaDelta)
+            if (!alaDelta.usingAlaDelta)
                 FallFunction();
         }
 
@@ -345,9 +306,6 @@ public class PlayerVehicleScript : MonoBehaviour
 
         }
 
-        //AlaDelta Function
-        alaDeltaClass.AlaDeltaFunction(this, controls, inputs, touchingGround, alaDeltaEnabled);
-
         if (reduceSpeed && vehicleMaxSpeed > savedMaxSpeed)
         {
             vehicleMaxSpeed -= Time.deltaTime * 10;
@@ -358,8 +316,6 @@ public class PlayerVehicleScript : MonoBehaviour
             vehicleMaxSpeed = savedMaxSpeed;
             vehicleAcceleration = savedAcceleration;
         }
-
-
 
         //Vehicle sound pitch function
         VehicleSoundPitchFunction();

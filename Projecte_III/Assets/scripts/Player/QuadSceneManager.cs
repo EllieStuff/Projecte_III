@@ -129,15 +129,15 @@ public class QuadSceneManager : MonoBehaviour
                 break;
 
             case "Plunger":
-                // ToDo: Fer Init
+                player.GetComponent<PlayerThrowPlunger>().Init(_modifier, _active);
                 break;
 
             case "AlaDelta":
-                // ToDo: Fer Init
+                player.GetComponent<AlaDelta>().Init(_active);
                 break;
 
             case "ChasisElevation":
-                // ToDo: Fer Init
+                player.GetComponent<ChasisElevation>().Init(_active);
                 break;
 
             case "Umbrella":

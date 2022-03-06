@@ -4,14 +4,40 @@ using UnityEngine;
 
 public class AlaDelta : MonoBehaviour
 {
-    public bool alaDelta;
+    public bool usingAlaDelta;
     [SerializeField] float alaDeltaDuration;
     [SerializeField] float alaDeltaTimer;
+    PlayerVehicleScript player;
+    bool touchingGround;
+    internal bool alaDeltaEnabled, hasAlaDelta;
+    PlayerInputs inputs;
+
+    public void Init(bool _active)
+    {
+        hasAlaDelta = _active;
+    }
+
+    public void Activate()
+    {
+        if (hasAlaDelta)
+            alaDeltaEnabled = true;
+    }
 
     private void Start()
     {
+        player = GetComponent<PlayerVehicleScript>();
+        inputs = GetComponent<PlayerInputs>();
         alaDeltaDuration = 1;
         alaDeltaTimer = 1;
+    }
+
+    private void Update()
+    {
+        if(hasAlaDelta)
+        {
+            AlaDeltaFunction();
+            CheckAlaDeltaGround(player.touchingGround);
+        }
     }
 
     public void CheckAlaDeltaGround(bool touchingGround)
@@ -19,18 +45,18 @@ public class AlaDelta : MonoBehaviour
         if (touchingGround)
         {
             alaDeltaTimer = alaDeltaDuration;
-            alaDelta = false;
+            usingAlaDelta = false;
         }
     }
 
-    public void AlaDeltaFunction(PlayerVehicleScript player, QuadControlSystem controls ,PlayerInputs inputs, bool touchingGround, bool alaDeltaEnabled)
+    public void AlaDeltaFunction()
     {
-        if (!alaDelta && touchingGround && (alaDeltaEnabled || controls.Quad.AlaDelta))
-            alaDelta = true;
+        if (!usingAlaDelta && touchingGround && (alaDeltaEnabled || player.controls.Quad.AlaDelta))
+            usingAlaDelta = true;
         else
             alaDeltaEnabled = false;
 
-        if (alaDelta && alaDeltaTimer >= 0)
+        if (usingAlaDelta && alaDeltaTimer >= 0)
         {
             alaDeltaTimer -= Time.deltaTime;
             if (alaDeltaTimer >= alaDeltaDuration - 0.6f)
@@ -53,7 +79,7 @@ public class AlaDelta : MonoBehaviour
             if (alaDeltaTimer <= 0)
             {
                 alaDeltaTimer = alaDeltaDuration;
-                alaDelta = false;
+                usingAlaDelta = false;
             }
         }
     }
