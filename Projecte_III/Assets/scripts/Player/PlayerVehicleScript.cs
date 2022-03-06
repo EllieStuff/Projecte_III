@@ -57,8 +57,7 @@ public class PlayerVehicleScript : MonoBehaviour
     private float desatascadorCooldown;
 
     internal bool buildingScene;
-    internal List<string> listOfModifiers;
-    bool hasFloater = false;
+    internal List<Transform> listOfModifiers;
     private float savedAcceleration;
     [SerializeField] private int desatascadorBaseCooldown = 20;
     [SerializeField] private GameObject desatascadorPrefab;
@@ -79,9 +78,12 @@ public class PlayerVehicleScript : MonoBehaviour
     private Rigidbody outVehicleRB;
 
     //Modifiers
-    private bool plungerEnabled = true;
-    private bool chasisEnabled = true;
-    private bool alaDeltaEnabled = true;
+    private bool plungerEnabled = false;
+    private bool chasisEnabled = false;
+    private bool alaDeltaEnabled = false;
+
+    //internal PlayerFloater floater;
+    //internal PlayerPaintGun paintGun;
     //____________________________________
 
     public void ActivatePlunger()
@@ -105,6 +107,8 @@ public class PlayerVehicleScript : MonoBehaviour
         //inputSystem = GameObject.FindGameObjectWithTag("InputSystem").GetComponent<InputSystem>();
         inputs = GetComponent<PlayerInputs>();
         inputs.SetGameMode(gameMode);
+
+        //floater = GetComponent<PlayerFloater>();
 
         defaultColorMat = Color.white;
         particleMat.color = defaultColorMat;
@@ -149,10 +153,11 @@ public class PlayerVehicleScript : MonoBehaviour
 
     internal void Init()
     {
-        if (!hasFloater)
-        {
-            Physics.IgnoreLayerCollision(3, 4, true);
-        }
+        //Physics.IgnoreLayerCollision(3, 4, !hasFloater);
+        //if (!hasFloater)
+        //{
+        //    Physics.IgnoreLayerCollision(3, 4, true);
+        //}
     }
 
     void Update()
@@ -245,11 +250,11 @@ public class PlayerVehicleScript : MonoBehaviour
 
                 //-----Temporal-----
 
-                if (Input.GetKeyDown(KeyCode.F))
-                {
-                    Physics.IgnoreLayerCollision(3, 4, hasFloater);
-                    hasFloater = !hasFloater;
-                }
+                //if (Input.GetKeyDown(KeyCode.F))
+                //{
+                //    Physics.IgnoreLayerCollision(3, 4, hasFloater);
+                //    hasFloater = !hasFloater;
+                //}
 
                 //--------------------
 
@@ -308,7 +313,7 @@ public class PlayerVehicleScript : MonoBehaviour
             }
         }
 
-        if (controls.Quad.plunger && !desatascador && desatascadorCooldown <= 0 && desatascadorInstance == null)
+        if ((controls.Quad.plunger || plungerEnabled) && !desatascador && desatascadorCooldown <= 0 && desatascadorInstance == null)
         {
             if (!createMaterial)
             {
@@ -324,6 +329,8 @@ public class PlayerVehicleScript : MonoBehaviour
             desatascador = true;
             desatascadorCooldown = desatascadorBaseCooldown;
         }
+        else
+            plungerEnabled = false;
 
         if (desatascadorCooldown > 0)
             desatascadorCooldown -= Time.deltaTime;
@@ -337,6 +344,7 @@ public class PlayerVehicleScript : MonoBehaviour
                 desatascadorInstance.GetComponent<plungerInstance>().destroyPlunger = true;
                 desatascadorInstance = null;
                 desatascador = false;
+                plungerEnabled = false;
             }
             else if(desatascadorInstance == null)
             {
@@ -484,12 +492,10 @@ public class PlayerVehicleScript : MonoBehaviour
             DriftFunction();
 
             //CHASIS ELEVATION FUNCTION
-            if(chasisEnabled)
-                ChasisElevationFunction();
+            ChasisElevationFunction();
 
             //PLUNGER FUNCTION
-            if (plungerEnabled)
-                Desatascador();
+            Desatascador();  // El plungerEnabled hauria d'anar en lloc de l'input
 
 
             savedVelocity = vehicleRB.velocity;
@@ -522,8 +528,7 @@ public class PlayerVehicleScript : MonoBehaviour
         }
 
         //ALADELTA FUNCTION
-        if(alaDeltaEnabled)
-            AlaDeltaFunction();
+        AlaDeltaFunction();
 
         if (reduceSpeed && vehicleMaxSpeed > savedMaxSpeed)
         {
@@ -546,11 +551,13 @@ public class PlayerVehicleScript : MonoBehaviour
     {
         Transform chasisTransform = transform.GetChild(0);
 
-        if (controls.Quad.ChasisElevation && !chasisElevation && chasisTransform.localPosition.y <= 0)
+        if ((controls.Quad.ChasisElevation || chasisEnabled) && !chasisElevation && chasisTransform.localPosition.y <= 0)
         {
             chasisElevation = true;
             chasisElevationTimer = 2;
         }
+        else
+            chasisEnabled = false;
 
         if (chasisElevation)
         {
@@ -797,8 +804,10 @@ public class PlayerVehicleScript : MonoBehaviour
 
     void AlaDeltaFunction() 
     {
-        if (!alaDelta && touchingGround && controls.Quad.AlaDelta)
+        if (!alaDelta && touchingGround && (alaDeltaEnabled || controls.Quad.AlaDelta))
             alaDelta = true;
+        else
+            alaDeltaEnabled = false;
 
         if(alaDelta && alaDeltaTimer >= 0)
         {
@@ -828,40 +837,40 @@ public class PlayerVehicleScript : MonoBehaviour
         }
     }
 
-    internal void SetCarModifiers()
-    {
-        for(int i = 0; i < listOfModifiers.Count; i++)
-        {
-            switch (listOfModifiers[i])
-            {
-                case "Floater":
-                    hasFloater = true;
+    //internal void SetCarModifiers()
+    //{
+    //    for(int i = 0; i < listOfModifiers.Count; i++)
+    //    {
+    //        switch (listOfModifiers[i])
+    //        {
+    //            case "Floater":
+    //                hasFloater = true;
 
-                    break;
+    //                break;
 
-                default:
-                    break;
-            }
-        }
+    //            default:
+    //                break;
+    //        }
+    //    }
 
-    }
+    //}
 
-    void UpdateCarModifiers()
-    {
-        for (int i = 0; i < listOfModifiers.Count; i++)
-        {
-            switch (listOfModifiers[i])
-            {
-                //case "Floater":
+    //void UpdateCarModifiers()
+    //{
+    //    for (int i = 0; i < listOfModifiers.Count; i++)
+    //    {
+    //        switch (listOfModifiers[i])
+    //        {
+    //            //case "Floater":
                     
 
-                //    break;
+    //            //    break;
 
-                default:
-                    break;
-            }
-        }
-    }
+    //            default:
+    //                break;
+    //        }
+    //    }
+    //}
 
     void checkFallDeath()
     {
@@ -919,10 +928,6 @@ public class PlayerVehicleScript : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag.Equals("Water") && !hasFloater)
-        {
-            StartCoroutine(LerpVehicleMaxSpeed(savedMaxSpeed * 2 / 3, 3.0f));
-        }
         if(other.tag.Equals("Respawn") && !other.GetComponent<DeathfallAndCheckpointsSystem>().activated)
         {
             GameObject.Find("UI").transform.GetChild(1).GetComponent<UIPosition>().actualCheckpoint++;
@@ -932,11 +937,6 @@ public class PlayerVehicleScript : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         //StartCoroutine(WaitEndBoost());
-
-        if(other.tag.Equals("Water") && !hasFloater)
-        {
-            StartCoroutine(LerpVehicleMaxSpeed(savedMaxSpeed, 1.5f));
-        }
 
         if (other.CompareTag("Painting") || other.CompareTag("Oil"))
         {
@@ -974,7 +974,7 @@ public class PlayerVehicleScript : MonoBehaviour
 
     }
 
-    IEnumerator LerpVehicleMaxSpeed(float _targetValue, float _lerpTime)
+    internal IEnumerator LerpVehicleMaxSpeed(float _targetValue, float _lerpTime)
     {
         float lerpTimer = 0;
         while (vehicleMaxSpeed != _targetValue)

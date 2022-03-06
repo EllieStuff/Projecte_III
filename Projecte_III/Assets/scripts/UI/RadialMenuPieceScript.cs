@@ -7,15 +7,18 @@ public class RadialMenuPieceScript : MonoBehaviour
 {
     public Image backGround;
     public Image icon;
+    public float iconRotDiff;
     
     Color targetBgColor, initColor;
     float lerpBgColorTime = 0.1f;
+    float delayTime;    // ToDo: Fer que sigui igual al del modifier i usar un slider per mostrar el temps d'espera en el background
 
 
     // Start is called before the first frame update
     void Start()
     {
         targetBgColor = initColor = backGround.color;
+        //iconPosDiff = icon.transform.position - iconCenter;
     }
 
     // Update is called once per frame
@@ -24,6 +27,10 @@ public class RadialMenuPieceScript : MonoBehaviour
         
     }
 
+    public void ReinitColor()
+    {
+        backGround.color = targetBgColor = initColor;
+    }
 
     public void LerpBgColor(Color _color)
     {
@@ -33,18 +40,14 @@ public class RadialMenuPieceScript : MonoBehaviour
             StartCoroutine(LerpBgColorCoroutine(_color));
         }
     }
-    public void ReinitColor()
-    {
-        backGround.color = initColor;
-    }
 
     IEnumerator LerpBgColorCoroutine(Color _color)
     {
         float timer = 0;
-        Color initColor = backGround.color;
+        Color tmpInitColor = backGround.color;
         while(timer < lerpBgColorTime)
         {
-            backGround.color = Color.Lerp(initColor, _color, timer / lerpBgColorTime);
+            backGround.color = Color.Lerp(tmpInitColor, _color, timer / lerpBgColorTime);
 
             yield return new WaitForEndOfFrame();
             timer += Time.deltaTime;

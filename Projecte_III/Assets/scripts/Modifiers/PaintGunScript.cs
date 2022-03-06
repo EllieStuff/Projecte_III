@@ -37,16 +37,19 @@ public class PaintGunScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return) && gunUsable)
-            Activate();
+        //if (Input.GetKeyDown(KeyCode.Return) && gunUsable)
+        //    Activate();
     }
 
 
     public void Activate()
     {
-        Debug.Log("In");
-        gunUsable = false;
-        StartCoroutine(ShootGun());
+        if (gunUsable)
+        {
+            Debug.Log("In");
+            gunUsable = false;
+            StartCoroutine(ShootGun());
+        }
     }
 
 

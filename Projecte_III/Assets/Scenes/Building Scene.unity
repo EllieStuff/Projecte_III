@@ -2289,6 +2289,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: OilGun
       objectReference: {fileID: 0}
+    - target: {fileID: 1621495200553532331, guid: d584bcd656d57064bb982ea01939edbf, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1621495200553532333, guid: d584bcd656d57064bb982ea01939edbf, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -11872,6 +11876,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PaintGun
       objectReference: {fileID: 0}
+    - target: {fileID: 7475119761178636492, guid: 744c3d4e107cc6f40ae6cf58296d8924, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 744c3d4e107cc6f40ae6cf58296d8924, type: 3}
 --- !u!1001 &8960972185411439822
@@ -11881,9 +11889,49 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 392654958}
     m_Modifications:
+    - target: {fileID: 8960972185328376351, guid: cdfaae4d8abc3bc44a0efcd1725d9d9f, type: 3}
+      propertyPath: rmPiecePrefab
+      value: 
+      objectReference: {fileID: 6694579210785101479, guid: eb3b245245512bc4ebc7578f1c94e9db, type: 3}
+    - target: {fileID: 8960972185328376351, guid: cdfaae4d8abc3bc44a0efcd1725d9d9f, type: 3}
+      propertyPath: rmPiecesPrefabs.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8960972185328376351, guid: cdfaae4d8abc3bc44a0efcd1725d9d9f, type: 3}
+      propertyPath: rmPiecesPrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 6441877512860545779, guid: 75984efbfc0c2534485e5d49542c3441, type: 3}
+    - target: {fileID: 8960972185328376351, guid: cdfaae4d8abc3bc44a0efcd1725d9d9f, type: 3}
+      propertyPath: rmPiecesPrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 7021075173994560435, guid: 68dd2f9ac5fdea641a4f7089a3db23ce, type: 3}
+    - target: {fileID: 8960972185328376351, guid: cdfaae4d8abc3bc44a0efcd1725d9d9f, type: 3}
+      propertyPath: rmPiecesPrefabs.Array.data[2]
+      value: 
+      objectReference: {fileID: 6694579210785101479, guid: eb3b245245512bc4ebc7578f1c94e9db, type: 3}
+    - target: {fileID: 8960972185328376351, guid: cdfaae4d8abc3bc44a0efcd1725d9d9f, type: 3}
+      propertyPath: rmPiecesPrefabs.Array.data[3]
+      value: 
+      objectReference: {fileID: 6633316307572027289, guid: 535c83ff1d8d98d4ca1234f652351e56, type: 3}
+    - target: {fileID: 8960972185328376351, guid: cdfaae4d8abc3bc44a0efcd1725d9d9f, type: 3}
+      propertyPath: rmPiecesPrefabs.Array.data[4]
+      value: 
+      objectReference: {fileID: 6877919685099143160, guid: aa8242b00f6f6694a92b5335c3654312, type: 3}
+    - target: {fileID: 8960972185328376351, guid: cdfaae4d8abc3bc44a0efcd1725d9d9f, type: 3}
+      propertyPath: rmPiecesPrefabs.Array.data[5]
+      value: 
+      objectReference: {fileID: 9134454354690410769, guid: c79a1227793ad344ba1da515a3182b9b, type: 3}
+    - target: {fileID: 8960972185328376351, guid: cdfaae4d8abc3bc44a0efcd1725d9d9f, type: 3}
+      propertyPath: rmPiecesPrefabs.Array.data[6]
+      value: 
+      objectReference: {fileID: 2441533658141721169, guid: 5eacfa51c01f9ea49826f65cb3b23c9b, type: 3}
     - target: {fileID: 8960972185859166780, guid: cdfaae4d8abc3bc44a0efcd1725d9d9f, type: 3}
       propertyPath: m_Name
       value: RadialMenuManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 8960972185859166780, guid: cdfaae4d8abc3bc44a0efcd1725d9d9f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8960972185859166781, guid: cdfaae4d8abc3bc44a0efcd1725d9d9f, type: 3}
       propertyPath: m_Pivot.x

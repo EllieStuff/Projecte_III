@@ -11,7 +11,7 @@ public class OilGunScript : MonoBehaviour
     [SerializeField] Utils.MinMaxFloat size = new Utils.MinMaxFloat(0.01f, 0.1f);
     [SerializeField] Utils.MinMaxVec3 dirDiff = new Utils.MinMaxVec3(-Vector3.one, Vector3.one);
 
-    bool gunActive = false;
+    bool gunUsable = true;
 
     // Start is called before the first frame update
     void Start()
@@ -22,25 +22,29 @@ public class OilGunScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Backspace) && !gunActive)
-            Activate();
+        //if (Input.GetKeyDown(KeyCode.Backspace) && gunUsable)
+        //    Activate();
     }
 
 
     public void Activate()
     {
-        Debug.Log("In");
-        gunActive = true;
-        for(int i = 0; i < dropsAmount; i++)
+        if (gunUsable)
         {
-            GameObject currBullet = GameObject.Instantiate(prefab, transform.position, prefab.transform.rotation);
-            float newScale = size.GetRndValue();
-            currBullet.transform.localScale = new Vector3(newScale, newScale, newScale);
-            currBullet.GetComponent<Rigidbody>().AddForce((transform.forward + dirDiff.GetRndValue().normalized) * force.GetRndValue(), ForceMode.Impulse);
+            Debug.Log("In");
+            gunUsable = false;
+            for (int i = 0; i < dropsAmount; i++)
+            {
+                GameObject currBullet = GameObject.Instantiate(prefab, transform.position, prefab.transform.rotation);
+                float newScale = size.GetRndValue();
+                currBullet.transform.localScale = new Vector3(newScale, newScale, newScale);
+                currBullet.GetComponent<Rigidbody>().AddForce((transform.forward + dirDiff.GetRndValue().normalized) * force.GetRndValue(), ForceMode.Impulse);
 
+            }
+
+            StartCoroutine(RechargeGun());
         }
 
-        StartCoroutine(RechargeGun());
     }
 
 
@@ -54,7 +58,7 @@ public class OilGunScript : MonoBehaviour
         }
 
 
-        gunActive = false;
+        gunUsable = true;
         Debug.Log("Out");
     }
 }
