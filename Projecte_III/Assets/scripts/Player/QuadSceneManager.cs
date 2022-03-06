@@ -8,6 +8,7 @@ public class QuadSceneManager : MonoBehaviour
     GameObject player;
     PlayerVehicleScript playerScript;
     string[] listOfAllModifiers = { "Floater", "PaintGun", "OilGun", "Plunger", "AlaDelta", "ChasisElevation" };
+    bool sceneLoaded;
 
     private void Awake()
     {
@@ -34,7 +35,7 @@ public class QuadSceneManager : MonoBehaviour
                     child.SetActive(false);
             }
         }
-        else if (scene.name == "Building Scene")
+        else if (scene.name == "Building Scene" && !sceneLoaded)
         {
             for (int i = 0; i < transform.childCount; i++)
             {
@@ -70,7 +71,7 @@ public class QuadSceneManager : MonoBehaviour
                 Destroy(objs[1]);
             }
         }
-        else if (scene.name != "Menu")
+        else if (scene.name != "Menu" && !sceneLoaded)
         {
             Transform initial = GameObject.FindGameObjectWithTag("InitPos").transform;
 
@@ -90,6 +91,8 @@ public class QuadSceneManager : MonoBehaviour
             rb.useGravity = true;
 
             SetCarModifiers();
+
+            sceneLoaded = true;
         }
 
     }
