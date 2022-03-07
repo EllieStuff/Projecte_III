@@ -3,17 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RadialMenuScript : MonoBehaviour
+public class PlayingMainRadialMenu : MonoBehaviour
 {
-    [SerializeField] List<RadialMenuPieceScript> rmPiecesPrefabs;
-    //int modifiersNum;
+    [SerializeField] BuildingRadialMenu menuToCopy;
 
     Transform player;
     PlayerInputs playerInputs;
     RadialMenuPieceScript[] rmPieces;
     float degreesPerPiece;
-    float gapDegrees = 3.0f;
-    float distToIcon;
     float 
         selectedAlpha = 0.75f,
         nonSelectedAlpha = 0.5f;
@@ -22,48 +19,23 @@ public class RadialMenuScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        player = GameObject.FindGameObjectsWithTag("Player")[menuToCopy.playerId].transform;
         playerInputs = player.GetComponent<PlayerInputs>();
 
-        //modifiersNum = rmPiecesPrefabs.Count;
-        for(int i = 0; i < rmPiecesPrefabs.Count; i++)
+        transform.Rotate(0, 0, -menuToCopy.gapDegrees);
+    }
+    internal void Init()
+    {
+        rmPieces = new RadialMenuPieceScript[menuToCopy.transform.childCount];
+        for (int i = 0; i < rmPieces.Length; i++)
         {
-            if (rmPiecesPrefabs[i].tag == "Floater")
-            {
-                rmPiecesPrefabs.RemoveAt(i);
-                //modifiersNum--;
-            }
+            GameObject tmpGO = Instantiate(menuToCopy.transform.GetChild(i).gameObject, this.transform);
+            rmPieces[i] = tmpGO.GetComponent<RadialMenuPieceScript>();
         }
 
-        if (rmPiecesPrefabs.Count > 0)
-        {
-            degreesPerPiece = 360.0f / rmPiecesPrefabs.Count;
-            distToIcon = Vector3.Distance(rmPiecesPrefabs[0].icon.transform.position, rmPiecesPrefabs[0].backGround.transform.position);
-            transform.Rotate(0, 0, -gapDegrees);
+        degreesPerPiece = menuToCopy.degreesPerPiece;
 
-            rmPieces = new RadialMenuPieceScript[rmPiecesPrefabs.Count];
-            for (int i = 0; i < rmPieces.Length; i++)
-            {
-                rmPieces[i] = Instantiate(rmPiecesPrefabs[i], this.transform);
-                //Vector3 posDiff = rmPieces[i].backGround.transform.localPosition - rmPieces[i].icon.transform.localPosition;
-                if (rmPieces.Length > 1)
-                {
-                    rmPieces[i].backGround.fillAmount = (1.0f / rmPieces.Length) - (gapDegrees / 360.0f);
-                    rmPieces[i].backGround.transform.localRotation = Quaternion.Euler(0, 0, degreesPerPiece / 2.0f + gapDegrees / 2.0f + i * degreesPerPiece);
-                }
-                else
-                    rmPieces[i].backGround.fillAmount = 360.0f;
-
-
-                //rmPieces[i].icon.transform.RotateAround(rmPieces[i].transform.position, Vector3.forward, degreesPerPiece / 2.0f + gapDegrees / 2.0f + i * degreesPerPiece + );
-                Vector3 dirVector = Quaternion.AngleAxis(i * degreesPerPiece, Vector3.forward) * Vector3.up;
-                Vector3 movVector = dirVector * distToIcon;
-                rmPieces[i].icon.transform.localPosition = rmPieces[i].backGround.transform.localPosition + movVector;
-                rmPieces[i].icon.transform.RotateAround(rmPieces[i].transform.position, Vector3.forward, rmPieces[i].iconRotDiff);
-            }
-
-        }
-
+        gameObject.SetActive(false);
     }
 
     // Update is called once per frame
