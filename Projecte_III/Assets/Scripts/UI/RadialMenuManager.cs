@@ -1,32 +1,79 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RadialMenuManager : MonoBehaviour
 {
-    [SerializeField] GameObject radialMenu;
+    public enum RadialMenuState { DEFAULT, BUILDING, PLAYING };
+
+    [SerializeField] GameObject buildingRadialMenu;
+    [SerializeField] GameObject playingRadialMenu;
+    [SerializeField] PlayingMainRadialMenu playingMainRM;
+    [SerializeField] int playerId = 0;
+    [SerializeField] RadialMenuState state = RadialMenuState.DEFAULT;
 
     PlayerInputs playerInputs;
     bool triggered = false;
 
+    private void Awake()
+    {
+        //DontDestroyOnLoad(gameObject);
+
+        buildingRadialMenu.GetComponent<BuildingRadialMenu>().playerId = playerId;
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
+    }
     // Start is called before the first frame update
     void Start()
     {
         playerInputs = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInputs>();
     }
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "Menu")
+        {
+            state = RadialMenuState.DEFAULT;
+            buildingRadialMenu.SetActive(false);
+            playingRadialMenu.SetActive(false);
+        }
+        else if (scene.name == "Building Scene" || scene.name == "Building Scene Multiplayer")
+        {
+            state = RadialMenuState.BUILDING;
+            buildingRadialMenu.SetActive(true);
+            playingRadialMenu.SetActive(false);
+
+            buildingRadialMenu.GetComponent<BuildingRadialMenu>().Init();
+        }
+        else
+        {
+            state = RadialMenuState.PLAYING;
+            buildingRadialMenu.SetActive(false);
+            playingRadialMenu.SetActive(true);
+
+            playingMainRM.Init();
+            playingRadialMenu.GetComponentInChildren<PlayingSecondaryRadialMenu>().Init();
+        }
+
+    }
 
     // Update is called once per frame
     void Update()
     {
-        if (playerInputs.EnableGadgetMenu && !triggered)
+        if (state == RadialMenuState.PLAYING)
         {
-            triggered = true;
-            radialMenu.SetActive(true);
-        }
-        else if (!playerInputs.EnableGadgetMenu && triggered)
-        {
-            triggered = false;
-            radialMenu.SetActive(false);
+            if (playerInputs.EnableGadgetMenu && !triggered)
+            {
+                triggered = true;
+                playingMainRM.gameObject.SetActive(true);
+            }
+            else if (!playerInputs.EnableGadgetMenu && triggered)
+            {
+                triggered = false;
+                playingMainRM.gameObject.SetActive(false);
+            }
+
         }
 
     }
