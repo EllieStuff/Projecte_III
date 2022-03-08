@@ -32,29 +32,31 @@ public class RadialMenuManager : MonoBehaviour
     }
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "Menu")
+        try
         {
-            state = RadialMenuState.DEFAULT;
-            buildingRadialMenu.SetActive(false);
-            playingRadialMenu.SetActive(false);
-        }
-        else if (scene.name == "Building Scene" || scene.name == "Building Scene Multiplayer")
-        {
-            state = RadialMenuState.BUILDING;
-            buildingRadialMenu.SetActive(true);
-            playingRadialMenu.SetActive(false);
+            if (scene.name == "Menu")
+            {
+                Destroy(gameObject.transform.parent.gameObject);
+            }
+            else if (scene.name == "Building Scene" || scene.name == "Building Scene Multiplayer")
+            {
+                state = RadialMenuState.BUILDING;
+                buildingRadialMenu.SetActive(true);
+                playingRadialMenu.SetActive(false);
 
-            buildingRadialMenu.GetComponent<BuildingRadialMenu>().Init();
-        }
-        else
-        {
-            state = RadialMenuState.PLAYING;
-            buildingRadialMenu.SetActive(false);
-            playingRadialMenu.SetActive(true);
+                buildingRadialMenu.GetComponent<BuildingRadialMenu>().Init();
+            }
+            else
+            {
+                state = RadialMenuState.PLAYING;
+                buildingRadialMenu.SetActive(false);
+                playingRadialMenu.SetActive(true);
 
-            playingMainRM.Init();
-            playingRadialMenu.GetComponentInChildren<PlayingSecondaryRadialMenu>().Init();
+                playingMainRM.Init();
+                playingRadialMenu.GetComponentInChildren<PlayingSecondaryRadialMenu>().Init();
+            }
         }
+        catch { }
 
     }
 
