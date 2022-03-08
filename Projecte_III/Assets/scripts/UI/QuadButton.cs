@@ -27,7 +27,7 @@ public class QuadButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         if(currentQuad == null)
             currentQuad = quadSpot.transform.GetChild(0).gameObject;
 
-        if (quadModel.name == currentQuad.name || quadModel.name + "(Clone)" == currentQuad.name) return;
+        if (currentQuad.name.Contains(quadModel.name)) return;
 
         if (quadModel != null)
         {
@@ -50,7 +50,7 @@ public class QuadButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         if (currentQuad == null)
             currentQuad = quadSpot.transform.GetChild(0).gameObject;
 
-        if (quadModel.name == currentQuad.name || quadModel.name + "(Clone)" == currentQuad.name) return;
+        if (currentQuad.name.Contains(quadModel.name)) return;
 
         if (quadModel != null && quadSpot.transform.childCount > 1)
         {
@@ -73,14 +73,19 @@ public class QuadButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         if (currentQuad == null)
             currentQuad = quadSpot.transform.GetChild(0).gameObject;
 
-        if (quadModel.name == currentQuad.name || quadModel.name + "(Clone)" == currentQuad.name) return;
+        if (currentQuad.name.Contains(quadModel.name)) return;
 
         if (quadSpot.transform.childCount > 0)
         {
             Destroy(quadSpot.transform.GetChild(0).gameObject);
         }
 
-        Instantiate(quadModel, quadSpot.transform);
+        Transform clone = Instantiate(quadModel, quadSpot.transform).transform;
+        Destroy(quadSpot.transform.GetChild(1).gameObject);
+
+        Debug.Log(clone.GetChild(clone.childCount - 1));
+
+        GameObject.FindGameObjectWithTag("ModifierSpots").GetComponent<ModifierManager>().SetNewModifierSpots(clone.GetChild(clone.childCount - 1));
 
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStatsManager>().SetStats();
 

@@ -7,7 +7,7 @@ public class RadialMenuManager : MonoBehaviour
 {
     public enum RadialMenuState { DEFAULT, BUILDING, PLAYING };
 
-    [SerializeField] GameObject buildingRadialMenu;
+    public GameObject buildingRadialMenu;
     [SerializeField] GameObject playingRadialMenu;
     [SerializeField] PlayingMainRadialMenu playingMainRM;
     [SerializeField] int playerId = 0;

@@ -136,6 +136,19 @@ public class ModifierManager : MonoBehaviour
         Instantiate(obj, target.transform);
     }
 
+    public void SetNewModifierSpots(Transform newModfs)
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Destroy(transform.GetChild(i).gameObject);
+        }
+
+        newModfs.parent = transform;
+        newModfs.localPosition = transform.localPosition;
+        newModfs.localScale = transform.localScale;
+        newModfs.localRotation = transform.localRotation;
+    }
+
     public void Active(bool active)
     {
         isActive = active;
