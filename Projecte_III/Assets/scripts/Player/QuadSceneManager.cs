@@ -37,6 +37,8 @@ public class QuadSceneManager : MonoBehaviour
         }
         else if (scene.name == "Building Scene" && !sceneLoaded)
         {
+            GameObject.FindGameObjectWithTag("ModifierSpots").GetComponent<ModifierManager>().Active(false);
+
             for (int i = 0; i < transform.childCount; i++)
             {
                 GameObject child = transform.GetChild(i).gameObject;
@@ -73,6 +75,8 @@ public class QuadSceneManager : MonoBehaviour
         }
         else if (scene.name != "Menu" && !sceneLoaded)
         {
+            GameObject.FindGameObjectWithTag("ModifierSpots").GetComponent<ModifierManager>().Active(false);
+
             Transform initial = GameObject.FindGameObjectWithTag("InitPos").transform;
 
             gameObject.transform.position = initial.position;
@@ -105,7 +109,7 @@ public class QuadSceneManager : MonoBehaviour
         {
             if (modifiers.GetChild(i).childCount > 0)
             {
-                Transform currModifier = modifiers.GetChild(i).GetChild(0).GetChild(0);
+                Transform currModifier = modifiers.GetChild(i).GetChild(0);
                 playerScript.listOfModifiers.Add(currModifier);
             }
         }

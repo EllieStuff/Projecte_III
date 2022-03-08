@@ -36,9 +36,9 @@ public class ParticleController : MonoBehaviour
         }       
 
         //Smoke Particles
-        if((controls.Quad.Forward.ReadValue<float>() > 0) && !SmokeParticleSys.isEmitting)
+        if(controls.Quad.Forward.ReadValue<float>() > 0 && !SmokeParticleSys.isEmitting)
             SmokeParticleSys.Play();
-        else if ((controls.Quad.Forward.ReadValue<float>() == 0) && SmokeParticleSys.isEmitting)
+        else if (controls.Quad.Forward.ReadValue<float>() == 0 && SmokeParticleSys.isEmitting)
             SmokeParticleSys.Stop();
     }
 }
