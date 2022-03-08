@@ -7,7 +7,9 @@ public class StatsSlider : MonoBehaviour
 {
     float currentValue = -1;
 
-    float maxValue = 200;
+    
+
+    [SerializeField] float maxValue = 200;
 
     Color mainColor;
 

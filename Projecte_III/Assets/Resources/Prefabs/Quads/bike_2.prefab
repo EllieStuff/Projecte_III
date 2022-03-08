@@ -113,6 +113,7 @@ GameObject:
   - component: {fileID: 7734920449677840251}
   - component: {fileID: 2940530184202390684}
   - component: {fileID: 3177527054621360874}
+  - component: {fileID: 334329506967272984}
   m_Layer: 6
   m_Name: Modifier Zone 3
   m_TagString: Untagged
@@ -196,6 +197,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &334329506967272984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6566082728958253243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 770c0c0a3b4837a40b845bd8d497ac7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  availableTypes: 
 --- !u!1 &7156387235524101880
 GameObject:
   m_ObjectHideFlags: 0
@@ -208,6 +222,7 @@ GameObject:
   - component: {fileID: 5520498651908044075}
   - component: {fileID: 1480203625832214361}
   - component: {fileID: 6542920950148337839}
+  - component: {fileID: 4300861602782946386}
   m_Layer: 6
   m_Name: Modifier Zone 1
   m_TagString: Untagged
@@ -291,6 +306,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4300861602782946386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7156387235524101880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 770c0c0a3b4837a40b845bd8d497ac7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  availableTypes: 
 --- !u!1 &8017030491147316878
 GameObject:
   m_ObjectHideFlags: 0
@@ -336,6 +364,7 @@ GameObject:
   - component: {fileID: 3649848677701543871}
   - component: {fileID: 410862787328087345}
   - component: {fileID: 4489203602498792205}
+  - component: {fileID: 6634638209636410732}
   m_Layer: 6
   m_Name: Modifier Zone 2
   m_TagString: Untagged
@@ -419,3 +448,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &6634638209636410732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8227122114282697026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 770c0c0a3b4837a40b845bd8d497ac7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  availableTypes: 

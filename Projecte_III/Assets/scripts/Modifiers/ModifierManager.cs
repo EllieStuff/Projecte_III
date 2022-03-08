@@ -60,8 +60,7 @@ public class ModifierManager : MonoBehaviour
             //Place button ------ Left mouse click ------ 
             if(controls.ConstructionMenu.ConstructModifier.ReadValue<float>() > 0)
             {
-
-                if (target.transform.childCount > 0)
+                if (target.transform.childCount > 0 && raycastHit.transform.GetComponent<ModifierSpotData>().IsAvailable(target.transform.GetChild(0).gameObject.tag))
                 {
                     PlaceModifier(raycastHit.transform);
                 }
