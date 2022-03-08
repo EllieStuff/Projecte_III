@@ -66,15 +66,15 @@ public class BuildingRadialMenu : MonoBehaviour
     {
         for (int i = 0; i < modifierSpots.Length; i++)
         {
-            if(modifierSpots[i].childCount > 0)
+            if (modifierSpots[i].childCount > 0)
             {
                 if (!modifierSpotsData[i].hadModifier
-                    || modifierSpots[i].GetChild(0).tag != modifierSpotsData[i].modifierTag) 
+                    || modifierSpots[i].GetChild(0).tag != modifierSpotsData[i].modifierTag)
                     return i;
             }
             else
             {
-                if (modifierSpotsData[i].hadModifier) 
+                if (modifierSpotsData[i].hadModifier)
                     return i;
             }
         }

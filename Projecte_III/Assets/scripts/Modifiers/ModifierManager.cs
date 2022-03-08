@@ -9,6 +9,8 @@ public class ModifierManager : MonoBehaviour
     QuadControls controls;
     private PlayerStatsManager stats;
 
+    private GameObject player;
+
     private LayerMask layerMask;
 
     bool isActive;
@@ -19,7 +21,9 @@ public class ModifierManager : MonoBehaviour
         
         ShowTarget(false);
 
-        stats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStatsManager>();
+        player = GameObject.FindGameObjectWithTag("Player");
+
+        stats = player.GetComponent<PlayerStatsManager>();
 
         layerMask = LayerMask.GetMask("Modifiers");
         Debug.Log(layerMask.value);
@@ -30,10 +34,17 @@ public class ModifierManager : MonoBehaviour
 
     void Update()
     {
-        if (!isActive) return;
+        if (!isActive)
+        {
+            
+            Vector3 playerEuler = Quaternion.ToEulerAngles(player.transform.localRotation);
+            playerEuler *= Mathf.Rad2Deg;
+            playerEuler.y += -180;
 
-        
+            transform.localRotation = Quaternion.Euler(playerEuler);
 
+            return;
+        }
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
 
         Vector3 newPos = ray.origin + ray.direction * (transform.position.z + Mathf.Abs(Camera.main.transform.position.z));
@@ -100,11 +111,11 @@ public class ModifierManager : MonoBehaviour
         }
 
         GameObject clone = Instantiate(target.transform.GetChild(0).gameObject, spot);
+        if (clone.GetComponent<MeshCollider>() != null) clone.GetComponent<MeshCollider>().enabled = false;
 
         spot.GetComponent<MeshRenderer>().enabled = false;
 
         clone.transform.localScale = clone.transform.parent.parent.localScale;
-        clone.transform.localRotation = clone.transform.parent.parent.localRotation;
 
         clone.transform.position = Vector3.zero;
         clone.transform.localPosition = Vector3.zero;
