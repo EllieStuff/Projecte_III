@@ -248,10 +248,10 @@ public class PlayerVehicleScript : MonoBehaviour
             {
                 //Left
                 if (inputs.Left)
-                    vehicleRB.AddTorque(new Vector3(0, -vehicleTorque * inputs.LeftFloat, 0));
+                    vehicleRB.AddTorque(new Vector3(0, -vehicleTorque /** inputs.LeftFloat*/, 0));
                 //Right
                 else if (inputs.Right)
-                    vehicleRB.AddTorque(new Vector3(0, vehicleTorque * inputs.RightFloat, 0));
+                    vehicleRB.AddTorque(new Vector3(0, vehicleTorque /** inputs.RightFloat*/, 0));
             }
 
             //Backwards
