@@ -49,7 +49,6 @@ public class PlayerThrowPlunger : MonoBehaviour
 
     private void CheckPlungerThrow()
     {
-        Debug.Log("ee");
         RaycastHit hit;
         if (Physics.SphereCast(modifierTransform.position, 10, modifierTransform.TransformDirection(Vector3.forward), out hit, 10))
         {

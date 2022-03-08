@@ -69,10 +69,8 @@ public class plungerInstance : MonoBehaviour
 
                 if (Mathf.Abs(transform.TransformDirection(playerRB.velocity).z) > 0 && playerRB.velocity.y < 5)
                 {
-                    if (playerNum == 1 && !prepareToDestroy)
+                    if (!prepareToDestroy)
                         playerShotPlunger.GetComponent<PlayerVehicleScript>().vehicleMaxSpeed = 30;
-                    if (playerNum == 2 && !prepareToDestroy)
-                        playerShotPlunger.GetComponent<PlayerVehicleScriptP2>().vehicleMaxSpeed = 30;
 
                     playerRB.velocity += playerShotPlunger.transform.TransformDirection(new Vector3(0, 0, 0.5f));
                     playerRB.velocity = new Vector3(playerRB.velocity.x, oldSpeedY, playerRB.velocity.z);
