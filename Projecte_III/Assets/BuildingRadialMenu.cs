@@ -69,7 +69,7 @@ public class BuildingRadialMenu : MonoBehaviour
             if(modifierSpots[i].childCount > 0)
             {
                 if (!modifierSpotsData[i].hadModifier
-                    || modifierSpots[i].GetChild(0).GetChild(0).tag != modifierSpotsData[i].modifierTag) 
+                    || modifierSpots[i].GetChild(0).tag != modifierSpotsData[i].modifierTag) 
                     return i;
             }
             else
@@ -94,7 +94,7 @@ public class BuildingRadialMenu : MonoBehaviour
 
         currModSpotData.hadModifier = modifierSpots[_modIdx].childCount > 0;
         if (currModSpotData.hadModifier)
-            currModSpotData.modifierTag = modifierSpots[_modIdx].GetChild(0).GetChild(0).tag;
+            currModSpotData.modifierTag = modifierSpots[_modIdx].GetChild(0).tag;
         else
             currModSpotData.modifierTag = "";
 
