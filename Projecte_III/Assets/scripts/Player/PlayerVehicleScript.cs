@@ -450,7 +450,7 @@ public class PlayerVehicleScript : MonoBehaviour
         if (audio.enabled)
            audio.pitch = (vehicleRB.velocity.magnitude * 1) / vehicleMaxSpeed/2;
 
-        if (inputs.Drift && vehicleMaxSpeed <= savedMaxSpeed)
+        if (inputs.Drift && (inputs.Left || inputs.Right) && vehicleMaxSpeed <= savedMaxSpeed && vehicleRB.velocity.magnitude > 0.5f)
         {
             audio.pitch = 1;
             if (audio.clip != driftClip)
