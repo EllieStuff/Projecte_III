@@ -12,7 +12,8 @@ public class BuildingRadialMenu : MonoBehaviour
     internal float degreesPerPiece = 0.0f;
     internal float gapDegrees = 3.0f;
     float distToIcon;
-    
+    internal float bgFillAmount;
+
     class ModifierSpotsData {
         public string modifierTag = "";
         public bool hadModifier = false;
@@ -138,14 +139,16 @@ public class BuildingRadialMenu : MonoBehaviour
             distToIcon = Vector3.Distance(rmPiecesPrefabs[0].icon.transform.position, rmPiecesPrefabs[0].backGround.transform.position);
 
 
+            bgFillAmount = (1.0f / rmPiecesPrefabs.Count) - (gapDegrees / 360.0f);
             for (int i = 0; i < rmPiecesPrefabs.Count; i++)
             {
                 rmPieces.Add(Instantiate(rmPiecesPrefabs[i], this.transform));
-                //Vector3 posDiff = rmPieces[i].backGround.transform.localPosition - rmPieces[i].icon.transform.localPosition;
+                rmPieces[i].delayBackground.fillAmount = 0.0f;
                 if (rmPiecesPrefabs.Count > 1)
                 {
-                    rmPieces[i].backGround.fillAmount = (1.0f / rmPiecesPrefabs.Count) - (gapDegrees / 360.0f);
+                    rmPieces[i].backGround.fillAmount = bgFillAmount;
                     rmPieces[i].backGround.transform.localRotation = Quaternion.Euler(0, 0, degreesPerPiece / 2.0f + gapDegrees / 2.0f + i * degreesPerPiece);
+                    rmPieces[i].delayBackground.transform.localRotation = Quaternion.Euler(0, 0, degreesPerPiece / 2.0f + gapDegrees / 2.0f + i * degreesPerPiece);
                 }
                 else
                     rmPieces[i].backGround.fillAmount = 360.0f;

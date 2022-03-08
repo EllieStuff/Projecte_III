@@ -6,7 +6,7 @@ public class PlayingSecondaryRadialMenu : MonoBehaviour
 {
     [SerializeField] BuildingRadialMenu menuToCopy;
 
-    GameObject[] rmPieces;
+    internal RadialMenuPieceScript[] rmPieces;
 
     // Start is called before the first frame update
     private void Start()
@@ -15,10 +15,11 @@ public class PlayingSecondaryRadialMenu : MonoBehaviour
     }
     internal void Init()
     {
-        rmPieces = new GameObject[menuToCopy.transform.childCount];
+        rmPieces = new RadialMenuPieceScript[menuToCopy.transform.childCount];
         for (int i = 0; i < rmPieces.Length; i++)
         {
-            rmPieces[i] = Instantiate(menuToCopy.transform.GetChild(i).gameObject, this.transform);
+            GameObject tmpGO = Instantiate(menuToCopy.transform.GetChild(i).gameObject, this.transform);
+            rmPieces[i] = tmpGO.GetComponent<RadialMenuPieceScript>();
         }
 
     }

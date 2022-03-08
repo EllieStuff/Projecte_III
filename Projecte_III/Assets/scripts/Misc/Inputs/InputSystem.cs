@@ -6,7 +6,7 @@ public class InputSystem : MonoBehaviour
 {
     public const float INPUT_THRESHOLD = 0.3f;
 
-    public enum KeyCodes { FORWARD, BACKWARD, LEFT, RIGHT, DRIFT, ENABLE_GADGET_MENU, CONFIRM_GADGET };
+    public enum KeyCodes { FORWARD, BACKWARD, LEFT, RIGHT, DRIFT, ENABLE_GADGET_MENU, CONFIRM_GADGET, USE_GADGET };
     public enum AxisCodes { CHOOSE_ITEM };
     public enum DeviceTypes { DEFAULT, KEYBOARD, CONTROLLER };
 
@@ -337,6 +337,18 @@ public class InputSystem : MonoBehaviour
                                     complexCasesReturnAux = IsInThreshold(j2Dirs[mainDeviceId]) && !IsInThreshold(lateJ2Dirs[mainDeviceId]);
                                 }
                             }
+                        }
+                    }
+
+                    break;
+
+                case KeyCodes.USE_GADGET:
+                    for (int i = 0; i < controls.Quad.UseChosenGadget.controls.Count; i++)
+                    {
+                        if (controls.Quad.UseChosenGadget.controls[i].device.deviceId == mainDeviceId)
+                        {
+                            //Debug.Log("UseChosenGadget is " + controls.Quad.UseChosenGadget.controls[i].EvaluateMagnitude());
+                            if (controls.Quad.UseChosenGadget.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return true;
                         }
                     }
 
