@@ -122,15 +122,6 @@ public class BuildingRadialMenu : MonoBehaviour
 
     void RefreshRadialMenu()
     {
-        //for (int i = 0; i < rmPiecesPrefabs.Count; i++)
-        //{
-        //    if (rmPiecesPrefabs[i].tag == "Floater")
-        //    {
-        //        rmPiecesPrefabs.RemoveAt(i);
-        //        //modifiersNum--;
-        //    }
-        //}
-
         DestroyChilds();
         rmPieces = new List<RadialMenuPieceScript>();
         if (rmPiecesPrefabs.Count > 0)

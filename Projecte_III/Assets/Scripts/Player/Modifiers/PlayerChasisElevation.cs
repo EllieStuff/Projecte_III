@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChasisElevation : MonoBehaviour
+public class PlayerChasisElevation : MonoBehaviour
 {
     float chasisElevationTimer;
     [SerializeField] private bool chasisElevation;
@@ -29,15 +29,16 @@ public class ChasisElevation : MonoBehaviour
     private void Update()
     {
         if (hasChasis)
-            Chasis();
+            ChasisUpdate();
     }
 
-    public void Chasis()
+    public void ChasisUpdate()
     {
         Transform chasisTransform = transform.GetChild(0);
 
         if ((controls.Quad.ChasisElevation || chasisEnabled) && !chasisElevation && chasisTransform.localPosition.y <= 0)
         {
+            chasisEnabled = false;
             chasisElevation = true;
             chasisElevationTimer = 2;
         }
@@ -60,4 +61,5 @@ public class ChasisElevation : MonoBehaviour
                 chasisTransform.localPosition = new Vector3(chasisTransform.localPosition.x, chasisTransform.localPosition.y - 0.05f, chasisTransform.localPosition.z);
         }
     }
+
 }

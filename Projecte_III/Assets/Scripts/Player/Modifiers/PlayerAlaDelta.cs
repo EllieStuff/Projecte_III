@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AlaDelta : MonoBehaviour
+public class PlayerAlaDelta : MonoBehaviour
 {
     public bool usingAlaDelta;
     [SerializeField] float alaDeltaDuration;
@@ -35,7 +35,7 @@ public class AlaDelta : MonoBehaviour
     {
         if(hasAlaDelta)
         {
-            AlaDeltaFunction();
+            AlaDeltaUpdate();
             CheckAlaDeltaGround(player.touchingGround);
         }
     }
@@ -49,10 +49,13 @@ public class AlaDelta : MonoBehaviour
         }
     }
 
-    public void AlaDeltaFunction()
+    public void AlaDeltaUpdate()
     {
         if (!usingAlaDelta && touchingGround && (alaDeltaEnabled || player.controls.Quad.AlaDelta))
+        {
+            alaDeltaEnabled = false;
             usingAlaDelta = true;
+        }
         else
             alaDeltaEnabled = false;
 

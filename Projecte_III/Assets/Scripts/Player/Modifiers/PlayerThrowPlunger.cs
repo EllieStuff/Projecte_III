@@ -5,15 +5,14 @@ using UnityEngine;
 public class PlayerThrowPlunger : MonoBehaviour
 {
     private Transform localTransform;
-    private Vector3 VectorLerp;
     private Vector3 savedDirection;
-    private float desatascadorCooldown;
+    private int plungerBaseDisappearCooldown = 5;
+    private float plungerDisappearCooldown;
     private float timerPoint;
     private bool createMaterial;
-    private bool desatascador;
-    private GameObject desatascadorInstance;
-    [SerializeField] private GameObject desatascadorPrefab;
-    private int desatascadorBaseCooldown = 20;
+    private bool plunger;
+    private GameObject plungerInstance;
+    [SerializeField] private GameObject plungerPrefab;
     private PlayerVehicleScript player;
     bool plungerEnabled = false;
     bool hasPlunger;
@@ -43,7 +42,7 @@ public class PlayerThrowPlunger : MonoBehaviour
         if (hasPlunger)
         {
             CheckPlungerThrow();
-            Plunger();
+            PlungerUpdate();
         }
     }
 
@@ -64,7 +63,7 @@ public class PlayerThrowPlunger : MonoBehaviour
 
         bool isCorrect = transform.InverseTransformDirection(savedDirection).z > 0.75;
 
-        if (savedDirection != Vector3.zero && desatascadorCooldown <= 0)
+        if (savedDirection != Vector3.zero /*&& desatascadorCooldown <= 0*/  )
         {
             Vector3 sum = (modifierTransform.position + savedDirection * 3);
 
@@ -89,46 +88,47 @@ public class PlayerThrowPlunger : MonoBehaviour
         }
     }
 
-    public void Plunger()
+    public void PlungerUpdate()
     {
-        if ((player.controls.Quad.plunger || plungerEnabled) && !desatascador && desatascadorCooldown <= 0 && desatascadorInstance == null)
+        if (plungerEnabled && !plunger /*&& desatascadorCooldown <= 0*/ && plungerInstance == null)
         {
+            plungerEnabled = false;
             if (!createMaterial)
             {
                 line.material = new Material(line.material);
                 createMaterial = true;
             }
 
-            desatascadorInstance = Instantiate(desatascadorPrefab, modifierTransform.position, this.transform.rotation);
-            Physics.IgnoreCollision(desatascadorInstance.transform.GetChild(0).GetComponent<BoxCollider>(), transform.GetChild(0).GetComponent<BoxCollider>());
-            desatascadorInstance.GetComponent<plungerInstance>().playerShotPlunger = this.gameObject;
-            desatascadorInstance.GetComponent<plungerInstance>().playerNum = player.playerNum;
-            desatascadorInstance.GetComponent<plungerInstance>().normalDir = savedDirection;
-            desatascador = true;
-            desatascadorCooldown = desatascadorBaseCooldown;
+            plungerInstance = Instantiate(plungerPrefab, modifierTransform.position, this.transform.rotation);
+            Physics.IgnoreCollision(plungerInstance.transform.GetChild(0).GetComponent<BoxCollider>(), transform.GetChild(0).GetComponent<BoxCollider>());
+            plungerInstance.GetComponent<plungerInstance>().playerShotPlunger = this.gameObject;
+            plungerInstance.GetComponent<plungerInstance>().playerNum = player.playerNum;
+            plungerInstance.GetComponent<plungerInstance>().normalDir = savedDirection;
+            plunger = true;
+            plungerDisappearCooldown = plungerBaseDisappearCooldown;
         }
         else
             plungerEnabled = false;
 
-        if (desatascadorCooldown > 0)
-            desatascadorCooldown -= Time.deltaTime;
+        if (plungerDisappearCooldown > 0)
+            plungerDisappearCooldown -= Time.deltaTime;
 
-        if (desatascador)
+        if (plunger)
         {
-            if (desatascadorCooldown <= desatascadorBaseCooldown / 2 && desatascadorInstance != null)
+            if (plungerDisappearCooldown <= plungerBaseDisappearCooldown && plungerInstance != null)
             {
                 savedDirection = Vector3.zero;
                 player.vehicleMaxSpeed = player.savedMaxSpeed;
-                desatascadorInstance.GetComponent<plungerInstance>().destroyPlunger = true;
-                desatascadorInstance = null;
-                desatascador = false;
-                plungerEnabled = false;
+                plungerInstance.GetComponent<plungerInstance>().destroyPlunger = true;
+                plungerInstance = null;
+                plunger = false;
+                //plungerEnabled = false;
             }
-            else if (desatascadorInstance == null)
+            else if (plungerInstance == null)
             {
                 savedDirection = Vector3.zero;
                 player.vehicleMaxSpeed = player.savedMaxSpeed;
-                desatascador = false;
+                plunger = false;
             }
             if (player.vehicleMaxSpeed > player.savedMaxSpeed)
             {

@@ -57,14 +57,14 @@ public class PlayerVehicleScript : MonoBehaviour
     [SerializeField] private AudioClip normalClip;
     [SerializeField] private AudioClip boostClip;
 
-    private AlaDelta alaDelta;
+    private PlayerAlaDelta alaDelta;
 
     private Transform outTransform;
     private Rigidbody outVehicleRB;
 
     void Start()
     {
-        alaDelta = GetComponent<AlaDelta>();
+        alaDelta = GetComponent<PlayerAlaDelta>();
 
         controls = new QuadControlSystem();
 

@@ -22,21 +22,6 @@ public class RadialMenuPieceScript : MonoBehaviour
         outline = backGround.GetComponent<Outline>();
     }
 
-    private void OnEnable()
-    {
-        //buildingMenu = transform.GetComponentInParent<BuildingRadialMenu>();
-        //if(buildingMenu != null)
-        //{
-
-        //}
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void ReinitColor()
     {
         backGround.color = targetBgColor = initColor;

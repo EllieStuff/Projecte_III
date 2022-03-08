@@ -91,7 +91,7 @@ public class RadialMenuManager : MonoBehaviour
                 playingRM1_Script.gameObject.SetActive(false);
             }
 
-            if (playerInputs.UseGadget && selectedGadget != null)
+            if (playerInputs.UseGadget && selectedGadget != null && !piecesData[selectedGadget.tag].countdownActive)
             {
                 UseGadget();
             }
@@ -136,12 +136,12 @@ public class RadialMenuManager : MonoBehaviour
 
             case "AlaDelta":
                 // ToDo: Adaptar amb els nous scripts
-                player.GetComponent<AlaDelta>().Activate();
+                player.GetComponent<PlayerAlaDelta>().Activate();
                 break;
 
             case "ChasisElevation":
                 // ToDo: Adaptar amb els nous scripts
-                player.GetComponent<ChasisElevation>().Activate();
+                player.GetComponent<PlayerChasisElevation>().Activate();
                 break;
 
             case "Umbrella":

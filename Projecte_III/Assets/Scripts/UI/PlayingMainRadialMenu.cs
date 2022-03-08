@@ -16,7 +16,6 @@ public class PlayingMainRadialMenu : MonoBehaviour
         selectedAlpha = 0.75f,
         nonSelectedAlpha = 0.5f;
     int activeElement, lastActiveElement;
-    RadialMenuManager.PieceData lastSelectedGadged = null;
 
     // Start is called before the first frame update
     void Start()
@@ -91,25 +90,5 @@ public class PlayingMainRadialMenu : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
-
-
-    //internal void ManageModifiersDelays()
-    //{
-    //    foreach (string key in piecesData.Keys)
-    //    {
-    //        PieceData currPieceData = piecesData[key];
-    //        if (currPieceData.countdownActive)
-    //        {
-    //            Debug.Log(key + " has " + Mathf.Lerp(0.0f, menuToCopy.bgFillAmount, currPieceData.delayTimer / menuToCopy.bgFillAmount));
-    //            rmPieces[currPieceData.id].delayBackground.fillAmount = Mathf.Lerp(0.0f, menuToCopy.bgFillAmount, currPieceData.delayTimer / menuToCopy.bgFillAmount);
-    //            if (currPieceData.delayTimer > 0)
-    //                piecesData[key].delayTimer -= Time.deltaTime;
-    //            else
-    //                piecesData[key].countdownActive = false;
-    //        }
-
-
-    //    }
-    //}
 
 }

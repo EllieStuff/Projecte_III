@@ -140,11 +140,11 @@ public class QuadSceneManager : MonoBehaviour
                 break;
 
             case "AlaDelta":
-                player.GetComponent<AlaDelta>().Init(_active);
+                player.GetComponent<PlayerAlaDelta>().Init(_active);
                 break;
 
             case "ChasisElevation":
-                player.GetComponent<ChasisElevation>().Init(_active);
+                player.GetComponent<PlayerChasisElevation>().Init(_active);
                 break;
 
             case "Umbrella":
