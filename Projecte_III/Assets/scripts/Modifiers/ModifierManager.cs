@@ -8,6 +8,7 @@ public class ModifierManager : MonoBehaviour
     private GameObject target;
     QuadControls controls;
     private PlayerStatsManager stats;
+    private StatsSliderManager statsSliders;
 
     private GameObject player;
 
@@ -30,6 +31,8 @@ public class ModifierManager : MonoBehaviour
 
         controls = new QuadControls();
         controls.Enable();
+
+        statsSliders = GameObject.FindGameObjectWithTag("StatsManager").GetComponent<StatsSliderManager>();
     }
 
     void Update()
@@ -63,6 +66,11 @@ public class ModifierManager : MonoBehaviour
                 if (target.transform.childCount > 0 && raycastHit.transform.GetComponent<ModifierSpotData>().IsAvailable(target.transform.GetChild(0).gameObject.tag))
                 {
                     PlaceModifier(raycastHit.transform);
+
+                    stats.SetStats();
+                    SetNewValues(stats.transform.GetComponent<Stats>().GetStats(), true);
+
+                    return;
                 }
             }
             //Delete button ------ Right mouse click ------ 
@@ -71,15 +79,26 @@ public class ModifierManager : MonoBehaviour
                 for (int i = 0; i < raycastHit.transform.childCount; i++)
                 {
                     raycastHit.transform.GetComponent<MeshRenderer>().enabled = true;
+
                     Destroy(raycastHit.transform.GetChild(i).gameObject);
+
                     stats.SetStats();
+                    SetNewValues(stats.transform.GetComponent<Stats>().GetStats(), true);
                 }
+                return;
             }
+
+            if(target.transform.childCount > 0)
+                SetNewValues(stats.transform.GetComponent<Stats>().GetStats() + target.transform.GetComponentInChildren<Stats>().GetStats());
+
         }
 
         if (controls.ConstructionMenu.DeleteModifier.ReadValue<float>() > 0)
         {
-            if(target.transform.childCount > 0) Destroy(target.transform.GetChild(0).gameObject);
+            if (target.transform.childCount > 0)
+            {
+                Destroy(target.transform.GetChild(0).gameObject);
+            }
         }
     }
 
@@ -120,6 +139,8 @@ public class ModifierManager : MonoBehaviour
         clone.transform.localPosition = Vector3.zero;
 
         stats.SetStats();
+
+        SetNewValues(stats.transform.GetComponent<Stats>().GetStats(), true);
     }
 
     public void ChangeGameObject(GameObject obj)
@@ -159,5 +180,11 @@ public class ModifierManager : MonoBehaviour
             target = Instantiate(new GameObject());
             target.name = "Mouse";
         }
+    }
+
+
+    private void SetNewValues(Stats.Data _stats, bool placed = false)
+    {
+        statsSliders.SetSliderValue(_stats, placed);
     }
 }

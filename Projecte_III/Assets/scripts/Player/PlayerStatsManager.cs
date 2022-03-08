@@ -38,6 +38,7 @@ public class PlayerStatsManager : MonoBehaviour
             if (modfs.GetChild(i).childCount > 0)
                 stats.SetStats(stats + modfs.GetChild(i).GetComponentInChildren<Stats>());
         }
+
         GameObject statsUI = GameObject.FindGameObjectWithTag("StatsManager");
         if(statsUI != null) statsUI.GetComponentInChildren<StatsListUI>().UpdateStatsUI(stats.GetStats());
     }
