@@ -250,7 +250,7 @@ public class @QuadControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""9d7539bf-4baa-48cf-96f4-396b5aa493e3"",
-                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Player1"",

@@ -8,6 +8,7 @@ public class QuadSceneManager : MonoBehaviour
     GameObject player;
     PlayerVehicleScript playerScript;
     string[] listOfAllModifiers = { "Floater", "PaintGun", "OilGun", "Plunger", "AlaDelta", "ChasisElevation" };
+    bool sceneLoaded;
 
     private void Awake()
     {
@@ -34,8 +35,10 @@ public class QuadSceneManager : MonoBehaviour
                     child.SetActive(false);
             }
         }
-        else if (scene.name == "Building Scene")
+        else if (scene.name == "Building Scene" && !sceneLoaded)
         {
+            GameObject.FindGameObjectWithTag("ModifierSpots").GetComponent<ModifierManager>().Active(false);
+
             for (int i = 0; i < transform.childCount; i++)
             {
                 GameObject child = transform.GetChild(i).gameObject;
@@ -70,8 +73,10 @@ public class QuadSceneManager : MonoBehaviour
                 Destroy(objs[1]);
             }
         }
-        else if (scene.name != "Menu")
+        else if (scene.name != "Menu" && !sceneLoaded)
         {
+            GameObject.FindGameObjectWithTag("ModifierSpots").GetComponent<ModifierManager>().Active(false);
+
             Transform initial = GameObject.FindGameObjectWithTag("InitPos").transform;
 
             gameObject.transform.position = initial.position;
@@ -91,7 +96,7 @@ public class QuadSceneManager : MonoBehaviour
 
             SetCarModifiers();
 
-            playerScript.Init();
+            sceneLoaded = true;
         }
 
     }
@@ -104,7 +109,7 @@ public class QuadSceneManager : MonoBehaviour
         {
             if (modifiers.GetChild(i).childCount > 0)
             {
-                Transform currModifier = modifiers.GetChild(i).GetChild(0).GetChild(0);
+                Transform currModifier = modifiers.GetChild(i).GetChild(0);
                 playerScript.listOfModifiers.Add(currModifier);
             }
         }
@@ -131,15 +136,15 @@ public class QuadSceneManager : MonoBehaviour
                 break;
 
             case "Plunger":
-                // ToDo: Fer Init
+                player.GetComponent<PlayerThrowPlunger>().Init(_modifier, _active);
                 break;
 
             case "AlaDelta":
-                // ToDo: Fer Init
+                player.GetComponent<AlaDelta>().Init(_active);
                 break;
 
             case "ChasisElevation":
-                // ToDo: Fer Init
+                player.GetComponent<ChasisElevation>().Init(_active);
                 break;
 
             case "Umbrella":

@@ -93,17 +93,17 @@ public class PlayingMainRadialMenu : MonoBehaviour
 
                 case "Plunger":
                     // ToDo: Adaptar amb els nous scripts
-                    player.GetComponent<PlayerVehicleScript>().ActivatePlunger();
+                    player.GetComponent<PlayerThrowPlunger>().Activate();
                     break;
 
                 case "AlaDelta":
                     // ToDo: Adaptar amb els nous scripts
-                    player.GetComponent<PlayerVehicleScript>().ActivateAlaDelta();
+                    player.GetComponent<AlaDelta>().Activate();
                     break;
 
                 case "ChasisElevation":
                     // ToDo: Adaptar amb els nous scripts
-                    player.GetComponent<PlayerVehicleScript>().ActivateChasis();
+                    player.GetComponent<ChasisElevation>().Activate();
                     break;
 
                 case "Umbrella":

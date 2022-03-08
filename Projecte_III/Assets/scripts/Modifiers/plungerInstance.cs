@@ -77,7 +77,6 @@ public class plungerInstance : MonoBehaviour
                     playerRB.velocity += playerShotPlunger.transform.TransformDirection(new Vector3(0, 0, 0.5f));
                     playerRB.velocity = new Vector3(playerRB.velocity.x, oldSpeedY, playerRB.velocity.z);
                 }
-                Debug.Log(playerShotPlunger.GetComponent<Rigidbody>().velocity);
             }
             else if (!collisionTag.Equals("ground"))
             {
