@@ -319,6 +319,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 17415734}
   m_CullTransparentMesh: 1
+--- !u!1 &21911380 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8114660769760056783, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+  m_PrefabInstance: {fileID: 6089789507022749367}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &21911382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 21911380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc434e7fd01d97b44937ffa4c492f05a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &39191897
 GameObject:
   m_ObjectHideFlags: 0
@@ -1256,8 +1273,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1823983637}
-        m_TargetAssemblyTypeName: BuildingSpots, Assembly-CSharp
+      - m_Target: {fileID: 21911382}
+        m_TargetAssemblyTypeName: ModifierManager, Assembly-CSharp
         m_MethodName: ChangeGameObject
         m_Mode: 2
         m_Arguments:
@@ -7679,8 +7696,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1823983637}
-        m_TargetAssemblyTypeName: BuildingSpots, Assembly-CSharp
+      - m_Target: {fileID: 21911382}
+        m_TargetAssemblyTypeName: ModifierManager, Assembly-CSharp
         m_MethodName: ChangeGameObject
         m_Mode: 2
         m_Arguments:
@@ -9985,8 +10002,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1823983637}
-        m_TargetAssemblyTypeName: BuildingSpots, Assembly-CSharp
+      - m_Target: {fileID: 21911382}
+        m_TargetAssemblyTypeName: ModifierManager, Assembly-CSharp
         m_MethodName: ChangeGameObject
         m_Mode: 2
         m_Arguments:
@@ -11227,8 +11244,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1823983637}
-        m_TargetAssemblyTypeName: BuildingSpots, Assembly-CSharp
+      - m_Target: {fileID: 21911382}
+        m_TargetAssemblyTypeName: ModifierManager, Assembly-CSharp
         m_MethodName: ChangeGameObject
         m_Mode: 2
         m_Arguments:
