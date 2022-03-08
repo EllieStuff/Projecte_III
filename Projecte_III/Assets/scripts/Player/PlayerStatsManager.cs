@@ -19,12 +19,6 @@ public class PlayerStatsManager : MonoBehaviour
         SetStats();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void SetStats()
     {
         stats.ResetStats();

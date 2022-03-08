@@ -5,11 +5,20 @@ public class QuadButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 {
     [SerializeField] private GameObject quadModel;
     [SerializeField] private GameObject quadSpot;
-
+    StatsSliderManager stats;
     Stats.Data sliderData;
+
+    PlayerStatsManager playerStats;
 
     [SerializeField] private GameObject currentQuad;
     private bool placed = false;
+
+    private void Start()
+    {
+        playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStatsManager>();
+
+        stats = GameObject.FindGameObjectWithTag("StatsManager").GetComponent<StatsSliderManager>();
+    }
 
     private void Update()
     {
@@ -32,16 +41,18 @@ public class QuadButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         if (quadModel != null)
         {
             Instantiate(quadModel, quadSpot.transform);
-            
-            if(quadSpot.transform.childCount > 1)
+
+            Stats.Data current = playerStats.transform.GetComponent<Stats>().GetStats() - currentQuad.GetComponent<Stats>().GetStats();
+            current += quadModel.GetComponent<Stats>().GetStats();
+
+            if (quadSpot.transform.childCount > 1)
             {
                 if (quadSpot.transform.childCount > 2)
                     Destroy(quadSpot.transform.GetChild(1).gameObject);
 
                 currentQuad.SetActive(false);
             }
-
-            //SetNewValues();
+            SetNewValues(current);
         }
     }
 
@@ -51,6 +62,8 @@ public class QuadButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             currentQuad = quadSpot.transform.GetChild(0).gameObject;
 
         if (currentQuad.name.Contains(quadModel.name)) return;
+
+        SetNewValues(playerStats.transform.GetComponent<Stats>().GetStats(), true);
 
         if (quadModel != null && quadSpot.transform.childCount > 1)
         {
@@ -65,7 +78,6 @@ public class QuadButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
             currentQuad.SetActive(true);
         }
-        //SetNewValues();
     }
 
     public void SetQuad()
@@ -87,19 +99,14 @@ public class QuadButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
         GameObject.FindGameObjectWithTag("ModifierSpots").GetComponent<ModifierManager>().SetNewModifierSpots(clone.GetChild(clone.childCount - 1));
 
-        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStatsManager>().SetStats();
+        playerStats.SetStats();
 
+        SetNewValues(playerStats.transform.GetComponent<Stats>().GetStats(), true);
         placed = true;
     }
 
-    private void SetNewValues()
+    private void SetNewValues(Stats.Data _stats, bool placed = false)
     {
-        StatsSliderManager stats = GameObject.FindGameObjectWithTag("StatsManager").GetComponent<StatsSliderManager>();
-
-        stats.SetSliderValue(sliderData.acceleration, "Acceleration");
-        stats.SetSliderValue(sliderData.friction, "Friction");
-        stats.SetSliderValue(sliderData.maxVelocity, "MaxVelocity");
-        stats.SetSliderValue(sliderData.torque, "Torque");
-        stats.SetSliderValue(sliderData.weight, "Weight");
+        stats.SetSliderValue(_stats, placed);
     }
 }

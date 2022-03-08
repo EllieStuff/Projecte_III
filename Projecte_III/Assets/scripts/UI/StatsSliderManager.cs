@@ -16,8 +16,19 @@ public class StatsSliderManager : MonoBehaviour
         stats = new StatsSlider[transform.childCount];
         for (int i = 0; i < stats.Length; i++)
         {
-            stats[i] = transform.GetChild(i).GetComponent<StatsSlider>();
+            stats[i] = transform.GetChild(1).GetChild(i).GetComponent<StatsSlider>();
         }
+    }
+
+    public void SetSliderValue(Stats.Data stats, bool placed = false)
+    {
+        SetSliderValue(stats.acceleration, "Acceleration", placed);
+        SetSliderValue(stats.friction, "Friction", placed);
+        SetSliderValue(stats.maxVelocity, "MaxVelocity", placed);
+        SetSliderValue(stats.torque, "Torque", placed);
+        SetSliderValue(stats.weight, "Weight", placed);
+
+        if (placed) statsValue = stats;
     }
 
     public void SetSliderValue(float value, string statType, bool placed = false)
@@ -37,9 +48,15 @@ public class StatsSliderManager : MonoBehaviour
     {
         if(!first)
         {
-            statsValue = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>().GetStats();
+            GetPlayerStats();
+            SetSliderValue(statsValue, true);
 
             first = true;
         }
+    }
+
+    public void GetPlayerStats()
+    {
+        statsValue = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>().GetStats();
     }
 }
