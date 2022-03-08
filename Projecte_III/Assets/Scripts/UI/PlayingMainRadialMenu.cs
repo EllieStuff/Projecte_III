@@ -5,16 +5,18 @@ using UnityEngine;
 
 public class PlayingMainRadialMenu : MonoBehaviour
 {
+    [SerializeField] RadialMenuManager manager;
     [SerializeField] BuildingRadialMenu menuToCopy;
 
     Transform player;
     PlayerInputs playerInputs;
-    RadialMenuPieceScript[] rmPieces;
+    internal RadialMenuPieceScript[] rmPieces;
     float degreesPerPiece;
     float 
         selectedAlpha = 0.75f,
         nonSelectedAlpha = 0.5f;
     int activeElement, lastActiveElement;
+    RadialMenuManager.PieceData lastSelectedGadged = null;
 
     // Start is called before the first frame update
     void Start()
@@ -80,47 +82,34 @@ public class PlayingMainRadialMenu : MonoBehaviour
     {
         if (playerInputs.ConfirmGadget)
         {
-            //Do action from each modifier
-            switch (rmPieces[lastActiveElement].tag)
-            {
-                case "OilGun":
-                    player.GetComponent<PlayerOilGun>().Activate();
-                    break;
+            // Update Selected Gadget
+            RadialMenuManager.PieceData newSelectedGadged = new RadialMenuManager.PieceData(lastActiveElement, rmPieces[lastActiveElement].delayTime, rmPieces[lastActiveElement].tag);
+            manager.SetSelectedGadget(newSelectedGadged);
 
-                case "PaintGun":
-                    player.GetComponent<PlayerPaintGun>().Activate();
-                    break;
-
-                case "Plunger":
-                    // ToDo: Adaptar amb els nous scripts
-                    player.GetComponent<PlayerThrowPlunger>().Activate();
-                    break;
-
-                case "AlaDelta":
-                    // ToDo: Adaptar amb els nous scripts
-                    player.GetComponent<AlaDelta>().Activate();
-                    break;
-
-                case "ChasisElevation":
-                    // ToDo: Adaptar amb els nous scripts
-                    player.GetComponent<ChasisElevation>().Activate();
-                    break;
-
-                case "Umbrella":
-                    // ToDo: Fer
-                    break;
-
-                ///Prolly should make an exception for this, since it's automatic
-                //case "Floater":
-                //    break;
-
-                default:
-                    break;
-            }
-
+            //Disable Menu
             rmPieces[lastActiveElement].ReinitColor();
             gameObject.SetActive(false);
         }
     }
+
+
+    //internal void ManageModifiersDelays()
+    //{
+    //    foreach (string key in piecesData.Keys)
+    //    {
+    //        PieceData currPieceData = piecesData[key];
+    //        if (currPieceData.countdownActive)
+    //        {
+    //            Debug.Log(key + " has " + Mathf.Lerp(0.0f, menuToCopy.bgFillAmount, currPieceData.delayTimer / menuToCopy.bgFillAmount));
+    //            rmPieces[currPieceData.id].delayBackground.fillAmount = Mathf.Lerp(0.0f, menuToCopy.bgFillAmount, currPieceData.delayTimer / menuToCopy.bgFillAmount);
+    //            if (currPieceData.delayTimer > 0)
+    //                piecesData[key].delayTimer -= Time.deltaTime;
+    //            else
+    //                piecesData[key].countdownActive = false;
+    //        }
+
+
+    //    }
+    //}
 
 }

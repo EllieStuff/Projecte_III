@@ -110,6 +110,14 @@
                     "interactions": ""
                 },
                 {
+                    "name": "UseChosenGadget",
+                    "type": "Button",
+                    "id": "18a3717e-c594-4bc1-bbf4-027d623bade9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
                     "name": "ChasisElevation",
                     "type": "Button",
                     "id": "6e1b1bb5-77ff-493c-9f3c-692aa3e32ec0",
@@ -121,14 +129,6 @@
                     "name": "AlaDelta",
                     "type": "Button",
                     "id": "183df223-cdd4-4beb-9465-d9577c47fd7c",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "UseActualGadget",
-                    "type": "Button",
-                    "id": "18a3717e-c594-4bc1-bbf4-027d623bade9",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -424,22 +424,22 @@
                 {
                     "name": "",
                     "id": "fad30964-d4dc-4650-a5da-3909c606e34b",
-                    "path": "<Mouse>/leftButton",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "Player1",
-                    "action": "UseActualGadget",
+                    "action": "UseChosenGadget",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "c584fdd9-1d0f-4884-b9b5-164e6bf0f467",
-                    "path": "<Gamepad>/buttonSouth",
+                    "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
                     "groups": "Player1",
-                    "action": "UseActualGadget",
+                    "action": "UseChosenGadget",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
