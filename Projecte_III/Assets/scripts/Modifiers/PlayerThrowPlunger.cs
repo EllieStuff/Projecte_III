@@ -18,11 +18,12 @@ public class PlayerThrowPlunger : MonoBehaviour
     bool plungerEnabled = false;
     bool hasPlunger;
     Transform modifierTransform;
+    LineRenderer line;
 
     public void Init(Transform _modifier, bool _active)
     {
         hasPlunger = _active;
-        modifierTransform = _modifier;
+        modifierTransform = transform;
     }
 
     public void Activate()
@@ -33,17 +34,22 @@ public class PlayerThrowPlunger : MonoBehaviour
 
     private void Start()
     {
+        line = GetComponent<LineRenderer>();
         player = GetComponent<PlayerVehicleScript>();
     }
 
     private void Update()
     {
         if (hasPlunger)
+        {
+            CheckPlungerThrow();
             Plunger();
+        }
     }
 
-    public void Plunger()
+    private void CheckPlungerThrow()
     {
+        Debug.Log("ee");
         RaycastHit hit;
         if (Physics.SphereCast(modifierTransform.position, 10, modifierTransform.TransformDirection(Vector3.forward), out hit, 10))
         {
@@ -53,8 +59,6 @@ public class PlayerThrowPlunger : MonoBehaviour
 
         if (localTransform != null)
             savedDirection = (localTransform.position - modifierTransform.position).normalized;
-
-        LineRenderer line = GetComponent<LineRenderer>();
 
         line.SetPosition(0, Vector3.zero);
         line.SetPosition(1, Vector3.zero);
@@ -84,7 +88,10 @@ public class PlayerThrowPlunger : MonoBehaviour
                 savedDirection = Vector3.zero;
             }
         }
+    }
 
+    public void Plunger()
+    {
         if ((player.controls.Quad.plunger || plungerEnabled) && !desatascador && desatascadorCooldown <= 0 && desatascadorInstance == null)
         {
             if (!createMaterial)
