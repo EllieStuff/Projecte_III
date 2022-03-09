@@ -8,7 +8,6 @@ public class PlayerAlaDelta : MonoBehaviour
     [SerializeField] float alaDeltaDuration;
     [SerializeField] float alaDeltaTimer;
     PlayerVehicleScript player;
-    bool touchingGround;
     internal bool alaDeltaEnabled, hasAlaDelta;
     PlayerInputs inputs;
 
@@ -31,7 +30,7 @@ public class PlayerAlaDelta : MonoBehaviour
         alaDeltaTimer = 1;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if(hasAlaDelta)
         {
@@ -42,7 +41,7 @@ public class PlayerAlaDelta : MonoBehaviour
 
     public void CheckAlaDeltaGround(bool touchingGround)
     {
-        if (touchingGround)
+        if (alaDeltaTimer < alaDeltaDuration - 0.6f && touchingGround)
         {
             alaDeltaTimer = alaDeltaDuration;
             usingAlaDelta = false;
@@ -51,7 +50,7 @@ public class PlayerAlaDelta : MonoBehaviour
 
     public void AlaDeltaUpdate()
     {
-        if (!usingAlaDelta && touchingGround && (alaDeltaEnabled || player.controls.Quad.AlaDelta))
+        if (!usingAlaDelta && player.touchingGround && (alaDeltaEnabled || player.controls.Quad.AlaDelta))
         {
             alaDeltaEnabled = false;
             usingAlaDelta = true;
@@ -78,11 +77,6 @@ public class PlayerAlaDelta : MonoBehaviour
                 player.savedVelocity = transform.TransformDirection(new Vector3(0, 0, 25));
 
                 player.vehicleRB.velocity = new Vector3(player.savedVelocity.x, -5, player.savedVelocity.z);
-            }
-            if (alaDeltaTimer <= 0)
-            {
-                alaDeltaTimer = alaDeltaDuration;
-                usingAlaDelta = false;
             }
         }
     }

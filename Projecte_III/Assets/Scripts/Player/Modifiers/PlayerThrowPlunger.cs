@@ -115,7 +115,7 @@ public class PlayerThrowPlunger : MonoBehaviour
 
         if (plunger)
         {
-            if (plungerDisappearCooldown <= plungerBaseDisappearCooldown && plungerInstance != null)
+            if (plungerDisappearCooldown <= plungerBaseDisappearCooldown / 2 && plungerInstance != null)
             {
                 savedDirection = Vector3.zero;
                 player.vehicleMaxSpeed = player.savedMaxSpeed;

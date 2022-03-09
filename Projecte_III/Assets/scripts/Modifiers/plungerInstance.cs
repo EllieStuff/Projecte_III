@@ -27,7 +27,7 @@ public class plungerInstance : MonoBehaviour
         startRot = new Quaternion(0, this.transform.rotation.y, 0, this.transform.rotation.w);
         
         if(normalDir != Vector3.zero)
-            body.velocity = new Vector3(plungerVelocity * normalDir.x, normalDir.y + 0.5f, plungerVelocity * normalDir.z);
+            body.velocity = new Vector3(plungerVelocity * normalDir.x, normalDir.y + 0.75f, plungerVelocity * normalDir.z);
         else
             body.velocity = transform.TransformDirection(new Vector3(0, 0.5f, plungerVelocity));
         
