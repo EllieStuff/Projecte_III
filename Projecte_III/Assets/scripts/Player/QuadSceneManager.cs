@@ -26,7 +26,7 @@ public class QuadSceneManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "Menu")
+        if (scene.name == "Menu" && !sceneLoaded)
         {
             for (int i = 0; i < transform.childCount; i++)
             {

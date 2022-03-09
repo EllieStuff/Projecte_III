@@ -26,7 +26,7 @@ public class PlayerAlaDelta : MonoBehaviour
     {
         player = GetComponent<PlayerVehicleScript>();
         inputs = GetComponent<PlayerInputs>();
-        alaDeltaDuration = 1;
+        alaDeltaDuration = 2;
         alaDeltaTimer = 1;
     }
 
@@ -41,7 +41,7 @@ public class PlayerAlaDelta : MonoBehaviour
 
     public void CheckAlaDeltaGround(bool touchingGround)
     {
-        if (alaDeltaTimer < alaDeltaDuration - 0.6f && touchingGround)
+        if (alaDeltaTimer < alaDeltaDuration - 0.9f && touchingGround)
         {
             alaDeltaTimer = alaDeltaDuration;
             usingAlaDelta = false;
@@ -61,7 +61,7 @@ public class PlayerAlaDelta : MonoBehaviour
         if (usingAlaDelta && alaDeltaTimer >= 0)
         {
             alaDeltaTimer -= Time.deltaTime;
-            if (alaDeltaTimer >= alaDeltaDuration - 0.6f)
+            if (alaDeltaTimer >= alaDeltaDuration - 0.9f)
             {
                 transform.rotation = new Quaternion(0, transform.rotation.y, 0, transform.rotation.w);
                 player.vehicleRB.velocity += new Vector3(0, 1, 0);
