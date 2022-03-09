@@ -95,8 +95,6 @@ public class QuadButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         Transform clone = Instantiate(quadModel, quadSpot.transform).transform;
         Destroy(quadSpot.transform.GetChild(1).gameObject);
 
-        Debug.Log(clone.GetChild(clone.childCount - 1));
-
         GameObject.FindGameObjectWithTag("ModifierSpots").GetComponent<ModifierManager>().SetNewModifierSpots(clone.GetChild(clone.childCount - 1));
 
         playerStats.SetStats();

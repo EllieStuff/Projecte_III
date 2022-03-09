@@ -27,7 +27,6 @@ public class ModifierManager : MonoBehaviour
         stats = player.GetComponent<PlayerStatsManager>();
 
         layerMask = LayerMask.GetMask("Modifiers");
-        Debug.Log(layerMask.value);
 
         controls = new QuadControls();
         controls.Enable();
@@ -37,6 +36,7 @@ public class ModifierManager : MonoBehaviour
 
     void Update()
     {
+        Stats.Data playerStats = stats.transform.GetComponent<Stats>().GetStats();
         if (!isActive)
         {
             
@@ -54,12 +54,15 @@ public class ModifierManager : MonoBehaviour
 
         target.transform.position = newPos;
 
+        SetNewValues(playerStats);
+
         if (Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, layerMask))
         {
+            
             target.transform.position = raycastHit.transform.position;
             target.transform.localScale = raycastHit.transform.lossyScale;
             target.transform.rotation = raycastHit.transform.rotation;
-
+            
             //Place button ------ Left mouse click ------ 
             if(controls.ConstructionMenu.ConstructModifier.ReadValue<float>() > 0)
             {
@@ -81,16 +84,17 @@ public class ModifierManager : MonoBehaviour
                     raycastHit.transform.GetComponent<MeshRenderer>().enabled = true;
 
                     Destroy(raycastHit.transform.GetChild(i).gameObject);
-
-                    stats.SetStats();
-                    SetNewValues(stats.transform.GetComponent<Stats>().GetStats(), true);
                 }
+                stats.SetStats();
+                SetNewValues(stats.transform.GetComponent<Stats>().GetStats(), true);
                 return;
             }
 
-            if(target.transform.childCount > 0)
-                SetNewValues(stats.transform.GetComponent<Stats>().GetStats() + target.transform.GetComponentInChildren<Stats>().GetStats());
-
+            if(raycastHit.transform.childCount == 0 || (target.transform.childCount > 0 && (raycastHit.transform.childCount > 0 && target.transform.GetChild(0).tag != raycastHit.transform.GetChild(0).tag)))
+            {
+                SetNewValues(playerStats + target.transform.GetComponentInChildren<Stats>().GetStats());
+            }
+                
         }
 
         if (controls.ConstructionMenu.DeleteModifier.ReadValue<float>() > 0)

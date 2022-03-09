@@ -30,9 +30,6 @@ public class StatsSlider : MonoBehaviour
     {
         if(placed || value == currentValue)
         {
-            Debug.Log(true);
-
-
             sliders[0].value = value;
             sliders[0].transform.GetChild(1).GetComponentInChildren<Image>().color = mainColor;
 
