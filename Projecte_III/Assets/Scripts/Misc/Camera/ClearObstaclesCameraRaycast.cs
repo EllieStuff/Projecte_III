@@ -19,9 +19,7 @@ public class ClearObstaclesCameraRaycast : MonoBehaviour
         public MeshRenderer renderer; public Material savedMaterial; public ObstacleState state = ObstacleState.DISAPPEARING;
         public ObstacleData(MeshRenderer _renderer, Material _savedMaterial) { renderer = _renderer; savedMaterial = _savedMaterial; }
     }
-    List<ObstacleData> obstaclesDataList = new List<ObstacleData>();
     Dictionary<Transform, ObstacleData> obstaclesDataDict = new Dictionary<Transform, ObstacleData>();
-    List<MeshRenderer> obstaclesMeshes = new List<MeshRenderer>();
 
     // Start is called before the first frame update
     void Start()
@@ -39,57 +37,9 @@ public class ClearObstaclesCameraRaycast : MonoBehaviour
 
         Debug.DrawLine(cameraPos, playerPos, Color.red);
         RaycastHit[] hits = Physics.SphereCastAll(new Ray(playerPos, cameraPos - playerPos), clearingRadius, Vector3.Distance(cameraPos, playerPos));
-        //UpdateHitsList(hits);
         UpdateHitsDictionary(hits);
     }
 
-    void UpdateHitsList(RaycastHit[] _hits)
-    {
-        // Erase Unnecesari Data
-        if (obstaclesDataList.Count > 0)
-        {
-            int idx = 0;
-            while (idx < obstaclesDataList.Count)
-            {
-                bool found = false;
-                for (int i = 0; i < _hits.Length && !found; i++)
-                {
-                    if (_hits[i].transform.tag == "Tree")
-                    {
-                        if (obstaclesDataList[idx].renderer.transform == _hits[i].transform)
-                            found = true;
-                    }
-                }
-
-                if (found) idx++;
-                else
-                {
-                    StartCoroutine(ReappearObstacle(obstaclesDataList[idx]));
-                    obstaclesDataList.RemoveAt(idx);
-                }
-            }
-        }
-
-        // Looks For new Data
-        for (int i = 0; i < _hits.Length; i++)
-        {
-            //Debug.Log("Colliding " + _hits[i].transform.tag);
-            if (_hits[i].transform.tag == "Tree")
-            {
-                if (obstaclesDataList.Find(_obs => _obs.renderer.transform == _hits[i].transform) == null)
-                {
-                    MeshRenderer renderer = _hits[i].transform.GetComponent<MeshRenderer>();
-                    if (renderer != null)
-                    {
-                        ObstacleData newObstacleData = new ObstacleData(renderer, renderer.material);
-                        obstaclesDataList.Add(newObstacleData);
-                        StartCoroutine(ClearObstacle(newObstacleData));
-                    }
-                }
-            }
-        }
-
-    }
     
     void UpdateHitsDictionary(RaycastHit[] _hits)
     {
@@ -145,22 +95,6 @@ public class ClearObstaclesCameraRaycast : MonoBehaviour
     }
 
 
-    IEnumerator ReappearObstacle(ObstacleData _obsData)
-    {
-        yield return new WaitForEndOfFrame();
-        Material targetMaterial = _obsData.savedMaterial;
-        Color targetColor = targetMaterial.color;
-
-        float timer = 0.0f;
-        while (timer < lerpTime)
-        {
-            yield return new WaitForEndOfFrame();
-            timer += Time.deltaTime;
-            _obsData.renderer.material.color = Color.Lerp(_obsData.renderer.material.color, targetColor, timer / lerpTime);
-        }
-        yield return new WaitForEndOfFrame();
-        _obsData.renderer.material = targetMaterial;
-    }
     IEnumerator ReappearObstacle(ObstacleData _obsData, Transform _key)
     {
         yield return new WaitForEndOfFrame();
@@ -179,21 +113,6 @@ public class ClearObstaclesCameraRaycast : MonoBehaviour
         yield return new WaitForEndOfFrame();
         _obsData.renderer.material = targetMaterial;
         obstaclesDataDict.Remove(_key);
-    }
-    IEnumerator ClearObstacle(ObstacleData _obsData)
-    {
-        yield return new WaitForEndOfFrame();
-        _obsData.renderer.material = new Material(auxPolyBrushMat);
-        Color targetColor = _obsData.renderer.material.color;
-        targetColor.a = 0.3f;
-
-        float timer = 0.0f;
-        while (timer < lerpTime)
-        {
-            yield return new WaitForEndOfFrame();
-            timer += Time.deltaTime;
-            _obsData.renderer.material.color = Color.Lerp(_obsData.renderer.material.color, targetColor, timer / lerpTime);
-        }
     }
     IEnumerator ClearObstacle(ObstacleData _obsData, Transform _key)
     {
