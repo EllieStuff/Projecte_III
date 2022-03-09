@@ -64,7 +64,7 @@ public class ClearObstaclesCameraRaycast : MonoBehaviour
             // Looks For new Data
             for (int i = 0; i < _hits.Length; i++)
             {
-                Debug.Log("Colliding " + _hits[i].transform.tag);
+                //Debug.Log("Colliding " + _hits[i].transform.tag);
                 if (_hits[i].transform.tag == "Tree")
                 {
                     if (obstaclesData.Find(_obs => _obs.renderer.transform == _hits[i].transform) == null)

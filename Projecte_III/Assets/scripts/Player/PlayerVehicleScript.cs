@@ -133,7 +133,6 @@ public class PlayerVehicleScript : MonoBehaviour
             //Here we set the position and rotation from the wheel renderers
 
             if (!buildingScene)
-            if (!buildingScene)
             {
                 Vector3 wheelPosition;
                 Quaternion wheelRotation;
@@ -316,6 +315,11 @@ public class PlayerVehicleScript : MonoBehaviour
             vehicleMaxSpeed = savedMaxSpeed;
             vehicleAcceleration = savedAcceleration;
         }
+
+        //Check if player is on sand
+        if (SlowingSandScript.CheckIfOnSand(transform))
+            Debug.Log("AAAAAAAAAAAAAAAA");
+        Debug.Log(SlowingSandScript.CheckIfOnSand(transform));
 
         //Vehicle sound pitch function
         VehicleSoundPitchFunction();
