@@ -7,8 +7,12 @@ public class ClearObstaclesCameraRaycast : MonoBehaviour
     [SerializeField] Material auxPolyBrushMat;
     [SerializeField] float clearingRadius = 10.0f;
     [SerializeField] float lerpTime = 3.0f;
+    [SerializeField] float forwardMargin = 10.0f;
+    [SerializeField] float downMargin = 5.0f;
 
-    Transform player, camera;
+    Transform player;
+
+    //Transform player, camera;
     class ObstacleData
     {
         public MeshRenderer renderer; public Material savedMaterial;
@@ -21,17 +25,23 @@ public class ClearObstaclesCameraRaycast : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        camera = Camera.main.transform;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.DrawLine(camera.position, player.position, Color.red);
-        RaycastHit[] hits = Physics.SphereCastAll(new Ray(player.position, player.up), clearingRadius, 20.0f);
-        UpdateHits(hits);
-        //hits = Physics.SphereCastAll(camera.position, clearingRadius, player.position, Vector3.Distance(camera.position, player.position));
+        Vector3 currMargin = player.forward * forwardMargin; 
+        //if (player.Backward)
+        //    currMargin = Vector3.zero;
+        currMargin.y += downMargin;
+        Vector3 cameraPos = Camera.main.transform.position + currMargin;
+        Vector3 playerPos = player.position + currMargin;
+
+        Debug.DrawLine(cameraPos, playerPos, Color.red);
+        //RaycastHit[] hits = Physics.SphereCastAll(new Ray(player.position, player.up), clearingRadius, 20.0f);
         //UpdateHits(hits);
+        RaycastHit[] hits = Physics.SphereCastAll(new Ray(playerPos, cameraPos - playerPos), clearingRadius, Vector3.Distance(cameraPos, playerPos));
+        UpdateHits(hits);
 
     }
 
