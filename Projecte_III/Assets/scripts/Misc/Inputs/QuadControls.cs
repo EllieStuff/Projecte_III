@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/Scripts/Misc/Inputs/QuadControls.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/scripts/Misc/Inputs/QuadControls.inputactions'
 
 using System;
 using System.Collections;
@@ -123,6 +123,14 @@ public class @QuadControls : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
+                    ""name"": ""UseChosenGadget"",
+                    ""type"": ""Button"",
+                    ""id"": ""18a3717e-c594-4bc1-bbf4-027d623bade9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
                     ""name"": ""ChasisElevation"",
                     ""type"": ""Button"",
                     ""id"": ""6e1b1bb5-77ff-493c-9f3c-692aa3e32ec0"",
@@ -134,14 +142,6 @@ public class @QuadControls : IInputActionCollection, IDisposable
                     ""name"": ""AlaDelta"",
                     ""type"": ""Button"",
                     ""id"": ""183df223-cdd4-4beb-9465-d9577c47fd7c"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""UseActualGadget"",
-                    ""type"": ""Button"",
-                    ""id"": ""18a3717e-c594-4bc1-bbf4-027d623bade9"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -437,22 +437,22 @@ public class @QuadControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""fad30964-d4dc-4650-a5da-3909c606e34b"",
-                    ""path"": ""<Mouse>/leftButton"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Player1"",
-                    ""action"": ""UseActualGadget"",
+                    ""action"": ""UseChosenGadget"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
                     ""id"": ""c584fdd9-1d0f-4884-b9b5-164e6bf0f467"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Player1"",
-                    ""action"": ""UseActualGadget"",
+                    ""action"": ""UseChosenGadget"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -734,9 +734,9 @@ public class @QuadControls : IInputActionCollection, IDisposable
         m_Quad_ChooseItemDown = m_Quad.FindAction("ChooseItemDown", throwIfNotFound: true);
         m_Quad_ChooseItemMouse = m_Quad.FindAction("ChooseItemMouse", throwIfNotFound: true);
         m_Quad_ConfirmChosenGadget = m_Quad.FindAction("ConfirmChosenGadget", throwIfNotFound: true);
+        m_Quad_UseChosenGadget = m_Quad.FindAction("UseChosenGadget", throwIfNotFound: true);
         m_Quad_ChasisElevation = m_Quad.FindAction("ChasisElevation", throwIfNotFound: true);
         m_Quad_AlaDelta = m_Quad.FindAction("AlaDelta", throwIfNotFound: true);
-        m_Quad_UseActualGadget = m_Quad.FindAction("UseActualGadget", throwIfNotFound: true);
         // QuadP2
         m_QuadP2 = asset.FindActionMap("QuadP2", throwIfNotFound: true);
         m_QuadP2_Forward = m_QuadP2.FindAction("Forward", throwIfNotFound: true);
@@ -814,9 +814,9 @@ public class @QuadControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Quad_ChooseItemDown;
     private readonly InputAction m_Quad_ChooseItemMouse;
     private readonly InputAction m_Quad_ConfirmChosenGadget;
+    private readonly InputAction m_Quad_UseChosenGadget;
     private readonly InputAction m_Quad_ChasisElevation;
     private readonly InputAction m_Quad_AlaDelta;
-    private readonly InputAction m_Quad_UseActualGadget;
     public struct QuadActions
     {
         private @QuadControls m_Wrapper;
@@ -834,9 +834,9 @@ public class @QuadControls : IInputActionCollection, IDisposable
         public InputAction @ChooseItemDown => m_Wrapper.m_Quad_ChooseItemDown;
         public InputAction @ChooseItemMouse => m_Wrapper.m_Quad_ChooseItemMouse;
         public InputAction @ConfirmChosenGadget => m_Wrapper.m_Quad_ConfirmChosenGadget;
+        public InputAction @UseChosenGadget => m_Wrapper.m_Quad_UseChosenGadget;
         public InputAction @ChasisElevation => m_Wrapper.m_Quad_ChasisElevation;
         public InputAction @AlaDelta => m_Wrapper.m_Quad_AlaDelta;
-        public InputAction @UseActualGadget => m_Wrapper.m_Quad_UseActualGadget;
         public InputActionMap Get() { return m_Wrapper.m_Quad; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -885,15 +885,15 @@ public class @QuadControls : IInputActionCollection, IDisposable
                 @ConfirmChosenGadget.started -= m_Wrapper.m_QuadActionsCallbackInterface.OnConfirmChosenGadget;
                 @ConfirmChosenGadget.performed -= m_Wrapper.m_QuadActionsCallbackInterface.OnConfirmChosenGadget;
                 @ConfirmChosenGadget.canceled -= m_Wrapper.m_QuadActionsCallbackInterface.OnConfirmChosenGadget;
+                @UseChosenGadget.started -= m_Wrapper.m_QuadActionsCallbackInterface.OnUseChosenGadget;
+                @UseChosenGadget.performed -= m_Wrapper.m_QuadActionsCallbackInterface.OnUseChosenGadget;
+                @UseChosenGadget.canceled -= m_Wrapper.m_QuadActionsCallbackInterface.OnUseChosenGadget;
                 @ChasisElevation.started -= m_Wrapper.m_QuadActionsCallbackInterface.OnChasisElevation;
                 @ChasisElevation.performed -= m_Wrapper.m_QuadActionsCallbackInterface.OnChasisElevation;
                 @ChasisElevation.canceled -= m_Wrapper.m_QuadActionsCallbackInterface.OnChasisElevation;
                 @AlaDelta.started -= m_Wrapper.m_QuadActionsCallbackInterface.OnAlaDelta;
                 @AlaDelta.performed -= m_Wrapper.m_QuadActionsCallbackInterface.OnAlaDelta;
                 @AlaDelta.canceled -= m_Wrapper.m_QuadActionsCallbackInterface.OnAlaDelta;
-                @UseActualGadget.started -= m_Wrapper.m_QuadActionsCallbackInterface.OnUseActualGadget;
-                @UseActualGadget.performed -= m_Wrapper.m_QuadActionsCallbackInterface.OnUseActualGadget;
-                @UseActualGadget.canceled -= m_Wrapper.m_QuadActionsCallbackInterface.OnUseActualGadget;
             }
             m_Wrapper.m_QuadActionsCallbackInterface = instance;
             if (instance != null)
@@ -937,15 +937,15 @@ public class @QuadControls : IInputActionCollection, IDisposable
                 @ConfirmChosenGadget.started += instance.OnConfirmChosenGadget;
                 @ConfirmChosenGadget.performed += instance.OnConfirmChosenGadget;
                 @ConfirmChosenGadget.canceled += instance.OnConfirmChosenGadget;
+                @UseChosenGadget.started += instance.OnUseChosenGadget;
+                @UseChosenGadget.performed += instance.OnUseChosenGadget;
+                @UseChosenGadget.canceled += instance.OnUseChosenGadget;
                 @ChasisElevation.started += instance.OnChasisElevation;
                 @ChasisElevation.performed += instance.OnChasisElevation;
                 @ChasisElevation.canceled += instance.OnChasisElevation;
                 @AlaDelta.started += instance.OnAlaDelta;
                 @AlaDelta.performed += instance.OnAlaDelta;
                 @AlaDelta.canceled += instance.OnAlaDelta;
-                @UseActualGadget.started += instance.OnUseActualGadget;
-                @UseActualGadget.performed += instance.OnUseActualGadget;
-                @UseActualGadget.canceled += instance.OnUseActualGadget;
             }
         }
     }
@@ -1121,9 +1121,9 @@ public class @QuadControls : IInputActionCollection, IDisposable
         void OnChooseItemDown(InputAction.CallbackContext context);
         void OnChooseItemMouse(InputAction.CallbackContext context);
         void OnConfirmChosenGadget(InputAction.CallbackContext context);
+        void OnUseChosenGadget(InputAction.CallbackContext context);
         void OnChasisElevation(InputAction.CallbackContext context);
         void OnAlaDelta(InputAction.CallbackContext context);
-        void OnUseActualGadget(InputAction.CallbackContext context);
     }
     public interface IQuadP2Actions
     {

@@ -182,6 +182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ca04e4564cb62d42bc5cebc26bf45b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  manager: {fileID: 8960972185859166778}
   menuToCopy: {fileID: 7302185472296721652}
 --- !u!1 &8960972185859166780
 GameObject:
@@ -235,6 +236,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildingRadialMenu: {fileID: 4174484847126048156}
   playingRadialMenu: {fileID: 8796117645492911790}
-  playingMainRM: {fileID: 8960972185328376351}
+  buildingRM_Script: {fileID: 7302185472296721652}
+  playingRM1_Script: {fileID: 8960972185328376351}
+  playingRM2_Script: {fileID: 4052832492766246582}
   playerId: 0
   state: 0

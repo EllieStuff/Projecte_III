@@ -26,7 +26,7 @@ public class QuadSceneManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "Menu")
+        if (scene.name == "Menu" && !sceneLoaded)
         {
             for (int i = 0; i < transform.childCount; i++)
             {
@@ -140,11 +140,11 @@ public class QuadSceneManager : MonoBehaviour
                 break;
 
             case "AlaDelta":
-                player.GetComponent<AlaDelta>().Init(_active);
+                player.GetComponent<PlayerAlaDelta>().Init(_active);
                 break;
 
             case "ChasisElevation":
-                player.GetComponent<ChasisElevation>().Init(_active);
+                player.GetComponent<PlayerChasisElevation>().Init(_active);
                 break;
 
             case "Umbrella":

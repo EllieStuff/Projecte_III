@@ -57,14 +57,14 @@ public class PlayerVehicleScript : MonoBehaviour
     [SerializeField] private AudioClip normalClip;
     [SerializeField] private AudioClip boostClip;
 
-    private AlaDelta alaDelta;
+    private PlayerAlaDelta alaDelta;
 
     private Transform outTransform;
     private Rigidbody outVehicleRB;
 
     void Start()
     {
-        alaDelta = GetComponent<AlaDelta>();
+        alaDelta = GetComponent<PlayerAlaDelta>();
 
         controls = new QuadControlSystem();
 
@@ -132,7 +132,6 @@ public class PlayerVehicleScript : MonoBehaviour
 
             //Here we set the position and rotation from the wheel renderers
 
-            if (!buildingScene)
             if (!buildingScene)
             {
                 Vector3 wheelPosition;
@@ -317,6 +316,11 @@ public class PlayerVehicleScript : MonoBehaviour
             vehicleAcceleration = savedAcceleration;
         }
 
+        //Check if player is on sand
+        if (SlowingSandScript.CheckIfOnSand(transform))
+            Debug.Log("AAAAAAAAAAAAAAAA");
+        Debug.Log(SlowingSandScript.CheckIfOnSand(transform));
+
         //Vehicle sound pitch function
         VehicleSoundPitchFunction();
     }
@@ -450,7 +454,7 @@ public class PlayerVehicleScript : MonoBehaviour
         if (audio.enabled)
            audio.pitch = (vehicleRB.velocity.magnitude * 1) / vehicleMaxSpeed/2;
 
-        if (inputs.Drift && vehicleMaxSpeed <= savedMaxSpeed)
+        if (inputs.Drift && (inputs.Left || inputs.Right) && vehicleMaxSpeed <= savedMaxSpeed && vehicleRB.velocity.magnitude > 0.5f)
         {
             audio.pitch = 1;
             if (audio.clip != driftClip)

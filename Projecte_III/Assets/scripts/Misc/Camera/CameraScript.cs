@@ -14,6 +14,7 @@ public class CameraScript : MonoBehaviour
 
     float camPosSpeed = 5.0f;
     [SerializeField] float camRotSpeed = 1.1f;
+    float savedRotSpeed;
     Quaternion rotOffsetQuat, lookBackRotOffset;
     private Camera cam;
     private Rigidbody vehicleRB;
@@ -26,6 +27,7 @@ public class CameraScript : MonoBehaviour
 
         rotOffsetQuat = Quaternion.Euler(rotOffset);
         lookBackRotOffset = Quaternion.Euler(0, 180, 0);
+        savedRotSpeed = camRotSpeed;
 
         if(camIndex == 0)
             playerVehicle = GameObject.FindGameObjectWithTag("Player").transform.GetChild(0).GetChild(0).gameObject;
@@ -54,21 +56,34 @@ public class CameraScript : MonoBehaviour
         Vector3 targetPos = new Vector3(playerVehicle.transform.position.x, playerVehicle.transform.position.y + 2, playerVehicle.transform.position.z);
         transform.position = Vector3.Lerp(this.transform.position + posOffset, targetPos, Time.deltaTime * camPosSpeed);
         //transform.rotation = Quaternion.Euler(rotOffset);
+        
+        //transform.rotation = Quaternion.RotateTowards(transform.rotation, rotOffsetQuat, Time.deltaTime * camRotSpeed * 100);
         transform.rotation = Quaternion.Lerp(transform.rotation, rotOffsetQuat, Time.deltaTime * camRotSpeed);
+        
         //transform.rotation = rotOffsetQuat;
       
     }
 
 
-    public void ChangeRotation(Vector3 newRot)
+    public void ChangeRotation(Vector3 _newRot)
     {
-        rotOffsetQuat = Quaternion.Euler(newRot);
-
+        rotOffsetQuat = Quaternion.Euler(_newRot);
+    }
+    public void ChangeRotation(Vector3 _newRot, float _customRotSpeed)
+    {
+        rotOffsetQuat = Quaternion.Euler(_newRot);
+        camRotSpeed = _customRotSpeed;
     }
 
     public void ResetRotation()
     {
         rotOffsetQuat = Quaternion.Euler(rotOffset);
+        camRotSpeed = savedRotSpeed;
+    }
+    public void ResetRotation(float _customRotSpeed)
+    {
+        rotOffsetQuat = Quaternion.Euler(rotOffset);
+        camRotSpeed = _customRotSpeed;
     }
 
 }

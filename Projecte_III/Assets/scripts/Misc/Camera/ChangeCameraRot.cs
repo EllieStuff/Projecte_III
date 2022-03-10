@@ -5,6 +5,10 @@ using UnityEngine;
 public class ChangeCameraRot : MonoBehaviour
 {
     [SerializeField] Vector3 newRot;
+    [SerializeField] bool useInCustomRotSpeed = false;
+    [SerializeField] float inCustomRotSpeed = 1.2f;
+    [SerializeField] bool useOutCustomRotSpeed = false;
+    [SerializeField] float outCustomRotSpeed = 1.2f;
 
 
     private void OnTriggerEnter(Collider other)
@@ -13,7 +17,10 @@ public class ChangeCameraRot : MonoBehaviour
         {
             //Debug.Log("In");
             CameraScript camera = Camera.main.GetComponentInParent<CameraScript>();
-            camera.ChangeRotation(newRot);
+            if (!useInCustomRotSpeed)
+                camera.ChangeRotation(newRot);
+            else
+                camera.ChangeRotation(newRot, inCustomRotSpeed);
         }
 
     }
@@ -24,7 +31,10 @@ public class ChangeCameraRot : MonoBehaviour
         {
             //Debug.Log("Out");
             CameraScript camera = Camera.main.GetComponentInParent<CameraScript>();
-            camera.ResetRotation();
+            if (!useOutCustomRotSpeed)
+                camera.ResetRotation();
+            else
+                camera.ResetRotation(outCustomRotSpeed);
         }
 
     }
