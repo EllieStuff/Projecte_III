@@ -6,7 +6,7 @@ public class PlayerStatsManager : MonoBehaviour
 {
     [SerializeField]private Stats stats;
 
-    private GameObject wheelsSpot, quadSpot, modifierSpot;
+    private GameObject wheelsSpot, quadSpot;
 
     // Start is called before the first frame update
     void Start()
@@ -49,8 +49,7 @@ public class PlayerStatsManager : MonoBehaviour
 
     public void HideVoidModifier()
     {
-        //Transform modfs = GameObject.FindGameObjectWithTag("ModifierSpots").transform;
-        Transform modfs = modifierSpot.transform.GetChild(0);
+        Transform modfs = GameObject.FindGameObjectWithTag("ModifierSpots").transform.GetChild(0);
 
         for (int i = 0; i < modfs.childCount; i++)
         {

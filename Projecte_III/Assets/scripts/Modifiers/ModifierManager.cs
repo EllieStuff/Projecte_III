@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,8 +11,6 @@ public class ModifierManager : MonoBehaviour
     private GameObject player;
 
     private LayerMask layerMask;
-
-    bool isActive;
 
     void Start()
     {
@@ -37,18 +33,16 @@ public class ModifierManager : MonoBehaviour
     void Update()
     {
         Stats.Data playerStats = stats.transform.GetComponent<Stats>().GetStats();
-        if (!target.activeSelf)
+        if (GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().GetSceneName() != "Building Scene" && (target == null || !target.activeSelf))
         {
-            
-            Vector3 playerEuler = Quaternion.ToEulerAngles(player.transform.localRotation);
-            playerEuler *= Mathf.Rad2Deg;
-            playerEuler.y += -180;
+            Transform chasis = player.transform.parent.GetChild(0);
 
-            transform.localRotation = Quaternion.Euler(playerEuler);
+            Quaternion playerEuler = chasis.GetChild(chasis.childCount - 1).rotation;
+
+            transform.rotation = playerEuler;
 
             return;
         }
-        Debug.Log("Not active");
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
 
         Vector3 newPos = ray.origin + ray.direction * (transform.position.z + Mathf.Abs(Camera.main.transform.position.z));
@@ -67,7 +61,6 @@ public class ModifierManager : MonoBehaviour
             //Place button ------ Left mouse click ------ 
             if(controls.ConstructionMenu.ConstructModifier.ReadValue<float>() > 0)
             {
-                Debug.Log(raycastHit.transform.GetComponent<ModifierSpotData>());
                 if (target.transform.childCount > 0 && raycastHit.transform.GetComponent<ModifierSpotData>().IsAvailable(target.transform.GetChild(0).gameObject.tag))
                 {
                     PlaceModifier(raycastHit.transform);
@@ -180,8 +173,6 @@ public class ModifierManager : MonoBehaviour
 
     public void Active(bool active)
     {
-        isActive = active;
-
         if (!active)
             Destroy(target);
         else
