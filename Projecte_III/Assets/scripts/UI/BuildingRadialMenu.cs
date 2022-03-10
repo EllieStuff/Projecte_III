@@ -53,7 +53,7 @@ public class BuildingRadialMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (modifierSpots[0] == null) Init();
+        if (modifierSpots.Length == 0 || modifierSpots[0] == null) Init();
 
         int changedSpotId = CheckForModifierSpotsChanges();
         if(changedSpotId >= 0)

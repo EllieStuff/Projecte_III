@@ -23,8 +23,8 @@ public  class SlowingSandScript : MonoBehaviour
         Color[] colors = mesh.colors;
         Debug.Log(colors.Length);
 
-            if (colors[hit.triangleIndex] == ObjectiveColor)
-                return true;
+            //if (colors[hit.triangleIndex] == ObjectiveColor)
+                //return true;
         
         return false;
     }
