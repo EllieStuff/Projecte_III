@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class WheelButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
@@ -10,23 +7,44 @@ public class WheelButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     [SerializeField] private GameObject wheelSpot = null;
     [SerializeField] private GameObject currentWheel;
 
+    PlayerStatsManager playerStats;
+    StatsSliderManager stats;
+
     Stats.Data sliderData;
 
     private bool placed = false;
+
+    private void Start()
+    {
+        playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStatsManager>();
+
+        stats = GameObject.FindGameObjectWithTag("StatsManager").GetComponent<StatsSliderManager>();
+    }
 
     private void Update()
     {
         sliderData = wheelsModel.GetComponent<Stats>().GetStats();
 
         if (wheelSpot == null)
-            wheelSpot = GameObject.FindGameObjectWithTag("VehicleSet").transform.GetChild(1).gameObject;
+        {
+            wheelSpot = GameObject.FindGameObjectWithTag("Player").transform.GetChild(1).gameObject;
+            currentWheel = wheelSpot.transform.GetChild(0).gameObject;
+        }
     }
 
     public void OnPointerEnter(PointerEventData data)
     {
+        if (currentWheel == null)
+            currentWheel = wheelSpot.transform.GetChild(0).gameObject;
+
+        if (currentWheel.name.Contains(wheelsModel.name)) return;
+
         if (wheelsModel != null)
         {
             Instantiate(wheelsModel, wheelSpot.transform);
+
+            Stats.Data current = playerStats.transform.GetComponent<Stats>().GetStats() - currentWheel.GetComponent<Stats>().GetStats();
+            current += wheelsModel.GetComponent<Stats>().GetStats();
 
             if (wheelSpot.transform.GetChild(0).childCount > 1 && (currentWheel == null || currentWheel.name != wheelsModel.name))
             {
@@ -38,12 +56,19 @@ public class WheelButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 currentWheel.SetActive(false);
             }
 
-            //SetNewValues();
+            SetNewValues(current);
         }
     }
 
     public void OnPointerExit(PointerEventData data)
     {
+        if (currentWheel == null)
+            currentWheel = wheelSpot.transform.GetChild(0).gameObject;
+
+        if (currentWheel.name.Contains(wheelsModel.name)) return;
+
+        SetNewValues(playerStats.transform.GetComponent<Stats>().GetStats(), true);
+
         if (wheelsModel != null && wheelSpot.transform.childCount > 1)
         {
             Destroy(wheelSpot.transform.GetChild(1).gameObject);
@@ -57,36 +82,35 @@ public class WheelButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         {
             currentWheel.SetActive(true);
         }
-
-        //SetNewValues();
     }
 
     public void SetWheels()
     {
-        if(wheelSpot.transform.childCount > 0 && wheelSpot.transform.GetChild(0).name != wheelsModel.name)
+        if (currentWheel == null)
+            currentWheel = wheelSpot.transform.GetChild(0).gameObject;
+
+        if (currentWheel.name.Contains(wheelsModel.name)) return;
+
+        for (int i = 0; i < wheelSpot.transform.childCount; i++)
         {
-            Destroy(wheelSpot.transform.GetChild(0).gameObject);
+            Destroy(wheelSpot.transform.GetChild(i).gameObject);
         }
 
         //SetNewValues();
 
-        GameObject instance = Instantiate(wheelsModel, wheelSpot.transform);
+        Transform instance = Instantiate(wheelsModel, wheelSpot.transform).transform;
 
         instance.GetComponent<AudioSource>().enabled = true;
 
-        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStatsManager>().SetStats();
+        playerStats.SetStats();
+
+        SetNewValues(playerStats.transform.GetComponent<Stats>().GetStats(), true);
 
         placed = true;
     }
 
-    private void SetNewValues()
+    private void SetNewValues(Stats.Data _stats, bool placed = false)
     {
-        StatsSliderManager stats = GameObject.FindGameObjectWithTag("StatsManager").GetComponent<StatsSliderManager>();
-
-        stats.SetSliderValue(sliderData.acceleration, "Acceleration");
-        stats.SetSliderValue(sliderData.friction, "Friction");
-        stats.SetSliderValue(sliderData.maxVelocity, "MaxVelocity");
-        stats.SetSliderValue(sliderData.torque, "Torque");
-        stats.SetSliderValue(sliderData.weight, "Weight");
+        stats.SetSliderValue(_stats, placed);
     }
 }

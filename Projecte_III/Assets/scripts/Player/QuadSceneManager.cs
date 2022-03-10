@@ -37,7 +37,10 @@ public class QuadSceneManager : MonoBehaviour
         }
         else if (scene.name == "Building Scene" && !sceneLoaded)
         {
-            GameObject.FindGameObjectWithTag("ModifierSpots").GetComponent<ModifierManager>().Active(false);
+            ModifierManager modfs = GameObject.FindGameObjectWithTag("ModifierSpots").GetComponent<ModifierManager>();
+            Transform quad = GameObject.FindGameObjectWithTag("PlayerVehicle").transform.GetChild(0);
+            modfs.SetNewModifierSpots(quad.GetChild(quad.childCount - 1));
+            modfs.Active(false);
 
             for (int i = 0; i < transform.childCount; i++)
             {

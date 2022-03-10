@@ -19,7 +19,7 @@ public class BuildingRadialMenu : MonoBehaviour
         public bool hadModifier = false;
         public ModifierSpotsData() { }
     }
-    Transform[] modifierSpots;
+    [SerializeField] Transform[] modifierSpots;
     ModifierSpotsData[] modifierSpotsData;
 
     // Start is called before the first frame update
@@ -53,6 +53,8 @@ public class BuildingRadialMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (modifierSpots.Length == 0 || modifierSpots[0] == null) Init();
+
         int changedSpotId = CheckForModifierSpotsChanges();
         if(changedSpotId >= 0)
         {

@@ -6,7 +6,7 @@ public class PlayerStatsManager : MonoBehaviour
 {
     [SerializeField]private Stats stats;
 
-    private GameObject wheelsSpot, quadSpot, modifierSpot;
+    private GameObject wheelsSpot, quadSpot;
 
     // Start is called before the first frame update
     void Start()
@@ -14,15 +14,8 @@ public class PlayerStatsManager : MonoBehaviour
         stats = gameObject.AddComponent<Stats>();
         wheelsSpot = GameObject.FindGameObjectWithTag("Wheels");
         quadSpot = GameObject.FindGameObjectWithTag("PlayerVehicle");
-        modifierSpot = GameObject.FindGameObjectWithTag("ModifierSpots");
 
         SetStats();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void SetStats()
@@ -37,21 +30,26 @@ public class PlayerStatsManager : MonoBehaviour
 
         //Modifier Stats
         //Transform modfs = GameObject.FindGameObjectWithTag("ModifierSpots").transform;
-        Transform modfs = modifierSpot.transform.GetChild(0);
+        Transform modfs = GameObject.FindGameObjectWithTag("ModifierSpots").transform.GetChild(0);
 
         for (int i = 0; i < modfs.childCount; i++)
         {
             if (modfs.GetChild(i).childCount > 0)
+            {
                 stats.SetStats(stats + modfs.GetChild(i).GetComponentInChildren<Stats>());
+            }
         }
+
         GameObject statsUI = GameObject.FindGameObjectWithTag("StatsManager");
         if(statsUI != null) statsUI.GetComponentInChildren<StatsListUI>().UpdateStatsUI(stats.GetStats());
+
+
+        
     }
 
     public void HideVoidModifier()
     {
-        //Transform modfs = GameObject.FindGameObjectWithTag("ModifierSpots").transform;
-        Transform modfs = modifierSpot.transform.GetChild(0);
+        Transform modfs = GameObject.FindGameObjectWithTag("ModifierSpots").transform.GetChild(0);
 
         for (int i = 0; i < modfs.childCount; i++)
         {
