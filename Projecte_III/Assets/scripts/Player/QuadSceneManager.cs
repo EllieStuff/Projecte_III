@@ -53,7 +53,7 @@ public class QuadSceneManager : MonoBehaviour
                     child.SetActive(true);
             }
 
-            Transform initial = GameObject.FindGameObjectWithTag("InitPos").transform;
+            Transform initial = GameObject.FindGameObjectWithTag("InitPos").GetComponent<InitPosManager>().GetInitPos(playerId);
 
             gameObject.transform.localPosition = initial.localPosition;
             gameObject.transform.localRotation = initial.localRotation;
@@ -82,9 +82,9 @@ public class QuadSceneManager : MonoBehaviour
         }
         else if (scene.name != "Menu" && !sceneLoaded)
         {
-            GameObject.FindGameObjectWithTag("ModifierSpots").GetComponent<ModifierManager>().Active(false);
+            playersManager.GetPlayerModifier(playerId).GetComponent<ModifierManager>().Active(false);
 
-            Transform initial = GameObject.FindGameObjectWithTag("InitPos").transform;
+            Transform initial = GameObject.FindGameObjectWithTag("InitPos").GetComponent<InitPosManager>().GetInitPos(playerId);
 
             gameObject.transform.position = initial.position;
             gameObject.transform.localRotation = initial.localRotation;
@@ -110,7 +110,7 @@ public class QuadSceneManager : MonoBehaviour
 
     void SetCarModifiers()
     {
-        Transform modifiers = GameObject.FindGameObjectWithTag("ModifierSpots").transform.GetChild(0);
+        Transform modifiers = playersManager.GetPlayerModifier(playerId).GetChild(0);
         playerScript.listOfModifiers = new List<Transform>(modifiers.childCount);
         for (int i = 0; i < modifiers.childCount; i++)
         {

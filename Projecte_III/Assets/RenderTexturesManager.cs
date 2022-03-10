@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class RenderTexturesManager : MonoBehaviour
 {
-    [SerializeField] Transform[] renderTextures;
-
+    [SerializeField] GameObject[] renderSetups;
+    
+    //Transform[] renderTextures = new Transform[4];
+    int currState = 0;
     PlayersManager.GameModes gameMode;
 
     // Start is called before the first frame update
@@ -21,11 +23,19 @@ public class RenderTexturesManager : MonoBehaviour
     }
 
 
+    public void SetRenderSetup(int _numOfPlayers)
+    {
+        currState = _numOfPlayers - 1;
+        for(int i = 0; i < renderSetups.Length; i++)
+        {
+            renderSetups[i].SetActive(currState == i);
+        }
+    }
     public Transform GetRenderTexture(int _idx)
     {
-        if (gameMode == PlayersManager.GameModes.MONO) return renderTextures[0];
+        if (gameMode == PlayersManager.GameModes.MONO) return renderSetups[0].transform.GetChild(0);
 
-        return renderTextures[_idx];
+        return renderSetups[currState].transform.GetChild(_idx);
     }
 
 }

@@ -1,21 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RendererCamerasManager : MonoBehaviour
 {
+    Vector3 marginVector = new Vector3(0, 1, -4);
+
     //CameraManager cameraManager;
     //int numOfPlayers;
-    [System.Serializable]
-    class RenderCamerasData
-    {
-        public Vector3 position, scale;
-        public bool isActive = false;
-    }
-    [SerializeField] RenderCamerasData[] renderCamerasData1Player;
-    [SerializeField] RenderCamerasData[] renderCamerasData2Players;
-    [SerializeField] RenderCamerasData[] renderCamerasData3Players;
-    [SerializeField] RenderCamerasData[] renderCamerasData4Players;
+    //[System.Serializable]
+    //class RenderCamerasData
+    //{
+    //    public Vector3 position, scale;
+    //    public bool isActive = false;
+    //}
+    //[SerializeField] RenderCamerasData[] renderCamerasData1Player;
+    //[SerializeField] RenderCamerasData[] renderCamerasData2Players;
+    //[SerializeField] RenderCamerasData[] renderCamerasData3Players;
+    //[SerializeField] RenderCamerasData[] renderCamerasData4Players;
 
     // Start is called before the first frame update
     void Start()
@@ -24,42 +27,22 @@ public class RendererCamerasManager : MonoBehaviour
 
         /// Modificar escales i posicions de les textures en funció del número de jugadors
         int numOfPlayers = cameraManager.playersManager.numOfPlayers;
-        for (int i = 0; i < cameraManager.GetNumOfCameras(); i++)
-        {
-            Transform currRenderTexture = cameraManager.rendTexManager.GetRenderTexture(i);
-            RenderCamerasData currCameraData = null;
-            switch (numOfPlayers)
+        cameraManager.rendTexManager.SetRenderSetup(numOfPlayers);
+
+        string sceneName = SceneManager.GetActiveScene().name;
+        if (sceneName == "Building Scene" || sceneName == "Building Scene Multiplayer") {
+            if (numOfPlayers == 2)
             {
-                case 1:
-                    currCameraData = renderCamerasData1Player[i];
-                    break;
-
-                case 2:
-                    currCameraData = renderCamerasData2Players[i];
-                    break;
-
-                case 3:
-                    currCameraData = renderCamerasData3Players[i];
-                    break;
-
-                case 4:
-                    currCameraData = renderCamerasData4Players[i];
-                    break;
-
-                default:
-                    break;
+                Transform camera = cameraManager.GetCamera(0).transform;
+                camera.position = camera.position + marginVector;
+                camera = cameraManager.GetCamera(1).transform;
+                camera.position = camera.position + marginVector;
             }
-
-            if (currCameraData != null)
+            else if (numOfPlayers == 3)
             {
-                Vector3 newPos = currCameraData.position + new Vector3(Screen.width / 2.0f, Screen.height / 2.0f);
-                currRenderTexture.position = newPos;
-                currRenderTexture.localScale = currCameraData.scale;
-                currRenderTexture.gameObject.SetActive(currCameraData.isActive);
+                Transform camera = cameraManager.GetCamera(2).transform;
+                camera.position = camera.position + marginVector;
             }
-            else 
-                Debug.LogError("Current Camera Not Found at index " + i);
-
         }
 
     }
