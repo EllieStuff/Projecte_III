@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayersManager : MonoBehaviour
 {
     public enum GameModes { MONO, MULTI_LOCAL /*, MULTI_ONLINE*/ };
-    [SerializeField] GameModes gameMode = GameModes.MONO;
+    public GameModes gameMode = GameModes.MONO;
 
     public InputSystem inputSystem;
     public int numOfPlayers = 1;

@@ -18,7 +18,8 @@ public class ModifierManager : MonoBehaviour
         
         ShowTarget(false);
 
-        player = GameObject.FindGameObjectWithTag("Player");
+        //PlayersManager playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
+        player = transform.parent.GetComponentInChildren<PlayerVehicleScript>().gameObject;
 
         stats = player.GetComponent<PlayerStatsManager>();
 

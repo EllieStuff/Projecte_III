@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class QuadSceneManager : MonoBehaviour
 {
+    public int playerId;
+
+    PlayersManager playersManager;
     GameObject player;
     PlayerVehicleScript playerScript;
     string[] listOfAllModifiers = { "Floater", "PaintGun", "OilGun", "Plunger", "AlaDelta", "ChasisElevation" };
@@ -14,7 +17,8 @@ public class QuadSceneManager : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
 
-        player = GameObject.FindGameObjectWithTag("Player");
+        playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
+        player = playersManager.GetPlayer(playerId).gameObject;
         playerScript = player.GetComponent<PlayerVehicleScript>();
 
         GameObject[] objs = GameObject.FindGameObjectsWithTag("VehicleSet");
@@ -37,8 +41,8 @@ public class QuadSceneManager : MonoBehaviour
         }
         else if (scene.name == "Building Scene" && !sceneLoaded)
         {
-            ModifierManager modfs = GameObject.FindGameObjectWithTag("ModifierSpots").GetComponent<ModifierManager>();
-            Transform quad = GameObject.FindGameObjectWithTag("PlayerVehicle").transform.GetChild(0);
+            ModifierManager modfs = playersManager.GetPlayerModifier(playerId).GetComponent<ModifierManager>(); //GameObject.FindGameObjectWithTag("ModifierSpots").GetComponent<ModifierManager>();
+            Transform quad = playersManager.GetPlayer(playerId).GetChild(0).GetChild(0); //GameObject.FindGameObjectWithTag("PlayerVehicle").transform.GetChild(0);
             modfs.SetNewModifierSpots(quad.GetChild(quad.childCount - 1));
             modfs.Active(false);
 
