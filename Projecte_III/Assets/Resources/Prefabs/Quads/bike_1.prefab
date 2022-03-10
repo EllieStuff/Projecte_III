@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 985446578318185466}
   - component: {fileID: 1302346853581263527}
   - component: {fileID: 5428002612033954126}
+  - component: {fileID: 5147150212383062975}
   m_Layer: 6
   m_Name: Modifier Zone 1
   m_TagString: Untagged
@@ -95,6 +96,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &5147150212383062975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122227936668703300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 770c0c0a3b4837a40b845bd8d497ac7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  availableTypes: 010000000500000002000000
 --- !u!1 &2043901934774427347
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,6 +255,7 @@ GameObject:
   - component: {fileID: 8690166351198687392}
   - component: {fileID: 7250154125098163777}
   - component: {fileID: 4323825684826194621}
+  - component: {fileID: 7217364471258846022}
   m_Layer: 6
   m_Name: Modifier Zone 3
   m_TagString: Untagged
@@ -324,6 +339,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &7217364471258846022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7506381011222266082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 770c0c0a3b4837a40b845bd8d497ac7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  availableTypes: 04000000
 --- !u!1 &7950999340847932033
 GameObject:
   m_ObjectHideFlags: 0
@@ -336,6 +364,7 @@ GameObject:
   - component: {fileID: 245101787236295425}
   - component: {fileID: 9014084406266956439}
   - component: {fileID: 8614160109519163745}
+  - component: {fileID: 7259015206485629385}
   m_Layer: 6
   m_Name: Modifier Zone 2
   m_TagString: Untagged
@@ -419,3 +448,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &7259015206485629385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7950999340847932033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 770c0c0a3b4837a40b845bd8d497ac7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  availableTypes: 0100000003000000

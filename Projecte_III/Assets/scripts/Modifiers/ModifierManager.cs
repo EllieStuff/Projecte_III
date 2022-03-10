@@ -37,7 +37,7 @@ public class ModifierManager : MonoBehaviour
     void Update()
     {
         Stats.Data playerStats = stats.transform.GetComponent<Stats>().GetStats();
-        if (!isActive)
+        if (!target.activeSelf)
         {
             
             Vector3 playerEuler = Quaternion.ToEulerAngles(player.transform.localRotation);
@@ -48,6 +48,7 @@ public class ModifierManager : MonoBehaviour
 
             return;
         }
+        Debug.Log("Not active");
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
 
         Vector3 newPos = ray.origin + ray.direction * (transform.position.z + Mathf.Abs(Camera.main.transform.position.z));
@@ -66,6 +67,7 @@ public class ModifierManager : MonoBehaviour
             //Place button ------ Left mouse click ------ 
             if(controls.ConstructionMenu.ConstructModifier.ReadValue<float>() > 0)
             {
+                Debug.Log(raycastHit.transform.GetComponent<ModifierSpotData>());
                 if (target.transform.childCount > 0 && raycastHit.transform.GetComponent<ModifierSpotData>().IsAvailable(target.transform.GetChild(0).gameObject.tag))
                 {
                     PlaceModifier(raycastHit.transform);
@@ -90,7 +92,10 @@ public class ModifierManager : MonoBehaviour
                 return;
             }
 
-            if(raycastHit.transform.childCount == 0 || (target.transform.childCount > 0 && (raycastHit.transform.childCount > 0 && target.transform.GetChild(0).tag != raycastHit.transform.GetChild(0).tag)))
+            if(target.transform.childCount > 0 && 
+                (raycastHit.transform.childCount == 0 ||
+                (raycastHit.transform.childCount > 0 && 
+                target.transform.GetChild(0).tag != raycastHit.transform.GetChild(0).tag)))
             {
                 SetNewValues(playerStats + target.transform.GetComponentInChildren<Stats>().GetStats());
             }
