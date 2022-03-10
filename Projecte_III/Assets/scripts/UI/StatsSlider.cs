@@ -7,11 +7,11 @@ public class StatsSlider : MonoBehaviour
 {
     float currentValue = -1;
 
-    float maxValue = 200;
+    [SerializeField] float maxValue = 200;
 
     Color mainColor;
 
-    Slider[] sliders;
+    [SerializeField] Slider[] sliders;
 
     // Start is called before the first frame update
     void Start()
@@ -28,42 +28,33 @@ public class StatsSlider : MonoBehaviour
 
     public void SetSliderValue(float value, bool placed)
     {
-        if (value == currentValue)
-            return;
-
-        if(placed)
+        if(placed || value == currentValue)
         {
-            currentValue = value;
-            sliders[0].value = currentValue;
+            sliders[0].value = value;
             sliders[0].transform.GetChild(1).GetComponentInChildren<Image>().color = mainColor;
 
-            sliders[1].value = currentValue;
-            sliders[1].transform.GetChild(1).GetComponentInChildren<Image>().color = mainColor;
+            sliders[1].value = value;
+            sliders[1].transform.GetChild(0).GetComponentInChildren<Image>().color = mainColor;
 
+            currentValue = value;
             return;
         }
 
         if (value < currentValue)
         {
-            sliders[0].value = value;
-            sliders[0].transform.GetChild(1).GetComponentInChildren<Image>().color = Color.green;
-
-            sliders[1].value = currentValue;
-            sliders[1].transform.GetChild(1).GetComponentInChildren<Image>().color = mainColor;
-        }
-        else
-        {
             sliders[0].value = currentValue;
             sliders[0].transform.GetChild(1).GetComponentInChildren<Image>().color = Color.red;
 
             sliders[1].value = value;
-            sliders[1].transform.GetChild(1).GetComponentInChildren<Image>().color = mainColor;
+            sliders[1].transform.GetChild(0).GetComponentInChildren<Image>().color = mainColor;
         }
-    }
+        else
+        {
+            sliders[0].value = value;
+            sliders[0].transform.GetChild(1).GetComponentInChildren<Image>().color = Color.green;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+            sliders[1].value = currentValue;
+            sliders[1].transform.GetChild(0).GetComponentInChildren<Image>().color = mainColor;
+        }
     }
 }

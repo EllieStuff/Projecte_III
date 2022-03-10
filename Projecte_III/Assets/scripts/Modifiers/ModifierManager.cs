@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,12 +6,11 @@ public class ModifierManager : MonoBehaviour
     private GameObject target;
     QuadControls controls;
     private PlayerStatsManager stats;
+    private StatsSliderManager statsSliders;
 
     private GameObject player;
 
     private LayerMask layerMask;
-
-    bool isActive;
 
     void Start()
     {
@@ -26,22 +23,23 @@ public class ModifierManager : MonoBehaviour
         stats = player.GetComponent<PlayerStatsManager>();
 
         layerMask = LayerMask.GetMask("Modifiers");
-        Debug.Log(layerMask.value);
 
         controls = new QuadControls();
         controls.Enable();
+
+        statsSliders = GameObject.FindGameObjectWithTag("StatsManager").GetComponent<StatsSliderManager>();
     }
 
     void Update()
     {
-        if (!isActive)
+        Stats.Data playerStats = stats.transform.GetComponent<Stats>().GetStats();
+        if (GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().GetSceneName() != "Building Scene" && (target == null || !target.activeSelf))
         {
-            
-            Vector3 playerEuler = Quaternion.ToEulerAngles(player.transform.localRotation);
-            playerEuler *= Mathf.Rad2Deg;
-            playerEuler.y += -180;
+            Transform chasis = player.transform.parent.GetChild(0);
 
-            transform.localRotation = Quaternion.Euler(playerEuler);
+            Quaternion playerEuler = chasis.GetChild(chasis.childCount - 1).rotation;
+
+            transform.rotation = playerEuler;
 
             return;
         }
@@ -51,19 +49,26 @@ public class ModifierManager : MonoBehaviour
 
         target.transform.position = newPos;
 
+        SetNewValues(playerStats);
+
         if (Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, layerMask))
         {
+            
             target.transform.position = raycastHit.transform.position;
             target.transform.localScale = raycastHit.transform.lossyScale;
             target.transform.rotation = raycastHit.transform.rotation;
-
+            
             //Place button ------ Left mouse click ------ 
             if(controls.ConstructionMenu.ConstructModifier.ReadValue<float>() > 0)
             {
-
-                if (target.transform.childCount > 0)
+                if (target.transform.childCount > 0 && raycastHit.transform.GetComponent<ModifierSpotData>().IsAvailable(target.transform.GetChild(0).gameObject.tag))
                 {
                     PlaceModifier(raycastHit.transform);
+
+                    stats.SetStats();
+                    SetNewValues(stats.transform.GetComponent<Stats>().GetStats(), true);
+
+                    return;
                 }
             }
             //Delete button ------ Right mouse click ------ 
@@ -72,15 +77,30 @@ public class ModifierManager : MonoBehaviour
                 for (int i = 0; i < raycastHit.transform.childCount; i++)
                 {
                     raycastHit.transform.GetComponent<MeshRenderer>().enabled = true;
+
                     Destroy(raycastHit.transform.GetChild(i).gameObject);
-                    stats.SetStats();
                 }
+                stats.SetStats();
+                SetNewValues(stats.transform.GetComponent<Stats>().GetStats(), true);
+                return;
             }
+
+            if(target.transform.childCount > 0 && 
+                (raycastHit.transform.childCount == 0 ||
+                (raycastHit.transform.childCount > 0 && 
+                target.transform.GetChild(0).tag != raycastHit.transform.GetChild(0).tag)))
+            {
+                SetNewValues(playerStats + target.transform.GetComponentInChildren<Stats>().GetStats());
+            }
+                
         }
 
         if (controls.ConstructionMenu.DeleteModifier.ReadValue<float>() > 0)
         {
-            if(target.transform.childCount > 0) Destroy(target.transform.GetChild(0).gameObject);
+            if (target.transform.childCount > 0)
+            {
+                Destroy(target.transform.GetChild(0).gameObject);
+            }
         }
     }
 
@@ -121,6 +141,8 @@ public class ModifierManager : MonoBehaviour
         clone.transform.localPosition = Vector3.zero;
 
         stats.SetStats();
+
+        SetNewValues(stats.transform.GetComponent<Stats>().GetStats(), true);
     }
 
     public void ChangeGameObject(GameObject obj)
@@ -136,10 +158,21 @@ public class ModifierManager : MonoBehaviour
         Instantiate(obj, target.transform);
     }
 
+    public void SetNewModifierSpots(Transform newModfs)
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Destroy(transform.GetChild(i).gameObject);
+        }
+
+        newModfs.parent = transform;
+        newModfs.localPosition = transform.localPosition;
+        newModfs.localScale = transform.localScale;
+        newModfs.localRotation = transform.localRotation;
+    }
+
     public void Active(bool active)
     {
-        isActive = active;
-
         if (!active)
             Destroy(target);
         else
@@ -147,5 +180,11 @@ public class ModifierManager : MonoBehaviour
             target = Instantiate(new GameObject());
             target.name = "Mouse";
         }
+    }
+
+
+    private void SetNewValues(Stats.Data _stats, bool placed = false)
+    {
+        statsSliders.SetSliderValue(_stats, placed);
     }
 }
