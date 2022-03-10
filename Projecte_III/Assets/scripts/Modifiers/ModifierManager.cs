@@ -33,7 +33,8 @@ public class ModifierManager : MonoBehaviour
     void Update()
     {
         Stats.Data playerStats = stats.transform.GetComponent<Stats>().GetStats();
-        if (GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().GetSceneName() != "Building Scene" && (target == null || !target.activeSelf))
+        
+        if (GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().GetSceneName() != "Building Scene")
         {
             Transform chasis = player.transform.parent.GetChild(0);
 
@@ -43,6 +44,7 @@ public class ModifierManager : MonoBehaviour
 
             return;
         }
+        else if (target == null || !target.activeSelf) return;
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
 
         Vector3 newPos = ray.origin + ray.direction * (transform.position.z + Mathf.Abs(Camera.main.transform.position.z));
