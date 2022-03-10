@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class WheelButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
@@ -41,8 +38,6 @@ public class WheelButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             currentWheel = wheelSpot.transform.GetChild(0).gameObject;
 
         if (currentWheel.name.Contains(wheelsModel.name)) return;
-
-
 
         if (wheelsModel != null)
         {
@@ -87,8 +82,6 @@ public class WheelButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         {
             currentWheel.SetActive(true);
         }
-
-        //SetNewValues();
     }
 
     public void SetWheels()
@@ -98,14 +91,14 @@ public class WheelButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
         if (currentWheel.name.Contains(wheelsModel.name)) return;
 
-        if (wheelSpot.transform.childCount > 0 && wheelSpot.transform.GetChild(0).name != wheelsModel.name)
+        for (int i = 0; i < wheelSpot.transform.childCount; i++)
         {
-            Destroy(wheelSpot.transform.GetChild(0).gameObject);
+            Destroy(wheelSpot.transform.GetChild(i).gameObject);
         }
 
         //SetNewValues();
 
-        GameObject instance = Instantiate(wheelsModel, wheelSpot.transform);
+        Transform instance = Instantiate(wheelsModel, wheelSpot.transform).transform;
 
         instance.GetComponent<AudioSource>().enabled = true;
 
