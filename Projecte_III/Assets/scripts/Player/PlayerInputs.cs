@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerInputs : MonoBehaviour
 {
-    PlayerVehicleScript.GameModes gameMode = PlayerVehicleScript.GameModes.MONO;
+    PlayersManager.GameModes gameMode = PlayersManager.GameModes.MONO;
     InputSystem inputSystem;
     InputSystem.ControlData[] controlData = new InputSystem.ControlData[1];
 
@@ -52,7 +52,7 @@ public class PlayerInputs : MonoBehaviour
     {
         switch (gameMode)
         {
-            case PlayerVehicleScript.GameModes.MONO:
+            case PlayersManager.GameModes.MONO:
                 if(controlData == null || controlData[0] == null)
                     controlData = inputSystem.GetAllControllersData();
                 else
@@ -62,7 +62,7 @@ public class PlayerInputs : MonoBehaviour
 
                 break;
 
-            case PlayerVehicleScript.GameModes.MULTI_LOCAL:
+            case PlayersManager.GameModes.MULTI_LOCAL:
                 if (controlData[0] == null)
                     controlData[0] = inputSystem.GetActiveControllerData();
                 else
@@ -95,9 +95,9 @@ public class PlayerInputs : MonoBehaviour
 
 
 
-    public void SetGameMode(PlayerVehicleScript.GameModes _gameMode)
-    {
-        gameMode = _gameMode;
-    }
+    //public void SetGameMode(PlayerVehicleScript.GameModes _gameMode)
+    //{
+    //    gameMode = _gameMode;
+    //}
 
 }
