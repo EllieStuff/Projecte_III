@@ -45,7 +45,7 @@ public class PlayingMainRadialMenu : MonoBehaviour
         if (gameObject.activeSelf && rmPieces.Length > 0)
         {
             HighlightActiveElement(activeElement);
-            GetInput();
+            if (playerInputs.ConfirmGadget) SelectGadget();
 
             lastActiveElement = activeElement;
             activeElement = GetActiveElement();
@@ -77,16 +77,18 @@ public class PlayingMainRadialMenu : MonoBehaviour
 
     }
 
-    private void GetInput()
+    internal void SelectGadget()
     {
-        if (playerInputs.ConfirmGadget)
+        if (lastActiveElement >= 0)
         {
             // Update Selected Gadget
+            Debug.Log("Idx: " + lastActiveElement);
             RadialMenuManager.PieceData newSelectedGadged = new RadialMenuManager.PieceData(lastActiveElement, rmPieces[lastActiveElement].delayTime, rmPieces[lastActiveElement].tag);
             manager.SetSelectedGadget(newSelectedGadged);
 
             //Disable Menu
             rmPieces[lastActiveElement].ReinitColor();
+            lastActiveElement = -1;
             gameObject.SetActive(false);
         }
     }
