@@ -78,7 +78,7 @@ public class RadialMenuManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (state == RadialMenuState.PLAYING)
+        if (state == RadialMenuState.PLAYING && playingRM1_Script.transform.childCount > 0)
         {
             if (playerInputs.EnableGadgetMenu && !triggered)
             {
@@ -88,7 +88,8 @@ public class RadialMenuManager : MonoBehaviour
             else if (!playerInputs.EnableGadgetMenu && triggered)
             {
                 triggered = false;
-                playingRM1_Script.gameObject.SetActive(false);
+                playingRM1_Script.SelectGadget();
+                //playingRM1_Script.gameObject.SetActive(false);
             }
 
             if (playerInputs.UseGadget && selectedGadget != null && !piecesData[selectedGadget.tag].countdownActive)
