@@ -38,6 +38,8 @@ public class PlayerVehicleScript : MonoBehaviour
     public Vector3 respawnPosition, respawnRotation, respawnVelocity;
     public float boostPadMultiplier;
     public float maxClimbingAngle;
+    [SerializeField] private float sandVelocityMultiplier;
+    [SerializeField] private float sandAccelerationMultiplier;
 
     [SerializeField] private GameObject wheelsPivot;
 
@@ -315,11 +317,6 @@ public class PlayerVehicleScript : MonoBehaviour
             vehicleMaxSpeed = savedMaxSpeed;
             vehicleAcceleration = savedAcceleration;
         }
-
-        //Check if player is on sand
-        if (SlowingSandScript.CheckIfOnSand(transform))
-            Debug.Log("AAAAAAAAAAAAAAAA");
-        Debug.Log(SlowingSandScript.CheckIfOnSand(transform));
 
         //Vehicle sound pitch function
         VehicleSoundPitchFunction();
@@ -603,6 +600,10 @@ public class PlayerVehicleScript : MonoBehaviour
             }
         }
 
+        //Terrain
+        if (other.CompareTag("Sand") && touchingGround)
+            OnSand(other);
+
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -611,16 +612,27 @@ public class PlayerVehicleScript : MonoBehaviour
             GameObject.Find("UI").transform.GetChild(1).GetComponent<UIPosition>().actualCheckpoint++;
             other.GetComponent<DeathfallAndCheckpointsSystem>().activated = true;
         }
+        
     }
     private void OnTriggerExit(Collider other)
     {
-        StartCoroutine(WaitEndBoost());
+        if(!other.CompareTag("Sand"))
+            StartCoroutine(WaitEndBoost());
 
         if (other.CompareTag("Painting") || other.CompareTag("Oil"))
         {
             ResetFriction();
         }
 
+        //Terrain
+        if (other.CompareTag("Sand") || !touchingGround)
+        {
+            //if (vehicleMaxSpeed == savedMaxSpeed / sandVelocityMultiplier)
+            //{
+                vehicleMaxSpeed = savedMaxSpeed;
+                vehicleAcceleration = savedAcceleration;
+            //}
+        }
     }
 
     void OnCollisionExit(Collision other)
@@ -638,6 +650,16 @@ public class PlayerVehicleScript : MonoBehaviour
         vehicleRB.AddForce(velFrictionVec, ForceMode.Force);
         vehicleRB.angularDrag = savedAngularDrag * _dragInc;
     }
+
+    void OnSand(Collider other)
+    {
+        if(vehicleMaxSpeed <= savedMaxSpeed && vehicleMaxSpeed > savedMaxSpeed / sandVelocityMultiplier)
+        {
+            vehicleMaxSpeed = savedMaxSpeed / sandVelocityMultiplier;
+            vehicleAcceleration = savedAcceleration / sandAccelerationMultiplier;
+        }
+    }
+
 
     internal IEnumerator LerpVehicleMaxSpeed(float _targetValue, float _lerpTime)
     {
