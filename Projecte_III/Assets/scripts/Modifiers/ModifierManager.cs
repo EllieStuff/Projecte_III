@@ -46,10 +46,31 @@ public class ModifierManager : MonoBehaviour
             return;
         }
         else if (target == null || !target.activeSelf) return;
-        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+        CameraManager camManager = GameObject.FindGameObjectWithTag("CamerasManager").GetComponent<CameraManager>();
+        int playerId = transform.GetComponentInParent<QuadSceneManager>().playerId;
+        PlayersManager playersManager = transform.parent.GetComponentInParent<PlayersManager>();
+        PlayerInputs inputs = playersManager.GetPlayer(playerId).GetComponent<PlayerInputs>();
+        Vector3 newPos = Vector3.zero;
+        Ray ray = new Ray();
+        if (playersManager.gameMode == PlayersManager.GameModes.MONO)
+        {
+            ray = camManager.GetCamera(playerId).ScreenPointToRay(Mouse.current.position.ReadValue());
+            newPos = ray.origin + ray.direction * (transform.position.z + Mathf.Abs(camManager.GetCamera(playerId).transform.position.z));
+        }
+        else if (playersManager.gameMode == PlayersManager.GameModes.MULTI_LOCAL)
+        {
+            if (inputs.ControlData[0].deviceType == InputSystem.DeviceTypes.KEYBOARD)
+            {
+                Vector3 mousePos = Mouse.current.position.ReadValue() * 2.0f;
+                mousePos.y -= Screen.height;
+                // ToDo: Trobar les distancies entre quad i sumar-les, potser agafar distancies entre initPoints pot ser bona idea
+                float quadDistances = 0.0f;
+                if (playerId == 1) mousePos.x += quadDistances;
+                ray = camManager.GetCamera(playerId).ScreenPointToRay(mousePos);
 
-        Vector3 newPos = ray.origin + ray.direction * (transform.position.z + Mathf.Abs(Camera.main.transform.position.z));
-
+                newPos = ray.origin + ray.direction * (transform.position.z + Mathf.Abs(camManager.GetCamera(playerId).transform.position.z));
+            }
+        }
         target.transform.position = newPos;
 
         SetNewValues(playerStats);

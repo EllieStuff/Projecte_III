@@ -13,9 +13,9 @@ public class PlayersManager : MonoBehaviour
     [SerializeField] Transform[] modifiers;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-
+        DontDestroyOnLoad(gameObject);
     }
 
     // Update is called once per frame
