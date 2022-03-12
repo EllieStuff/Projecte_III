@@ -5,11 +5,12 @@ using UnityEngine;
 
 public class PlayingMainRadialMenu : MonoBehaviour
 {
+    [SerializeField] RadialMenuManager manager;
     [SerializeField] BuildingRadialMenu menuToCopy;
 
     Transform player;
     PlayerInputs playerInputs;
-    RadialMenuPieceScript[] rmPieces;
+    internal RadialMenuPieceScript[] rmPieces;
     float degreesPerPiece;
     float 
         selectedAlpha = 0.75f,
@@ -44,7 +45,7 @@ public class PlayingMainRadialMenu : MonoBehaviour
         if (gameObject.activeSelf && rmPieces.Length > 0)
         {
             HighlightActiveElement(activeElement);
-            GetInput();
+            if (playerInputs.ConfirmGadget) SelectGadget();
 
             lastActiveElement = activeElement;
             activeElement = GetActiveElement();
@@ -76,49 +77,18 @@ public class PlayingMainRadialMenu : MonoBehaviour
 
     }
 
-    private void GetInput()
+    internal void SelectGadget()
     {
-        if (playerInputs.ConfirmGadget)
+        if (lastActiveElement >= 0)
         {
-            //Do action from each modifier
-            switch (rmPieces[lastActiveElement].tag)
-            {
-                case "OilGun":
-                    player.GetComponent<PlayerOilGun>().Activate();
-                    break;
+            // Update Selected Gadget
+            Debug.Log("Idx: " + lastActiveElement);
+            RadialMenuManager.PieceData newSelectedGadged = new RadialMenuManager.PieceData(lastActiveElement, rmPieces[lastActiveElement].delayTime, rmPieces[lastActiveElement].tag);
+            manager.SetSelectedGadget(newSelectedGadged);
 
-                case "PaintGun":
-                    player.GetComponent<PlayerPaintGun>().Activate();
-                    break;
-
-                case "Plunger":
-                    // ToDo: Adaptar amb els nous scripts
-                    player.GetComponent<PlayerThrowPlunger>().Activate();
-                    break;
-
-                case "AlaDelta":
-                    // ToDo: Adaptar amb els nous scripts
-                    player.GetComponent<AlaDelta>().Activate();
-                    break;
-
-                case "ChasisElevation":
-                    // ToDo: Adaptar amb els nous scripts
-                    player.GetComponent<ChasisElevation>().Activate();
-                    break;
-
-                case "Umbrella":
-                    // ToDo: Fer
-                    break;
-
-                ///Prolly should make an exception for this, since it's automatic
-                //case "Floater":
-                //    break;
-
-                default:
-                    break;
-            }
-
+            //Disable Menu
             rmPieces[lastActiveElement].ReinitColor();
+            lastActiveElement = -1;
             gameObject.SetActive(false);
         }
     }

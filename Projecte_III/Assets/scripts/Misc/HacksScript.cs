@@ -5,7 +5,7 @@ using UnityEngine;
 public class HacksScript : MonoBehaviour
 {
     [SerializeField] Transform[] tpTransforms;
-    [SerializeField] LoadSceneManager sceneLoader;
+    LoadSceneManager sceneLoader;
 
     PlayerVehicleScript playerScript;
     Quaternion rotMargin;

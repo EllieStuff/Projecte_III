@@ -27,7 +27,7 @@ public class plungerInstance : MonoBehaviour
         startRot = new Quaternion(0, this.transform.rotation.y, 0, this.transform.rotation.w);
         
         if(normalDir != Vector3.zero)
-            body.velocity = new Vector3(plungerVelocity * normalDir.x, normalDir.y + 0.2f, plungerVelocity * normalDir.z);
+            body.velocity = new Vector3(plungerVelocity * normalDir.x, normalDir.y + 0.75f, plungerVelocity * normalDir.z);
         else
             body.velocity = transform.TransformDirection(new Vector3(0, 0.5f, plungerVelocity));
         
@@ -69,10 +69,8 @@ public class plungerInstance : MonoBehaviour
 
                 if (Mathf.Abs(transform.TransformDirection(playerRB.velocity).z) > 0 && playerRB.velocity.y < 5)
                 {
-                    if (playerNum == 1 && !prepareToDestroy)
+                    if (!prepareToDestroy)
                         playerShotPlunger.GetComponent<PlayerVehicleScript>().vehicleMaxSpeed = 30;
-                    if (playerNum == 2 && !prepareToDestroy)
-                        playerShotPlunger.GetComponent<PlayerVehicleScriptP2>().vehicleMaxSpeed = 30;
 
                     playerRB.velocity += playerShotPlunger.transform.TransformDirection(new Vector3(0, 0, 0.5f));
                     playerRB.velocity = new Vector3(playerRB.velocity.x, oldSpeedY, playerRB.velocity.z);
