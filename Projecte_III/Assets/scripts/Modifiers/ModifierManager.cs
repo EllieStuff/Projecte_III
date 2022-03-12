@@ -108,6 +108,7 @@ public class ModifierManager : MonoBehaviour
 
     public void ShowTarget(bool show)
     {
+        Debug.Log("enter");
         if (target.activeSelf != show)
             target.SetActive(show);
 
@@ -115,8 +116,14 @@ public class ModifierManager : MonoBehaviour
         for (int i = 0; i < modfs.childCount; i++)
         {
             GameObject child = modfs.GetChild(i).gameObject;
-            if (child.transform.childCount > 0) continue;
+            GameObject child2 = null;
+
+            if (child.transform.GetChildCount() > 0)
+                child2 = child.transform.GetChild(0).gameObject;
+
+            //if (child.transform.childCount > 0) continue;
             if (child.activeSelf != show) child.SetActive(show);
+            if (child2 != null && child2.activeSelf != show) child2.SetActive(show);
         }
 
         if(!show && target.transform.childCount > 0)
