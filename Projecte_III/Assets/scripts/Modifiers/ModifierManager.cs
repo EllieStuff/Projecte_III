@@ -144,7 +144,7 @@ public class ModifierManager : MonoBehaviour
 
         stats.SetStats();
 
-        SetNewValues(stats.transform.GetComponent<Stats>().GetStats(), true);
+        //SetNewValues(stats.transform.GetComponent<Stats>().GetStats(), true);
     }
 
     public void ChangeGameObject(GameObject obj)

@@ -104,7 +104,7 @@ public class WheelButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
         playerStats.SetStats();
 
-        SetNewValues(playerStats.transform.GetComponent<Stats>().GetStats(), true);
+        //SetNewValues(playerStats.transform.GetComponent<Stats>().GetStats(), true);
 
         placed = true;
     }

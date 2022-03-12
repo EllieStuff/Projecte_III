@@ -905,7 +905,6 @@ GameObject:
   - component: {fileID: 104860135}
   - component: {fileID: 104860137}
   - component: {fileID: 104860136}
-  - component: {fileID: 104860138}
   m_Layer: 5
   m_Name: List
   m_TagString: Untagged
@@ -975,18 +974,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 104860134}
   m_CullTransparentMesh: 1
---- !u!114 &104860138
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 104860134}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06159002a86d1604185514a03d10f216, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &107066248
 GameObject:
   m_ObjectHideFlags: 0
@@ -1822,9 +1809,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '50
-
-'
+  m_text: F
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2334,9 +2319,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '50
-
-'
+  m_text: W
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -5148,7 +5131,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a320bc341453afa439c4e9a2d732f6af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxValue: 200
+  maxValue: 1
+  name: 
   sliders: []
 --- !u!1 &678579875
 GameObject:
@@ -5409,7 +5393,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a320bc341453afa439c4e9a2d732f6af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxValue: 200
+  maxValue: 50
+  name: 
   sliders: []
 --- !u!1 &755673392
 GameObject:
@@ -6043,9 +6028,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '50
-
-'
+  m_text: MV
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -7247,9 +7230,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '50
-
-'
+  m_text: A
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -9129,7 +9110,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a320bc341453afa439c4e9a2d732f6af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxValue: 200
+  maxValue: 30000
+  name: 
   sliders: []
 --- !u!1 &1560592114
 GameObject:
@@ -9648,9 +9630,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '50
-
-'
+  m_text: T
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -10734,7 +10714,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a320bc341453afa439c4e9a2d732f6af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxValue: 200
+  maxValue: 2000
+  name: 
   sliders: []
 --- !u!1 &1920625962
 GameObject:
@@ -11720,7 +11701,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a320bc341453afa439c4e9a2d732f6af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxValue: 200
+  maxValue: 30
+  name: 
   sliders: []
 --- !u!1001 &1773846652531177335
 PrefabInstance:
