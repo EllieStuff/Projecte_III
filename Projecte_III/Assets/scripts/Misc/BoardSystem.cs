@@ -9,6 +9,8 @@ public class BoardSystem : MonoBehaviour
 
     private void Awake()
     {
+        hideBoard = false;
+
         startPos = transform.localPosition;
     }
 
