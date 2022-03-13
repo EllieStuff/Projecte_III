@@ -27,7 +27,6 @@ public class LoadSceneManager : MonoBehaviour
 
     public void ChangeScene(string _newScene)
     {
-        GameObject.FindGameObjectWithTag("ModifierSpots").GetComponent<ModifierManager>().ShowTarget(true);
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStatsManager>().SetStats();
         newScene = _newScene;
         changeScene = true;
