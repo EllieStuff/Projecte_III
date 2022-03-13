@@ -58,6 +58,7 @@ public class QuadSceneManager : MonoBehaviour
             for (int i = 0; i < transform.childCount; i++)
             {
                 Transform child = transform.GetChild(i);
+                if (child.tag == "ModifierSpots") continue;
                 child.localPosition = Vector3.zero;
                 if (child.name == "Player")
                     child.localRotation = new Quaternion(0, 180, 0, 0);
