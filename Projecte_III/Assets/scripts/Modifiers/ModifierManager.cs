@@ -118,7 +118,7 @@ public class ModifierManager : MonoBehaviour
             GameObject child = modfs.GetChild(i).gameObject;
             GameObject child2 = null;
 
-            if (child.transform.GetChildCount() > 0)
+            if (child.transform.childCount > 0)
                 child2 = child.transform.GetChild(0).gameObject;
 
             //if (child.transform.childCount > 0) continue;
