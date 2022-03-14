@@ -22,8 +22,9 @@ public class StatsSlider : MonoBehaviour
             sliders[i] = transform.GetChild(i).GetComponent<Slider>();
             sliders[i].maxValue = maxValue;
         }
-
-        mainColor = Color.blue;
+        Color color = Color.blue;
+        color.g = .8f;
+        mainColor = color;
     }
 
     public void SetSliderValue(float value, bool placed)
