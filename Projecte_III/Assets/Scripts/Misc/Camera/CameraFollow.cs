@@ -51,11 +51,9 @@ public class CameraFollow : MonoBehaviour
 
     private void RaycastCamera()
     {
-        Ray ray = new Ray(target.position, target.TransformDirection(new Vector3(0, 0.1f, -1)));
-        if (Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue))
+        Ray ray = new Ray(target.position, (transform.position - target.position).normalized);
+        if (Physics.Raycast(ray, out RaycastHit raycastHit, Vector3.Distance(transform.position, target.position), -1, QueryTriggerInteraction.Ignore))
         {
-            float dist = Vector3.Distance(transform.position, target.position);
-            if(dist < 30)
             transform.position = raycastHit.point;
         }
     }
