@@ -8,6 +8,8 @@ public class DoneButtonManager : MonoBehaviour
     [SerializeField] internal Color selectedBttnImgColor;
     [SerializeField] Color readyBttnImgColor;
 
+    public int buttonsActive = 0;
+
     DoneButtonScript[] doneButtonScripts;
 
     // Start is called before the first frame update
@@ -32,12 +34,19 @@ public class DoneButtonManager : MonoBehaviour
 
     bool AllPlayersReady()
     {
+        if (!doneButtonScripts[0].isActive) return false;
+
         foreach(DoneButtonScript button in doneButtonScripts)
         {
-            if (!button.isReady) return false;
+            if (button.isActive && !button.isReady) return false;
         }
 
         return true;
+    }
+
+    public DoneButtonScript GetButton(int _idx)
+    {
+        return doneButtonScripts[_idx];
     }
 
     IEnumerator ChangeSceneEvent()
@@ -49,6 +58,7 @@ public class DoneButtonManager : MonoBehaviour
         }
         yield return new WaitForSeconds(1.5f);
         Debug.Log("Changing Scene");
+        GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>().numOfPlayers = buttonsActive;
         GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().ChangeScene(nextScene);
     }
 

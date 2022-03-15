@@ -14,7 +14,7 @@ public class PlayerInputs : MonoBehaviour
     float
         forward, backward, right, left, drift;
     bool
-        enableGadgetMenu, confirmGadget, useGadget;
+        start, enableGadgetMenu, confirmGadget, useGadget;
 
     // Axis
     Vector2
@@ -33,6 +33,7 @@ public class PlayerInputs : MonoBehaviour
     public bool Backward { get { return backward > InputSystem.INPUT_THRESHOLD; } }
     public bool Right { get { return right > InputSystem.INPUT_THRESHOLD; } }
     public bool Left { get { return left > InputSystem.INPUT_THRESHOLD; } }
+    public bool Start { get { return start; } }
     public bool Drift { get { return drift > InputSystem.INPUT_THRESHOLD; } }
     public bool EnableGadgetMenu { get { return enableGadgetMenu; } }
     public bool ConfirmGadget { get { return confirmGadget; } }
@@ -97,6 +98,7 @@ public class PlayerInputs : MonoBehaviour
         backward = inputSystem.GetKeyFloat(InputSystem.KeyCodes.BACKWARD, controlData);
         right = inputSystem.GetKeyFloat(InputSystem.KeyCodes.RIGHT, controlData);
         left = inputSystem.GetKeyFloat(InputSystem.KeyCodes.LEFT, controlData);
+        start = inputSystem.GetKey(InputSystem.KeyCodes.START, controlData);
         drift = inputSystem.GetKeyFloat(InputSystem.KeyCodes.DRIFT, controlData);
         enableGadgetMenu = inputSystem.GetKey(InputSystem.KeyCodes.ENABLE_GADGET_MENU, controlData);
         confirmGadget = inputSystem.GetKey(InputSystem.KeyCodes.CONFIRM_GADGET, controlData);

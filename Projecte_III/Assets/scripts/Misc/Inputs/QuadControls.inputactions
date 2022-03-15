@@ -118,6 +118,14 @@
                     "interactions": ""
                 },
                 {
+                    "name": "Start",
+                    "type": "Button",
+                    "id": "63cc4883-68c7-4bc8-a272-f559b2decb60",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
                     "name": "ChasisElevation",
                     "type": "Button",
                     "id": "6e1b1bb5-77ff-493c-9f3c-692aa3e32ec0",
@@ -440,6 +448,17 @@
                     "processors": "",
                     "groups": "Player1",
                     "action": "UseChosenGadget",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a911d508-e42a-42f0-9a02-c02fcf3670a3",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Start",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
