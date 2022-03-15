@@ -9,7 +9,7 @@ public class StatsSlider : MonoBehaviour
 
     [SerializeField] float maxValue = 200;
 
-    Color mainColor;
+    Color mainColor, less, more;
 
     [SerializeField] Slider[] sliders;
 
@@ -25,6 +25,12 @@ public class StatsSlider : MonoBehaviour
         Color color = Color.blue;
         color.g = .8f;
         mainColor = color;
+
+        less = Color.red * 0.8f;
+        less.a = 1;
+        more = Color.green * 0.8f;
+        more.a = 1;
+
     }
 
     public void SetSliderValue(float value, bool placed)
@@ -44,7 +50,7 @@ public class StatsSlider : MonoBehaviour
         if (value < currentValue)
         {
             sliders[0].value = currentValue;
-            sliders[0].transform.GetChild(1).GetComponentInChildren<Image>().color = Color.red;
+            sliders[0].transform.GetChild(1).GetComponentInChildren<Image>().color = less;
 
             sliders[1].value = value;
             sliders[1].transform.GetChild(0).GetComponentInChildren<Image>().color = mainColor;
@@ -52,7 +58,7 @@ public class StatsSlider : MonoBehaviour
         else
         {
             sliders[0].value = value;
-            sliders[0].transform.GetChild(1).GetComponentInChildren<Image>().color = Color.green;
+            sliders[0].transform.GetChild(1).GetComponentInChildren<Image>().color = more;
 
             sliders[1].value = currentValue;
             sliders[1].transform.GetChild(0).GetComponentInChildren<Image>().color = mainColor;
