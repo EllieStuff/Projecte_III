@@ -706,8 +706,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1503203255}
-  - {fileID: 60841487}
   - {fileID: 2037422141}
+  - {fileID: 60841487}
   - {fileID: 117658648}
   m_Father: {fileID: 392654958}
   m_RootOrder: 5
@@ -731,8 +731,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statsSliders:
   - {fileID: 1503203256}
-  - {fileID: 60841488}
   - {fileID: 2037422142}
+  - {fileID: 60841488}
   - {fileID: 117658649}
 --- !u!1 &47299678
 GameObject:
@@ -923,7 +923,7 @@ GameObject:
   - component: {fileID: 60841487}
   - component: {fileID: 60841488}
   m_Layer: 5
-  m_Name: Stats (1)
+  m_Name: Stats (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -943,7 +943,7 @@ RectTransform:
   - {fileID: 514498513}
   - {fileID: 1277403476}
   m_Father: {fileID: 44522110}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -962,7 +962,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 751c459d9a8f72c479469a6976543bba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerId: 1
+  playerId: 2
 --- !u!1 &69665590
 GameObject:
   m_ObjectHideFlags: 0
@@ -2026,8 +2026,8 @@ Transform:
   m_Children:
   - {fileID: 1590272222}
   - {fileID: 2052861225}
-  - {fileID: 1442997879}
   - {fileID: 1439998094}
+  - {fileID: 1442997879}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -11554,8 +11554,8 @@ MonoBehaviour:
   initPoses:
   - {fileID: 1268354656}
   - {fileID: 1701448180}
-  - {fileID: 889350641}
   - {fileID: 2008494351}
+  - {fileID: 889350641}
 --- !u!4 &962304568
 Transform:
   m_ObjectHideFlags: 0
@@ -16566,7 +16566,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5550834916945680585, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5550834916945680585, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: m_LocalPosition.x
@@ -17280,7 +17280,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5550834916945680585, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5550834916945680585, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: m_LocalPosition.x
@@ -24217,7 +24217,7 @@ GameObject:
   - component: {fileID: 2037422141}
   - component: {fileID: 2037422142}
   m_Layer: 5
-  m_Name: Stats (2)
+  m_Name: Stats (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24237,7 +24237,7 @@ RectTransform:
   - {fileID: 1029305138}
   - {fileID: 1312569487}
   m_Father: {fileID: 44522110}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -24256,7 +24256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 751c459d9a8f72c479469a6976543bba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerId: 2
+  playerId: 1
 --- !u!1 &2051945320
 GameObject:
   m_ObjectHideFlags: 0
@@ -25133,6 +25133,7 @@ MonoBehaviour:
   nextScene: Scorching Desert
   selectedBttnImgColor: {r: 0.023529412, g: 0.7176471, b: 0.6627451, a: 1}
   readyBttnImgColor: {r: 0, g: 0.7169812, b: 0.079954185, a: 1}
+  buttonsActive: 0
 --- !u!1 &2102892343
 GameObject:
   m_ObjectHideFlags: 0
