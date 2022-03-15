@@ -31,7 +31,7 @@ public class WheelButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
         if (wheelSpot == null)
         {
-            wheelSpot = playerStats.transform.GetChild(1).gameObject;
+            wheelSpot = playerStats.transform.parent.GetChild(1).gameObject;
             currentWheel = wheelSpot.transform.GetChild(0).gameObject;
         }
     }

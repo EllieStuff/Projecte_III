@@ -11,6 +11,7 @@ public class ModifierManager : MonoBehaviour
     private PlayersManager playersManager;
     private PlayerInputs inputs;
     private Camera usedCamera;
+    private Transform rendererCamera;
     private GameObject player;
     private int playerId;
 
@@ -36,6 +37,7 @@ public class ModifierManager : MonoBehaviour
         playerId = transform.GetComponentInParent<QuadSceneManager>().playerId;
         inputs = playersManager.GetPlayer(playerId).GetComponent<PlayerInputs>();
         usedCamera = GameObject.FindGameObjectWithTag("CamerasManager").GetComponent<CameraManager>().GetCamera(playerId);
+        rendererCamera = GameObject.FindGameObjectWithTag("CamerasManager").GetComponent<CameraManager>().GetRendererCamera(playerId);
         statsSliders = GameObject.FindGameObjectWithTag("StatsManager").GetComponent<StatsManager>().GetPlayerStats(playerId);
 
     }
@@ -81,13 +83,21 @@ public class ModifierManager : MonoBehaviour
             Debug.Log(playerId + " has " + inputs.ControlData[0].deviceType.ToString());
             if (inputs.ControlData[0].deviceType == InputSystem.DeviceTypes.KEYBOARD)
             {
-                Vector3 mousePos = Mouse.current.position.ReadValue();
-                mousePos.y -= Screen.height / 2.0f;
+                Vector3 mousePos = Mouse.current.position.ReadValue();// * 2.0f;
+                //mousePos.y -= Screen.height;
                 //mousePos.z = usedCamera.transform.position.z;
                 // ToDo: Trobar les distancies entre quad i sumar-les, potser agafar distancies entre initPoints pot ser bona idea
-                float quadDistances = Vector3.Distance(playersManager.GetPlayer(0).position, playersManager.GetPlayer(playerId).position);
-                mousePos.x += quadDistances - (Screen.width / 2.0f);
-                ray = usedCamera.ScreenPointToRay(mousePos);
+                //float quadDistances = Vector3.Distance(playersManager.GetPlayer(0).position, playersManager.GetPlayer(playerId).position);
+                //mousePos.x += quadDistances;
+                Vector3 rendererMousePos = mousePos - rendererCamera.position;
+                rendererMousePos *= 2;
+                rendererMousePos.z = 0;
+                if(playerId == 0 || playerId == 2)
+                    rendererMousePos.x += Screen.width;
+                if (playerId == 2 || playerId == 3)
+                    rendererMousePos.y += Screen.height * 1.25f;
+
+                ray = usedCamera.ScreenPointToRay(rendererMousePos);
 
                 newPos = ray.origin + ray.direction * (transform.position.z + Mathf.Abs(usedCamera.transform.position.z));
             }

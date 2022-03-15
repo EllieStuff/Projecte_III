@@ -35,4 +35,10 @@ public class CameraManager : MonoBehaviour
 
         return renderCameras[_idx];
     }
+    public Transform GetRendererCamera(int _idx = 0)
+    {
+        if (playersManager.gameMode == PlayersManager.GameModes.MONO) return rendTexManager.transform.GetChild(0);
+
+        return rendTexManager.transform.GetChild(_idx);
+    }
 }
