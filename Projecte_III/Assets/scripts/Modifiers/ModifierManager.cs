@@ -3,21 +3,22 @@ using UnityEngine.InputSystem;
 
 public class ModifierManager : MonoBehaviour
 {
-    private GameObject target;
+    private GameObject target = null;
     QuadControls controls;
     private PlayerStatsManager stats;
     private StatsSliderManager statsSliders;
 
+    private PlayersManager playersManager;
+    private PlayerInputs inputs;
+    private Camera usedCamera;
     private GameObject player;
+    private int playerId;
 
     private LayerMask layerMask;
+    private bool controllerInited = false;
 
     void Start()
     {
-        Active(true);
-        
-        ShowTarget(false);
-
         //PlayersManager playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
         player = transform.parent.GetComponentInChildren<PlayerVehicleScript>().gameObject;
 
@@ -28,13 +29,35 @@ public class ModifierManager : MonoBehaviour
         controls = new QuadControls();
         controls.Enable();
 
-        statsSliders = GameObject.FindGameObjectWithTag("StatsManager").GetComponent<StatsSliderManager>();
+        /// Todo
+        //   - Canviar getcomponents amb el playerManager
+        //   - Adaptar funcionament ratoli segons id del jugador que l'utilitzi
+        playersManager = transform.parent.GetComponentInParent<PlayersManager>();
+        playerId = transform.GetComponentInParent<QuadSceneManager>().playerId;
+        inputs = playersManager.GetPlayer(playerId).GetComponent<PlayerInputs>();
+        usedCamera = GameObject.FindGameObjectWithTag("CamerasManager").GetComponent<CameraManager>().GetCamera(playerId);
+        statsSliders = GameObject.FindGameObjectWithTag("StatsManager").GetComponent<StatsManager>().GetPlayerStats(playerId);
+
     }
 
     void Update()
     {
+        if(!controllerInited && inputs.ControlData[0] != null)
+        {
+            controllerInited = true;
+            Active(true);
+            ShowTarget(false);
+        }
+        else if (controllerInited)
+        {
+            UpdateTarget();
+        }
+    }
+
+    void UpdateTarget()
+    {
         Stats.Data playerStats = stats.transform.GetComponent<Stats>().GetStats();
-        
+
         if (GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().GetSceneName() != "Building Scene")
         {
             Transform chasis = player.transform.parent.GetChild(0);
@@ -46,29 +69,27 @@ public class ModifierManager : MonoBehaviour
             return;
         }
         else if (target == null || !target.activeSelf) return;
-        CameraManager camManager = GameObject.FindGameObjectWithTag("CamerasManager").GetComponent<CameraManager>();
-        int playerId = transform.GetComponentInParent<QuadSceneManager>().playerId;
-        PlayersManager playersManager = transform.parent.GetComponentInParent<PlayersManager>();
-        PlayerInputs inputs = playersManager.GetPlayer(playerId).GetComponent<PlayerInputs>();
         Vector3 newPos = Vector3.zero;
         Ray ray = new Ray();
         if (playersManager.gameMode == PlayersManager.GameModes.MONO)
         {
-            ray = camManager.GetCamera(playerId).ScreenPointToRay(Mouse.current.position.ReadValue());
-            newPos = ray.origin + ray.direction * (transform.position.z + Mathf.Abs(camManager.GetCamera(playerId).transform.position.z));
+            ray = usedCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
+            newPos = ray.origin + ray.direction * (transform.position.z + Mathf.Abs(usedCamera.transform.position.z));
         }
         else if (playersManager.gameMode == PlayersManager.GameModes.MULTI_LOCAL)
         {
+            Debug.Log(playerId + " has " + inputs.ControlData[0].deviceType.ToString());
             if (inputs.ControlData[0].deviceType == InputSystem.DeviceTypes.KEYBOARD)
             {
-                Vector3 mousePos = Mouse.current.position.ReadValue() * 2.0f;
-                mousePos.y -= Screen.height;
+                Vector3 mousePos = Mouse.current.position.ReadValue();
+                mousePos.y -= Screen.height / 2.0f;
+                //mousePos.z = usedCamera.transform.position.z;
                 // ToDo: Trobar les distancies entre quad i sumar-les, potser agafar distancies entre initPoints pot ser bona idea
-                float quadDistances = 0.0f;
-                if (playerId == 1) mousePos.x += quadDistances;
-                ray = camManager.GetCamera(playerId).ScreenPointToRay(mousePos);
+                float quadDistances = Vector3.Distance(playersManager.GetPlayer(0).position, playersManager.GetPlayer(playerId).position);
+                mousePos.x += quadDistances - (Screen.width / 2.0f);
+                ray = usedCamera.ScreenPointToRay(mousePos);
 
-                newPos = ray.origin + ray.direction * (transform.position.z + Mathf.Abs(camManager.GetCamera(playerId).transform.position.z));
+                newPos = ray.origin + ray.direction * (transform.position.z + Mathf.Abs(usedCamera.transform.position.z));
             }
         }
         target.transform.position = newPos;
@@ -77,13 +98,13 @@ public class ModifierManager : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, layerMask))
         {
-            
+
             target.transform.position = raycastHit.transform.position;
             target.transform.localScale = raycastHit.transform.lossyScale;
             target.transform.rotation = raycastHit.transform.rotation;
-            
+
             //Place button ------ Left mouse click ------ 
-            if(controls.ConstructionMenu.ConstructModifier.ReadValue<float>() > 0)
+            if (controls.ConstructionMenu.ConstructModifier.ReadValue<float>() > 0)
             {
                 if (target.transform.childCount > 0 && raycastHit.transform.GetComponent<ModifierSpotData>().IsAvailable(target.transform.GetChild(0).gameObject.tag))
                 {
@@ -109,14 +130,14 @@ public class ModifierManager : MonoBehaviour
                 return;
             }
 
-            if(target.transform.childCount > 0 && 
+            if (target.transform.childCount > 0 &&
                 (raycastHit.transform.childCount == 0 ||
-                (raycastHit.transform.childCount > 0 && 
+                (raycastHit.transform.childCount > 0 &&
                 target.transform.GetChild(0).tag != raycastHit.transform.GetChild(0).tag)))
             {
                 SetNewValues(playerStats + target.transform.GetComponentInChildren<Stats>().GetStats());
             }
-                
+
         }
 
         if (controls.ConstructionMenu.DeleteModifier.ReadValue<float>() > 0)
@@ -130,20 +151,23 @@ public class ModifierManager : MonoBehaviour
 
     public void ShowTarget(bool show)
     {
-        if (target.activeSelf != show)
-            target.SetActive(show);
-
-        Transform modfs = transform.GetChild(0);
-        for (int i = 0; i < modfs.childCount; i++)
+        if (target != null)
         {
-            GameObject child = modfs.GetChild(i).gameObject;
-            if (child.transform.childCount > 0) continue;
-            if (child.activeSelf != show) child.SetActive(show);
-        }
+            if (target.activeSelf != show)
+                target.SetActive(show);
 
-        if(!show && target.transform.childCount > 0)
-        {
-            Destroy(target.transform.GetChild(0).gameObject);
+            Transform modfs = transform.GetChild(0);
+            for (int i = 0; i < modfs.childCount; i++)
+            {
+                GameObject child = modfs.GetChild(i).gameObject;
+                if (child.transform.childCount > 0) continue;
+                if (child.activeSelf != show) child.SetActive(show);
+            }
+
+            if (!show && target.transform.childCount > 0)
+            {
+                Destroy(target.transform.GetChild(0).gameObject);
+            }
         }
     }
 
@@ -171,7 +195,7 @@ public class ModifierManager : MonoBehaviour
 
     public void ChangeGameObject(GameObject obj)
     {
-        if (target.transform.childCount > 0)
+        if (target != null && target.transform.childCount > 0)
         {
             GameObject currentChild = target.transform.GetChild(0).gameObject;
             if (obj.name == currentChild.name)
@@ -202,7 +226,14 @@ public class ModifierManager : MonoBehaviour
         else
         {
             target = Instantiate(new GameObject());
-            target.name = "Mouse";
+            if (inputs.ControlData[0].deviceType == InputSystem.DeviceTypes.KEYBOARD)
+            {
+                target.name = "Mouse";
+            }
+            else if (inputs.ControlData[0].deviceType == InputSystem.DeviceTypes.CONTROLLER)
+            {
+                target.name = "Controller";
+            }
         }
     }
 

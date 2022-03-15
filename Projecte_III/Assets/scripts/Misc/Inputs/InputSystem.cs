@@ -30,6 +30,7 @@ public class InputSystem : MonoBehaviour
             deviceType = DeviceTypes.CONTROLLER;
 
             mainDeviceId = _controls.Quad.ActivateController.controls[_controllerIdx].device.deviceId;
+            mouseDeviceId = -1;
 
         }
 
@@ -99,7 +100,7 @@ public class InputSystem : MonoBehaviour
             return null;
 
         int deviceId = controls.Quad.ActivateController.activeControl.device.deviceId;
-        if (activatedControllers.Find(_control => _control.mainDeviceId == deviceId) != null)
+        if (activatedControllers.Find(_control => _control.mainDeviceId == deviceId || _control.mouseDeviceId == deviceId) != null)
             return null;
 
         for (int i = 0; i < controls.Quad.ActivateController.controls.Count; i++)

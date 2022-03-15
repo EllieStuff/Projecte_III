@@ -7,6 +7,7 @@ public class ButtonManager : MonoBehaviour
 {
     [SerializeField] private Button[] buttonList;
     [SerializeField] private GameObject[] backgrounds;
+    [SerializeField] internal int playerId;
 
     public void OpenButtons()
     {

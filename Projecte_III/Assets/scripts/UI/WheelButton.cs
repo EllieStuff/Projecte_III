@@ -7,8 +7,10 @@ public class WheelButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     [SerializeField] private GameObject wheelSpot = null;
     [SerializeField] private GameObject currentWheel;
 
+    PlayersManager playersManager;
     PlayerStatsManager playerStats;
     StatsSliderManager stats;
+    int playerId;
 
     Stats.Data sliderData;
 
@@ -16,9 +18,11 @@ public class WheelButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     private void Start()
     {
-        playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStatsManager>();
+        playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
+        playerId = transform.parent.parent.GetComponentInParent<ButtonManager>().playerId;
+        playerStats = playersManager.GetPlayer(playerId).GetComponent<PlayerStatsManager>();
 
-        stats = GameObject.FindGameObjectWithTag("StatsManager").GetComponent<StatsSliderManager>();
+        stats = GameObject.FindGameObjectWithTag("StatsManager").GetComponent<StatsManager>().GetPlayerStats(playerId);
     }
 
     private void Update()
@@ -27,7 +31,7 @@ public class WheelButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
         if (wheelSpot == null)
         {
-            wheelSpot = GameObject.FindGameObjectWithTag("Player").transform.GetChild(1).gameObject;
+            wheelSpot = playerStats.transform.GetChild(1).gameObject;
             currentWheel = wheelSpot.transform.GetChild(0).gameObject;
         }
     }

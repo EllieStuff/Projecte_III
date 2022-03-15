@@ -7,7 +7,9 @@ public class QuadButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     [SerializeField] private GameObject quadSpot;
     StatsSliderManager stats;
     Stats.Data sliderData;
+    int playerId;
 
+    PlayersManager playersManager;
     PlayerStatsManager playerStats;
 
     [SerializeField] private GameObject currentQuad;
@@ -15,9 +17,12 @@ public class QuadButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     private void Start()
     {
-        playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStatsManager>();
+        playerId = transform.parent.parent.GetComponentInParent<ButtonManager>().playerId;
 
-        stats = GameObject.FindGameObjectWithTag("StatsManager").GetComponent<StatsSliderManager>();
+        playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
+        playerStats = playersManager.GetPlayer(playerId).GetComponent<PlayerStatsManager>();
+
+        stats = GameObject.FindGameObjectWithTag("StatsManager").GetComponent<StatsManager>().GetPlayerStats(playerId);
     }
 
     private void Update()
@@ -26,7 +31,7 @@ public class QuadButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
         if (quadSpot == null)
         {
-            quadSpot = GameObject.FindGameObjectWithTag("PlayerVehicle");
+            quadSpot = playerStats.transform.GetChild(0).gameObject;
             currentQuad = quadSpot.transform.GetChild(0).gameObject;
         }
     }
@@ -95,7 +100,7 @@ public class QuadButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         Transform clone = Instantiate(quadModel, quadSpot.transform).transform;
         Destroy(quadSpot.transform.GetChild(1).gameObject);
 
-        GameObject.FindGameObjectWithTag("ModifierSpots").GetComponent<ModifierManager>().SetNewModifierSpots(clone.GetChild(clone.childCount - 1));
+        playersManager.GetPlayerModifier(playerId).GetComponent<ModifierManager>().SetNewModifierSpots(clone.GetChild(clone.childCount - 1));
 
         playerStats.SetStats();
 

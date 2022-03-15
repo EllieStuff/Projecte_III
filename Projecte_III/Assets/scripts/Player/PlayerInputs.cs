@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class PlayerInputs : MonoBehaviour
 {
-    PlayersManager.GameModes gameMode = PlayersManager.GameModes.MONO;
+    PlayersManager playersManagers;
+    //PlayersManager.GameModes gameMode = PlayersManager.GameModes.MONO;
     InputSystem inputSystem;
     InputSystem.ControlData[] controlData = new InputSystem.ControlData[1];
+    int playerId;
 
     // Keys
     float
@@ -42,7 +44,10 @@ public class PlayerInputs : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        if(GameObject.FindGameObjectWithTag("InputSystem") != null)
+        playersManagers = transform.parent.GetComponentInParent<PlayersManager>();
+        playerId = transform.GetComponentInParent<QuadSceneManager>().playerId;
+        //gameMode = transform.parent.GetComponentInParent<PlayersManager>().gameMode;
+        //if(GameObject.FindGameObjectWithTag("InputSystem") != null)
         inputSystem = GameObject.FindGameObjectWithTag("InputSystem").GetComponent<InputSystem>();
         controlData[0] = null;
     }
@@ -50,7 +55,7 @@ public class PlayerInputs : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        switch (gameMode)
+        switch (playersManagers.gameMode)
         {
             case PlayersManager.GameModes.MONO:
                 if(controlData == null || controlData[0] == null)
@@ -64,7 +69,15 @@ public class PlayerInputs : MonoBehaviour
 
             case PlayersManager.GameModes.MULTI_LOCAL:
                 if (controlData[0] == null)
-                    controlData[0] = inputSystem.GetActiveControllerData();
+                {
+                    for (int i = 0; i <= playerId; i++)
+                    {
+                        if (i == playerId)
+                            controlData[0] = inputSystem.GetActiveControllerData();
+                        else if (!playersManagers.GetPlayer(i).GetComponent<PlayerInputs>().Inited())
+                            break;
+                    }
+                }
                 else
                 {
                     UpdateInputs();
@@ -93,11 +106,9 @@ public class PlayerInputs : MonoBehaviour
         chooseItem = inputSystem.GetAxis(InputSystem.AxisCodes.CHOOSE_ITEM, controlData);
     }
 
-
-
-    //public void SetGameMode(PlayerVehicleScript.GameModes _gameMode)
-    //{
-    //    gameMode = _gameMode;
-    //}
+    public bool Inited()
+    {
+        return controlData != null && controlData[0] != null;
+    }
 
 }
