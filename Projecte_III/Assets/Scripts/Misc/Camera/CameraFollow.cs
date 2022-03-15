@@ -12,22 +12,37 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] private float rotSpeed;
     [SerializeField] private float maxDampSpeed;
     float timer;
+    Rigidbody vehicleRB;
 
 
     private void Start()
     {
         //Mateu helpppp
         target = GameObject.FindGameObjectWithTag("Player").transform;
+        vehicleRB = target.GetComponent<PlayerVehicleScript>().vehicleRB;
         transform.position = target.position;
     }
     private void Update()
     {
+        fovSystem();
         HandlePosition();
         HandleRotation();
         RaycastCamera();
 
     }
 
+    private void fovSystem()
+    {
+        PlayerVehicleScript pScript = target.GetComponent<PlayerVehicleScript>();
+        Camera cam = GetComponent<Camera>();
+
+        float savedFov = new Vector3(vehicleRB.velocity.x, 0, vehicleRB.velocity.z).magnitude * 80 / pScript.vehicleMaxSpeed;
+
+        if (pScript.vehicleMaxSpeed > pScript.savedMaxSpeed && savedFov >= 60)
+            cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, savedFov, Time.deltaTime * 0.8f);
+        else
+            cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, 60, Time.deltaTime * 5);
+    }
 
     private void HandlePosition()
     {
