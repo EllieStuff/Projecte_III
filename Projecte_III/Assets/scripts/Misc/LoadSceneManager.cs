@@ -5,7 +5,7 @@ public class LoadSceneManager : MonoBehaviour
 {
     string currentSceneName;
     float timer = 2;
-    string newScene;
+    public string newScene;
     bool changeScene = false;
 
     private void Start()
@@ -25,10 +25,9 @@ public class LoadSceneManager : MonoBehaviour
         }
     }
 
-    public void ChangeScene(string _newScene)
+    public void ChangeScene()
     {
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStatsManager>().SetStats();
-        newScene = _newScene;
         changeScene = true;
     }
 
