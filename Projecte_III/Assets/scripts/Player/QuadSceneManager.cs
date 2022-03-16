@@ -76,7 +76,7 @@ public class QuadSceneManager : MonoBehaviour
                 Destroy(objs[1]);
             }
         }
-        else if (scene.name != "Menu" && !sceneLoaded)
+        else if (scene.name != "Menu" && scene.name != "SceneSelector" && !sceneLoaded)
         {
             GameObject.FindGameObjectWithTag("ModifierSpots").GetComponent<ModifierManager>().Active(false);
 
