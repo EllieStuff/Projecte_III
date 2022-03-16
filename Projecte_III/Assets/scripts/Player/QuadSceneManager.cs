@@ -39,7 +39,7 @@ public class QuadSceneManager : MonoBehaviour
                     child.SetActive(false);
             }
         }
-        else if (scene.name == "Building Scene" && !sceneLoaded)
+        else if ((scene.name == "Building Scene" || scene.name == "Building Scene Multiplayer") && !sceneLoaded)
         {
             ModifierManager modfs = playersManager.GetPlayerModifier(playerId).GetComponent<ModifierManager>(); //GameObject.FindGameObjectWithTag("ModifierSpots").GetComponent<ModifierManager>();
             Transform quad = playersManager.GetPlayer(playerId).GetChild(0).GetChild(0); //GameObject.FindGameObjectWithTag("PlayerVehicle").transform.GetChild(0);

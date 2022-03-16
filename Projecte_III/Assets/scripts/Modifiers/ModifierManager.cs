@@ -36,8 +36,9 @@ public class ModifierManager : MonoBehaviour
         playersManager = transform.parent.GetComponentInParent<PlayersManager>();
         playerId = transform.GetComponentInParent<QuadSceneManager>().playerId;
         inputs = playersManager.GetPlayer(playerId).GetComponent<PlayerInputs>();
-        usedCamera = GameObject.FindGameObjectWithTag("CamerasManager").GetComponent<CameraManager>().GetCamera(playerId);
-        rendererCamera = GameObject.FindGameObjectWithTag("CamerasManager").GetComponent<CameraManager>().GetRendererCamera(playerId);
+        GameObject camerasManager = GameObject.FindGameObjectWithTag("CamerasManager");
+        usedCamera = camerasManager.GetComponent<CameraManager>().GetCamera(playerId);
+        rendererCamera = camerasManager.GetComponent<CameraManager>().GetRendererCamera(playerId);
         statsSliders = GameObject.FindGameObjectWithTag("StatsManager").GetComponent<StatsManager>().GetPlayerStats(playerId);
 
     }

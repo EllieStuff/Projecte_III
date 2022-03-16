@@ -17,6 +17,9 @@ public class InactiveScreensManager : MonoBehaviour
         playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
         currPlayerInputs = playersManager.GetPlayer(playersInited).GetComponent<PlayerInputs>();
         doneBttnManager = GameObject.FindGameObjectWithTag("DoneBttnManager").GetComponent<DoneButtonManager>();
+
+        if (playersManager.gameMode == PlayersManager.GameModes.MONO)
+            doneBttnManager.buttonsActive = playersInited = 1;
     }
 
     // Update is called once per frame

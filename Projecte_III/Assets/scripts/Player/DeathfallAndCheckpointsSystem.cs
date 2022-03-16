@@ -8,15 +8,13 @@ public class DeathfallAndCheckpointsSystem : MonoBehaviour
     public bool finishRaceCP;
     public bool activated;
     private bool enableMusic;
+    private bool multiplayerMode;
     private GameObject particlesFinish;
     private AudioSource fireworkEffectSound;
     private AudioSource finishAudio;
-    [SerializeField] private bool multiplayerMode;
     [SerializeField] private GameObject particlesPrefab;
-    PlayerVehicleScript vehicleScript;
-    PlayerVehicleScriptP2 vehicleScriptP2;
-    GameObject chasis;
-    GameObject chasisP2;
+    PlayerVehicleScript[] vehicleScripts;
+    GameObject[] chasises;
 
     private void Update()
     {
@@ -36,29 +34,46 @@ public class DeathfallAndCheckpointsSystem : MonoBehaviour
             finishAudio = particlesFinish.transform.GetChild(0).GetComponent<AudioSource>();
             fireworkEffectSound = particlesFinish.GetComponent<AudioSource>();
         }
-       
-        vehicleScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerVehicleScript>();
-        if(multiplayerMode)
-        vehicleScriptP2 = GameObject.FindGameObjectWithTag("Player2").GetComponent<PlayerVehicleScriptP2>();
 
-        chasis = vehicleScript.transform.Find("vehicleChasis").gameObject;
-        if(multiplayerMode)
-        chasisP2 = vehicleScriptP2.transform.Find("vehicleChasis").gameObject;
+        PlayersManager playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
+        multiplayerMode = (playersManager.gameMode == PlayersManager.GameModes.MULTI_LOCAL);
+        vehicleScripts = new PlayerVehicleScript[playersManager.numOfPlayers];
+        chasises = new GameObject[playersManager.numOfPlayers];
+        for(int i = 0; i < playersManager.numOfPlayers; i++)
+        {
+            vehicleScripts[i] = playersManager.GetPlayer(i).GetComponent<PlayerVehicleScript>();
+            chasises[i] = vehicleScripts[i].transform.Find("vehicleChasis").gameObject;
+        }
+        
+        //vehicleScripts = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerVehicleScript>();
+        //if(multiplayerMode)
+        //vehicleScriptP2 = GameObject.FindGameObjectWithTag("Player2").GetComponent<PlayerVehicleScriptP2>();
+
+        //chasis = vehicleScript.transform.Find("vehicleChasis").gameObject;
+        //if(multiplayerMode)
+        //chasisP2 = vehicleScriptP2.transform.Find("vehicleChasis").gameObject;
 
 
         //Set default checkpoint (should be the first of the level)
         if (name.Equals("Checkpoint"))
         {
-            vehicleScript.respawnPosition = transform.position;
-            vehicleScript.respawnRotation = transform.localEulerAngles;
-            vehicleScript.respawnVelocity = Vector3.zero;
-
-            if(multiplayerMode)
+            for(int i = 0; i < vehicleScripts.Length; i++)
             {
-                vehicleScriptP2.respawnPosition = transform.position;
-                vehicleScriptP2.respawnRotation = transform.localEulerAngles;
-                vehicleScriptP2.respawnVelocity = Vector3.zero;
+                vehicleScripts[i].respawnPosition = transform.position;
+                vehicleScripts[i].respawnRotation = transform.localEulerAngles;
+                vehicleScripts[i].respawnVelocity = Vector3.zero;
             }
+
+            //vehicleScript.respawnPosition = transform.position;
+            //vehicleScript.respawnRotation = transform.localEulerAngles;
+            //vehicleScript.respawnVelocity = Vector3.zero;
+
+            //if(multiplayerMode)
+            //{
+            //    vehicleScriptP2.respawnPosition = transform.position;
+            //    vehicleScriptP2.respawnRotation = transform.localEulerAngles;
+            //    vehicleScriptP2.respawnVelocity = Vector3.zero;
+            //}
         }
     }
 
@@ -95,46 +110,73 @@ public class DeathfallAndCheckpointsSystem : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //PLAYER1
-        if (gameObject.tag.Equals("Respawn") && chasis == other.gameObject)
+        if (other.CompareTag("PlayerVehicle"))
         {
-            vehicleScript.respawnPosition = transform.position;
-            vehicleScript.respawnRotation = transform.localEulerAngles;
-            vehicleScript.respawnVelocity = Vector3.zero;
-        }
-        if (gameObject.tag.Equals("Death Zone") && chasis == other.gameObject)
-        {
-            AudioManager.Instance.Play_SFX("Fall_SFX");
+            int currPlayerId = other.transform.parent.GetComponentInParent<QuadSceneManager>().playerId;
+            
+            if (gameObject.tag.Equals("Respawn"))
+            {
+                vehicleScripts[currPlayerId].respawnPosition = transform.position;
+                vehicleScripts[currPlayerId].respawnRotation = transform.localEulerAngles;
+                vehicleScripts[currPlayerId].respawnVelocity = Vector3.zero;
+            }
+            if (gameObject.tag.Equals("Death Zone"))
+            {
+                AudioManager.Instance.Play_SFX("Fall_SFX");
 
-            other.GetComponentInParent<Transform>().parent.position = vehicleScript.respawnPosition;
-            other.GetComponentInParent<PlayerVehicleScript>().vehicleRB.velocity = vehicleScript.respawnVelocity;
-            other.GetComponentInParent<PlayerVehicleScript>().vehicleRB.angularVelocity = vehicleScript.respawnVelocity;
-            other.GetComponentInParent<PlayerVehicleScript>().vehicleRB.constraints = RigidbodyConstraints.FreezePositionX;
-            other.GetComponentInParent<PlayerVehicleScript>().vehicleRB.constraints = RigidbodyConstraints.FreezePositionZ;
-            other.GetComponentInParent<Transform>().parent.localEulerAngles = vehicleScript.respawnRotation;
-            other.GetComponentInParent<Transform>().parent.localEulerAngles += new Vector3(0, 90, 0);
-        }
-        //____________________________________________________________________________________________________________________________
+                // Fa falta el transform.parent??
+                PlayerVehicleScript currPlayerScript = other.GetComponentInParent<PlayerVehicleScript>();
+                currPlayerScript.transform.parent.position = vehicleScripts[currPlayerId].respawnPosition;
+                currPlayerScript.vehicleRB.velocity = vehicleScripts[currPlayerId].respawnVelocity;
+                currPlayerScript.vehicleRB.angularVelocity = vehicleScripts[currPlayerId].respawnVelocity;
+                currPlayerScript.vehicleRB.constraints = RigidbodyConstraints.FreezePositionX;
+                currPlayerScript.vehicleRB.constraints = RigidbodyConstraints.FreezePositionZ;
+                currPlayerScript.transform.parent.localEulerAngles = vehicleScripts[currPlayerId].respawnRotation;
+                currPlayerScript.transform.parent.localEulerAngles += new Vector3(0, 90, 0);
+            }
 
-        //PLAYER2
-        if (multiplayerMode && gameObject.tag.Equals("Respawn") && chasisP2 == other.gameObject)
-        {
-            vehicleScriptP2.respawnPosition = transform.position;
-            vehicleScriptP2.respawnRotation = transform.localEulerAngles;
-            vehicleScriptP2.respawnVelocity = Vector3.zero;
         }
-        if (multiplayerMode && gameObject.tag.Equals("Death Zone") && chasisP2 == other.gameObject)
-        {
-            AudioManager.Instance.Play_SFX("Fall_SFX");
 
-            other.GetComponentInParent<Transform>().parent.position = vehicleScriptP2.respawnPosition;
-            other.GetComponentInParent<PlayerVehicleScript>().vehicleRB.velocity = vehicleScriptP2.respawnVelocity;
-            other.GetComponentInParent<PlayerVehicleScript>().vehicleRB.angularVelocity = vehicleScriptP2.respawnVelocity;
-            other.GetComponentInParent<PlayerVehicleScript>().vehicleRB.constraints = RigidbodyConstraints.FreezePositionX;
-            other.GetComponentInParent<PlayerVehicleScript>().vehicleRB.constraints = RigidbodyConstraints.FreezePositionZ;
-            other.GetComponentInParent<Transform>().parent.localEulerAngles = vehicleScriptP2.respawnRotation;
-            other.GetComponentInParent<Transform>().parent.localEulerAngles += new Vector3(0, 90, 0);
-        }
-        //____________________________________________________________________________________________________________________________
+        ////PLAYER1
+        //if (gameObject.tag.Equals("Respawn") && chasis == other.gameObject)
+        //{
+        //    vehicleScript.respawnPosition = transform.position;
+        //    vehicleScript.respawnRotation = transform.localEulerAngles;
+        //    vehicleScript.respawnVelocity = Vector3.zero;
+        //}
+        //if (gameObject.tag.Equals("Death Zone") && chasis == other.gameObject)
+        //{
+        //    AudioManager.Instance.Play_SFX("Fall_SFX");
+
+        //    other.GetComponentInParent<Transform>().parent.position = vehicleScript.respawnPosition;
+        //    other.GetComponentInParent<PlayerVehicleScript>().vehicleRB.velocity = vehicleScript.respawnVelocity;
+        //    other.GetComponentInParent<PlayerVehicleScript>().vehicleRB.angularVelocity = vehicleScript.respawnVelocity;
+        //    other.GetComponentInParent<PlayerVehicleScript>().vehicleRB.constraints = RigidbodyConstraints.FreezePositionX;
+        //    other.GetComponentInParent<PlayerVehicleScript>().vehicleRB.constraints = RigidbodyConstraints.FreezePositionZ;
+        //    other.GetComponentInParent<Transform>().parent.localEulerAngles = vehicleScript.respawnRotation;
+        //    other.GetComponentInParent<Transform>().parent.localEulerAngles += new Vector3(0, 90, 0);
+        //}
+        ////____________________________________________________________________________________________________________________________
+
+        ////PLAYER2
+        //if (multiplayerMode && gameObject.tag.Equals("Respawn") && chasisP2 == other.gameObject)
+        //{
+        //    vehicleScriptP2.respawnPosition = transform.position;
+        //    vehicleScriptP2.respawnRotation = transform.localEulerAngles;
+        //    vehicleScriptP2.respawnVelocity = Vector3.zero;
+        //}
+        //if (multiplayerMode && gameObject.tag.Equals("Death Zone") && chasisP2 == other.gameObject)
+        //{
+        //    AudioManager.Instance.Play_SFX("Fall_SFX");
+
+        //    other.GetComponentInParent<Transform>().parent.position = vehicleScriptP2.respawnPosition;
+        //    other.GetComponentInParent<PlayerVehicleScript>().vehicleRB.velocity = vehicleScriptP2.respawnVelocity;
+        //    other.GetComponentInParent<PlayerVehicleScript>().vehicleRB.angularVelocity = vehicleScriptP2.respawnVelocity;
+        //    other.GetComponentInParent<PlayerVehicleScript>().vehicleRB.constraints = RigidbodyConstraints.FreezePositionX;
+        //    other.GetComponentInParent<PlayerVehicleScript>().vehicleRB.constraints = RigidbodyConstraints.FreezePositionZ;
+        //    other.GetComponentInParent<Transform>().parent.localEulerAngles = vehicleScriptP2.respawnRotation;
+        //    other.GetComponentInParent<Transform>().parent.localEulerAngles += new Vector3(0, 90, 0);
+        //}
+        ////____________________________________________________________________________________________________________________________
     }
 }

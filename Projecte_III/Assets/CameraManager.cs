@@ -9,7 +9,6 @@ public class CameraManager : MonoBehaviour
 
     internal PlayersManager playersManager;
     internal RenderTexturesManager rendTexManager;
-    //int numOfPlayers = 1;
 
     // Start is called before the first frame update
     void Awake()
@@ -17,6 +16,17 @@ public class CameraManager : MonoBehaviour
         playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
         rendTexManager = GameObject.FindGameObjectWithTag("RenderTexturesManager").GetComponent<RenderTexturesManager>();
         //numOfPlayers = playersManager.numOfPlayers;
+    }
+
+    private void Start()
+    {
+        for(int i = 0; i < renderCameras.Length; i++)
+        {
+            if (i < playersManager.numOfPlayers)
+                renderCameras[i].gameObject.SetActive(true);
+            else
+                renderCameras[i].gameObject.SetActive(false);
+        }
     }
 
     // Update is called once per frame

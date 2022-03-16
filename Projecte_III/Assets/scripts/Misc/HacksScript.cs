@@ -15,7 +15,21 @@ public class HacksScript : MonoBehaviour
     {
         sceneLoader = GetComponent<LoadSceneManager>();
 
-        playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerVehicleScript>();
+        PlayersManager playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
+        if (playersManager.gameMode == PlayersManager.GameModes.MONO)
+        {
+            playerScript = playersManager.GetPlayer(0).GetComponent<PlayerVehicleScript>();
+        }
+        else if (playersManager.gameMode == PlayersManager.GameModes.MULTI_LOCAL)
+        {
+            for (int i = 0; i < playersManager.numOfPlayers; i++)
+            {
+                Transform currPlayer = playersManager.GetPlayer(i);
+                if(currPlayer.GetComponent<PlayerInputs>().ControlData[0].deviceType == InputSystem.DeviceTypes.KEYBOARD)
+                    playerScript = currPlayer.GetComponent<PlayerVehicleScript>();
+            }
+        }
+
         rotMargin = Quaternion.Euler(0, 90, 0);
     }
 

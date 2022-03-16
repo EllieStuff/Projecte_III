@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class DoneButtonScript : MonoBehaviour
 {
+    [SerializeField] internal bool isActive = false;
     [SerializeField] int playerId;
 
-    internal bool isActive = false;
     internal bool isReady = false;
     PlayersManager playersManager;
     PlayerInputs playerInputs;

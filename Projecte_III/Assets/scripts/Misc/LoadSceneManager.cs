@@ -12,7 +12,9 @@ public class LoadSceneManager : MonoBehaviour
 
     public void ChangeScene(string _newScene)
     {
-        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStatsManager>().SetStats();
+        PlayersManager playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>(); 
+        for(int i = 0; i < playersManager.numOfPlayers; i++)
+            playersManager.GetPlayer(i).GetComponent<PlayerStatsManager>().SetStats();
 
         if(_newScene != currentSceneName)
         {

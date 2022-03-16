@@ -41,7 +41,7 @@ public class RadialMenuManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectsWithTag("Player")[playerId].GetComponent<PlayerVehicleScript>();
+        player = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>().GetPlayer(playerId).GetComponent<PlayerVehicleScript>();
         playerInputs = player.GetComponent<PlayerInputs>();
     }
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)

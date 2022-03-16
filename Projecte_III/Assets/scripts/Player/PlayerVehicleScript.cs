@@ -606,7 +606,7 @@ public class PlayerVehicleScript : MonoBehaviour
     {
         if(other.tag.Equals("Respawn") && !other.GetComponent<DeathfallAndCheckpointsSystem>().activated)
         {
-            GameObject.Find("UI").transform.GetChild(1).GetComponent<UIPosition>().actualCheckpoint++;
+            GameObject.Find("UI").transform.Find("SliderPosition").GetComponent<UIPosition>().actualCheckpoint++;
             other.GetComponent<DeathfallAndCheckpointsSystem>().activated = true;
         }
         

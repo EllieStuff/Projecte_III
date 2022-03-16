@@ -5,12 +5,16 @@ using UnityEngine.InputSystem;
 
 public class CameraScript : MonoBehaviour
 {
-    public int camIndex;
-    public GameObject playerVehicle;
+    public int playerId;
     [SerializeField] Vector3 posOffset;
     [SerializeField] Vector3 rotOffset;
 
     public QuadControls controls;
+
+    [HideInInspector]
+    public Transform playerVehicle;
+
+    PlayerVehicleScript playerScript;
 
     float camPosSpeed = 5.0f;
     [SerializeField] float camRotSpeed = 1.1f;
@@ -29,22 +33,26 @@ public class CameraScript : MonoBehaviour
         lookBackRotOffset = Quaternion.Euler(0, 180, 0);
         savedRotSpeed = camRotSpeed;
 
-        if(camIndex == 0)
-            playerVehicle = GameObject.FindGameObjectWithTag("Player").transform.GetChild(0).GetChild(0).gameObject;
-        else if(camIndex == 1)
-            playerVehicle = GameObject.FindGameObjectWithTag("Player2").transform.GetChild(0).GetChild(0).gameObject;
+        PlayersManager playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
+        playerScript = playersManager.GetPlayer(playerId).GetComponent<PlayerVehicleScript>();
+        playerVehicle = playerScript.transform.GetChild(0).GetChild(0);
+
+        //if(camIndex == 0)
+        //    playerVehicle = GameObject.FindGameObjectWithTag("Player").transform.GetChild(0).GetChild(0).gameObject;
+        //else if(camIndex == 1)
+        //    playerVehicle = GameObject.FindGameObjectWithTag("Player2").transform.GetChild(0).GetChild(0).gameObject;
 
         if (playerVehicle != null)
-            vehicleRB = playerVehicle.transform.parent.parent.GetComponent<PlayerVehicleScript>().vehicleRB;
+            vehicleRB = playerVehicle.parent.parent.GetComponent<PlayerVehicleScript>().vehicleRB;
 
-        this.transform.position = new Vector3(playerVehicle.transform.position.x, playerVehicle.transform.position.y + 2, playerVehicle.transform.position.z);
+        this.transform.position = new Vector3(playerVehicle.position.x, playerVehicle.position.y + 2, playerVehicle.position.z);
         this.transform.rotation = rotOffsetQuat;
     }
 
     // Update is called once per frame
     void Update()
     {
-        PlayerVehicleScript pScript = playerVehicle.transform.parent.parent.GetComponent<PlayerVehicleScript>();
+        PlayerVehicleScript pScript = playerVehicle.parent.parent.GetComponent<PlayerVehicleScript>();
 
         float savedFov = new Vector3(vehicleRB.velocity.x, 0, vehicleRB.velocity.z).magnitude * 75 / pScript.vehicleMaxSpeed;
         
@@ -53,7 +61,7 @@ public class CameraScript : MonoBehaviour
         else
             cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, 60, Time.deltaTime * 5);
 
-        Vector3 targetPos = new Vector3(playerVehicle.transform.position.x, playerVehicle.transform.position.y + 2, playerVehicle.transform.position.z);
+        Vector3 targetPos = new Vector3(playerVehicle.position.x, playerVehicle.position.y + 2, playerVehicle.position.z);
         transform.position = Vector3.Lerp(this.transform.position + posOffset, targetPos, Time.deltaTime * camPosSpeed);
         //transform.rotation = Quaternion.Euler(rotOffset);
         
