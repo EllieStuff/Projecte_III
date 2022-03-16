@@ -28,13 +28,13 @@ public class SceneSelector : MonoBehaviour
         if (inputs.Right && mapPos < mapQuantity - 1)
         {
             mapPos++;
-            newPos = new Vector3(newPos.x -12.64f, newPos.y, newPos.z);
+            newPos = new Vector3(newPos.x -25.28f, newPos.y, newPos.z);
 
         }
         else if (inputs.Left && mapPos > 0)
         {
             mapPos--;
-            newPos = new Vector3(newPos.x + 12.64f, newPos.y, newPos.z);
+            newPos = new Vector3(newPos.x + 25.28f, newPos.y, newPos.z);
         }
 
         transform.position = Vector3.Lerp(transform.position, newPos, Time.deltaTime * 2);
