@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SceneSelector : MonoBehaviour
 {
     [SerializeField] int mapPos;
     [SerializeField] int mapQuantity;
     [SerializeField] string[] mapNames;
+    [SerializeField] Button doneButton;
     PlayerInputs inputs;
     float timerPress;
     Vector3 newPos;
@@ -42,6 +44,11 @@ public class SceneSelector : MonoBehaviour
         }
 
         transform.position = Vector3.Lerp(transform.position, newPos, Time.deltaTime * 2);
+
+        if (mapNames[mapPos] != "" && !doneButton.interactable)
+            doneButton.interactable = true;
+        else if(mapNames[mapPos] == "" && doneButton.interactable)
+            doneButton.interactable = false;
     }
 
     public void loadScene()
