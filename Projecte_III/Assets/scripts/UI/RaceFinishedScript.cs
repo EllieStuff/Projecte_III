@@ -158,23 +158,9 @@ public class RaceFinishedScript : MonoBehaviour
 
     public void openScoreMenu()
     {
-        if(!scoreGameObject.active)
+        if(!scoreGameObject.activeSelf)
             scoreGameObject.SetActive(true);
         else
             scoreGameObject.SetActive(false);
-    }
-
-    public void QuitMenu()
-    {
-        Destroy(GameObject.Find("Vehicle Set"));
-        Destroy(GameObject.Find("[Debug Updater]"));
-        SceneManager.LoadScene("Menu");
-    }
-
-    public void BuildMenu()
-    {
-        Destroy(GameObject.Find("Vehicle Set"));
-        Destroy(GameObject.Find("[Debug Updater]"));
-        SceneManager.LoadScene("Building Scene");
     }
 }

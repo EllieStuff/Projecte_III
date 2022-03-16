@@ -25,8 +25,9 @@ public class LoadSceneManager : MonoBehaviour
         }
     }
 
-    public void ChangeScene()
+    public void ChangeScene(string _newScene)
     {
+        newScene = _newScene;
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStatsManager>().SetStats();
         changeScene = true;
     }

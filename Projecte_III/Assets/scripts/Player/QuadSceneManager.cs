@@ -10,11 +10,23 @@ public class QuadSceneManager : MonoBehaviour
     string[] listOfAllModifiers = { "Floater", "PaintGun", "OilGun", "Plunger", "AlaDelta", "ChasisElevation" };
     bool sceneLoaded;
 
+    private string playerTag = "Player2";
+
     private void Awake()
     {
+        GameObject current = GameObject.FindGameObjectWithTag(playerTag);
+
+        if (current != null)
+        {
+            Destroy(gameObject);
+        }
+
+        gameObject.tag = playerTag;
+        
+        player = GameObject.FindGameObjectWithTag("Player");
+
         DontDestroyOnLoad(gameObject);
 
-        player = GameObject.FindGameObjectWithTag("Player");
         playerScript = player.GetComponent<PlayerVehicleScript>();
 
         GameObject[] objs = GameObject.FindGameObjectsWithTag("VehicleSet");

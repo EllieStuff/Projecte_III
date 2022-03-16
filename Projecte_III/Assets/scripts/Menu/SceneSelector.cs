@@ -19,9 +19,19 @@ public class SceneSelector : MonoBehaviour
     {
         inputSystem = GameObject.FindGameObjectWithTag("InputSystem");
         inputs = inputSystem.GetComponent<PlayerInputs>();
+
+        
+        if (inputs == null)
+        {
+            Debug.Log(inputs);
+            Destroy(inputSystem);
+            inputSystem = GameObject.FindGameObjectWithTag("InputSystem");
+            inputs = inputSystem.GetComponent<PlayerInputs>();
+            Debug.Log(inputs);
+        }
         newPos = transform.position;
-        inputSystem.transform.name = "destroy";
-        inputSystem.transform.tag = "SceneSelector";
+        //inputSystem.transform.name = "destroy";
+        //inputSystem.transform.tag = "SceneSelector";
     }
 
     void Update()
@@ -53,8 +63,8 @@ public class SceneSelector : MonoBehaviour
 
     public void loadScene()
     {
-        UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
-        Destroy(inputSystem);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        Destroy(inputs);
         DontDestroyOnLoad(gameObject);
         SceneManager.LoadScene("Building Scene");
     }
