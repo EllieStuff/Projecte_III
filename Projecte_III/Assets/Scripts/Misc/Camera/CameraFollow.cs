@@ -13,6 +13,7 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] private float maxDampSpeed;
     float timer;
     Rigidbody vehicleRB;
+    bool is3rdPerson;
 
 
     private void Start()
@@ -24,14 +25,14 @@ public class CameraFollow : MonoBehaviour
     }
     private void Update()
     {
-        fovSystem();
+        FovSystem();
         HandlePosition();
         HandleRotation();
         RaycastCamera();
-
+        ChangeCameraMode();
     }
 
-    private void fovSystem()
+    private void FovSystem()
     {
         PlayerVehicleScript pScript = target.GetComponent<PlayerVehicleScript>();
         Camera cam = GetComponent<Camera>();
@@ -73,5 +74,22 @@ public class CameraFollow : MonoBehaviour
         }
     }
 
-
+    private void ChangeCameraMode()
+    {
+        if(Input.GetKeyDown(KeyCode.Tab))
+        {
+            if (is3rdPerson && !GetComponentInParent<CameraScript>().enabled)
+            {
+                GetComponentInParent<CameraScript>().enabled = true;
+                GetComponent<CameraFollow>().enabled = false;
+                is3rdPerson = false;
+            }
+            else if(!is3rdPerson && GetComponent<CameraFollow>().enabled)
+            {
+                GetComponentInParent<CameraScript>().enabled = false;
+                GetComponent<CameraFollow>().enabled = true;
+                is3rdPerson = true;
+            }
+        }
+    }
 }

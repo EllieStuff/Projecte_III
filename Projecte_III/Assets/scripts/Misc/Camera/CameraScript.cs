@@ -21,6 +21,7 @@ public class CameraScript : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log("Start1: " + transform.position);
         cam = transform.GetChild(0).GetComponent<Camera>();
         controls = new QuadControls();
         controls.Enable();
@@ -39,6 +40,7 @@ public class CameraScript : MonoBehaviour
 
         this.transform.position = new Vector3(playerVehicle.transform.position.x, playerVehicle.transform.position.y + 2, playerVehicle.transform.position.z);
         this.transform.rotation = rotOffsetQuat;
+        Debug.Log("Start2: " + transform.position);
     }
 
     // Update is called once per frame
@@ -56,7 +58,7 @@ public class CameraScript : MonoBehaviour
         Vector3 targetPos = new Vector3(playerVehicle.transform.position.x, playerVehicle.transform.position.y + 2, playerVehicle.transform.position.z);
         transform.position = Vector3.Lerp(this.transform.position + posOffset, targetPos, Time.deltaTime * camPosSpeed);
         //transform.rotation = Quaternion.Euler(rotOffset);
-        
+        Debug.Log("Update: " + transform.position);
         //transform.rotation = Quaternion.RotateTowards(transform.rotation, rotOffsetQuat, Time.deltaTime * camRotSpeed * 100);
         transform.rotation = Quaternion.Lerp(transform.rotation, rotOffsetQuat, Time.deltaTime * camRotSpeed);
         
