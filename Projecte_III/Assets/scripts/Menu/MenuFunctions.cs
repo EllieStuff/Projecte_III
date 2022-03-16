@@ -44,7 +44,7 @@ public class MenuFunctions : MonoBehaviour
             }
         }
         if(timerChangeScene <= 0)
-            SceneManager.LoadScene("Building Scene");
+            SceneManager.LoadScene("SceneSelector");
         else if(timerChangeScene <= 3)
         {
             for(int i = 0; i < 2; i++)
