@@ -6,6 +6,8 @@ public class PlayerStatsManager : MonoBehaviour
 {
     [SerializeField]private Stats stats;
     bool first = false;
+    PlayersManager playersManager;
+    int playerId;
 
     private GameObject wheelsSpot, quadSpot;
 
@@ -13,8 +15,10 @@ public class PlayerStatsManager : MonoBehaviour
     void Start()
     {
         stats = gameObject.AddComponent<Stats>();
-        wheelsSpot = GameObject.FindGameObjectWithTag("Wheels");
-        quadSpot = GameObject.FindGameObjectWithTag("PlayerVehicle");
+        playerId = GetComponentInParent<QuadSceneManager>().playerId;
+        playersManager = transform.parent.GetComponentInParent<PlayersManager>();
+        wheelsSpot = transform.parent.Find("Wheels Models").gameObject;
+        quadSpot = transform.Find("vehicleChasis").gameObject;
     }
 
     public void SetStats()
@@ -29,7 +33,8 @@ public class PlayerStatsManager : MonoBehaviour
 
         //Modifier Stats
         //Transform modfs = GameObject.FindGameObjectWithTag("ModifierSpots").transform;
-        Transform modfs = GameObject.FindGameObjectWithTag("ModifierSpots").transform.GetChild(0);
+        Transform modfs = playersManager.GetPlayerModifier(playerId).GetChild(0);
+        //Transform modfs = GameObject.FindGameObjectWithTag("ModifierSpots").transform.GetChild(0);
 
         for (int i = 0; i < modfs.childCount; i++)
         {
@@ -39,7 +44,7 @@ public class PlayerStatsManager : MonoBehaviour
             }
         }
 
-        GameObject.FindGameObjectWithTag("StatsManager").GetComponent<StatsSliderManager>().SetSliderValue(stats.GetStats(), true);
+        GameObject.FindGameObjectWithTag("StatsManager").GetComponent<StatsManager>().GetPlayerStats(playerId).SetSliderValue(stats.GetStats(), true);
     }
 
     private void Update()
@@ -53,7 +58,7 @@ public class PlayerStatsManager : MonoBehaviour
 
     public void HideVoidModifier()
     {
-        Transform modfs = GameObject.FindGameObjectWithTag("ModifierSpots").transform.GetChild(0);
+        Transform modfs = playersManager.GetPlayerModifier(playerId).GetChild(0);
 
         for (int i = 0; i < modfs.childCount; i++)
         {

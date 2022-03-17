@@ -40,6 +40,7 @@ public class StatsSlider : MonoBehaviour
             sliders[0].value = value;
             sliders[0].transform.GetChild(1).GetComponentInChildren<Image>().color = mainColor;
 
+            if (sliders[1].transform.GetChild(0).GetComponentInChildren<Image>() == null) Debug.LogWarning("error at " + sliders[1].transform.parent.name);
             sliders[1].value = value;
             sliders[1].transform.GetChild(0).GetComponentInChildren<Image>().color = mainColor;
 
