@@ -17,7 +17,7 @@ public class PlayerThrowPlunger : MonoBehaviour
     bool plungerEnabled = false;
     bool hasPlunger;
     Transform modifierTransform;
-    LineRenderer line;
+    public LineRenderer line;
 
     public void Init(Transform _modifier, bool _active)
     {
