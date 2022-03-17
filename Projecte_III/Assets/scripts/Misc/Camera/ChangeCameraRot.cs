@@ -10,13 +10,21 @@ public class ChangeCameraRot : MonoBehaviour
     [SerializeField] bool useOutCustomRotSpeed = false;
     [SerializeField] float outCustomRotSpeed = 1.2f;
 
+    CameraManager cameraManager;
+
+    private void Start()
+    {
+        cameraManager = GameObject.FindGameObjectWithTag("CamerasManager").GetComponent<CameraManager>();
+    }
+
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("PlayerVehicle"))
         {
             //Debug.Log("In");
-            CameraScript camera = Camera.main.GetComponentInParent<CameraScript>();
+            int playerId = other.transform.parent.GetComponentInParent<QuadSceneManager>().playerId;
+            CameraScript camera = cameraManager.GetCamera(playerId).GetComponentInParent<CameraScript>();
             if (!useInCustomRotSpeed)
                 camera.ChangeRotation(newRot);
             else
@@ -30,7 +38,8 @@ public class ChangeCameraRot : MonoBehaviour
         if (other.CompareTag("PlayerVehicle"))
         {
             //Debug.Log("Out");
-            CameraScript camera = Camera.main.GetComponentInParent<CameraScript>();
+            int playerId = other.transform.parent.GetComponentInParent<QuadSceneManager>().playerId;
+            CameraScript camera = cameraManager.GetCamera(playerId).GetComponentInParent<CameraScript>();
             if (!useOutCustomRotSpeed)
                 camera.ResetRotation();
             else
