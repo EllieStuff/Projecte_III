@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerStatsManager : MonoBehaviour
 {
     [SerializeField]private Stats stats;
+    bool first = false;
 
     private GameObject wheelsSpot, quadSpot;
 
@@ -14,8 +15,6 @@ public class PlayerStatsManager : MonoBehaviour
         stats = gameObject.AddComponent<Stats>();
         wheelsSpot = GameObject.FindGameObjectWithTag("Wheels");
         quadSpot = GameObject.FindGameObjectWithTag("PlayerVehicle");
-
-        SetStats();
     }
 
     public void SetStats()
@@ -40,11 +39,16 @@ public class PlayerStatsManager : MonoBehaviour
             }
         }
 
-        GameObject statsUI = GameObject.FindGameObjectWithTag("StatsManager");
-        if(statsUI != null) statsUI.GetComponentInChildren<StatsListUI>().UpdateStatsUI(stats.GetStats());
+        GameObject.FindGameObjectWithTag("StatsManager").GetComponent<StatsSliderManager>().SetSliderValue(stats.GetStats(), true);
+    }
 
-
-        
+    private void Update()
+    {
+        if (!first)
+        {
+            SetStats();
+            first = true;
+        }
     }
 
     public void HideVoidModifier()

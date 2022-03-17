@@ -108,7 +108,6 @@ public class ModifierManager : MonoBehaviour
 
     public void ShowTarget(bool show)
     {
-        Debug.Log("enter");
         if (target.activeSelf != show)
             target.SetActive(show);
 
@@ -141,12 +140,9 @@ public class ModifierManager : MonoBehaviour
 
         clone.transform.localScale = clone.transform.parent.parent.localScale;
 
-        clone.transform.position = Vector3.zero;
         clone.transform.localPosition = Vector3.zero;
 
         stats.SetStats();
-
-        SetNewValues(stats.transform.GetComponent<Stats>().GetStats(), true);
     }
 
     public void ChangeGameObject(GameObject obj)
@@ -170,7 +166,7 @@ public class ModifierManager : MonoBehaviour
         }
 
         newModfs.parent = transform;
-        newModfs.localPosition = transform.localPosition;
+        newModfs.localPosition = Vector3.zero;
         newModfs.localScale = transform.localScale;
         newModfs.localRotation = transform.localRotation;
     }

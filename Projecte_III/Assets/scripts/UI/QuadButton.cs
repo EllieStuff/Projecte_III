@@ -99,7 +99,7 @@ public class QuadButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
         playerStats.SetStats();
 
-        SetNewValues(playerStats.transform.GetComponent<Stats>().GetStats(), true);
+        //SetNewValues(playerStats.transform.GetComponent<Stats>().GetStats(), true);
         placed = true;
     }
 

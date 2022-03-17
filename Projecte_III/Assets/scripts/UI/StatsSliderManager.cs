@@ -13,10 +13,10 @@ public class StatsSliderManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        stats = new StatsSlider[transform.childCount];
+        stats = new StatsSlider[transform.GetChild(0).childCount];
         for (int i = 0; i < stats.Length; i++)
         {
-            stats[i] = transform.GetChild(1).GetChild(i).GetComponent<StatsSlider>();
+            stats[i] = transform.GetChild(0).GetChild(i).GetComponent<StatsSlider>();
         }
     }
 
