@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/scripts/Misc/Inputs/QuadControls.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/Scripts/Misc/Inputs/QuadControls.inputactions'
 
 using System;
 using System.Collections;
@@ -126,6 +126,14 @@ public class @QuadControls : IInputActionCollection, IDisposable
                     ""name"": ""UseChosenGadget"",
                     ""type"": ""Button"",
                     ""id"": ""18a3717e-c594-4bc1-bbf4-027d623bade9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Start"",
+                    ""type"": ""Button"",
+                    ""id"": ""63cc4883-68c7-4bc8-a272-f559b2decb60"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -455,6 +463,17 @@ public class @QuadControls : IInputActionCollection, IDisposable
                     ""action"": ""UseChosenGadget"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a911d508-e42a-42f0-9a02-c02fcf3670a3"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Start"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -735,6 +754,7 @@ public class @QuadControls : IInputActionCollection, IDisposable
         m_Quad_ChooseItemMouse = m_Quad.FindAction("ChooseItemMouse", throwIfNotFound: true);
         m_Quad_ConfirmChosenGadget = m_Quad.FindAction("ConfirmChosenGadget", throwIfNotFound: true);
         m_Quad_UseChosenGadget = m_Quad.FindAction("UseChosenGadget", throwIfNotFound: true);
+        m_Quad_Start = m_Quad.FindAction("Start", throwIfNotFound: true);
         m_Quad_ChasisElevation = m_Quad.FindAction("ChasisElevation", throwIfNotFound: true);
         m_Quad_AlaDelta = m_Quad.FindAction("AlaDelta", throwIfNotFound: true);
         // QuadP2
@@ -815,6 +835,7 @@ public class @QuadControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Quad_ChooseItemMouse;
     private readonly InputAction m_Quad_ConfirmChosenGadget;
     private readonly InputAction m_Quad_UseChosenGadget;
+    private readonly InputAction m_Quad_Start;
     private readonly InputAction m_Quad_ChasisElevation;
     private readonly InputAction m_Quad_AlaDelta;
     public struct QuadActions
@@ -835,6 +856,7 @@ public class @QuadControls : IInputActionCollection, IDisposable
         public InputAction @ChooseItemMouse => m_Wrapper.m_Quad_ChooseItemMouse;
         public InputAction @ConfirmChosenGadget => m_Wrapper.m_Quad_ConfirmChosenGadget;
         public InputAction @UseChosenGadget => m_Wrapper.m_Quad_UseChosenGadget;
+        public InputAction @Start => m_Wrapper.m_Quad_Start;
         public InputAction @ChasisElevation => m_Wrapper.m_Quad_ChasisElevation;
         public InputAction @AlaDelta => m_Wrapper.m_Quad_AlaDelta;
         public InputActionMap Get() { return m_Wrapper.m_Quad; }
@@ -888,6 +910,9 @@ public class @QuadControls : IInputActionCollection, IDisposable
                 @UseChosenGadget.started -= m_Wrapper.m_QuadActionsCallbackInterface.OnUseChosenGadget;
                 @UseChosenGadget.performed -= m_Wrapper.m_QuadActionsCallbackInterface.OnUseChosenGadget;
                 @UseChosenGadget.canceled -= m_Wrapper.m_QuadActionsCallbackInterface.OnUseChosenGadget;
+                @Start.started -= m_Wrapper.m_QuadActionsCallbackInterface.OnStart;
+                @Start.performed -= m_Wrapper.m_QuadActionsCallbackInterface.OnStart;
+                @Start.canceled -= m_Wrapper.m_QuadActionsCallbackInterface.OnStart;
                 @ChasisElevation.started -= m_Wrapper.m_QuadActionsCallbackInterface.OnChasisElevation;
                 @ChasisElevation.performed -= m_Wrapper.m_QuadActionsCallbackInterface.OnChasisElevation;
                 @ChasisElevation.canceled -= m_Wrapper.m_QuadActionsCallbackInterface.OnChasisElevation;
@@ -940,6 +965,9 @@ public class @QuadControls : IInputActionCollection, IDisposable
                 @UseChosenGadget.started += instance.OnUseChosenGadget;
                 @UseChosenGadget.performed += instance.OnUseChosenGadget;
                 @UseChosenGadget.canceled += instance.OnUseChosenGadget;
+                @Start.started += instance.OnStart;
+                @Start.performed += instance.OnStart;
+                @Start.canceled += instance.OnStart;
                 @ChasisElevation.started += instance.OnChasisElevation;
                 @ChasisElevation.performed += instance.OnChasisElevation;
                 @ChasisElevation.canceled += instance.OnChasisElevation;
@@ -1122,6 +1150,7 @@ public class @QuadControls : IInputActionCollection, IDisposable
         void OnChooseItemMouse(InputAction.CallbackContext context);
         void OnConfirmChosenGadget(InputAction.CallbackContext context);
         void OnUseChosenGadget(InputAction.CallbackContext context);
+        void OnStart(InputAction.CallbackContext context);
         void OnChasisElevation(InputAction.CallbackContext context);
         void OnAlaDelta(InputAction.CallbackContext context);
     }

@@ -6,7 +6,7 @@ public class InputSystem : MonoBehaviour
 {
     public const float INPUT_THRESHOLD = 0.3f;
 
-    public enum KeyCodes { FORWARD, BACKWARD, LEFT, RIGHT, DRIFT, ENABLE_GADGET_MENU, CONFIRM_GADGET, USE_GADGET };
+    public enum KeyCodes { FORWARD, BACKWARD, LEFT, RIGHT, START, DRIFT, ENABLE_GADGET_MENU, CONFIRM_GADGET, USE_GADGET };
     public enum AxisCodes { CHOOSE_ITEM };
     public enum DeviceTypes { DEFAULT, KEYBOARD, CONTROLLER };
 
@@ -30,6 +30,7 @@ public class InputSystem : MonoBehaviour
             deviceType = DeviceTypes.CONTROLLER;
 
             mainDeviceId = _controls.Quad.ActivateController.controls[_controllerIdx].device.deviceId;
+            mouseDeviceId = -1;
 
         }
 
@@ -99,7 +100,7 @@ public class InputSystem : MonoBehaviour
             return null;
 
         int deviceId = controls.Quad.ActivateController.activeControl.device.deviceId;
-        if (activatedControllers.Find(_control => _control.mainDeviceId == deviceId) != null)
+        if (activatedControllers.Find(_control => _control.mainDeviceId == deviceId || _control.mouseDeviceId == deviceId) != null)
             return null;
 
         for (int i = 0; i < controls.Quad.ActivateController.controls.Count; i++)
@@ -284,6 +285,18 @@ public class InputSystem : MonoBehaviour
                         {
                             //Debug.Log("Right is " + controls.Quad.Right.controls[i].EvaluateMagnitude());
                             if (controls.Quad.Right.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return true;
+                        }
+                    }
+
+                    break;
+
+                case KeyCodes.START:
+                    for (int i = 0; i < controls.Quad.Start.controls.Count; i++)
+                    {
+                        if (controls.Quad.Start.controls[i].device.deviceId == mainDeviceId)
+                        {
+                            //Debug.Log("Start is " + controls.Quad.Start.controls[i].EvaluateMagnitude());
+                            if (controls.Quad.Start.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return true;
                         }
                     }
 

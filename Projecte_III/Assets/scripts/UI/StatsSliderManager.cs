@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class StatsSliderManager : MonoBehaviour
 {
-    StatsSlider[] stats;
+    [SerializeField] int playerId;
 
+    StatsSlider[] stats;
     Stats.Data statsValue;
 
     private bool first = false;
@@ -57,6 +58,6 @@ public class StatsSliderManager : MonoBehaviour
 
     public void GetPlayerStats()
     {
-        statsValue = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>().GetStats();
+        statsValue = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>().GetPlayer(playerId).GetComponentInChildren<Stats>().GetStats();
     }
 }

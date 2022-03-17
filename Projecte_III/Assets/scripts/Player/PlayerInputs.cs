@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class PlayerInputs : MonoBehaviour
 {
-    PlayerVehicleScript.GameModes gameMode = PlayerVehicleScript.GameModes.MONO;
+    PlayersManager playersManagers;
+    //PlayersManager.GameModes gameMode = PlayersManager.GameModes.MONO;
     InputSystem inputSystem;
     InputSystem.ControlData[] controlData = new InputSystem.ControlData[1];
+    int playerId;
 
     // Keys
     float
         forward, backward, right, left, drift;
     bool
-        enableGadgetMenu, confirmGadget, useGadget;
+        start, enableGadgetMenu, confirmGadget, useGadget;
 
     // Axis
     Vector2
@@ -31,6 +33,7 @@ public class PlayerInputs : MonoBehaviour
     public bool Backward { get { return backward > InputSystem.INPUT_THRESHOLD; } }
     public bool Right { get { return right > InputSystem.INPUT_THRESHOLD; } }
     public bool Left { get { return left > InputSystem.INPUT_THRESHOLD; } }
+    public bool Start { get { return start; } }
     public bool Drift { get { return drift > InputSystem.INPUT_THRESHOLD; } }
     public bool EnableGadgetMenu { get { return enableGadgetMenu; } }
     public bool ConfirmGadget { get { return confirmGadget; } }
@@ -42,7 +45,10 @@ public class PlayerInputs : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        if(GameObject.FindGameObjectWithTag("InputSystem") != null)
+        playersManagers = transform.parent.GetComponentInParent<PlayersManager>();
+        playerId = transform.GetComponentInParent<QuadSceneManager>().playerId;
+        //gameMode = transform.parent.GetComponentInParent<PlayersManager>().gameMode;
+        //if(GameObject.FindGameObjectWithTag("InputSystem") != null)
         inputSystem = GameObject.FindGameObjectWithTag("InputSystem").GetComponent<InputSystem>();
         controlData[0] = null;
     }
@@ -50,9 +56,9 @@ public class PlayerInputs : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        switch (gameMode)
+        switch (playersManagers.gameMode)
         {
-            case PlayerVehicleScript.GameModes.MONO:
+            case PlayersManager.GameModes.MONO:
                 if(controlData == null || controlData[0] == null)
                     controlData = inputSystem.GetAllControllersData();
                 else
@@ -62,9 +68,17 @@ public class PlayerInputs : MonoBehaviour
 
                 break;
 
-            case PlayerVehicleScript.GameModes.MULTI_LOCAL:
+            case PlayersManager.GameModes.MULTI_LOCAL:
                 if (controlData[0] == null)
-                    controlData[0] = inputSystem.GetActiveControllerData();
+                {
+                    for (int i = 0; i <= playerId; i++)
+                    {
+                        if (i == playerId)
+                            controlData[0] = inputSystem.GetActiveControllerData();
+                        else if (!playersManagers.GetPlayer(i).GetComponent<PlayerInputs>().Inited())
+                            break;
+                    }
+                }
                 else
                 {
                     UpdateInputs();
@@ -84,6 +98,7 @@ public class PlayerInputs : MonoBehaviour
         backward = inputSystem.GetKeyFloat(InputSystem.KeyCodes.BACKWARD, controlData);
         right = inputSystem.GetKeyFloat(InputSystem.KeyCodes.RIGHT, controlData);
         left = inputSystem.GetKeyFloat(InputSystem.KeyCodes.LEFT, controlData);
+        start = inputSystem.GetKey(InputSystem.KeyCodes.START, controlData);
         drift = inputSystem.GetKeyFloat(InputSystem.KeyCodes.DRIFT, controlData);
         enableGadgetMenu = inputSystem.GetKey(InputSystem.KeyCodes.ENABLE_GADGET_MENU, controlData);
         confirmGadget = inputSystem.GetKey(InputSystem.KeyCodes.CONFIRM_GADGET, controlData);
@@ -93,11 +108,9 @@ public class PlayerInputs : MonoBehaviour
         chooseItem = inputSystem.GetAxis(InputSystem.AxisCodes.CHOOSE_ITEM, controlData);
     }
 
-
-
-    public void SetGameMode(PlayerVehicleScript.GameModes _gameMode)
+    public bool Inited()
     {
-        gameMode = _gameMode;
+        return controlData != null && controlData[0] != null;
     }
 
 }

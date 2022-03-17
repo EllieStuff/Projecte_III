@@ -27,7 +27,7 @@ public class PaintGunScript : MonoBehaviour
         //model.SetActive(false);
 
         LoadSceneManager scene = GameObject.Find("SceneManager").GetComponent<LoadSceneManager>();
-        if(scene == null || scene.GetSceneName() != "Building Scene")
+        if(scene == null || !scene.GetSceneName().Contains("Building Scene"))
         {
             model.transform.localScale = Vector3.zero;
             model.SetActive(false);

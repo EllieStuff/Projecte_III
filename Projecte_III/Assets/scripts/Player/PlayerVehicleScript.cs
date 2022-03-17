@@ -6,9 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class PlayerVehicleScript : MonoBehaviour
 {
-    public enum GameModes { MONO, MULTI_LOCAL /*, MULTI_ONLINE*/ };
-    [SerializeField] GameModes gameMode = GameModes.MONO;
-
     internal int playerNum;
 
     [SerializeField] Vector3 centerOfMass = new Vector3(0.0f, -0.7f, 0.0f);
@@ -71,7 +68,7 @@ public class PlayerVehicleScript : MonoBehaviour
         controls = new QuadControlSystem();
 
         inputs = GetComponent<PlayerInputs>();
-        inputs.SetGameMode(gameMode);
+        //inputs.SetGameMode(gameMode);
 
         defaultColorMat = Color.white;
         particleMat.color = defaultColorMat;
@@ -610,7 +607,7 @@ public class PlayerVehicleScript : MonoBehaviour
     {
         if(other.tag.Equals("Respawn") && !other.GetComponent<DeathfallAndCheckpointsSystem>().activated)
         {
-            GameObject.Find("UI").transform.GetChild(1).GetComponent<UIPosition>().actualCheckpoint++;
+            GameObject.Find("UI").transform.Find("SliderPosition").GetComponent<UIPosition>().actualCheckpoint++;
             other.GetComponent<DeathfallAndCheckpointsSystem>().activated = true;
         }
         

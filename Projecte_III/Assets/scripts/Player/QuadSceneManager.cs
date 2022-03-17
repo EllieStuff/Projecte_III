@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class QuadSceneManager : MonoBehaviour
 {
+    public int playerId;
+
+    PlayersManager playersManager;
     GameObject player;
     PlayerVehicleScript playerScript;
     string[] listOfAllModifiers = { "Floater", "PaintGun", "OilGun", "Plunger", "AlaDelta", "ChasisElevation" };
@@ -14,7 +17,8 @@ public class QuadSceneManager : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
 
-        player = GameObject.FindGameObjectWithTag("Player");
+        playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
+        player = playersManager.GetPlayer(playerId).gameObject;
         playerScript = player.GetComponent<PlayerVehicleScript>();
 
         GameObject[] objs = GameObject.FindGameObjectsWithTag("VehicleSet");
@@ -35,10 +39,10 @@ public class QuadSceneManager : MonoBehaviour
                     child.SetActive(false);
             }
         }
-        else if (scene.name == "Building Scene" && !sceneLoaded)
+        else if ((scene.name == "Building Scene" || scene.name == "Building Scene Multiplayer") && !sceneLoaded)
         {
-            ModifierManager modfs = GameObject.FindGameObjectWithTag("ModifierSpots").GetComponent<ModifierManager>();
-            Transform quad = GameObject.FindGameObjectWithTag("PlayerVehicle").transform.GetChild(0);
+            ModifierManager modfs = playersManager.GetPlayerModifier(playerId).GetComponent<ModifierManager>(); //GameObject.FindGameObjectWithTag("ModifierSpots").GetComponent<ModifierManager>();
+            Transform quad = playersManager.GetPlayer(playerId).GetChild(0).GetChild(0); //GameObject.FindGameObjectWithTag("PlayerVehicle").transform.GetChild(0);
             modfs.SetNewModifierSpots(quad.GetChild(quad.childCount - 1));
             modfs.Active(false);
 
@@ -49,7 +53,7 @@ public class QuadSceneManager : MonoBehaviour
                     child.SetActive(true);
             }
 
-            Transform initial = GameObject.FindGameObjectWithTag("InitPos").transform;
+            Transform initial = GameObject.FindGameObjectWithTag("InitPos").GetComponent<InitPosManager>().GetInitPos(playerId);
 
             gameObject.transform.localPosition = initial.localPosition;
             gameObject.transform.localRotation = initial.localRotation;
@@ -79,9 +83,9 @@ public class QuadSceneManager : MonoBehaviour
         }
         else if (scene.name != "Menu" && scene.name != "SceneSelector" && !sceneLoaded)
         {
-            GameObject.FindGameObjectWithTag("ModifierSpots").GetComponent<ModifierManager>().Active(false);
+            playersManager.GetPlayerModifier(playerId).GetComponent<ModifierManager>().Active(false);
 
-            Transform initial = GameObject.FindGameObjectWithTag("InitPos").transform;
+            Transform initial = GameObject.FindGameObjectWithTag("InitPos").GetComponent<InitPosManager>().GetInitPos(playerId);
 
             gameObject.transform.position = initial.position;
             gameObject.transform.localRotation = initial.localRotation;
@@ -107,7 +111,7 @@ public class QuadSceneManager : MonoBehaviour
 
     void SetCarModifiers()
     {
-        Transform modifiers = GameObject.FindGameObjectWithTag("ModifierSpots").transform.GetChild(0);
+        Transform modifiers = playersManager.GetPlayerModifier(playerId).GetChild(0);
         playerScript.listOfModifiers = new List<Transform>(modifiers.childCount);
         for (int i = 0; i < modifiers.childCount; i++)
         {
