@@ -11,6 +11,7 @@ public class ClearObstaclesCameraRaycast : MonoBehaviour
     [SerializeField] float downMargin = 5.0f;
 
     Transform player;
+    Camera camera;
 
     //Transform player, camera;
     public enum ObstacleState { DEFAULT, APPEARING, DISAPPEARING }
@@ -26,6 +27,7 @@ public class ClearObstaclesCameraRaycast : MonoBehaviour
     {
         int playerId = GetComponent<CameraScript>().playerId;
         player = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>().GetPlayer(playerId);
+        camera = GetComponentInChildren<Camera>();
     }
 
     // Update is called once per frame
@@ -33,7 +35,7 @@ public class ClearObstaclesCameraRaycast : MonoBehaviour
     {
         Vector3 currMargin = player.forward * forwardMargin;
         currMargin.y += downMargin;
-        Vector3 cameraPos = Camera.main.transform.position + currMargin;
+        Vector3 cameraPos = camera.transform.position + currMargin;
         Vector3 playerPos = player.position + currMargin;
 
         Debug.DrawLine(cameraPos, playerPos, Color.red);
