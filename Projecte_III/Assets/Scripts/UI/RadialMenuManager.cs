@@ -119,6 +119,8 @@ public class RadialMenuManager : MonoBehaviour
 
     private void UseGadget()
     {
+        bool hasBeenUsed = true;
+
         //Do action from each modifier
         switch (selectedGadget.tag)
         {
@@ -132,7 +134,11 @@ public class RadialMenuManager : MonoBehaviour
 
             case "Plunger":
                 // ToDo: Adaptar amb els nous scripts
-                player.GetComponent<PlayerThrowPlunger>().Activate();
+                LineRenderer line = player.GetComponent<PlayerThrowPlunger>().line;
+                if (line.material.color.Equals(Color.green) || line.GetPosition(1) == Vector3.zero)
+                    player.GetComponent<PlayerThrowPlunger>().Activate();
+                else
+                    hasBeenUsed = false;
                 break;
 
             case "AlaDelta":
@@ -157,8 +163,11 @@ public class RadialMenuManager : MonoBehaviour
                 break;
         }
         // Reinit Modifier CountDown
-        piecesData[selectedGadget.tag].delayTimer = piecesData[selectedGadget.tag].maxDelayTime;
-        piecesData[selectedGadget.tag].countdownActive = true;
+        if(hasBeenUsed)
+        {
+            piecesData[selectedGadget.tag].delayTimer = piecesData[selectedGadget.tag].maxDelayTime;
+            piecesData[selectedGadget.tag].countdownActive = true;
+        }
     }
 
     private void InitPiecesData()
