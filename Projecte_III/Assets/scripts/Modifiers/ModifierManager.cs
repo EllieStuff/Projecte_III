@@ -95,8 +95,10 @@ public class ModifierManager : MonoBehaviour
                 rendererMousePos.z = 0;
                 if(playerId == 0 || playerId == 2)
                     rendererMousePos.x += Screen.width;
-                if (playerId == 2 || playerId == 3)
+                if (playerId == 2)
                     rendererMousePos.y += Screen.height * 1.25f;
+                if (playerId == 3)
+                    rendererMousePos.y += Screen.height;
 
                 ray = usedCamera.ScreenPointToRay(rendererMousePos);
 
