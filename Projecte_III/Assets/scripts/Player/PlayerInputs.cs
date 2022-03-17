@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -45,8 +46,22 @@ public class PlayerInputs : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        playersManagers = transform.parent.GetComponentInParent<PlayersManager>();
-        playerId = transform.GetComponentInParent<QuadSceneManager>().playerId;
+        try
+        {
+            playersManagers = transform.parent.GetComponentInParent<PlayersManager>();
+        }
+        catch(Exception)
+        {
+            playersManagers = transform.GetComponent<PlayersManager>();
+        }
+        try
+        {
+            playerId = transform.GetComponentInParent<QuadSceneManager>().playerId;
+        }
+        catch(Exception)
+        {
+            playerId = 1;
+        }
         //gameMode = transform.parent.GetComponentInParent<PlayersManager>().gameMode;
         //if(GameObject.FindGameObjectWithTag("InputSystem") != null)
         inputSystem = GameObject.FindGameObjectWithTag("InputSystem").GetComponent<InputSystem>();

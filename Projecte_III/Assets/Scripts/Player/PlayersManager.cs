@@ -13,6 +13,8 @@ public class PlayersManager : MonoBehaviour
     [SerializeField] Transform[] players;
     [SerializeField] Transform[] modifiers;
 
+    bool disableFunctions;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -21,18 +23,20 @@ public class PlayersManager : MonoBehaviour
     }
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if(scene.name == "Menu")
+        if (scene.name == "Menu")
         {
             // Do nothing
         }
-        if(scene.name == "Building Scene Multiplayer")
+        else if (scene.name.Equals("SceneSelector"))
+            disableFunctions = true;
+        else if (scene.name == "Building Scene Multiplayer" && !disableFunctions)
         {
-            for(int i = 0; i < transform.childCount; i++)
+            for (int i = 0; i < transform.childCount; i++)
             {
                 transform.GetChild(i).gameObject.SetActive(true);
             }
         }
-        else if(scene.name == "Building Scene")
+        else if (scene.name == "Building Scene" && !disableFunctions)
         {
             transform.GetChild(0).gameObject.SetActive(true);
             for (int i = 1; i < transform.childCount; i++)
@@ -40,7 +44,7 @@ public class PlayersManager : MonoBehaviour
                 transform.GetChild(i).gameObject.SetActive(false);
             }
         }
-        else
+        else if(!disableFunctions)
         {
             if (gameMode == GameModes.MONO)
             {

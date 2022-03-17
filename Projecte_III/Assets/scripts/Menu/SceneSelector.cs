@@ -26,6 +26,12 @@ public class SceneSelector : MonoBehaviour
 
     void Update()
     {
+        if (SceneManager.GetActiveScene().name.Equals("Building Scene"))
+        {
+            GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().newScene = mapNames[mapPos];
+            Destroy(gameObject);
+        }
+
         if (timerPress <= 0 && (inputs.Right || inputs.Left))
             timerPress = 1;
         else if (timerPress > 0)
@@ -53,18 +59,8 @@ public class SceneSelector : MonoBehaviour
 
     public void loadScene()
     {
-        UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
         Destroy(inputSystem);
         DontDestroyOnLoad(gameObject);
         SceneManager.LoadScene("Building Scene");
-    }
-
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        if(scene.name.Equals("Building Scene"))
-        {
-            GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().newScene = mapNames[mapPos];
-            Destroy(gameObject);
-        }
     }
 }
