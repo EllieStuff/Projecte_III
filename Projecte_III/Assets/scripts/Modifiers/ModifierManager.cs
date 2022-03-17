@@ -61,7 +61,7 @@ public class ModifierManager : MonoBehaviour
     {
         Stats.Data playerStats = stats.transform.GetComponent<Stats>().GetStats();
 
-        if (GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().GetSceneName() != "Building Scene")
+        if (!GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().GetSceneName().Contains("Building Scene"))
         {
             Transform chasis = player.transform.parent.GetChild(0);
 
