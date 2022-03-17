@@ -10,25 +10,16 @@ public class SceneSelector : MonoBehaviour
     [SerializeField] int mapQuantity;
     [SerializeField] string[] mapNames;
     [SerializeField] Button doneButton;
-    PlayerInputs inputs;
+
     float timerPress;
     Vector3 newPos;
-    GameObject inputSystem;
+    InputSystem inputSystem;
+    public PlayerInputs menuPlayerInputs;
 
     void Start()
     {
-        inputSystem = GameObject.FindGameObjectWithTag("InputSystem");
-        inputs = inputSystem.GetComponent<PlayerInputs>();
+        inputSystem = InputSystem.Instance;
 
-        
-        if (inputs == null)
-        {
-            Debug.Log(inputs);
-            Destroy(inputSystem);
-            inputSystem = GameObject.FindGameObjectWithTag("InputSystem");
-            inputs = inputSystem.GetComponent<PlayerInputs>();
-            Debug.Log(inputs);
-        }
         newPos = transform.position;
         //inputSystem.transform.name = "destroy";
         //inputSystem.transform.tag = "SceneSelector";
@@ -36,18 +27,18 @@ public class SceneSelector : MonoBehaviour
 
     void Update()
     {
-        if (timerPress <= 0 && (inputs.Right || inputs.Left))
+        if (timerPress <= 0 && (menuPlayerInputs.Right || menuPlayerInputs.Left))
             timerPress = 1;
         else if (timerPress > 0)
             timerPress -= Time.deltaTime;
 
-        if (inputs.Right && mapPos < mapQuantity - 1)
+        if (menuPlayerInputs.Right && mapPos < mapQuantity - 1)
         {
             mapPos++;
             newPos = new Vector3(newPos.x -25.28f, newPos.y, newPos.z);
 
         }
-        else if (inputs.Left && mapPos > 0)
+        else if (menuPlayerInputs.Left && mapPos > 0)
         {
             mapPos--;
             newPos = new Vector3(newPos.x + 25.28f, newPos.y, newPos.z);
@@ -64,7 +55,6 @@ public class SceneSelector : MonoBehaviour
     public void loadScene()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
-        Destroy(inputs);
         DontDestroyOnLoad(gameObject);
         SceneManager.LoadScene("Building Scene");
     }
@@ -73,7 +63,7 @@ public class SceneSelector : MonoBehaviour
     {
         if(scene.name.Equals("Building Scene"))
         {
-            GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().newScene = mapNames[mapPos];
+            LoadSceneManager.Instance.newScene = mapNames[mapPos];
             Destroy(gameObject);
         }
     }

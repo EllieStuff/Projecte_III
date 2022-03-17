@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputSystem : MonoBehaviour
+public class InputSystem : MonoSingleton<InputSystem>
 {
     public const float INPUT_THRESHOLD = 0.3f;
 
@@ -44,15 +44,13 @@ public class InputSystem : MonoBehaviour
 
     List<ControlData> activatedControllers = new List<ControlData>();
 
-    // Start is called before the first frame update
-    void Start()
+    public override void Init()
     {
-        DontDestroyOnLoad(gameObject);
-
+        base.Init();
         controls = new QuadControls();
         controls.Enable();
     }
-
+ 
     private void LateUpdate()
     {
         if (notUpdatedIts < itsToUpdate)

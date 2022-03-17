@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerInputs : MonoBehaviour
 {
     PlayerVehicleScript.GameModes gameMode = PlayerVehicleScript.GameModes.MONO;
-    InputSystem inputSystem;
+    private InputSystem inputSystem;
     InputSystem.ControlData[] controlData = new InputSystem.ControlData[1];
 
     // Keys
@@ -38,12 +38,9 @@ public class PlayerInputs : MonoBehaviour
 
     public Vector2 ChooseItem { get { return chooseItem; } }
 
-
-    // Start is called before the first frame update
     void Awake()
     {
-        if(GameObject.FindGameObjectWithTag("InputSystem") != null)
-        inputSystem = GameObject.FindGameObjectWithTag("InputSystem").GetComponent<InputSystem>();
+        inputSystem = InputSystem.Instance;
         controlData[0] = null;
     }
 

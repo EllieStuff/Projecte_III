@@ -3,36 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
-public class AudioManager : MonoBehaviour
+public class AudioManager : MonoSingleton<AudioManager>
 {
     [SerializeField] [Range(0, 1)] float SFX_Volume = 1.0f;
     [SerializeField] [Range(0, 1)] float OST_Volume = 1.0f;
     [SerializeField] AudioSource SFX_AudioSource;
     [SerializeField] AudioSource OST_AudioSource;
 
-    private static AudioManager instance = null;
-    public static AudioManager Instance { get { return instance; } }
 
-    public void Awake()
+    public override void Init()
     {
-        if (instance == null)
-        {
-            instance = this;
+        base.Init();
 
-            SFX_Volume = PlayerPrefs.GetFloat("sfxVolume", SFX_Volume);
-            OST_Volume = PlayerPrefs.GetFloat("ostVolume", OST_Volume);
+        SFX_Volume = PlayerPrefs.GetFloat("sfxVolume", SFX_Volume);
+        OST_Volume = PlayerPrefs.GetFloat("ostVolume", OST_Volume);
 
-            SFX_AudioSource.volume = SFX_Volume;
-            OST_AudioSource.volume = OST_Volume;
-        }
-
+        SFX_AudioSource.volume = SFX_Volume;
+        OST_AudioSource.volume = OST_Volume;
     }
+    
     private void Start()
     {
         //Play_OST("InGameMusic");
         //Play_OST("MenuMusic");
     }
-
 
 
     public void Play_SFX(string _audioName, float _customPitch = -1.0f)

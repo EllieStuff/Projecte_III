@@ -1,15 +1,17 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LoadSceneManager : MonoBehaviour
+public class LoadSceneManager : MonoSingleton<LoadSceneManager>
 {
     string currentSceneName;
     float timer = 2;
     public string newScene;
     bool changeScene = false;
 
-    private void Start()
+    public override void Init()
     {
+        base.Init();
+
         currentSceneName = SceneManager.GetActiveScene().name;
     }
 
