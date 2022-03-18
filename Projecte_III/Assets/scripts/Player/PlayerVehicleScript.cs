@@ -145,10 +145,21 @@ public class PlayerVehicleScript : MonoBehaviour
                         touchingGround = true;
                     }
 
-                    wheel.position = Vector3.Lerp(wheel.position, wheelPosition, Time.deltaTime * 2);
+                    if(!wheel.name.Contains("Front"))
+                        wheel.position = wheelPosition;
 
-                    if (wheel.tag.Equals("front") && (inputs.Right || inputs.Left))
-                        wheel.transform.localRotation = Quaternion.Lerp(wheel.transform.localRotation, new Quaternion(0, (inputs.RightFloat / 5) - (inputs.LeftFloat / 5), 0, 1), Time.deltaTime * 3);
+                    if (wheel.name.Contains("Front") && (inputs.Right || inputs.Left))
+                    {
+                        int left = 0;
+                        int right = 0;
+
+                        if (inputs.Left)
+                            left = 5;
+                        else if (inputs.Right)
+                            right = 5;
+
+                        wheel.transform.localRotation = Quaternion.Lerp(wheel.transform.localRotation, new Quaternion(0, Mathf.Clamp((right / 5), -0.2f, 0.2f) - Mathf.Clamp((left / 5), -0.2f, 0.2f), 0, 1), Time.deltaTime * 3);
+                    }
                     else
                         wheel.transform.rotation = wheelRotation;
 
@@ -177,7 +188,6 @@ public class PlayerVehicleScript : MonoBehaviour
 
                 transform.parent.GetChild(2).localPosition = transform.localPosition;
             }
-
         }
 
     }
