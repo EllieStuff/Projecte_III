@@ -10,7 +10,7 @@ public class PlayersManager : MonoBehaviour
 
     public InputSystem inputSystem;
     public int numOfPlayers = 1;
-    [SerializeField] Transform[] players;
+    public Transform[] players;
     [SerializeField] Transform[] modifiers;
 
     bool disableFunctions;
