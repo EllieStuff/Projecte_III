@@ -154,11 +154,11 @@ public class PlayerVehicleScript : MonoBehaviour
                         int right = 0;
 
                         if (inputs.Left)
-                            left = 5;
+                            left = 1;
                         else if (inputs.Right)
-                            right = 5;
+                            right = 1;
 
-                        wheel.transform.localRotation = Quaternion.Lerp(wheel.transform.localRotation, new Quaternion(0, Mathf.Clamp((right / 5), -0.2f, 0.2f) - Mathf.Clamp((left / 5), -0.2f, 0.2f), 0, 1), Time.deltaTime * 3);
+                        wheel.transform.localRotation = Quaternion.Lerp(wheel.transform.localRotation, new Quaternion(0, Mathf.Clamp(right, -0.2f, 0.2f) - Mathf.Clamp(left, -0.2f, 0.2f), 0, 1), Time.deltaTime * 3);
                     }
                     else
                         wheel.transform.rotation = wheelRotation;
