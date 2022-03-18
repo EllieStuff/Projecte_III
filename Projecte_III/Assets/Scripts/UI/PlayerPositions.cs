@@ -28,7 +28,6 @@ public class PlayerPositions : MonoBehaviour
             transform.GetChild(1).gameObject.active = false;
             transform.GetChild(3).gameObject.active = false;
             transform.GetChild(2).SetSiblingIndex(1);
-            quads.players[1] = quads.players[2];
         }
         else if (quads.numOfPlayers == 3)
         {
