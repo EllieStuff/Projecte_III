@@ -225,6 +225,8 @@ public class ModifierManager : MonoBehaviour
         newModfs.localPosition = Vector3.zero;
         newModfs.localScale = transform.localScale;
         newModfs.localRotation = transform.localRotation;
+
+        newModfs.gameObject.SetActive(false);
     }
 
     public void Active(bool active)
