@@ -56,7 +56,7 @@ public class DoneButtonManager : MonoBehaviour
         {
             StartCoroutine(button.LerpBttnImgColor(readyBttnImgColor));
         }
-        yield return new WaitForSeconds(1.5f);
+        //yield return new WaitForSeconds(1.5f);
         Debug.Log("Changing Scene");
         GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>().numOfPlayers = buttonsActive;
         GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().ChangeScene(nextScene);
