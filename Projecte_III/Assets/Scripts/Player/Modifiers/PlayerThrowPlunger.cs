@@ -101,9 +101,18 @@ public class PlayerThrowPlunger : MonoBehaviour
 
             plungerInstance = Instantiate(plungerPrefab, modifierTransform.position, this.transform.rotation);
             Physics.IgnoreCollision(plungerInstance.transform.GetChild(0).GetComponent<BoxCollider>(), transform.GetChild(0).GetComponent<BoxCollider>());
-            plungerInstance.GetComponent<plungerInstance>().playerShotPlunger = this.gameObject;
-            plungerInstance.GetComponent<plungerInstance>().playerNum = player.playerNum;
-            plungerInstance.GetComponent<plungerInstance>().normalDir = savedDirection;
+            if(!localTransform.tag.Equals("Player"))
+            {
+                plungerInstance.GetComponent<plungerInstance>().playerShotPlunger = this.gameObject;
+                plungerInstance.GetComponent<plungerInstance>().playerNum = player.playerNum;
+                plungerInstance.GetComponent<plungerInstance>().normalDir = savedDirection;
+            }
+            else
+            {
+                plungerInstance.GetComponent<plungerInstance>().playerShotPlunger = this.gameObject;
+                plungerInstance.GetComponent<plungerInstance>().playerNum = player.playerNum;
+                plungerInstance.GetComponent<plungerInstance>().quadTarget = localTransform;
+            }
             plunger = true;
             plungerDisappearCooldown = plungerBaseDisappearCooldown;
         }
