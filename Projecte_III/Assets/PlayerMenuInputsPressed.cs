@@ -42,7 +42,6 @@ public class PlayerMenuInputsPressed : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        //update = !update;
         if (playerInputs.Inited())
         {
             if (playerInputs.MenuUp && !keysPressed[InputSystem.KeyCodes.MENU_UP])
@@ -53,11 +52,11 @@ public class PlayerMenuInputsPressed : MonoBehaviour
             {
                 keysPressed[InputSystem.KeyCodes.MENU_DOWN] = true;
             }
-            if (playerInputs.MenuAccept && !keysPressed[InputSystem.KeyCodes.MENU_RIGHT])
+            if (playerInputs.MenuRight && !keysPressed[InputSystem.KeyCodes.MENU_RIGHT])
             {
                 keysPressed[InputSystem.KeyCodes.MENU_RIGHT] = true;
             }
-            if (playerInputs.MenuAccept && !keysPressed[InputSystem.KeyCodes.MENU_LEFT])
+            if (playerInputs.MenuLeft && !keysPressed[InputSystem.KeyCodes.MENU_LEFT])
             {
                 keysPressed[InputSystem.KeyCodes.MENU_LEFT] = true;
             }
@@ -65,7 +64,7 @@ public class PlayerMenuInputsPressed : MonoBehaviour
             {
                 keysPressed[InputSystem.KeyCodes.MENU_ACCEPT] = true;
             }
-            if (playerInputs.MenuAccept && !keysPressed[InputSystem.KeyCodes.MENU_DECLINE])
+            if (playerInputs.MenuDecline && !keysPressed[InputSystem.KeyCodes.MENU_DECLINE])
             {
                 keysPressed[InputSystem.KeyCodes.MENU_DECLINE] = true;
             }
@@ -86,11 +85,11 @@ public class PlayerMenuInputsPressed : MonoBehaviour
         {
             keysPressed[InputSystem.KeyCodes.MENU_DOWN] = false;
         }
-        if (!playerInputs.MenuUp && keysPressed[InputSystem.KeyCodes.MENU_RIGHT])
+        if (!playerInputs.MenuRight && keysPressed[InputSystem.KeyCodes.MENU_RIGHT])
         {
             keysPressed[InputSystem.KeyCodes.MENU_RIGHT] = false;
         }
-        if (!playerInputs.MenuDown && keysPressed[InputSystem.KeyCodes.MENU_LEFT])
+        if (!playerInputs.MenuLeft && keysPressed[InputSystem.KeyCodes.MENU_LEFT])
         {
             keysPressed[InputSystem.KeyCodes.MENU_LEFT] = false;
         }
