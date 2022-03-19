@@ -6,9 +6,16 @@ using UnityEngine.UI;
 
 public class VolumeSliders : MonoBehaviour
 {
-    private void Start()
+    bool firstFrame = true;
+
+
+    private void LateUpdate()
     {
-        gameObject.SetActive(false);
+        if (firstFrame)
+        {
+            firstFrame = false;
+            gameObject.SetActive(false);
+        }
     }
 
 }

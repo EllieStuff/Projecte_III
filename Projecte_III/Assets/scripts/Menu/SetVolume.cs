@@ -12,6 +12,7 @@ public class SetVolume : MonoBehaviour
     [SerializeField] float sliderSpeedMult = 30;
     
     Slider slider;
+    bool firstFrame = true;
 
     // Start is called before the first frame update
     void Start()
@@ -26,12 +27,21 @@ public class SetVolume : MonoBehaviour
         slider.onValueChanged.AddListener(HandleSliderValueChanged);
     }
 
+    private void Update()
+    {
+        if (firstFrame)
+        {
+            firstFrame = false;
+            HandleSliderValueChanged(PlayerPrefs.GetFloat(savedVolumeKey, slider.maxValue));
+        }
+    }
+
 
     void HandleSliderValueChanged(float _value)
     {
         audioMixer.SetFloat(mixerKey, Mathf.Log10(_value) * sliderSpeedMult);
         PlayerPrefs.SetFloat(savedVolumeKey, _value);
-        Debug.Log("value " + _value);
+        Debug.Log("value " + _value.ToString("F1"));
     }
 
 }

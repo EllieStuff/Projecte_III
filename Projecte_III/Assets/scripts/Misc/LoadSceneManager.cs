@@ -20,6 +20,7 @@ public class LoadSceneManager : MonoBehaviour
 
         if (newScene != currentSceneName && timer <= 0)
         {
+            if (newScene == "Menu") PlayerPrefs.SetString("InitCutsceneEnabled", "false");
             SceneManager.LoadScene(newScene);
             changeScene = false;
         }

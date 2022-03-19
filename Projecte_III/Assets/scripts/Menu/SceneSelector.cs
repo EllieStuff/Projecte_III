@@ -26,7 +26,7 @@ public class SceneSelector : MonoBehaviour
 
     void Update()
     {
-        if (SceneManager.GetActiveScene().name.Equals("Building Scene"))
+        if (SceneManager.GetActiveScene().name.Contains("Building Scene"))
         {
             GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().newScene = mapNames[mapPos];
             Destroy(gameObject);
@@ -61,6 +61,15 @@ public class SceneSelector : MonoBehaviour
     {
         Destroy(inputSystem);
         DontDestroyOnLoad(gameObject);
-        SceneManager.LoadScene("Building Scene");
+
+        string gameMode = PlayerPrefs.GetString("GameMode", "null");
+        if (gameMode == "null")
+            Debug.LogError("GameMode was not chosen properly");
+        else if (gameMode == "Single")
+            SceneManager.LoadScene("Building Scene");
+        else if (gameMode == "MultiLocal")
+            SceneManager.LoadScene("Building Scene Multiplayer");
+
     }
+
 }

@@ -7,56 +7,16 @@ using UnityEngine.UI;
 
 public class MenuFunctions : MonoBehaviour
 {
+    const float ANIMS_MARGIN = 0.8f;
+
     public GameObject settingsMenu;
     public Slider localVoiceValue;
-    private bool changeSceneToBuilding;
-    private float timerChangeScene = 5;
-    private float menuCutSceneTimer = 10;
+    private float changeSceneTime = 5;
     [SerializeField] Transform[] vehicles;
     [SerializeField] GameObject menuCutScene;
+    [SerializeField] Transform menuTitle;
+    [SerializeField] Transform mainMenuButtonsFather;
 
-    private void Update()
-    {
-        if (menuCutSceneTimer > 0)
-            menuCutSceneTimer -= Time.deltaTime;
-        else if(menuCutScene != null)
-            Destroy(menuCutScene);
-
-        if(changeSceneToBuilding)
-        {
-            timerChangeScene -= Time.deltaTime;
-            for (int i = 0; i < transform.childCount; i++)
-            {
-                TextMeshProUGUI text1 = transform.GetChild(i).GetComponent<TextMeshProUGUI>();
-                if (text1 != null)
-                    text1.color -= new Color(0, 0, 0, Time.deltaTime);
-                Image childImage = transform.GetChild(i).GetComponent<Image>();
-                if (childImage != null)
-                {
-                    childImage.color -= new Color(0, 0, 0, Time.deltaTime);
-                    if (transform.GetChild(i).childCount > 0)
-                    {
-                        TextMeshProUGUI text2 = transform.GetChild(i).GetChild(0).GetComponent<TextMeshProUGUI>();
-                        if (text2 != null)
-                            text2.color -= new Color(0, 0, 0, Time.deltaTime);
-                    }
-                }
-            }
-        }
-        if(timerChangeScene <= 0)
-            SceneManager.LoadScene("SceneSelector");
-        else if(timerChangeScene <= 3)
-        {
-            for(int i = 0; i < 2; i++)
-            {
-                AudioSource audio = vehicles[i].GetChild(0).GetComponent<AudioSource>();
-                if (audio != null && !audio.enabled)
-                    audio.enabled = true;
-                vehicles[i].position += vehicles[i].TransformDirection(0, 0, Time.deltaTime * 50);
-            }
-        }
-
-    }
 
     public void OpenSettings()
     {
@@ -69,15 +29,73 @@ public class MenuFunctions : MonoBehaviour
         settingsMenu.SetActive(false);
     }
 
-    public void Play()
+    public void PlaySingle()
     {
         transform.parent.GetComponent<Animator>().enabled = true;
-        changeSceneToBuilding = true;
+        StartCoroutine(ExitMenuAnimationCoroutine());
+        PlayerPrefs.SetString("GameMode", "Single");
+    }
+    public void PlayMultiLocal()
+    {
+        transform.parent.GetComponent<Animator>().enabled = true;
+        StartCoroutine(ExitMenuAnimationCoroutine());
+        PlayerPrefs.SetString("GameMode", "MultiLocal");
     }
 
     public void ExitGame()
     {
         Application.Quit();
+    }
+
+
+    IEnumerator ExitMenuAnimationCoroutine()
+    {
+        // Gets the gameobjects to fade
+        int arrayDiff = 1;
+        Transform[] mainMenuUIItems = new Transform[mainMenuButtonsFather.childCount + arrayDiff];
+        Color[] initImagesColors = new Color[mainMenuUIItems.Length];
+        Color[] initTextsColors = new Color[mainMenuUIItems.Length];
+        for (int i = 0; i < mainMenuUIItems.Length - arrayDiff; i++) {
+            mainMenuUIItems[i] = mainMenuButtonsFather.GetChild(i);
+            initImagesColors[i] = mainMenuUIItems[i].GetComponent<Image>().color;
+            initTextsColors[i] = mainMenuUIItems[i].GetComponentInChildren<TextMeshProUGUI>().color;
+        }
+        int titleIdx = mainMenuUIItems.Length - arrayDiff;
+        mainMenuUIItems[titleIdx] = menuTitle;
+        initImagesColors[titleIdx] = menuTitle.GetComponent<Image>().color;
+        initTextsColors[titleIdx] = menuTitle.GetComponentInChildren<TextMeshProUGUI>().color;
+
+
+        // Run animations
+        float timer = 0, moveCarsTime = 2.0f;
+        while(timer < changeSceneTime)
+        {
+            yield return new WaitForEndOfFrame();
+            timer += Time.deltaTime;
+            if (timer > moveCarsTime)
+            {
+                for (int i = 0; i < vehicles.Length; i++)
+                {
+                    AudioSource audio = vehicles[i].GetChild(0).GetComponent<AudioSource>();
+                    if (audio != null && !audio.enabled)
+                        audio.enabled = true;
+                    vehicles[i].position += vehicles[i].TransformDirection(0, 0, Time.deltaTime * 50);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < mainMenuUIItems.Length; i++)
+                {
+                    mainMenuUIItems[i].GetComponent<Image>().color = Color.Lerp(initImagesColors[i], Color.clear, timer / (moveCarsTime - ANIMS_MARGIN));
+                    mainMenuUIItems[i].GetComponentInChildren<TextMeshProUGUI>().color = Color.Lerp(initTextsColors[i], Color.clear, timer / (moveCarsTime - ANIMS_MARGIN));
+                }
+            }
+
+        }
+
+        Destroy(menuCutScene);
+        SceneManager.LoadScene("SceneSelector");
+
     }
 
 }
