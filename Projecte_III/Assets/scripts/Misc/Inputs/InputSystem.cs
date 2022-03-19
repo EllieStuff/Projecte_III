@@ -48,7 +48,7 @@ public class InputSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
 
         controls = new QuadControls();
         controls.Enable();

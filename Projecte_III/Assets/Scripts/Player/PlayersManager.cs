@@ -23,7 +23,7 @@ public class PlayersManager : MonoBehaviour
     }
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "Menu")
+        if (scene.name.Contains("Menu"))
         {
             // Do nothing
         }

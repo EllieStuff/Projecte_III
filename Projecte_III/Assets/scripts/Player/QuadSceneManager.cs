@@ -32,14 +32,15 @@ public class QuadSceneManager : MonoBehaviour
     {
         if (scene.name == "Menu" && !sceneLoaded)
         {
-            for (int i = 0; i < transform.childCount; i++)
-            {
-                GameObject child = transform.GetChild(i).gameObject;
-                if (child.activeSelf)
-                    child.SetActive(false);
-            }
+           
+            //for (int i = 0; i < transform.childCount; i++)
+            //{
+            //    GameObject child = transform.GetChild(i).gameObject;
+            //    if (child.activeSelf)
+            //        child.SetActive(false);
+            //}
         }
-        else if ((scene.name == "Building Scene" || scene.name == "Building Scene Multiplayer") && !sceneLoaded)
+        else if (scene.name.Contains("Building Scene") && !sceneLoaded)
         {
             ModifierManager modfs = playersManager.GetPlayerModifier(playerId).GetComponent<ModifierManager>(); //GameObject.FindGameObjectWithTag("ModifierSpots").GetComponent<ModifierManager>();
             Transform quad = playersManager.GetPlayer(playerId).GetChild(0).GetChild(0); //GameObject.FindGameObjectWithTag("PlayerVehicle").transform.GetChild(0);
