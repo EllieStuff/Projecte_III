@@ -7,6 +7,7 @@ public class MainMenuInputs : MonoBehaviour
 {
     const int SETTINGS_IDX = 2;
     enum MenuState { MAIN, SETTINGS };
+    enum UIElementType { DEFAULT, BUTTON, SLIDER };
 
     [SerializeField] Transform mainFather;
     [SerializeField] Transform settingsFathers;
@@ -17,13 +18,13 @@ public class MainMenuInputs : MonoBehaviour
     int settingsIdx = 0;
     
     MenuState menuState = MenuState.MAIN;
+    UIElementType uiElementType = UIElementType.DEFAULT;
     GlobalMenuInputs inputs;
 
     // Start is called before the first frame update
     void Start()
     {
         inputs = GetComponent<GlobalMenuInputs>();
-
 
         mainButtons = new Button[mainFather.childCount];
         for (int i = 0; i < mainButtons.Length; i++)
@@ -32,6 +33,8 @@ public class MainMenuInputs : MonoBehaviour
         settingOptions = new Transform[settingsFathers.childCount];
         for (int i = 0; i < settingOptions.Length; i++)
             settingOptions[i] = settingsFathers.GetChild(i);
+
+        mainButtons[mainIdx].Select();
     }
 
     // Update is called once per frame
@@ -79,7 +82,24 @@ public class MainMenuInputs : MonoBehaviour
 
     void UpdateSettingsMenu()
     {
-
+        //if (inputs.UpPressed)
+        //{
+        //    mainIdx--;
+        //    if (mainIdx < 0) mainIdx = settingOptions.Length - 1;
+        //    settingOptions[mainIdx].Select();
+        //}
+        //if (inputs.DownPressed)
+        //{
+        //    mainIdx++;
+        //    if (mainIdx >= settingOptions.Length) mainIdx = 0;
+        //    settingOptions[mainIdx].Select();
+        //}
+        //if (inputs.AcceptPressed)
+        //{
+        //    if (mainIdx == SETTINGS_IDX)
+        //        menuState = MenuState.SETTINGS;
+        //    settingOptions[mainIdx].onClick.Invoke();
+        //}
     }
 
 }
