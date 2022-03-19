@@ -105,7 +105,7 @@ public class PlayerVehicleScript : MonoBehaviour
         respawnPosition = new Vector3(0, 0, 0);
         respawnRotation = new Vector3(0, 0, 0);
         respawnVelocity = new Vector3(0, 0, 0);
-        buildingScene = SceneManager.GetActiveScene().name == "Building Scene";
+        buildingScene = SceneManager.GetActiveScene().name.Contains("Building Scene");
     }
 
     void Update()
@@ -123,7 +123,7 @@ public class PlayerVehicleScript : MonoBehaviour
             try
             {
                 if(buildingScene)
-                quadChasisShake.localPosition += new Vector3(0, Mathf.Sin(timerShake * 75) / 400, 0);
+                    quadChasisShake.localPosition += new Vector3(0, Mathf.Sin(timerShake * 75) / 400, 0);
             }
             catch (Exception ex)
             {

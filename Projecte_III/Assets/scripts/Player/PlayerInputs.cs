@@ -11,11 +11,15 @@ public class PlayerInputs : MonoBehaviour
     InputSystem.ControlData[] controlData = new InputSystem.ControlData[1];
     int playerId;
 
+    bool generalInputsEnabled = true, menuInputsEnabled = true;
+
     // Keys
     float
         forward, backward, right, left, drift;
     bool
         start, enableGadgetMenu, confirmGadget, useGadget;
+    bool
+        mUp, mDown, mRight, mLeft, mAccept, mDecline;
 
     // Axis
     Vector2
@@ -39,6 +43,12 @@ public class PlayerInputs : MonoBehaviour
     public bool EnableGadgetMenu { get { return enableGadgetMenu; } }
     public bool ConfirmGadget { get { return confirmGadget; } }
     public bool UseGadget { get { return useGadget; } }
+    public bool MenuUp { get { return mUp; } }
+    public bool MenuDown { get { return mDown; } }
+    public bool MenuRight { get { return mRight; } }
+    public bool MenuLeft { get { return mLeft; } }
+    public bool MenuAccept { get { return mAccept; } }
+    public bool MenuDecline { get { return mDecline; } }
 
     public Vector2 ChooseItem { get { return chooseItem; } }
 
@@ -108,24 +118,48 @@ public class PlayerInputs : MonoBehaviour
 
     void UpdateInputs()
     {
-        //Keys
-        forward = inputSystem.GetKeyFloat(InputSystem.KeyCodes.FORWARD, controlData);
-        backward = inputSystem.GetKeyFloat(InputSystem.KeyCodes.BACKWARD, controlData);
-        right = inputSystem.GetKeyFloat(InputSystem.KeyCodes.RIGHT, controlData);
-        left = inputSystem.GetKeyFloat(InputSystem.KeyCodes.LEFT, controlData);
-        start = inputSystem.GetKey(InputSystem.KeyCodes.START, controlData);
-        drift = inputSystem.GetKeyFloat(InputSystem.KeyCodes.DRIFT, controlData);
-        enableGadgetMenu = inputSystem.GetKey(InputSystem.KeyCodes.ENABLE_GADGET_MENU, controlData);
-        confirmGadget = inputSystem.GetKey(InputSystem.KeyCodes.CONFIRM_GADGET, controlData);
-        useGadget = inputSystem.GetKey(InputSystem.KeyCodes.USE_GADGET, controlData);
+        /// General Inputs
+        if (generalInputsEnabled)
+        {
+            // Keys
+            forward = inputSystem.GetKeyFloat(InputSystem.KeyCodes.FORWARD, controlData);
+            backward = inputSystem.GetKeyFloat(InputSystem.KeyCodes.BACKWARD, controlData);
+            right = inputSystem.GetKeyFloat(InputSystem.KeyCodes.RIGHT, controlData);
+            left = inputSystem.GetKeyFloat(InputSystem.KeyCodes.LEFT, controlData);
+            start = inputSystem.GetKey(InputSystem.KeyCodes.START, controlData);
+            drift = inputSystem.GetKeyFloat(InputSystem.KeyCodes.DRIFT, controlData);
+            enableGadgetMenu = inputSystem.GetKey(InputSystem.KeyCodes.ENABLE_GADGET_MENU, controlData);
+            confirmGadget = inputSystem.GetKey(InputSystem.KeyCodes.CONFIRM_GADGET, controlData);
+            useGadget = inputSystem.GetKey(InputSystem.KeyCodes.USE_GADGET, controlData);
 
-        // Axis
-        chooseItem = inputSystem.GetAxis(InputSystem.AxisCodes.CHOOSE_ITEM, controlData);
+            // Axis
+            chooseItem = inputSystem.GetAxis(InputSystem.AxisCodes.CHOOSE_ITEM, controlData);
+        }
+
+        /// Menu Inputs
+        if (menuInputsEnabled)
+        {
+            mUp = inputSystem.GetKey(InputSystem.KeyCodes.MENU_UP, controlData);
+            mDown = inputSystem.GetKey(InputSystem.KeyCodes.MENU_DOWN, controlData);
+            mRight = inputSystem.GetKey(InputSystem.KeyCodes.MENU_RIGHT, controlData);
+            mLeft = inputSystem.GetKey(InputSystem.KeyCodes.MENU_LEFT, controlData);
+            mAccept = inputSystem.GetKey(InputSystem.KeyCodes.MENU_ACCEPT, controlData);
+            mDecline = inputSystem.GetKey(InputSystem.KeyCodes.MENU_DECLINE, controlData);
+        }
     }
 
     public bool Inited()
     {
         return controlData != null && controlData[0] != null;
+    }
+
+    void EnableGeneralInputs(bool _enable)
+    {
+        generalInputsEnabled = _enable;
+    }
+    void EnableMenuInputs(bool _enable)
+    {
+        menuInputsEnabled = _enable;
     }
 
 }

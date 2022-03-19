@@ -6,7 +6,7 @@ public class InputSystem : MonoBehaviour
 {
     public const float INPUT_THRESHOLD = 0.3f;
 
-    public enum KeyCodes { FORWARD, BACKWARD, LEFT, RIGHT, START, DRIFT, ENABLE_GADGET_MENU, CONFIRM_GADGET, USE_GADGET };
+    public enum KeyCodes { FORWARD, BACKWARD, LEFT, RIGHT, START, DRIFT, ENABLE_GADGET_MENU, CONFIRM_GADGET, USE_GADGET, MENU_UP, MENU_DOWN, MENU_RIGHT, MENU_LEFT, MENU_ACCEPT, MENU_DECLINE };
     public enum AxisCodes { CHOOSE_ITEM };
     public enum DeviceTypes { DEFAULT, KEYBOARD, CONTROLLER };
 
@@ -367,8 +367,82 @@ public class InputSystem : MonoBehaviour
 
                     break;
 
+                //MENU_UP, MENU_DOWN, MENU_RIGHT, MENU_LEFT, MENU_ACCEPT, MENU_DECLINE
+                case KeyCodes.MENU_UP:
+                    for (int i = 0; i < controls.BuildingMenu.Up.controls.Count; i++)
+                    {
+                        if (controls.BuildingMenu.Up.controls[i].device.deviceId == mainDeviceId)
+                        {
+                            //Debug.Log("BuildingMenu.Up is " + controls.BuildingMenu.Up.controls[i].EvaluateMagnitude());
+                            if (controls.BuildingMenu.Up.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return true;
+                        }
+                    }
+
+                    break;
+
+                case KeyCodes.MENU_DOWN:
+                    for (int i = 0; i < controls.BuildingMenu.Down.controls.Count; i++)
+                    {
+                        if (controls.BuildingMenu.Down.controls[i].device.deviceId == mainDeviceId)
+                        {
+                            //Debug.Log("BuildingMenu.Down is " + controls.BuildingMenu.Down.controls[i].EvaluateMagnitude());
+                            if (controls.BuildingMenu.Down.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return true;
+                        }
+                    }
+
+                    break;
+
+                case KeyCodes.MENU_RIGHT:
+                    for (int i = 0; i < controls.BuildingMenu.Right.controls.Count; i++)
+                    {
+                        if (controls.BuildingMenu.Right.controls[i].device.deviceId == mainDeviceId)
+                        {
+                            //Debug.Log("BuildingMenu.Right is " + controls.BuildingMenu.Right.controls[i].EvaluateMagnitude());
+                            if (controls.BuildingMenu.Right.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return true;
+                        }
+                    }
+
+                    break;
+
+                case KeyCodes.MENU_LEFT:
+                    for (int i = 0; i < controls.BuildingMenu.Left.controls.Count; i++)
+                    {
+                        if (controls.BuildingMenu.Left.controls[i].device.deviceId == mainDeviceId)
+                        {
+                            //Debug.Log("BuildingMenu.Left is " + controls.BuildingMenu.Left.controls[i].EvaluateMagnitude());
+                            if (controls.BuildingMenu.Left.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return true;
+                        }
+                    }
+
+                    break;
+
+                case KeyCodes.MENU_ACCEPT:
+                    for (int i = 0; i < controls.BuildingMenu.Accept.controls.Count; i++)
+                    {
+                        if (controls.BuildingMenu.Accept.controls[i].device.deviceId == mainDeviceId)
+                        {
+                            //Debug.Log("BuildingMenu.Accept is " + controls.BuildingMenu.Accept.controls[i].EvaluateMagnitude());
+                            if (controls.BuildingMenu.Accept.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return true;
+                        }
+                    }
+
+                    break;
+
+                case KeyCodes.MENU_DECLINE:
+                    for (int i = 0; i < controls.BuildingMenu.Decline.controls.Count; i++)
+                    {
+                        if (controls.BuildingMenu.Decline.controls[i].device.deviceId == mainDeviceId)
+                        {
+                            //Debug.Log("BuildingMenu.Decline is " + controls.BuildingMenu.Decline.controls[i].EvaluateMagnitude());
+                            if (controls.BuildingMenu.Decline.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return true;
+                        }
+                    }
+
+                    break;
+
                 default:
                     break;
+
             }
 
         }

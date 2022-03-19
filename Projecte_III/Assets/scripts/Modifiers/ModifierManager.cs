@@ -115,7 +115,7 @@ public class ModifierManager : MonoBehaviour
             target.transform.rotation = raycastHit.transform.rotation;
 
             //Place button ------ Left mouse click ------ 
-            if (controls.ConstructionMenu.ConstructModifier.ReadValue<float>() > 0)
+            if (controls.BuildingMenu.ConstructModifier.ReadValue<float>() > 0)
             {
                 if (target.transform.childCount > 0 && raycastHit.transform.GetComponent<ModifierSpotData>().IsAvailable(target.transform.GetChild(0).gameObject.tag))
                 {
@@ -128,7 +128,7 @@ public class ModifierManager : MonoBehaviour
                 }
             }
             //Delete button ------ Right mouse click ------ 
-            else if (controls.ConstructionMenu.DeleteModifier.ReadValue<float>() > 0)
+            else if (controls.BuildingMenu.DeleteModifier.ReadValue<float>() > 0)
             {
                 for (int i = 0; i < raycastHit.transform.childCount; i++)
                 {
@@ -151,7 +151,7 @@ public class ModifierManager : MonoBehaviour
 
         }
 
-        if (controls.ConstructionMenu.DeleteModifier.ReadValue<float>() > 0)
+        if (controls.BuildingMenu.DeleteModifier.ReadValue<float>() > 0)
         {
             if (target.transform.childCount > 0)
             {
