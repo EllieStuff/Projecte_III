@@ -5,14 +5,16 @@ using UnityEngine;
 
 public class DeathfallAndCheckpointsSystem : MonoBehaviour
 {
+    public int checkpointNumber;
     public bool finishRaceCP;
     public bool activated;
     private bool enableMusic;
-    private bool multiplayerMode;
+    [SerializeField] private bool multiplayerMode;
     private GameObject particlesFinish;
     private AudioSource fireworkEffectSound;
     private AudioSource finishAudio;
     [SerializeField] private GameObject particlesPrefab;
+    [SerializeField] private Transform nextCheckPoint;
     PlayerVehicleScript[] vehicleScripts;
     GameObject[] chasises;
 
@@ -119,6 +121,15 @@ public class DeathfallAndCheckpointsSystem : MonoBehaviour
                 vehicleScripts[currPlayerId].respawnPosition = transform.position;
                 vehicleScripts[currPlayerId].respawnRotation = transform.localEulerAngles;
                 vehicleScripts[currPlayerId].respawnVelocity = Vector3.zero;
+
+                if(multiplayerMode)
+                {
+                    Transform UIPositionIndex = GameObject.FindGameObjectWithTag("PositionsManager").transform;
+                    UIPosition posUI = UIPositionIndex.transform.GetChild(currPlayerId).GetComponent<UIPosition>();
+                    UIPositionIndex.GetComponent<PlayerPositions>().checkpoints[currPlayerId] = nextCheckPoint;
+                    if (checkpointNumber > posUI.checkpointNumber)
+                        posUI.checkpointNumber++;
+                }
             }
             if (gameObject.tag.Equals("Death Zone"))
             {

@@ -7,16 +7,18 @@ public class UIPosition : MonoBehaviour
 {
     public int checkpointNumber;
     public int actualCheckpoint;
+    public bool UIScript;
     private Slider sliderPos;
 
     private void Start()
     {
-        sliderPos = GetComponent<Slider>();
+        if (UIScript)
+            sliderPos = GetComponent<Slider>();
     }
 
     void Update()
     {
-        if(sliderPos.value < actualCheckpoint)
+        if(UIScript && sliderPos.value < actualCheckpoint)
             sliderPos.value =  Mathf.Lerp(sliderPos.value, actualCheckpoint, Time.deltaTime * 0.2f);
     }
 }
