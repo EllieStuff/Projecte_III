@@ -8,11 +8,18 @@ public class PlayerMenuInputsPressed : MonoBehaviour
 
     PlayerInputs playerInputs;
 
-    bool updateInputs = false;
+    int updateInputs = 0;
+    int updateMap = 2;
 
 
     Dictionary<InputSystem.KeyCodes, bool> keysPressed = new Dictionary<InputSystem.KeyCodes, bool>();
 
+    public bool MenuUp { get { return playerInputs.MenuUp; } }
+    public bool MenuDown { get { return playerInputs.MenuDown; } }
+    public bool MenuRight { get { return playerInputs.MenuRight; } }
+    public bool MenuLeft { get { return playerInputs.MenuLeft; } }
+    public bool MenuAccept { get { return playerInputs.MenuAccept; } }
+    public bool MenuDecline { get { return playerInputs.MenuDecline; } }
     public bool MenuUpPressed { get { return playerInputs.MenuUp && !keysPressed[InputSystem.KeyCodes.MENU_UP]; } }
     public bool MenuDownPressed { get { return playerInputs.MenuDown && !keysPressed[InputSystem.KeyCodes.MENU_DOWN]; } }
     public bool MenuRightPressed { get { return playerInputs.MenuRight && !keysPressed[InputSystem.KeyCodes.MENU_RIGHT]; } }
@@ -45,12 +52,22 @@ public class PlayerMenuInputsPressed : MonoBehaviour
     {
         if (playerInputs.Inited())
         {
-            updateInputs = !updateInputs;
-            playerInputs.EnableMenuInputs(updateInputs);
-            if (!updateInputs)
+            if (updateInputs == 0)
             {
+                updateInputs++;
+                playerInputs.EnableMenuInputs(true);
+            }
+            else if (updateInputs == 1)
+            {
+                updateInputs++;
+                playerInputs.EnableMenuInputs(false);
+            }
+            else if (updateInputs == updateMap)
+            {
+                updateInputs = 0;
                 UpdateMaps();
             }
+            
         }
     }
 
