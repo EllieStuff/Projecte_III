@@ -25,15 +25,12 @@ public class ButtonManager : MonoBehaviour
     {
         playerMenuInputs = GetComponent<PlayerMenuInputsPressed>();
 
-        if (playerId == 0)
-        {
-            InitSubButton(0);
-            InitSubButton(1);
-            InitSubButton(2);
+        InitSubButton(0);
+        InitSubButton(1);
+        InitSubButton(2);
 
 
-            mainButtons[mainIdx].Select();
-        }
+        mainButtons[mainIdx].Select();
 
     }
 

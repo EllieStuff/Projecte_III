@@ -62,11 +62,6 @@ public class PlayerMenuInputsPressed : MonoBehaviour
                 updateInputs++;
                 playerInputs.EnableMenuInputs(false);
             }
-            else if (updateInputs == updateMap)
-            {
-                updateInputs = 0;
-                UpdateMaps();
-            }
             
         }
     }
@@ -74,10 +69,11 @@ public class PlayerMenuInputsPressed : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        //if (playerInputs.Inited())
-        //{
-        //    UpdateMaps();
-        //}
+        if (updateInputs == updateMap)
+        {
+            updateInputs = 0;
+            UpdateMaps();
+        }
     }
 
     void UpdateMaps()
