@@ -499,7 +499,7 @@ public class @QuadControls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""Up"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""4263d938-3c97-4846-8754-5b4fd59c04c4"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
@@ -507,7 +507,7 @@ public class @QuadControls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""Down"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""7f143eba-6ba8-408d-bfb6-c7774772dfda"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
@@ -515,7 +515,7 @@ public class @QuadControls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""Right"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""43e1857d-870f-4c3a-a49b-2c400d6a81ce"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
@@ -523,7 +523,7 @@ public class @QuadControls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""Left"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""891df634-73be-4c49-ab2e-a5d2a5671ff7"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
@@ -531,7 +531,7 @@ public class @QuadControls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""Accept"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""59550993-d9d1-42dd-a87a-6ea0dfd57a1c"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
@@ -539,7 +539,7 @@ public class @QuadControls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""Decline"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""bcd9761b-acd7-4561-830b-277789b5a75b"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
@@ -560,30 +560,8 @@ public class @QuadControls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""8768f4b0-cce3-489c-999f-4aa54a74f346"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Delete Modifier"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""c77dabcf-77b5-4d7e-8dbe-72482ea8caec"",
                     ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Construct Modifier"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""9cf39890-7080-4b3a-a0d7-db5b29893b32"",
-                    ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

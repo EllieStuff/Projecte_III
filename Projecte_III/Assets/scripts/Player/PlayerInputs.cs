@@ -153,11 +153,11 @@ public class PlayerInputs : MonoBehaviour
         return controlData != null && controlData[0] != null;
     }
 
-    void EnableGeneralInputs(bool _enable)
+    public void EnableGeneralInputs(bool _enable)
     {
         generalInputsEnabled = _enable;
     }
-    void EnableMenuInputs(bool _enable)
+    public void EnableMenuInputs(bool _enable)
     {
         menuInputsEnabled = _enable;
     }

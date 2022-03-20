@@ -8,6 +8,8 @@ public class PlayerMenuInputsPressed : MonoBehaviour
 
     PlayerInputs playerInputs;
 
+    bool updateInputs = false;
+
 
     Dictionary<InputSystem.KeyCodes, bool> keysPressed = new Dictionary<InputSystem.KeyCodes, bool>();
 
@@ -39,43 +41,59 @@ public class PlayerMenuInputsPressed : MonoBehaviour
         keysPressed.Add(InputSystem.KeyCodes.MENU_DECLINE, false);
     }
 
-    // Update is called once per frame
-    void LateUpdate()
+    private void Update()
     {
         if (playerInputs.Inited())
         {
-            if (playerInputs.MenuUp && !keysPressed[InputSystem.KeyCodes.MENU_UP])
+            updateInputs = !updateInputs;
+            playerInputs.EnableMenuInputs(updateInputs);
+            if (!updateInputs)
             {
-                keysPressed[InputSystem.KeyCodes.MENU_UP] = true;
+                UpdateMaps();
             }
-            if (playerInputs.MenuDown && !keysPressed[InputSystem.KeyCodes.MENU_DOWN])
-            {
-                keysPressed[InputSystem.KeyCodes.MENU_DOWN] = true;
-            }
-            if (playerInputs.MenuRight && !keysPressed[InputSystem.KeyCodes.MENU_RIGHT])
-            {
-                keysPressed[InputSystem.KeyCodes.MENU_RIGHT] = true;
-            }
-            if (playerInputs.MenuLeft && !keysPressed[InputSystem.KeyCodes.MENU_LEFT])
-            {
-                keysPressed[InputSystem.KeyCodes.MENU_LEFT] = true;
-            }
-            if (playerInputs.MenuAccept && !keysPressed[InputSystem.KeyCodes.MENU_ACCEPT])
-            {
-                keysPressed[InputSystem.KeyCodes.MENU_ACCEPT] = true;
-            }
-            if (playerInputs.MenuDecline && !keysPressed[InputSystem.KeyCodes.MENU_DECLINE])
-            {
-                keysPressed[InputSystem.KeyCodes.MENU_DECLINE] = true;
-            }
-
-
-            ResetInputs();
         }
     }
 
+    // Update is called once per frame
+    void LateUpdate()
+    {
+        //if (playerInputs.Inited())
+        //{
+        //    UpdateMaps();
+        //}
+    }
 
-    void ResetInputs()
+    void UpdateMaps()
+    {
+        if (playerInputs.MenuUp && !keysPressed[InputSystem.KeyCodes.MENU_UP])
+        {
+            keysPressed[InputSystem.KeyCodes.MENU_UP] = true;
+        }
+        if (playerInputs.MenuDown && !keysPressed[InputSystem.KeyCodes.MENU_DOWN])
+        {
+            keysPressed[InputSystem.KeyCodes.MENU_DOWN] = true;
+        }
+        if (playerInputs.MenuRight && !keysPressed[InputSystem.KeyCodes.MENU_RIGHT])
+        {
+            keysPressed[InputSystem.KeyCodes.MENU_RIGHT] = true;
+        }
+        if (playerInputs.MenuLeft && !keysPressed[InputSystem.KeyCodes.MENU_LEFT])
+        {
+            keysPressed[InputSystem.KeyCodes.MENU_LEFT] = true;
+        }
+        if (playerInputs.MenuAccept && !keysPressed[InputSystem.KeyCodes.MENU_ACCEPT])
+        {
+            keysPressed[InputSystem.KeyCodes.MENU_ACCEPT] = true;
+        }
+        if (playerInputs.MenuDecline && !keysPressed[InputSystem.KeyCodes.MENU_DECLINE])
+        {
+            keysPressed[InputSystem.KeyCodes.MENU_DECLINE] = true;
+        }
+
+        ResetMaps();
+    }
+
+    void ResetMaps()
     {
         if (!playerInputs.MenuUp && keysPressed[InputSystem.KeyCodes.MENU_UP])
         {
