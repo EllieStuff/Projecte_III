@@ -47,6 +47,7 @@ public class ModifierManager : MonoBehaviour
     {
         if(!controllerInited && inputs.ControlData[0] != null)
         {
+            Debug.Log("A");
             controllerInited = true;
             Active(true);
             ShowTarget(false);
@@ -168,10 +169,14 @@ public class ModifierManager : MonoBehaviour
                 target.SetActive(show);
 
             Transform modfs = transform.GetChild(0);
+
+            if (!modfs.gameObject.activeSelf) modfs.gameObject.SetActive(true);
+
             for (int i = 0; i < modfs.childCount; i++)
             {
                 GameObject child = modfs.GetChild(i).gameObject;
                 if (child.transform.childCount > 0) continue;
+                
                 if (child.activeSelf != show) child.SetActive(show);
             }
 

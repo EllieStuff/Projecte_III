@@ -8,7 +8,7 @@ public class ButtonScript: MonoBehaviour
     [SerializeField] private ButtonManager manager;
     [SerializeField] private GameObject list;
     
-    private ModifierManager modifierSpots = null;
+    [SerializeField] private ModifierManager modifierSpots = null;
     private Button bttn;
     private PlayerInputs playerInputs;
 
@@ -18,7 +18,7 @@ public class ButtonScript: MonoBehaviour
 
         PlayersManager playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
         playerInputs = playersManager.GetPlayer(manager.playerId).GetComponent<PlayerInputs>();
-        if (list.name == "Modifiers Objs" && modifierSpots == null)
+        if (list.name.Contains("Modifiers ") && modifierSpots == null)
         {
             modifierSpots = playersManager.GetPlayerModifier(manager.playerId).GetComponent<ModifierManager>();
             modifierSpots.ShowTarget(false);
