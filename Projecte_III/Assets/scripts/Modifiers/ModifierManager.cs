@@ -257,4 +257,10 @@ public class ModifierManager : MonoBehaviour
     {
         statsSliders.SetSliderValue(_stats, placed);
     }
+
+    public void SetTargetPos(Vector3 _pos)
+    {
+        target.transform.position = _pos;
+    }
+
 }

@@ -20,6 +20,7 @@ public class ButtonManager : MonoBehaviour
     List<int> lastSelectedSubButtons_Idx = new List<int>();
     internal int mainIdx = 0;
     int lastSelectedMainIdx = 0;
+    ModifierManager modManager;
 
     public enum MenuState { MAIN, SUB, EDIT_MODIFIERS, DONE };
     public MenuState menuState = MenuState.MAIN;
@@ -28,6 +29,7 @@ public class ButtonManager : MonoBehaviour
     private void Start()
     {
         playerMenuInputs = GetComponent<PlayerMenuInputsPressed>();
+        modManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>().GetPlayerModifier(playerId).GetComponent<ModifierManager>();
 
         InitSubButton(0);
         InitSubButton(1);
@@ -64,6 +66,10 @@ public class ButtonManager : MonoBehaviour
                     if (mainIdx != MODIFIERS_IDX)
                         subButtons[mainIdx][subButtons_Idx[mainIdx]].onClick.Invoke();
                 }
+                else if(menuState == MenuState.EDIT_MODIFIERS)
+                {
+
+                }
             }
             if (playerMenuInputs.MenuDownPressed)
             {
@@ -85,6 +91,10 @@ public class ButtonManager : MonoBehaviour
                     if (mainIdx != MODIFIERS_IDX)
                         subButtons[mainIdx][subButtons_Idx[mainIdx]].onClick.Invoke();
                 }
+                else if (menuState == MenuState.EDIT_MODIFIERS)
+                {
+
+                }
             }
             if (playerMenuInputs.MenuAcceptPressed)
             {
@@ -102,7 +112,12 @@ public class ButtonManager : MonoBehaviour
                     {
                         menuState = MenuState.EDIT_MODIFIERS;
                         subButtons[mainIdx][subIdx].onClick.Invoke();
+                        modManager.SetTargetPos(modManager.transform.GetChild(0).GetChild(0).position);
                     }
+                }
+                else if (menuState == MenuState.EDIT_MODIFIERS)
+                {
+
                 }
             }
             if (playerMenuInputs.MenuDeclinePressed)
@@ -110,8 +125,9 @@ public class ButtonManager : MonoBehaviour
                 if(menuState == MenuState.SUB)
                 {
                     //menuState = MenuState.MAIN;
-                    mainButtons[mainIdx].onClick.Invoke();
+                    //mainButtons[mainIdx].onClick.Invoke();
                     //mainButtons[mainIdx].Select();
+                    mainButtons[mainIdx].GetComponent<ButtonScript>().ChangeListGeneral(mainIdx);
                     SelectButton(mainButtons[mainIdx]);
                 }
                 else if (menuState == MenuState.EDIT_MODIFIERS)

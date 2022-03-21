@@ -29,23 +29,27 @@ public class ButtonScript: MonoBehaviour
     {
         if (playerInputs.UsesKeyboard())
         {
-            if (!list.activeSelf)
-            {
-                manager.OpenButtons();
-                manager.menuState = ButtonManager.MenuState.SUB;
-                manager.mainIdx = _idx;
-                manager.SelectButton(bttn);
-                //bttn.GetComponent<Image>().color = new Color(0.75f, 0.75f, 0.75f, 1);
-            }
-            else
-            {
-                manager.CloseButtons();
-                manager.menuState = ButtonManager.MenuState.MAIN;
-                bttn.GetComponent<Image>().color = new Color(1, 1, 1, 1);
-            }
-
-            SetListActive(!list.activeSelf);
+            ChangeListGeneral(_idx);
         }
+    }
+    internal void ChangeListGeneral(int _idx)
+    {
+        if (!list.activeSelf)
+        {
+            manager.OpenButtons();
+            manager.menuState = ButtonManager.MenuState.SUB;
+            manager.mainIdx = _idx;
+            manager.SelectButton(bttn);
+            //bttn.GetComponent<Image>().color = new Color(0.75f, 0.75f, 0.75f, 1);
+        }
+        else
+        {
+            manager.CloseButtons();
+            manager.menuState = ButtonManager.MenuState.MAIN;
+            bttn.GetComponent<Image>().color = new Color(1, 1, 1, 1);
+        }
+
+        SetListActive(!list.activeSelf);
     }
 
     public void SetListActive(bool active)
