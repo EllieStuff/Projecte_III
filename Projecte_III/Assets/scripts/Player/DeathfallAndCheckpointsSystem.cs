@@ -126,7 +126,9 @@ public class DeathfallAndCheckpointsSystem : MonoBehaviour
                 {
                     Transform UIPositionIndex = GameObject.FindGameObjectWithTag("PositionsManager").transform;
                     UIPosition posUI = UIPositionIndex.transform.GetChild(currPlayerId).GetComponent<UIPosition>();
-                    UIPositionIndex.GetComponent<PlayerPositions>().checkpoints[currPlayerId] = nextCheckPoint;
+                    PlayerPositions playerPositions = UIPositionIndex.GetComponent<PlayerPositions>();
+                    if (playerPositions != null && nextCheckPoint != null)
+                        playerPositions.checkpoints[currPlayerId] = nextCheckPoint;
                     if (checkpointNumber > posUI.checkpointNumber)
                         posUI.checkpointNumber++;
                 }
