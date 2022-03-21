@@ -41,8 +41,11 @@ public class PlayerPositions : MonoBehaviour
     {
         for (int i = 0; i < quads.numOfPlayers; i++)
         {
-            distances[i] = Vector3.Distance(quads.players[i].position, checkpoints[i].position) - (transform.GetChild(i).GetComponent<UIPosition>().checkpointNumber * 1000);
-            sortedDistance[i] = (double)distances[i];
+            if(checkpoints[i] != null)
+            {
+                distances[i] = Vector3.Distance(quads.players[i].position, checkpoints[i].position) - (transform.GetChild(i).GetComponent<UIPosition>().checkpointNumber * 1000);
+                sortedDistance[i] = (double)distances[i];
+            }
         }
 
         Array.Sort(sortedDistance);
@@ -53,7 +56,7 @@ public class PlayerPositions : MonoBehaviour
 
             for (int o = 0; o < quads.numOfPlayers; o++)
             {
-                if (distances[i] == sortedDistance[o])
+                if (distances[i] == sortedDistance[o] && !quads.players[i].GetComponent<PlayerVehicleScript>().finishedRace)
                 {
                     switch(o + 1)
                     {

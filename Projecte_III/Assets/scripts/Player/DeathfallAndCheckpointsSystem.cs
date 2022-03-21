@@ -15,6 +15,7 @@ public class DeathfallAndCheckpointsSystem : MonoBehaviour
     private AudioSource finishAudio;
     [SerializeField] private GameObject particlesPrefab;
     [SerializeField] private Transform nextCheckPoint;
+    [SerializeField] private Transform[] finishedQuads;
     PlayerVehicleScript[] vehicleScripts;
     GameObject[] chasises;
 
@@ -39,6 +40,8 @@ public class DeathfallAndCheckpointsSystem : MonoBehaviour
 
         PlayersManager playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
         multiplayerMode = (playersManager.gameMode == PlayersManager.GameModes.MULTI_LOCAL);
+        if (multiplayerMode)
+            finishedQuads = new Transform[4];
         vehicleScripts = new PlayerVehicleScript[playersManager.numOfPlayers];
         chasises = new GameObject[playersManager.numOfPlayers];
         for(int i = 0; i < playersManager.numOfPlayers; i++)
@@ -84,24 +87,50 @@ public class DeathfallAndCheckpointsSystem : MonoBehaviour
         if (finishRaceCP)
         {
             GameObject UI = GameObject.Find("UI");
+            bool endRace = true;
 
             try
             {
-                if (!multiplayerMode)
+                if(multiplayerMode)
+                {
                     other.transform.parent.GetComponent<PlayerVehicleScript>().finishedRace = true;
 
-                UI.transform.GetChild(0).GetChild(0).GetComponent<UITimerChrono>().finishedRace = true;
-                UI.transform.GetChild(2).gameObject.SetActive(true);
+                    for (int i = 0; i < finishedQuads.Length; i++)
+                    {
+                        if (finishedQuads[i] == null)
+                        {
+                            finishedQuads[i] = other.transform;
+                            break;
+                        }
+                        else if (finishedQuads[i] == other.transform)
+                            break;
+                    }
 
-                particlesFinish.GetComponent<ParticleSystem>().Play();
-                finishAudio.Play();
-                fireworkEffectSound.Play();
-                
-                particlesFinish.transform.GetChild(0).GetComponent<AudioSource>().Play();
-                AudioManager.Instance.Stop_OST();
 
-                enableMusic = true;
-                finishRaceCP = false;
+                    PlayersManager pm = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
+
+                    for (int i = 0; i < pm.numOfPlayers; i++)
+                    {
+                        if (finishedQuads[i] == null)
+                            endRace = false;
+                    }
+                }
+
+                if (endRace)
+                {
+                    UI.transform.GetChild(1).GetChild(0).GetComponent<UITimerChrono>().finishedRace = true;
+                    UI.transform.GetChild(3).gameObject.SetActive(true);
+
+                    particlesFinish.GetComponent<ParticleSystem>().Play();
+                    finishAudio.Play();
+                    fireworkEffectSound.Play();
+
+                    particlesFinish.transform.GetChild(0).GetComponent<AudioSource>().Play();
+                    AudioManager.Instance.Stop_OST();
+
+                    enableMusic = true;
+                    finishRaceCP = false;
+                }
             }
             catch (Exception)
             {

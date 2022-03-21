@@ -166,12 +166,12 @@ public class RaceFinishedScript : MonoBehaviour
 
     public void QuitMenu()
     {
-        SceneManager.LoadScene("Menu");
+        SceneManager.LoadScene("Menu_without_splash");
     }
 
     public void BuildMenu()
-    {
+    {   
         Destroy(GameObject.FindGameObjectWithTag("PlayersManager"));
-        SceneManager.LoadScene("Menu");
+        SceneManager.LoadScene("Menu_without_splash");
     }
 }
