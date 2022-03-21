@@ -145,6 +145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc434e7fd01d97b44937ffa4c492f05a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  statsManager: {fileID: 44522109}
 --- !u!1 &44522109
 GameObject:
   m_ObjectHideFlags: 0
@@ -1132,6 +1133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plungerPrefab: {fileID: 5119215797378497723, guid: b174012fb8007ab43a6bf4d2e5b25a5c, type: 3}
+  line: {fileID: 0}
 --- !u!114 &345607906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2831,6 +2833,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1237269597}
     m_Modifications:
+    - target: {fileID: 2728634405906586652, guid: ef4ecab629294ff40aa991f3c2d147d7, type: 3}
+      propertyPath: statsManager
+      value: 
+      objectReference: {fileID: 44522109}
     - target: {fileID: 2728634405971061689, guid: ef4ecab629294ff40aa991f3c2d147d7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -2839,18 +2845,34 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 21911382}
+    - target: {fileID: 2728634406311592815, guid: ef4ecab629294ff40aa991f3c2d147d7, type: 3}
+      propertyPath: statsManager
+      value: 
+      objectReference: {fileID: 44522109}
     - target: {fileID: 2728634406483546365, guid: ef4ecab629294ff40aa991f3c2d147d7, type: 3}
       propertyPath: wheelSpot
       value: 
       objectReference: {fileID: 1840777870218433013}
+    - target: {fileID: 2728634406483546365, guid: ef4ecab629294ff40aa991f3c2d147d7, type: 3}
+      propertyPath: statsManager
+      value: 
+      objectReference: {fileID: 44522109}
     - target: {fileID: 2728634406623902803, guid: ef4ecab629294ff40aa991f3c2d147d7, type: 3}
       propertyPath: wheelSpot
       value: 
       objectReference: {fileID: 1840777870218433013}
+    - target: {fileID: 2728634406623902803, guid: ef4ecab629294ff40aa991f3c2d147d7, type: 3}
+      propertyPath: statsManager
+      value: 
+      objectReference: {fileID: 44522109}
     - target: {fileID: 2728634406732399849, guid: ef4ecab629294ff40aa991f3c2d147d7, type: 3}
       propertyPath: wheelSpot
       value: 
       objectReference: {fileID: 1840777870218433013}
+    - target: {fileID: 2728634406732399849, guid: ef4ecab629294ff40aa991f3c2d147d7, type: 3}
+      propertyPath: statsManager
+      value: 
+      objectReference: {fileID: 44522109}
     - target: {fileID: 2728634406907939588, guid: ef4ecab629294ff40aa991f3c2d147d7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -2955,14 +2977,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2728634407313351257, guid: ef4ecab629294ff40aa991f3c2d147d7, type: 3}
+      propertyPath: statsManager
+      value: 
+      objectReference: {fileID: 44522109}
     - target: {fileID: 2728634407406811348, guid: ef4ecab629294ff40aa991f3c2d147d7, type: 3}
       propertyPath: wheelSpot
       value: 
       objectReference: {fileID: 1840777870218433013}
+    - target: {fileID: 2728634407406811348, guid: ef4ecab629294ff40aa991f3c2d147d7, type: 3}
+      propertyPath: statsManager
+      value: 
+      objectReference: {fileID: 44522109}
+    - target: {fileID: 2728634407410168379, guid: ef4ecab629294ff40aa991f3c2d147d7, type: 3}
+      propertyPath: statsManager
+      value: 
+      objectReference: {fileID: 44522109}
+    - target: {fileID: 2728634407447483003, guid: ef4ecab629294ff40aa991f3c2d147d7, type: 3}
+      propertyPath: statsManager
+      value: 
+      objectReference: {fileID: 44522109}
     - target: {fileID: 2728634407556097585, guid: ef4ecab629294ff40aa991f3c2d147d7, type: 3}
       propertyPath: wheelSpot
       value: 
       objectReference: {fileID: 1840777870218433013}
+    - target: {fileID: 2728634407556097585, guid: ef4ecab629294ff40aa991f3c2d147d7, type: 3}
+      propertyPath: statsManager
+      value: 
+      objectReference: {fileID: 44522109}
     - target: {fileID: 2728634407652033625, guid: ef4ecab629294ff40aa991f3c2d147d7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -3386,6 +3428,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 1082010707954979873, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+      propertyPath: statsManager
+      value: 
+      objectReference: {fileID: 44522109}
     - target: {fileID: 2121126740340143591, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: m_Layer
       value: 3

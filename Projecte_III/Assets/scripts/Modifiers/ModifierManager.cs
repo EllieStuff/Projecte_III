@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 
 public class ModifierManager : MonoBehaviour
 {
+    [SerializeField] private GameObject statsManager;
     private GameObject target = null;
     QuadControls controls;
     private PlayerStatsManager stats;
@@ -39,7 +40,7 @@ public class ModifierManager : MonoBehaviour
         GameObject camerasManager = GameObject.FindGameObjectWithTag("CamerasManager");
         usedCamera = camerasManager.GetComponent<CameraManager>().GetCamera(playerId);
         rendererCamera = camerasManager.GetComponent<CameraManager>().GetRendererCamera(playerId);
-        statsSliders = GameObject.FindGameObjectWithTag("StatsManager").GetComponent<StatsManager>().GetPlayerStats(playerId);
+        statsSliders = statsManager.GetComponent<StatsManager>().GetPlayerStats(playerId);
 
     }
 

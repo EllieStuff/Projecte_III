@@ -5,6 +5,7 @@ public class QuadButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 {
     [SerializeField] private GameObject quadModel;
     [SerializeField] private GameObject quadSpot;
+    [SerializeField] private GameObject statsManager;
     StatsSliderManager stats;
     Stats.Data sliderData;
     int playerId;
@@ -22,7 +23,7 @@ public class QuadButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
         playerStats = playersManager.GetPlayer(playerId).GetComponent<PlayerStatsManager>();
 
-        stats = GameObject.FindGameObjectWithTag("StatsManager").GetComponent<StatsManager>().GetPlayerStats(playerId);
+        stats = statsManager.GetComponent<StatsManager>().GetPlayerStats(playerId);
     }
 
     private void Update()

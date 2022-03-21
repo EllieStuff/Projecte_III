@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerStatsManager : MonoBehaviour
 {
-    [SerializeField]private Stats stats;
+    [SerializeField] private Stats stats;
+    [SerializeField] private GameObject statsManager;
     bool first = false;
     PlayersManager playersManager;
     int playerId;
@@ -44,7 +45,7 @@ public class PlayerStatsManager : MonoBehaviour
             }
         }
 
-        GameObject.FindGameObjectWithTag("StatsManager").GetComponent<StatsManager>().GetPlayerStats(playerId).SetSliderValue(stats.GetStats(), true);
+        statsManager.GetComponent<StatsManager>().GetPlayerStats(playerId).SetSliderValue(stats.GetStats(), true);
     }
 
     private void Update()
