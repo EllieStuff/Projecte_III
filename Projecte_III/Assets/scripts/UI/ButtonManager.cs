@@ -10,15 +10,19 @@ public class ButtonManager : MonoBehaviour
     [SerializeField] private Button[] mainButtons;
     [SerializeField] private Transform[] subButtonsParents;
     [SerializeField] private GameObject[] backgrounds;
+    [SerializeField] private Color selectedMainButtonColor = Color.red;
+    [SerializeField] private Color selectedSubButtonColor = Color.red;
     [SerializeField] internal int playerId;
 
     PlayerMenuInputsPressed playerMenuInputs;
     List<List<Button>> subButtons = new List<List<Button>>();
     List<int> subButtons_Idx = new List<int>();
-    int mainIdx = 0;
+    List<int> lastSelectedSubButtons_Idx = new List<int>();
+    internal int mainIdx = 0;
+    int lastSelectedMainIdx = 0;
 
-    enum MenuState { MAIN, SUB, EDIT_MODIFIERS, DONE };
-    MenuState menuState = MenuState.MAIN;
+    public enum MenuState { MAIN, SUB, EDIT_MODIFIERS, DONE };
+    public MenuState menuState = MenuState.MAIN;
 
 
     private void Start()
@@ -30,7 +34,8 @@ public class ButtonManager : MonoBehaviour
         InitSubButton(2);
 
 
-        mainButtons[mainIdx].Select();
+        //mainButtons[mainIdx].Select();
+        SelectButton(mainButtons[mainIdx]);
 
     }
 
@@ -46,14 +51,16 @@ public class ButtonManager : MonoBehaviour
                     mainIdx--;
                     if (mainIdx < 0) 
                         mainIdx = mainButtons.Length - 1;
-                    mainButtons[mainIdx].Select();
+                    //mainButtons[mainIdx].Select();
+                    SelectButton(mainButtons[mainIdx]);
                 }
                 else if(menuState == MenuState.SUB)
                 {
                     subButtons_Idx[mainIdx]--;
                     if (subButtons_Idx[mainIdx] < 0) 
                         subButtons_Idx[mainIdx] = subButtons[mainIdx].Count - 1;
-                    subButtons[mainIdx][subButtons_Idx[mainIdx]].Select();
+                    //subButtons[mainIdx][subButtons_Idx[mainIdx]].Select();
+                    SelectButton(subButtons[mainIdx][subButtons_Idx[mainIdx]]);
                     if (mainIdx != MODIFIERS_IDX)
                         subButtons[mainIdx][subButtons_Idx[mainIdx]].onClick.Invoke();
                 }
@@ -65,14 +72,16 @@ public class ButtonManager : MonoBehaviour
                     mainIdx++;
                     if (mainIdx >= mainButtons.Length) 
                         mainIdx = 0;
-                    mainButtons[mainIdx].Select();
+                    //mainButtons[mainIdx].Select();
+                    SelectButton(mainButtons[mainIdx]);
                 }
                 else if (menuState == MenuState.SUB)
                 {
                     subButtons_Idx[mainIdx]++;
                     if (subButtons_Idx[mainIdx] >= subButtons[mainIdx].Count) 
                         subButtons_Idx[mainIdx] = 0;
-                    subButtons[mainIdx][subButtons_Idx[mainIdx]].Select();
+                    //subButtons[mainIdx][subButtons_Idx[mainIdx]].Select();
+                    SelectButton(subButtons[mainIdx][subButtons_Idx[mainIdx]]);
                     if (mainIdx != MODIFIERS_IDX)
                         subButtons[mainIdx][subButtons_Idx[mainIdx]].onClick.Invoke();
                 }
@@ -83,8 +92,9 @@ public class ButtonManager : MonoBehaviour
                 if (menuState == MenuState.MAIN)
                 {
                     mainButtons[mainIdx].onClick.Invoke();
-                    menuState = MenuState.SUB;
-                    subButtons[mainIdx][subIdx].Select();
+                    //menuState = MenuState.SUB;
+                    //subButtons[mainIdx][subIdx].Select();
+                    SelectButton(subButtons[mainIdx][subIdx]);
                 }
                 else if (menuState == MenuState.SUB)
                 {
@@ -99,16 +109,18 @@ public class ButtonManager : MonoBehaviour
             {
                 if(menuState == MenuState.SUB)
                 {
-                    menuState = MenuState.MAIN;
+                    //menuState = MenuState.MAIN;
                     mainButtons[mainIdx].onClick.Invoke();
-                    mainButtons[mainIdx].Select();
+                    //mainButtons[mainIdx].Select();
+                    SelectButton(mainButtons[mainIdx]);
                 }
                 else if (menuState == MenuState.EDIT_MODIFIERS)
                 {
                     menuState = MenuState.SUB;
                     int subIdx = subButtons_Idx[mainIdx];
                     subButtons[mainIdx][subIdx].onClick.Invoke();
-                    subButtons[mainIdx][subIdx].Select();
+                    //subButtons[mainIdx][subIdx].Select();
+                    SelectButton(subButtons[mainIdx][subIdx]);
                 }
             }
 
@@ -124,6 +136,25 @@ public class ButtonManager : MonoBehaviour
             subButtons[_idx].Add(subButtonsParents[_idx].GetChild(i).GetComponent<Button>());
         }
         subButtons_Idx.Add(0);
+        lastSelectedSubButtons_Idx.Add(0);
+    }
+
+    public void SelectButton(Button _buttonSelected)
+    {
+        if (menuState == MenuState.MAIN)
+        {
+            mainButtons[lastSelectedMainIdx].GetComponent<Image>().color = Color.white;
+            lastSelectedMainIdx = mainIdx;
+            _buttonSelected.GetComponentInChildren<Image>().color = selectedMainButtonColor;
+        }
+        else if (menuState == MenuState.SUB)
+        {
+            subButtons[lastSelectedMainIdx][lastSelectedSubButtons_Idx[lastSelectedMainIdx]].GetComponent<Image>().color = Color.white;
+            lastSelectedSubButtons_Idx[lastSelectedMainIdx] = subButtons_Idx[mainIdx];
+            _buttonSelected.GetComponentInChildren<Image>().color = selectedSubButtonColor;
+        }
+
+
     }
 
 

@@ -90,13 +90,12 @@ public class QuadButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         if (currentQuad == null)
             currentQuad = quadSpot.transform.GetChild(0).gameObject;
 
+        if (currentQuad.name.Contains(quadModel.name)) return;
+
         for (int i = 0; i < quadSpot.transform.childCount; i++)
         {
             Destroy(quadSpot.transform.GetChild(i).gameObject);
         }
-
-        if (currentQuad.name.Contains(quadModel.name)) return;
-
 
         Transform clone = Instantiate(quadModel, quadSpot.transform).transform;
 

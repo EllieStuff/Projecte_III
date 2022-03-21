@@ -152,6 +152,14 @@ public class PlayerInputs : MonoBehaviour
     {
         return controlData != null && controlData[0] != null;
     }
+    public bool UsesKeyboard()
+    {
+        for(int i = 0; i < controlData.Length; i++)
+        {
+            if (controlData[i].deviceType == InputSystem.DeviceTypes.KEYBOARD) return true;
+        }
+        return false;
+    }
 
     public void EnableGeneralInputs(bool _enable)
     {

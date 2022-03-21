@@ -616,7 +616,7 @@ public class @QuadControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""04073a58-141c-4746-8415-0e434b5bea91"",
-                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""path"": ""<Gamepad>/leftStick/down"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
