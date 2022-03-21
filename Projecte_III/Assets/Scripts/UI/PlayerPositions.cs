@@ -54,7 +54,25 @@ public class PlayerPositions : MonoBehaviour
             for (int o = 0; o < quads.numOfPlayers; o++)
             {
                 if (distances[i] == sortedDistance[o])
+                {
+                    switch(o + 1)
+                    {
+                        case 1:
+                            text.color = Color.green;
+                            break;
+                        case 2:
+                            text.color = Color.cyan;
+                            break;
+                        case 3:
+                            text.color = Color.yellow;
+                            break;
+                        case 4:
+                            text.color = Color.red;
+                            break;
+                    }
+
                     text.text = (o + 1).ToString();
+                }
             }
 
         }
