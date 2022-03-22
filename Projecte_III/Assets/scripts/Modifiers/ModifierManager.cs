@@ -252,9 +252,9 @@ public class ModifierManager : MonoBehaviour
         }
 
         newModfs.parent = transform;
-        newModfs.localPosition = Vector3.zero;
+        //newModfs.localPosition = Vector3.zero;
         newModfs.localScale = transform.localScale;
-        newModfs.localRotation = transform.localRotation;
+        //newModfs.localRotation = transform.localRotation;
     }
 
     public void Active(bool active)
