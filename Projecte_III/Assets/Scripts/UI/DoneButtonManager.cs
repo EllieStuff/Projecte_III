@@ -27,6 +27,11 @@ public class DoneButtonManager : MonoBehaviour
     {
         if (AllPlayersReady())
         {
+            PlayersManager playerManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
+            for (int i = 0; i < playerManager.numOfPlayers; i++)
+            {
+                playerManager.GetPlayerModifier(i).GetComponent<ModifierManager>().HideAllModifiersSpots();
+            }
             StartCoroutine(ChangeSceneEvent());
         }
     }

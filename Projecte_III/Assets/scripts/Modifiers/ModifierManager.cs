@@ -85,15 +85,12 @@ public class ModifierManager : MonoBehaviour
             Debug.Log(playerId + " has " + inputs.ControlData[0].deviceType.ToString());
             if (inputs.ControlData[0].deviceType == InputSystem.DeviceTypes.KEYBOARD)
             {
-                Vector3 mousePos = Mouse.current.position.ReadValue();// * 2.0f;
-                //mousePos.y -= Screen.height;
-                //mousePos.z = usedCamera.transform.position.z;
-                // ToDo: Trobar les distancies entre quad i sumar-les, potser agafar distancies entre initPoints pot ser bona idea
-                //float quadDistances = Vector3.Distance(playersManager.GetPlayer(0).position, playersManager.GetPlayer(playerId).position);
-                //mousePos.x += quadDistances;
+                Vector3 mousePos = Mouse.current.position.ReadValue();
+
                 Vector3 rendererMousePos = mousePos - rendererCamera.position;
                 rendererMousePos *= 2;
                 rendererMousePos.z = 0;
+
                 if(playerId == 0 || playerId == 2)
                     rendererMousePos.x += Screen.width;
                 if (playerId == 2 || playerId == 3)
@@ -106,20 +103,40 @@ public class ModifierManager : MonoBehaviour
         }
         target.transform.position = newPos;
 
+        for (int i = 0; i < transform.GetChild(0).childCount; i++)
+        {
+            transform.GetChild(0).GetChild(i).GetComponent<ModifierSpotData>().SetColor("", false);
+        }
+
+        if (target.transform.childCount > 0 && target.transform.GetChild(0).tag == "Floater")
+        {
+            target.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
+            target.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
+        }
+
         SetNewValues(playerStats);
 
         if (Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, layerMask))
         {
+            if(target.transform.childCount > 0)
+                raycastHit.transform.GetComponent<ModifierSpotData>().SetColor(target.transform.GetChild(0).gameObject.tag, true);
 
             target.transform.position = raycastHit.transform.position;
             target.transform.localScale = raycastHit.transform.lossyScale;
             target.transform.rotation = raycastHit.transform.rotation;
+
+            if (target.transform.childCount > 0 && target.transform.GetChild(0).tag == "Floater")
+            {
+                target.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
+                target.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
+            }
 
             //Place button ------ Left mouse click ------ 
             if (controls.ConstructionMenu.ConstructModifier.ReadValue<float>() > 0)
             {
                 if (target.transform.childCount > 0 && raycastHit.transform.GetComponent<ModifierSpotData>().IsAvailable(target.transform.GetChild(0).gameObject.tag))
                 {
+                    raycastHit.transform.GetComponent<ModifierSpotData>().SetColor(target.transform.GetChild(0).gameObject.tag, false);
                     PlaceModifier(raycastHit.transform);
 
                     stats.SetStats();
@@ -131,6 +148,7 @@ public class ModifierManager : MonoBehaviour
             //Delete button ------ Right mouse click ------ 
             else if (controls.ConstructionMenu.DeleteModifier.ReadValue<float>() > 0)
             {
+                raycastHit.transform.GetComponent<ModifierSpotData>().ResetAlpha();
                 for (int i = 0; i < raycastHit.transform.childCount; i++)
                 {
                     raycastHit.transform.GetComponent<MeshRenderer>().enabled = true;
@@ -191,15 +209,24 @@ public class ModifierManager : MonoBehaviour
         }
 
         GameObject clone = Instantiate(target.transform.GetChild(0).gameObject, spot);
+
+        if(clone.tag == "Floater")
+        {
+            clone.transform.GetChild(0).gameObject.SetActive(true);
+            clone.transform.GetChild(1).gameObject.SetActive(false);
+        }
+
         if (clone.GetComponent<MeshCollider>() != null) clone.GetComponent<MeshCollider>().enabled = false;
 
-        spot.GetComponent<MeshRenderer>().enabled = false;
+        Material mat = spot.GetComponent<MeshRenderer>().material;
+        Color c = mat.color;
+        c.a = 0.5f;
+        mat.color = c;
+        spot.GetComponent<MeshRenderer>().material = mat;
 
-        //clone.transform.localScale = clone.transform.parent.parent.localScale;
         Quaternion tmp = clone.transform.localRotation;
         tmp.z *= clone.transform.forward.z;
         clone.transform.localRotation = tmp;
-        //clone.transform.position = clone.transform.localPosition;
 
         stats.SetStats();
     }
@@ -248,6 +275,13 @@ public class ModifierManager : MonoBehaviour
         }
     }
 
+    public void HideAllModifiersSpots()
+    {
+        for (int i = 0; i < transform.GetChild(0).childCount; i++)
+        {
+            transform.GetChild(0).GetChild(i).GetComponent<MeshRenderer>().enabled = false;
+        }
+    }
 
     private void SetNewValues(Stats.Data _stats, bool placed = false)
     {
