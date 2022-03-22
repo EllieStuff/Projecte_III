@@ -129,6 +129,8 @@ public class ModifierManager : MonoBehaviour
             {
                 target.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
                 target.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
+
+                SetFloaterPositions(target.transform.GetChild(0));
             }
 
             //Place button ------ Left mouse click ------ 
@@ -214,21 +216,37 @@ public class ModifierManager : MonoBehaviour
         {
             clone.transform.GetChild(0).gameObject.SetActive(true);
             clone.transform.GetChild(1).gameObject.SetActive(false);
+
+            SetFloaterPositions(clone.transform);
         }
 
         if (clone.GetComponent<MeshCollider>() != null) clone.GetComponent<MeshCollider>().enabled = false;
 
         Material mat = spot.GetComponent<MeshRenderer>().material;
+       
         Color c = mat.color;
         c.a = 0.5f;
         mat.color = c;
         spot.GetComponent<MeshRenderer>().material = mat;
 
+        Debug.Log(clone.transform.localRotation * transform.eulerAngles);
+
         Quaternion tmp = clone.transform.localRotation;
         tmp.z *= clone.transform.forward.z;
+
         clone.transform.localRotation = tmp;
 
         stats.SetStats();
+    }
+
+    void SetFloaterPositions(Transform floaters)
+    {
+        for (int i = 0; i < floaters.GetChild(0).childCount; i++)
+        {
+            Transform child = floaters.GetChild(0).GetChild(i);
+
+            child.position = playersManager.GetPlayer(playerId).parent.GetChild(1).GetChild(0).GetChild(i).position;
+        }
     }
 
     public void ChangeGameObject(GameObject obj)
