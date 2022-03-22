@@ -11,6 +11,7 @@ public class ButtonScript: MonoBehaviour
     [SerializeField] private ModifierManager modifierSpots = null;
     private Button bttn;
     private PlayerInputs playerInputs;
+    private bool bttnInited = false;
 
     private void Start()
     {
@@ -25,12 +26,24 @@ public class ButtonScript: MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (!bttnInited && playerInputs.Inited())
+        {
+            bttnInited = true;
+            if (!playerInputs.UsesKeyboard())
+            {
+                bttn.interactable = false;
+                var colors = bttn.colors;
+                colors.disabledColor = Color.white;
+                bttn.colors = colors;
+            }
+        }
+    }
+
     public void ChangeList(int _idx)
     {
-        if (playerInputs.UsesKeyboard())
-        {
-            ChangeListGeneral(_idx);
-        }
+        ChangeListGeneral(_idx);
     }
     internal void ChangeListGeneral(int _idx)
     {

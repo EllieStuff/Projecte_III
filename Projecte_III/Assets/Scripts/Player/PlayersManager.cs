@@ -82,5 +82,13 @@ public class PlayersManager : MonoBehaviour
 
         return modifiers[_idx];
     }
+    public int GetPlayerUsingKeyboard()
+    {
+        for(int i = 0; i < players.Length; i++)
+        {
+            if (players[i].GetComponent<PlayerInputs>().UsesKeyboard()) return i;
+        }
+        return -1;
+    }
 
 }

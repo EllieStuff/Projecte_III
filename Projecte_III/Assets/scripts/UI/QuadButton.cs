@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class QuadButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -11,6 +12,7 @@ public class QuadButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     PlayersManager playersManager;
     PlayerStatsManager playerStats;
+    PlayerInputs playerInputs;
 
     [SerializeField] private GameObject currentQuad;
     private bool placed = false;
@@ -21,6 +23,7 @@ public class QuadButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
         playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
         playerStats = playersManager.GetPlayer(playerId).GetComponent<PlayerStatsManager>();
+        playerInputs = playersManager.GetPlayer(playerId).GetComponent<PlayerInputs>();
 
         stats = GameObject.FindGameObjectWithTag("StatsManager").GetComponent<StatsManager>().GetPlayerStats(playerId);
     }
@@ -38,6 +41,8 @@ public class QuadButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     public void OnPointerEnter(PointerEventData data)
     {
+        if (!playerInputs.UsesKeyboard()) return;
+
         if(currentQuad == null)
             currentQuad = quadSpot.transform.GetChild(0).gameObject;
 
@@ -63,6 +68,8 @@ public class QuadButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     public void OnPointerExit(PointerEventData data)
     {
+        if (!playerInputs.UsesKeyboard()) return;
+
         if (currentQuad == null)
             currentQuad = quadSpot.transform.GetChild(0).gameObject;
 

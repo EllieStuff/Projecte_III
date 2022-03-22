@@ -166,24 +166,37 @@ public class ModifierManager : MonoBehaviour
         }
     }
 
-    public void PlaceModifierByButton(Vector3 _pos)
+    public void PlaceModifierByButton(Transform _modiferSpot)
     {
-        //Vector3 fixPos = new Vector3(_pos.x - 0.1f, _pos.y, _pos.z);
-        Ray ray = usedCamera.ScreenPointToRay(target.transform.position);
-        if (Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, layerMask))
+        if (_modiferSpot.childCount == 0)
         {
-            Debug.Log(raycastHit.transform.name + " was hit");
-
-            target.transform.position = raycastHit.transform.position;
-            target.transform.localScale = raycastHit.transform.lossyScale;
-            target.transform.rotation = raycastHit.transform.rotation;
-
-
-            if (raycastHit.transform.childCount == 0)
+            if (target.transform.childCount > 0 && _modiferSpot.GetComponent<ModifierSpotData>().IsAvailable(target.transform.GetChild(0).gameObject.tag))
             {
-                if (target.transform.childCount > 0 && raycastHit.transform.GetComponent<ModifierSpotData>().IsAvailable(target.transform.GetChild(0).gameObject.tag))
+                PlaceModifier(_modiferSpot);
+
+                stats.SetStats();
+                SetNewValues(stats.transform.GetComponent<Stats>().GetStats(), true);
+
+                return;
+            }
+        }
+        else if (_modiferSpot.childCount > 0)
+        {
+            bool replaceMod = _modiferSpot.GetChild(0).tag != target.transform.GetChild(0).tag;
+            for (int i = 0; i < _modiferSpot.childCount; i++)
+            {
+                _modiferSpot.GetComponent<MeshRenderer>().enabled = true;
+
+                Destroy(_modiferSpot.GetChild(i).gameObject);
+            }
+            stats.SetStats();
+            SetNewValues(stats.transform.GetComponent<Stats>().GetStats(), true);
+
+            if (replaceMod)
+            {
+                if (target.transform.childCount > 0 && _modiferSpot.GetComponent<ModifierSpotData>().IsAvailable(target.transform.GetChild(0).gameObject.tag))
                 {
-                    PlaceModifier(raycastHit.transform);
+                    PlaceModifier(_modiferSpot);
 
                     stats.SetStats();
                     SetNewValues(stats.transform.GetComponent<Stats>().GetStats(), true);
@@ -191,37 +204,18 @@ public class ModifierManager : MonoBehaviour
                     return;
                 }
             }
-            else if (raycastHit.transform.childCount > 0)
-            {
-                for (int i = 0; i < raycastHit.transform.childCount; i++)
-                {
-                    raycastHit.transform.GetComponent<MeshRenderer>().enabled = true;
-
-                    Destroy(raycastHit.transform.GetChild(i).gameObject);
-                }
-                stats.SetStats();
-                SetNewValues(stats.transform.GetComponent<Stats>().GetStats(), true);
-                return;
-            }
-
-            if (target.transform.childCount > 0 &&
-                (raycastHit.transform.childCount == 0 ||
-                (raycastHit.transform.childCount > 0 &&
-                target.transform.GetChild(0).tag != raycastHit.transform.GetChild(0).tag)))
-            {
-                Stats.Data playerStats = stats.transform.GetComponent<Stats>().GetStats();
-                SetNewValues(playerStats + target.transform.GetComponentInChildren<Stats>().GetStats());
-            }
-
+            return;
         }
 
-        //if (controls.BuildingMenu.DeleteModifier.ReadValue<float>() > 0)
-        //{
-        //    if (target.transform.childCount > 0)
-        //    {
-        //        Destroy(target.transform.GetChild(0).gameObject);
-        //    }
-        //}
+        if (target.transform.childCount > 0 &&
+            (_modiferSpot.childCount == 0 ||
+            (_modiferSpot.childCount > 0 &&
+            target.transform.GetChild(0).tag != _modiferSpot.GetChild(0).tag)))
+        {
+            Stats.Data playerStats = stats.transform.GetComponent<Stats>().GetStats();
+            SetNewValues(playerStats + target.transform.GetComponentInChildren<Stats>().GetStats());
+        }
+
     }
 
     public void ShowTarget(bool show)
@@ -248,6 +242,20 @@ public class ModifierManager : MonoBehaviour
                 Destroy(target.transform.GetChild(0).gameObject);
             }
         }
+    }
+
+    public string GetTargetContent()
+    {
+        if (target == null || target.transform.childCount == 0)
+            return "none";
+
+        return target.transform.GetChild(0).tag;
+    }
+    public void DestroyTargetModifer()
+    {
+        if (target == null || target.transform.childCount == 0) return;
+
+        Destroy(target.transform.GetChild(0).gameObject);
     }
 
     private void PlaceModifier(Transform spot)
