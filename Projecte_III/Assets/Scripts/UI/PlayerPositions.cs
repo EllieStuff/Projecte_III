@@ -7,6 +7,7 @@ using UnityEngine;
 public class PlayerPositions : MonoBehaviour
 {
     public Transform[] checkpoints;
+    public bool tutorial;
     [SerializeField] private PlayersManager quads;
     float[] distances = new float[4];
     double[] sortedDistance = new double[4];
@@ -16,7 +17,7 @@ public class PlayerPositions : MonoBehaviour
         checkpoints = new Transform[4];
         quads = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
 
-        if (quads.numOfPlayers == 1)
+        if (quads.numOfPlayers == 1 && !tutorial)
         {
             transform.GetChild(0).gameObject.SetActive(false);
             transform.GetChild(1).gameObject.SetActive(false);
@@ -24,14 +25,21 @@ public class PlayerPositions : MonoBehaviour
             transform.GetChild(3).gameObject.SetActive(false);
             Destroy(this);
         }
-        else if (quads.numOfPlayers == 2)
+        else if (quads.numOfPlayers == 2 && !tutorial)
         {
             transform.GetChild(1).gameObject.SetActive(false);
             transform.GetChild(3).gameObject.SetActive(false);
             transform.GetChild(2).SetSiblingIndex(1);
         }
-        else if (quads.numOfPlayers == 3)
+        else if (quads.numOfPlayers == 3 && !tutorial)
         {
+            transform.GetChild(3).gameObject.SetActive(false);
+        }
+        else if(tutorial)
+        {
+            transform.GetChild(0).gameObject.SetActive(false);
+            transform.GetChild(1).gameObject.SetActive(false);
+            transform.GetChild(2).gameObject.SetActive(false);
             transform.GetChild(3).gameObject.SetActive(false);
         }
     }

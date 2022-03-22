@@ -12,7 +12,7 @@ public class SceneSelector : MonoBehaviour
     [SerializeField] Button doneButton;
     PlayerInputs inputs;
     float timerPress;
-    Vector3 newPos = new Vector3(-25.28f, 0, 0);
+    Vector3 newPos;
     GameObject inputSystem;
 
     void Start()
@@ -32,22 +32,22 @@ public class SceneSelector : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if (timerPress <= 0 && (inputs.Right || inputs.Left))
-            timerPress = 1;
-        else if (timerPress > 0)
-            timerPress -= Time.deltaTime;
-
-        if (inputs.Right && mapPos < mapQuantity - 1)
+        if (inputs.Right && mapPos < mapQuantity - 1 && timerPress <= 0)
         {
             mapPos++;
             newPos = new Vector3(newPos.x -25.28f, newPos.y, newPos.z);
 
         }
-        else if (inputs.Left && mapPos > 0)
+        else if (inputs.Left && mapPos > 0 && timerPress <= 0)
         {
             mapPos--;
             newPos = new Vector3(newPos.x + 25.28f, newPos.y, newPos.z);
         }
+
+        if (timerPress <= 0 && (inputs.Right || inputs.Left))
+            timerPress = 0.25f;
+        else if (timerPress > 0)
+            timerPress -= Time.deltaTime;
 
         transform.position = Vector3.Lerp(transform.position, newPos, Time.deltaTime * 2);
 

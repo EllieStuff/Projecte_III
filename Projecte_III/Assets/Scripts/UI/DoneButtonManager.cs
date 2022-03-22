@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class DoneButtonManager : MonoBehaviour
 {
-    [SerializeField] string nextScene;
     [SerializeField] internal Color selectedBttnImgColor;
     [SerializeField] Color readyBttnImgColor;
 
@@ -59,7 +58,8 @@ public class DoneButtonManager : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
         Debug.Log("Changing Scene");
         GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>().numOfPlayers = buttonsActive;
-        GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().ChangeScene(nextScene);
+        LoadSceneManager sceneManager = GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>();
+        sceneManager.ChangeScene(sceneManager.newScene);
     }
 
 }
