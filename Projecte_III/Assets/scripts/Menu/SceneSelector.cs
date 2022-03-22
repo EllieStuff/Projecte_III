@@ -12,7 +12,7 @@ public class SceneSelector : MonoBehaviour
     [SerializeField] Button doneButton;
     PlayerInputs inputs;
     float timerPress;
-    Vector3 newPos;
+    Vector3 newPos = new Vector3(-25.28f, 0, 0);
     GameObject inputSystem;
 
     void Start()
