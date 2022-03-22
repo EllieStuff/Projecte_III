@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class ModifierManager : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class ModifierManager : MonoBehaviour
 
     private LayerMask layerMask;
     private bool controllerInited = false;
+    private bool disabled = false;
 
     void Start()
     {
@@ -62,7 +64,10 @@ public class ModifierManager : MonoBehaviour
     {
         Stats.Data playerStats = stats.transform.GetComponent<Stats>().GetStats();
 
-        if (!GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().GetSceneName().Contains("Building Scene"))
+        if (SceneManager.GetActiveScene().name.Contains("Menu"))
+            disabled = true;
+
+        if (!disabled && !GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().GetSceneName().Contains("Building Scene"))
         {
             Transform chasis = player.transform.parent.GetChild(0);
 
