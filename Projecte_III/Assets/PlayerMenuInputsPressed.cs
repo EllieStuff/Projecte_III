@@ -12,26 +12,30 @@ public class PlayerMenuInputsPressed : MonoBehaviour
     int updateMap = 2;
 
 
+    bool
+        up, down, right, left,
+        accept, decline;
+
     Dictionary<InputSystem.KeyCodes, bool> keysPressed = new Dictionary<InputSystem.KeyCodes, bool>();
 
-    public bool MenuUp { get { return playerInputs.MenuUp; } }
-    public bool MenuDown { get { return playerInputs.MenuDown; } }
-    public bool MenuRight { get { return playerInputs.MenuRight; } }
-    public bool MenuLeft { get { return playerInputs.MenuLeft; } }
-    public bool MenuAccept { get { return playerInputs.MenuAccept; } }
-    public bool MenuDecline { get { return playerInputs.MenuDecline; } }
-    public bool MenuUpPressed { get { return playerInputs.MenuUp && !keysPressed[InputSystem.KeyCodes.MENU_UP]; } }
-    public bool MenuDownPressed { get { return playerInputs.MenuDown && !keysPressed[InputSystem.KeyCodes.MENU_DOWN]; } }
-    public bool MenuRightPressed { get { return playerInputs.MenuRight && !keysPressed[InputSystem.KeyCodes.MENU_RIGHT]; } }
-    public bool MenuLeftPressed { get { return playerInputs.MenuLeft && !keysPressed[InputSystem.KeyCodes.MENU_LEFT]; } }
-    public bool MenuAcceptPressed { get { return playerInputs.MenuAccept && !keysPressed[InputSystem.KeyCodes.MENU_ACCEPT]; } }
-    public bool MenuDeclinePressed { get { return playerInputs.MenuDecline && !keysPressed[InputSystem.KeyCodes.MENU_DECLINE]; } }
-    public bool MenuUpReleased { get { return !playerInputs.MenuUp && keysPressed[InputSystem.KeyCodes.MENU_UP]; } }
-    public bool MenuDownReleased { get { return !playerInputs.MenuDown && keysPressed[InputSystem.KeyCodes.MENU_DOWN]; } }
-    public bool MenuRightReleased { get { return !playerInputs.MenuRight && keysPressed[InputSystem.KeyCodes.MENU_RIGHT]; } }
-    public bool MenuLeftReleased { get { return !playerInputs.MenuLeft && keysPressed[InputSystem.KeyCodes.MENU_LEFT]; } }
-    public bool MenuAcceptReleased { get { return !playerInputs.MenuAccept && keysPressed[InputSystem.KeyCodes.MENU_ACCEPT]; } }
-    public bool MenuDeclineReleased { get { return !playerInputs.MenuDecline && keysPressed[InputSystem.KeyCodes.MENU_DECLINE]; } }
+    public bool MenuUp { get { return up; } }
+    public bool MenuDown { get { return down; } }
+    public bool MenuRight { get { return right; } }
+    public bool MenuLeft { get { return left; } }
+    public bool MenuAccept { get { return accept; } }
+    public bool MenuDecline { get { return decline; } }
+    public bool MenuUpPressed { get { return up && !keysPressed[InputSystem.KeyCodes.MENU_UP]; } }
+    public bool MenuDownPressed { get { return down && !keysPressed[InputSystem.KeyCodes.MENU_DOWN]; } }
+    public bool MenuRightPressed { get { return right && !keysPressed[InputSystem.KeyCodes.MENU_RIGHT]; } }
+    public bool MenuLeftPressed { get { return left && !keysPressed[InputSystem.KeyCodes.MENU_LEFT]; } }
+    public bool MenuAcceptPressed { get { return accept && !keysPressed[InputSystem.KeyCodes.MENU_ACCEPT]; } }
+    public bool MenuDeclinePressed { get { return decline && !keysPressed[InputSystem.KeyCodes.MENU_DECLINE]; } }
+    public bool MenuUpReleased { get { return !up && keysPressed[InputSystem.KeyCodes.MENU_UP]; } }
+    public bool MenuDownReleased { get { return !down && keysPressed[InputSystem.KeyCodes.MENU_DOWN]; } }
+    public bool MenuRightReleased { get { return !right && keysPressed[InputSystem.KeyCodes.MENU_RIGHT]; } }
+    public bool MenuLeftReleased { get { return !left && keysPressed[InputSystem.KeyCodes.MENU_LEFT]; } }
+    public bool MenuAcceptReleased { get { return !accept && keysPressed[InputSystem.KeyCodes.MENU_ACCEPT]; } }
+    public bool MenuDeclineReleased { get { return !decline && keysPressed[InputSystem.KeyCodes.MENU_DECLINE]; } }
 
 
     // Start is called before the first frame update
@@ -52,16 +56,28 @@ public class PlayerMenuInputsPressed : MonoBehaviour
     {
         if (playerInputs.Inited())
         {
-            if (updateInputs == 0)
+            if(updateInputs == 0)
             {
                 updateInputs++;
-                playerInputs.EnableMenuInputs(true);
+                UpdateInputs();
             }
-            else if (updateInputs == 1)
+            else if(updateInputs == 1)
             {
-                updateInputs++;
-                playerInputs.EnableMenuInputs(false);
+                updateInputs = 0;
+                UpdateMaps();
             }
+
+
+            //if (updateInputs == 0)
+            //{
+            //    updateInputs++;
+            //    playerInputs.EnableMenuInputs(true);
+            //}
+            //else if (updateInputs == 1)
+            //{
+            //    updateInputs++;
+            //    playerInputs.EnableMenuInputs(false);
+            //}
             
         }
     }
@@ -69,36 +85,46 @@ public class PlayerMenuInputsPressed : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        if (updateInputs == updateMap)
-        {
-            updateInputs = 0;
-            UpdateMaps();
-        }
+        //if (updateInputs == updateMap)
+        //{
+        //    updateInputs = 0;
+        //    UpdateMaps();
+        //}
+    }
+
+    void UpdateInputs()
+    {
+        up = playerInputs.MenuUp;
+        down = playerInputs.MenuDown;
+        right = playerInputs.MenuRight;
+        left = playerInputs.MenuLeft;
+        accept = playerInputs.MenuAccept;
+        decline = playerInputs.MenuDecline;
     }
 
     void UpdateMaps()
     {
-        if (playerInputs.MenuUp && !keysPressed[InputSystem.KeyCodes.MENU_UP])
+        if (up && !keysPressed[InputSystem.KeyCodes.MENU_UP])
         {
             keysPressed[InputSystem.KeyCodes.MENU_UP] = true;
         }
-        if (playerInputs.MenuDown && !keysPressed[InputSystem.KeyCodes.MENU_DOWN])
+        if (down && !keysPressed[InputSystem.KeyCodes.MENU_DOWN])
         {
             keysPressed[InputSystem.KeyCodes.MENU_DOWN] = true;
         }
-        if (playerInputs.MenuRight && !keysPressed[InputSystem.KeyCodes.MENU_RIGHT])
+        if (right && !keysPressed[InputSystem.KeyCodes.MENU_RIGHT])
         {
             keysPressed[InputSystem.KeyCodes.MENU_RIGHT] = true;
         }
-        if (playerInputs.MenuLeft && !keysPressed[InputSystem.KeyCodes.MENU_LEFT])
+        if (left && !keysPressed[InputSystem.KeyCodes.MENU_LEFT])
         {
             keysPressed[InputSystem.KeyCodes.MENU_LEFT] = true;
         }
-        if (playerInputs.MenuAccept && !keysPressed[InputSystem.KeyCodes.MENU_ACCEPT])
+        if (accept && !keysPressed[InputSystem.KeyCodes.MENU_ACCEPT])
         {
             keysPressed[InputSystem.KeyCodes.MENU_ACCEPT] = true;
         }
-        if (playerInputs.MenuDecline && !keysPressed[InputSystem.KeyCodes.MENU_DECLINE])
+        if (decline && !keysPressed[InputSystem.KeyCodes.MENU_DECLINE])
         {
             keysPressed[InputSystem.KeyCodes.MENU_DECLINE] = true;
         }
@@ -108,27 +134,27 @@ public class PlayerMenuInputsPressed : MonoBehaviour
 
     void ResetMaps()
     {
-        if (!playerInputs.MenuUp && keysPressed[InputSystem.KeyCodes.MENU_UP])
+        if (!up && keysPressed[InputSystem.KeyCodes.MENU_UP])
         {
             keysPressed[InputSystem.KeyCodes.MENU_UP] = false;
         }
-        if (!playerInputs.MenuDown && keysPressed[InputSystem.KeyCodes.MENU_DOWN])
+        if (!down && keysPressed[InputSystem.KeyCodes.MENU_DOWN])
         {
             keysPressed[InputSystem.KeyCodes.MENU_DOWN] = false;
         }
-        if (!playerInputs.MenuRight && keysPressed[InputSystem.KeyCodes.MENU_RIGHT])
+        if (!right && keysPressed[InputSystem.KeyCodes.MENU_RIGHT])
         {
             keysPressed[InputSystem.KeyCodes.MENU_RIGHT] = false;
         }
-        if (!playerInputs.MenuLeft && keysPressed[InputSystem.KeyCodes.MENU_LEFT])
+        if (!left && keysPressed[InputSystem.KeyCodes.MENU_LEFT])
         {
             keysPressed[InputSystem.KeyCodes.MENU_LEFT] = false;
         }
-        if (!playerInputs.MenuAccept && keysPressed[InputSystem.KeyCodes.MENU_ACCEPT])
+        if (!accept && keysPressed[InputSystem.KeyCodes.MENU_ACCEPT])
         {
             keysPressed[InputSystem.KeyCodes.MENU_ACCEPT] = false;
         }
-        if (!playerInputs.MenuDecline && keysPressed[InputSystem.KeyCodes.MENU_DECLINE])
+        if (!decline && keysPressed[InputSystem.KeyCodes.MENU_DECLINE])
         {
             keysPressed[InputSystem.KeyCodes.MENU_DECLINE] = false;
         }

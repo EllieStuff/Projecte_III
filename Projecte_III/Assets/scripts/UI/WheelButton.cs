@@ -6,11 +6,11 @@ public class WheelButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     [SerializeField] private GameObject wheelsModel;
     [SerializeField] private GameObject wheelSpot = null;
     [SerializeField] private GameObject currentWheel;
-    [SerializeField] private GameObject statsManager;
 
     PlayersManager playersManager;
     PlayerStatsManager playerStats;
     StatsSliderManager stats;
+    PlayerInputs playerInputs;
     int playerId;
 
     Stats.Data sliderData;
@@ -22,8 +22,9 @@ public class WheelButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
         playerId = transform.parent.parent.GetComponentInParent<ButtonManager>().playerId;
         playerStats = playersManager.GetPlayer(playerId).GetComponent<PlayerStatsManager>();
+        playerInputs = playersManager.GetPlayer(playerId).GetComponent<PlayerInputs>();
 
-        stats = statsManager.GetComponent<StatsManager>().GetPlayerStats(playerId);
+        stats = GameObject.FindGameObjectWithTag("StatsManager").GetComponent<StatsManager>().GetPlayerStats(playerId);
     }
 
     private void Update()
@@ -39,6 +40,8 @@ public class WheelButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnPointerEnter(PointerEventData data)
     {
+        if (!playerInputs.UsesKeyboard()) return;
+
         if (currentWheel == null)
             currentWheel = wheelSpot.transform.GetChild(0).gameObject;
 
@@ -67,6 +70,8 @@ public class WheelButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnPointerExit(PointerEventData data)
     {
+        if (!playerInputs.UsesKeyboard()) return;
+
         if (currentWheel == null)
             currentWheel = wheelSpot.transform.GetChild(0).gameObject;
 
@@ -107,8 +112,10 @@ public class WheelButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
         instance.GetComponent<AudioSource>().enabled = true;
 
-        playerStats.SetStats();
-
+        playerStats.SetStats();
+
+
+
         //SetNewValues(playerStats.transform.GetComponent<Stats>().GetStats(), true);
 
         placed = true;

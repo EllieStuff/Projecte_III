@@ -1,17 +1,18 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class QuadButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private GameObject quadModel;
     [SerializeField] private GameObject quadSpot;
-    [SerializeField] private GameObject statsManager;
     StatsSliderManager stats;
     Stats.Data sliderData;
     int playerId;
 
     PlayersManager playersManager;
     PlayerStatsManager playerStats;
+    PlayerInputs playerInputs;
 
     [SerializeField] private GameObject currentQuad;
     private bool placed = false;
@@ -22,8 +23,9 @@ public class QuadButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
         playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
         playerStats = playersManager.GetPlayer(playerId).GetComponent<PlayerStatsManager>();
+        playerInputs = playersManager.GetPlayer(playerId).GetComponent<PlayerInputs>();
 
-        stats = statsManager.GetComponent<StatsManager>().GetPlayerStats(playerId);
+        stats = GameObject.FindGameObjectWithTag("StatsManager").GetComponent<StatsManager>().GetPlayerStats(playerId);
     }
 
     private void Update()
@@ -39,7 +41,9 @@ public class QuadButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     public void OnPointerEnter(PointerEventData data)
     {
-        if(currentQuad == null)
+        if (!playerInputs.UsesKeyboard()) return;
+
+        if (currentQuad == null)
             currentQuad = quadSpot.transform.GetChild(0).gameObject;
 
         if (currentQuad.name.Contains(quadModel.name)) return;
@@ -64,6 +68,8 @@ public class QuadButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     public void OnPointerExit(PointerEventData data)
     {
+        if (!playerInputs.UsesKeyboard()) return;
+
         if (currentQuad == null)
             currentQuad = quadSpot.transform.GetChild(0).gameObject;
 
@@ -93,13 +99,12 @@ public class QuadButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
         if (currentQuad.name.Contains(quadModel.name)) return;
 
-        if (quadSpot.transform.childCount > 0)
+        for (int i = 0; i < quadSpot.transform.childCount; i++)
         {
-            Destroy(quadSpot.transform.GetChild(0).gameObject);
+            Destroy(quadSpot.transform.GetChild(i).gameObject);
         }
 
         Transform clone = Instantiate(quadModel, quadSpot.transform).transform;
-        Destroy(quadSpot.transform.GetChild(1).gameObject);
 
         playersManager.GetPlayerModifier(playerId).GetComponent<ModifierManager>().SetNewModifierSpots(clone.GetChild(clone.childCount - 1));
 
