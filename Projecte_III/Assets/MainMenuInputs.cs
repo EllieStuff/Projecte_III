@@ -100,6 +100,11 @@ public class MainMenuInputs : MonoBehaviour
         //        menuState = MenuState.SETTINGS;
         //    settingOptions[mainIdx].onClick.Invoke();
         //}
+        if (inputs.DeclinePressed || Input.GetKeyDown(KeyCode.Escape))
+        {
+            settingsFathers.gameObject.SetActive(false);
+            menuState = MenuState.MAIN;
+        }
     }
 
 }

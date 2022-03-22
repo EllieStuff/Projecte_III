@@ -13,6 +13,7 @@ public class ModifierManager : MonoBehaviour
     private Camera usedCamera;
     private Transform rendererCamera;
     private GameObject player;
+    private Vector3 lastMousePos = Vector3.zero;
     private int playerId;
 
     private LayerMask layerMask;
@@ -75,36 +76,40 @@ public class ModifierManager : MonoBehaviour
         else if (target == null || !target.activeSelf) return;
         Vector3 newPos = Vector3.zero;
         Ray ray = new Ray();
-        if (playersManager.gameMode == PlayersManager.GameModes.MONO)
+        Vector3 mousePos = Mouse.current.position.ReadValue();// * 2.0f;
+        if (lastMousePos != mousePos && inputs.UsesKeyboard())
         {
-            ray = usedCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
-            newPos = ray.origin + ray.direction * (transform.position.z + Mathf.Abs(usedCamera.transform.position.z));
-        }
-        else if (playersManager.gameMode == PlayersManager.GameModes.MULTI_LOCAL)
-        {
-            Debug.Log(playerId + " has " + inputs.ControlData[0].deviceType.ToString());
-            if (inputs.ControlData[0].deviceType == InputSystem.DeviceTypes.KEYBOARD)
+            if (playersManager.gameMode == PlayersManager.GameModes.MONO)
             {
-                Vector3 mousePos = Mouse.current.position.ReadValue();// * 2.0f;
-                //mousePos.y -= Screen.height;
-                //mousePos.z = usedCamera.transform.position.z;
-                // ToDo: Trobar les distancies entre quad i sumar-les, potser agafar distancies entre initPoints pot ser bona idea
-                //float quadDistances = Vector3.Distance(playersManager.GetPlayer(0).position, playersManager.GetPlayer(playerId).position);
-                //mousePos.x += quadDistances;
-                Vector3 rendererMousePos = mousePos - rendererCamera.position;
-                rendererMousePos *= 2;
-                rendererMousePos.z = 0;
-                if(playerId == 0 || playerId == 2)
-                    rendererMousePos.x += Screen.width;
-                if (playerId == 2 || playerId == 3)
-                    rendererMousePos.y += Screen.height * 1.25f;
-
-                ray = usedCamera.ScreenPointToRay(rendererMousePos);
-
+                ray = usedCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
                 newPos = ray.origin + ray.direction * (transform.position.z + Mathf.Abs(usedCamera.transform.position.z));
             }
+            else if (playersManager.gameMode == PlayersManager.GameModes.MULTI_LOCAL)
+            {
+                Debug.Log(playerId + " has " + inputs.ControlData[0].deviceType.ToString());
+                if (inputs.ControlData[0].deviceType == InputSystem.DeviceTypes.KEYBOARD)
+                {
+                    //mousePos.y -= Screen.height;
+                    //mousePos.z = usedCamera.transform.position.z;
+                    // ToDo: Trobar les distancies entre quad i sumar-les, potser agafar distancies entre initPoints pot ser bona idea
+                    //float quadDistances = Vector3.Distance(playersManager.GetPlayer(0).position, playersManager.GetPlayer(playerId).position);
+                    //mousePos.x += quadDistances;
+                    Vector3 rendererMousePos = mousePos - rendererCamera.position;
+                    rendererMousePos *= 2;
+                    rendererMousePos.z = 0;
+                    if (playerId == 0 || playerId == 2)
+                        rendererMousePos.x += Screen.width;
+                    if (playerId == 2 || playerId == 3)
+                        rendererMousePos.y += Screen.height * 1.25f;
+
+                    ray = usedCamera.ScreenPointToRay(rendererMousePos);
+
+                    newPos = ray.origin + ray.direction * (transform.position.z + Mathf.Abs(usedCamera.transform.position.z));
+                }
+            }
+            target.transform.position = newPos;
         }
-        target.transform.position = newPos;
+        lastMousePos = mousePos;
 
         SetNewValues(playerStats);
 
@@ -159,6 +164,64 @@ public class ModifierManager : MonoBehaviour
                 Destroy(target.transform.GetChild(0).gameObject);
             }
         }
+    }
+
+    public void PlaceModifierByButton(Vector3 _pos)
+    {
+        //Vector3 fixPos = new Vector3(_pos.x - 0.1f, _pos.y, _pos.z);
+        Ray ray = usedCamera.ScreenPointToRay(target.transform.position);
+        if (Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, layerMask))
+        {
+            Debug.Log(raycastHit.transform.name + " was hit");
+
+            target.transform.position = raycastHit.transform.position;
+            target.transform.localScale = raycastHit.transform.lossyScale;
+            target.transform.rotation = raycastHit.transform.rotation;
+
+
+            if (raycastHit.transform.childCount == 0)
+            {
+                if (target.transform.childCount > 0 && raycastHit.transform.GetComponent<ModifierSpotData>().IsAvailable(target.transform.GetChild(0).gameObject.tag))
+                {
+                    PlaceModifier(raycastHit.transform);
+
+                    stats.SetStats();
+                    SetNewValues(stats.transform.GetComponent<Stats>().GetStats(), true);
+
+                    return;
+                }
+            }
+            else if (raycastHit.transform.childCount > 0)
+            {
+                for (int i = 0; i < raycastHit.transform.childCount; i++)
+                {
+                    raycastHit.transform.GetComponent<MeshRenderer>().enabled = true;
+
+                    Destroy(raycastHit.transform.GetChild(i).gameObject);
+                }
+                stats.SetStats();
+                SetNewValues(stats.transform.GetComponent<Stats>().GetStats(), true);
+                return;
+            }
+
+            if (target.transform.childCount > 0 &&
+                (raycastHit.transform.childCount == 0 ||
+                (raycastHit.transform.childCount > 0 &&
+                target.transform.GetChild(0).tag != raycastHit.transform.GetChild(0).tag)))
+            {
+                Stats.Data playerStats = stats.transform.GetComponent<Stats>().GetStats();
+                SetNewValues(playerStats + target.transform.GetComponentInChildren<Stats>().GetStats());
+            }
+
+        }
+
+        //if (controls.BuildingMenu.DeleteModifier.ReadValue<float>() > 0)
+        //{
+        //    if (target.transform.childCount > 0)
+        //    {
+        //        Destroy(target.transform.GetChild(0).gameObject);
+        //    }
+        //}
     }
 
     public void ShowTarget(bool show)

@@ -20,7 +20,9 @@ public class ButtonManager : MonoBehaviour
     List<int> lastSelectedSubButtons_Idx = new List<int>();
     internal int mainIdx = 0;
     int lastSelectedMainIdx = 0;
+    int modIdx = 0;
     ModifierManager modManager;
+    Transform modTrans;
 
     public enum MenuState { MAIN, SUB, EDIT_MODIFIERS, DONE };
     public MenuState menuState = MenuState.MAIN;
@@ -66,10 +68,6 @@ public class ButtonManager : MonoBehaviour
                     if (mainIdx != MODIFIERS_IDX)
                         subButtons[mainIdx][subButtons_Idx[mainIdx]].onClick.Invoke();
                 }
-                else if(menuState == MenuState.EDIT_MODIFIERS)
-                {
-
-                }
             }
             if (playerMenuInputs.MenuDownPressed)
             {
@@ -91,9 +89,35 @@ public class ButtonManager : MonoBehaviour
                     if (mainIdx != MODIFIERS_IDX)
                         subButtons[mainIdx][subButtons_Idx[mainIdx]].onClick.Invoke();
                 }
-                else if (menuState == MenuState.EDIT_MODIFIERS)
+            }
+            if (playerMenuInputs.MenuRightPressed)
+            {
+                if (menuState == MenuState.EDIT_MODIFIERS)
                 {
+                    int tmpIdx = modIdx;
+                    do
+                    {
+                        tmpIdx++;
+                        if (tmpIdx >= modTrans.childCount) tmpIdx = 0;
+                    } while (tmpIdx != modIdx && modTrans.GetChild(tmpIdx).gameObject.activeSelf);
 
+                    modIdx = tmpIdx;
+                    modManager.SetTargetPos(modTrans.GetChild(modIdx).position);
+                }
+            }
+            if (playerMenuInputs.MenuLeftPressed)
+            {
+                if (menuState == MenuState.EDIT_MODIFIERS)
+                {
+                    int tmpIdx = modIdx;
+                    do
+                    {
+                        tmpIdx--;
+                        if (tmpIdx < 0) tmpIdx = modTrans.childCount - 1;
+                    } while (tmpIdx != modIdx && modTrans.GetChild(tmpIdx).gameObject.activeSelf);
+
+                    modIdx = tmpIdx;
+                    modManager.SetTargetPos(modTrans.GetChild(modIdx).position);
                 }
             }
             if (playerMenuInputs.MenuAcceptPressed)
@@ -112,15 +136,25 @@ public class ButtonManager : MonoBehaviour
                     {
                         menuState = MenuState.EDIT_MODIFIERS;
                         subButtons[mainIdx][subIdx].onClick.Invoke();
-                        modManager.SetTargetPos(modManager.transform.GetChild(0).GetChild(0).position);
+                        Debug.Log(modManager.transform.GetChild(0).GetChild(0).name);
+                        modTrans = modManager.transform.GetChild(0);
+                        for (int i = 0; i < modTrans.childCount; i++)
+                        {
+                            if (modTrans.GetChild(i).gameObject.activeSelf)
+                            {
+                                modManager.SetTargetPos(modTrans.GetChild(i).position);
+                                modIdx = i;
+                                break;
+                            }
+                        }
                     }
                 }
                 else if (menuState == MenuState.EDIT_MODIFIERS)
                 {
-
+                    modManager.PlaceModifierByButton(modTrans.GetChild(modIdx).position);
                 }
             }
-            if (playerMenuInputs.MenuDeclinePressed)
+            if (playerMenuInputs.MenuDeclinePressed || Input.GetKeyDown(KeyCode.Escape))
             {
                 if(menuState == MenuState.SUB)
                 {
@@ -134,7 +168,7 @@ public class ButtonManager : MonoBehaviour
                 {
                     menuState = MenuState.SUB;
                     int subIdx = subButtons_Idx[mainIdx];
-                    subButtons[mainIdx][subIdx].onClick.Invoke();
+                    //subButtons[mainIdx][subIdx].onClick.Invoke();
                     //subButtons[mainIdx][subIdx].Select();
                     SelectButton(subButtons[mainIdx][subIdx]);
                 }
