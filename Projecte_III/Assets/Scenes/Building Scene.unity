@@ -1788,11 +1788,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a276f7b16d92d6c4fb3298cad2f880a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &1101118842 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3490947353090283006, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
-  m_PrefabInstance: {fileID: 6089789507022749367}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1111520755
 GameObject:
   m_ObjectHideFlags: 0
@@ -2837,6 +2832,14 @@ PrefabInstance:
       propertyPath: statsManager
       value: 
       objectReference: {fileID: 44522109}
+    - target: {fileID: 2728634405971061688, guid: ef4ecab629294ff40aa991f3c2d147d7, type: 3}
+      propertyPath: m_Color.b
+      value: 0.8509804
+      objectReference: {fileID: 0}
+    - target: {fileID: 2728634405971061688, guid: ef4ecab629294ff40aa991f3c2d147d7, type: 3}
+      propertyPath: m_Color.r
+      value: 0.85490197
+      objectReference: {fileID: 0}
     - target: {fileID: 2728634405971061689, guid: ef4ecab629294ff40aa991f3c2d147d7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -2845,6 +2848,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 21911382}
+    - target: {fileID: 2728634406065967507, guid: ef4ecab629294ff40aa991f3c2d147d7, type: 3}
+      propertyPath: m_Color.b
+      value: 0.8509804
+      objectReference: {fileID: 0}
+    - target: {fileID: 2728634406065967507, guid: ef4ecab629294ff40aa991f3c2d147d7, type: 3}
+      propertyPath: m_Color.r
+      value: 0.85490197
+      objectReference: {fileID: 0}
     - target: {fileID: 2728634406311592815, guid: ef4ecab629294ff40aa991f3c2d147d7, type: 3}
       propertyPath: statsManager
       value: 
@@ -2877,6 +2888,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 21911382}
+    - target: {fileID: 2728634406907939591, guid: ef4ecab629294ff40aa991f3c2d147d7, type: 3}
+      propertyPath: m_Color.b
+      value: 0.8509804
+      objectReference: {fileID: 0}
+    - target: {fileID: 2728634406907939591, guid: ef4ecab629294ff40aa991f3c2d147d7, type: 3}
+      propertyPath: m_Color.r
+      value: 0.85490197
+      objectReference: {fileID: 0}
     - target: {fileID: 2728634407065403870, guid: ef4ecab629294ff40aa991f3c2d147d7, type: 3}
       propertyPath: m_Name
       value: Garage_Lists 1
@@ -3005,6 +3024,14 @@ PrefabInstance:
       propertyPath: statsManager
       value: 
       objectReference: {fileID: 44522109}
+    - target: {fileID: 2728634407652033624, guid: ef4ecab629294ff40aa991f3c2d147d7, type: 3}
+      propertyPath: m_Color.g
+      value: 0.8627451
+      objectReference: {fileID: 0}
+    - target: {fileID: 2728634407652033624, guid: ef4ecab629294ff40aa991f3c2d147d7, type: 3}
+      propertyPath: m_Color.r
+      value: 0.9607843
+      objectReference: {fileID: 0}
     - target: {fileID: 2728634407652033625, guid: ef4ecab629294ff40aa991f3c2d147d7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -3013,10 +3040,26 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
       objectReference: {fileID: 3874479624545897138, guid: 6e23e5a17c4e20243936504ffdd48d01, type: 3}
+    - target: {fileID: 2728634407863957676, guid: ef4ecab629294ff40aa991f3c2d147d7, type: 3}
+      propertyPath: m_Color.g
+      value: 0.8627451
+      objectReference: {fileID: 0}
+    - target: {fileID: 2728634407863957676, guid: ef4ecab629294ff40aa991f3c2d147d7, type: 3}
+      propertyPath: m_Color.r
+      value: 0.9607843
+      objectReference: {fileID: 0}
     - target: {fileID: 2728634407863957677, guid: ef4ecab629294ff40aa991f3c2d147d7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 21911382}
+    - target: {fileID: 2728634407927522750, guid: ef4ecab629294ff40aa991f3c2d147d7, type: 3}
+      propertyPath: m_Color.b
+      value: 0.8509804
+      objectReference: {fileID: 0}
+    - target: {fileID: 2728634407927522750, guid: ef4ecab629294ff40aa991f3c2d147d7, type: 3}
+      propertyPath: m_Color.r
+      value: 0.85490197
+      objectReference: {fileID: 0}
     - target: {fileID: 2728634407927522751, guid: ef4ecab629294ff40aa991f3c2d147d7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -3303,7 +3346,7 @@ PrefabInstance:
     - target: {fileID: 38654283868662907, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: quadChasisShake
       value: 
-      objectReference: {fileID: 1101118842}
+      objectReference: {fileID: 0}
     - target: {fileID: 38654283868662907, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: vehicleMaxSpeed
       value: 17.5
