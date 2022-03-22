@@ -195,9 +195,11 @@ public class ModifierManager : MonoBehaviour
 
         spot.GetComponent<MeshRenderer>().enabled = false;
 
-        clone.transform.localScale = clone.transform.parent.parent.localScale;
-
-        clone.transform.localPosition = Vector3.zero;
+        //clone.transform.localScale = clone.transform.parent.parent.localScale;
+        Quaternion tmp = clone.transform.localRotation;
+        tmp.z *= clone.transform.forward.z;
+        clone.transform.localRotation = tmp;
+        //clone.transform.position = clone.transform.localPosition;
 
         stats.SetStats();
     }
