@@ -15,6 +15,7 @@ public class ModifierManager : MonoBehaviour
     private Camera usedCamera;
     private Transform rendererCamera;
     private GameObject player;
+    private Vector3 lastMousePos = Vector3.zero;
     private int playerId;
 
     private LayerMask layerMask;
@@ -48,8 +49,9 @@ public class ModifierManager : MonoBehaviour
 
     void Update()
     {
-        if(!controllerInited && inputs.ControlData[0] != null)
+        if (!controllerInited && inputs.ControlData[0] != null)
         {
+            Debug.Log("A");
             controllerInited = true;
             Active(true);
             ShowTarget(false);
@@ -64,10 +66,7 @@ public class ModifierManager : MonoBehaviour
     {
         Stats.Data playerStats = stats.transform.GetComponent<Stats>().GetStats();
 
-        if (SceneManager.GetActiveScene().name.Contains("Menu"))
-            disabled = true;
-
-        if (!disabled && !GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().GetSceneName().Contains("Building Scene"))
+        if (!GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().GetSceneName().Contains("Building Scene"))
         {
             Transform chasis = player.transform.parent.GetChild(0);
 
@@ -80,70 +79,55 @@ public class ModifierManager : MonoBehaviour
         else if (target == null || !target.activeSelf) return;
         Vector3 newPos = Vector3.zero;
         Ray ray = new Ray();
-        if (playersManager.gameMode == PlayersManager.GameModes.MONO)
+        Vector3 mousePos = Mouse.current.position.ReadValue();// * 2.0f;
+        if (lastMousePos != mousePos && inputs.UsesKeyboard())
         {
-            ray = usedCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
-            newPos = ray.origin + ray.direction * (transform.position.z + Mathf.Abs(usedCamera.transform.position.z));
-        }
-        else if (playersManager.gameMode == PlayersManager.GameModes.MULTI_LOCAL)
-        {
-            Debug.Log(playerId + " has " + inputs.ControlData[0].deviceType.ToString());
-            if (inputs.ControlData[0].deviceType == InputSystem.DeviceTypes.KEYBOARD)
+            if (playersManager.gameMode == PlayersManager.GameModes.MONO)
             {
-                Vector3 mousePos = Mouse.current.position.ReadValue();
-
-                Vector3 rendererMousePos = mousePos - rendererCamera.position;
-                rendererMousePos *= 2;
-                rendererMousePos.z = 0;
-
-                if(playerId == 0 || playerId == 2)
-                    rendererMousePos.x += Screen.width;
-                if (playerId == 2 || playerId == 3)
-                    rendererMousePos.y += Screen.height * 1.25f;
-
-                ray = usedCamera.ScreenPointToRay(rendererMousePos);
-
+                ray = usedCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
                 newPos = ray.origin + ray.direction * (transform.position.z + Mathf.Abs(usedCamera.transform.position.z));
             }
-        }
-        target.transform.position = newPos;
+            else if (playersManager.gameMode == PlayersManager.GameModes.MULTI_LOCAL)
+            {
+                Debug.Log(playerId + " has " + inputs.ControlData[0].deviceType.ToString());
+                if (inputs.ControlData[0].deviceType == InputSystem.DeviceTypes.KEYBOARD)
+                {
+                    //mousePos.y -= Screen.height;
+                    //mousePos.z = usedCamera.transform.position.z;
+                    // ToDo: Trobar les distancies entre quad i sumar-les, potser agafar distancies entre initPoints pot ser bona idea
+                    //float quadDistances = Vector3.Distance(playersManager.GetPlayer(0).position, playersManager.GetPlayer(playerId).position);
+                    //mousePos.x += quadDistances;
+                    Vector3 rendererMousePos = mousePos - rendererCamera.position;
+                    rendererMousePos *= 2;
+                    rendererMousePos.z = 0;
+                    if (playerId == 0 || playerId == 2)
+                        rendererMousePos.x += Screen.width;
+                    if (playerId == 2 || playerId == 3)
+                        rendererMousePos.y += Screen.height * 1.25f;
 
-        for (int i = 0; i < transform.GetChild(0).childCount; i++)
-        {
-            transform.GetChild(0).GetChild(i).GetComponent<ModifierSpotData>().SetColor("", false);
-        }
+                    ray = usedCamera.ScreenPointToRay(rendererMousePos);
 
-        if (target.transform.childCount > 0 && target.transform.GetChild(0).tag == "Floater")
-        {
-            target.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
-            target.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
+                    newPos = ray.origin + ray.direction * (transform.position.z + Mathf.Abs(usedCamera.transform.position.z));
+                }
+            }
+            target.transform.position = newPos;
         }
+        lastMousePos = mousePos;
 
         SetNewValues(playerStats);
 
         if (Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, layerMask))
         {
-            if(target.transform.childCount > 0)
-                raycastHit.transform.GetComponent<ModifierSpotData>().SetColor(target.transform.GetChild(0).gameObject.tag, true);
 
             target.transform.position = raycastHit.transform.position;
             target.transform.localScale = raycastHit.transform.lossyScale;
             target.transform.rotation = raycastHit.transform.rotation;
 
-            if (target.transform.childCount > 0 && target.transform.GetChild(0).tag == "Floater")
-            {
-                target.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
-                target.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
-
-                SetFloaterPositions(target.transform.GetChild(0));
-            }
-
             //Place button ------ Left mouse click ------ 
-            if (controls.ConstructionMenu.ConstructModifier.ReadValue<float>() > 0)
+            if (controls.BuildingMenu.ConstructModifier.ReadValue<float>() > 0)
             {
                 if (target.transform.childCount > 0 && raycastHit.transform.GetComponent<ModifierSpotData>().IsAvailable(target.transform.GetChild(0).gameObject.tag))
                 {
-                    raycastHit.transform.GetComponent<ModifierSpotData>().SetColor(target.transform.GetChild(0).gameObject.tag, false);
                     PlaceModifier(raycastHit.transform);
 
                     stats.SetStats();
@@ -153,9 +137,8 @@ public class ModifierManager : MonoBehaviour
                 }
             }
             //Delete button ------ Right mouse click ------ 
-            else if (controls.ConstructionMenu.DeleteModifier.ReadValue<float>() > 0)
+            else if (controls.BuildingMenu.DeleteModifier.ReadValue<float>() > 0)
             {
-                raycastHit.transform.GetComponent<ModifierSpotData>().ResetAlpha();
                 for (int i = 0; i < raycastHit.transform.childCount; i++)
                 {
                     raycastHit.transform.GetComponent<MeshRenderer>().enabled = true;
@@ -177,13 +160,65 @@ public class ModifierManager : MonoBehaviour
 
         }
 
-        if (controls.ConstructionMenu.DeleteModifier.ReadValue<float>() > 0)
+        if (controls.BuildingMenu.DeleteModifier.ReadValue<float>() > 0)
         {
             if (target.transform.childCount > 0)
             {
                 Destroy(target.transform.GetChild(0).gameObject);
             }
         }
+    }
+
+    public void PlaceModifierByButton(Transform _modiferSpot)
+    {
+        if (_modiferSpot.childCount == 0)
+        {
+            if (target.transform.childCount > 0 && _modiferSpot.GetComponent<ModifierSpotData>().IsAvailable(target.transform.GetChild(0).gameObject.tag))
+            {
+                PlaceModifier(_modiferSpot);
+
+                stats.SetStats();
+                SetNewValues(stats.transform.GetComponent<Stats>().GetStats(), true);
+
+                return;
+            }
+        }
+        else if (_modiferSpot.childCount > 0)
+        {
+            bool replaceMod = _modiferSpot.GetChild(0).tag != target.transform.GetChild(0).tag;
+            for (int i = 0; i < _modiferSpot.childCount; i++)
+            {
+                _modiferSpot.GetComponent<MeshRenderer>().enabled = true;
+
+                Destroy(_modiferSpot.GetChild(i).gameObject);
+            }
+            stats.SetStats();
+            SetNewValues(stats.transform.GetComponent<Stats>().GetStats(), true);
+
+            if (replaceMod)
+            {
+                if (target.transform.childCount > 0 && _modiferSpot.GetComponent<ModifierSpotData>().IsAvailable(target.transform.GetChild(0).gameObject.tag))
+                {
+                    PlaceModifier(_modiferSpot);
+
+                    stats.SetStats();
+                    SetNewValues(stats.transform.GetComponent<Stats>().GetStats(), true);
+
+                    return;
+                }
+            }
+            return;
+        }
+
+        if (target.transform.childCount > 0 &&
+            (_modiferSpot.childCount == 0 ||
+            (_modiferSpot.childCount > 0 &&
+            target.transform.GetChild(0).tag != _modiferSpot.GetChild(0).tag)))
+        {
+            Stats.Data playerStats = stats.transform.GetComponent<Stats>().GetStats();
+            SetNewValues(playerStats + target.transform.GetComponentInChildren<Stats>().GetStats());
+        }
+
     }
 
     public void ShowTarget(bool show)
@@ -194,10 +229,14 @@ public class ModifierManager : MonoBehaviour
                 target.SetActive(show);
 
             Transform modfs = transform.GetChild(0);
+
+            if (!modfs.gameObject.activeSelf) modfs.gameObject.SetActive(true);
+
             for (int i = 0; i < modfs.childCount; i++)
             {
                 GameObject child = modfs.GetChild(i).gameObject;
                 if (child.transform.childCount > 0) continue;
+
                 if (child.activeSelf != show) child.SetActive(show);
             }
 
@@ -206,6 +245,20 @@ public class ModifierManager : MonoBehaviour
                 Destroy(target.transform.GetChild(0).gameObject);
             }
         }
+    }
+
+    public string GetTargetContent()
+    {
+        if (target == null || target.transform.childCount == 0)
+            return "none";
+
+        return target.transform.GetChild(0).tag;
+    }
+    public void DestroyTargetModifer()
+    {
+        if (target == null || target.transform.childCount == 0) return;
+
+        Destroy(target.transform.GetChild(0).gameObject);
     }
 
     private void PlaceModifier(Transform spot)
@@ -217,7 +270,7 @@ public class ModifierManager : MonoBehaviour
 
         GameObject clone = Instantiate(target.transform.GetChild(0).gameObject, spot);
 
-        if(clone.tag == "Floater")
+        if (clone.tag == "Floater")
         {
             clone.transform.GetChild(0).gameObject.SetActive(true);
             clone.transform.GetChild(1).gameObject.SetActive(false);
@@ -228,13 +281,13 @@ public class ModifierManager : MonoBehaviour
         if (clone.GetComponent<MeshCollider>() != null) clone.GetComponent<MeshCollider>().enabled = false;
 
         Material mat = spot.GetComponent<MeshRenderer>().material;
-       
+
         Color c = mat.color;
         c.a = 0.5f;
         mat.color = c;
         spot.GetComponent<MeshRenderer>().material = mat;
 
-        Debug.Log(clone.transform.localRotation * transform.eulerAngles);
+        //Debug.Log(clone.transform.localRotation * transform.eulerAngles);
 
         Quaternion tmp = clone.transform.localRotation;
         tmp.z *= clone.transform.forward.z;
@@ -277,7 +330,9 @@ public class ModifierManager : MonoBehaviour
         newModfs.parent = transform;
         //newModfs.localPosition = Vector3.zero;
         newModfs.localScale = transform.localScale;
-        //newModfs.localRotation = transform.localRotation;
+        newModfs.localRotation = transform.localRotation;
+
+        newModfs.gameObject.SetActive(false);
     }
 
     public void Active(bool active)
@@ -310,4 +365,10 @@ public class ModifierManager : MonoBehaviour
     {
         statsSliders.SetSliderValue(_stats, placed);
     }
+
+    public void SetTargetPos(Vector3 _pos)
+    {
+        target.transform.position = _pos;
+    }
+
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ModifierSpotData : MonoBehaviour
 {
-    enum ModifierTypes { AlaDelta, Floater, OilGun, PaintGun, Plunger, Umbrella}
+    enum ModifierTypes { AlaDelta, Floater, OilGun, PaintGun, Plunger, Umbrella }
 
     [SerializeField] private ModifierTypes[] availableTypes;
 
@@ -44,15 +44,15 @@ public class ModifierSpotData : MonoBehaviour
         GetComponent<MeshRenderer>().material = mat;
     }
 
-    public void  SetColor(string tag, bool active)
+    public void SetColor(string tag, bool active)
     {
         Material mat = GetComponent<MeshRenderer>().material;
         float a = mat.color.a;
         Color tmp = mainColor;
-        if(active)
+        if (active)
         {
             Debug.Log("IsAvailable color");
-            if(IsAvailable(tag))
+            if (IsAvailable(tag))
                 tmp = correctColor;
             else
                 tmp = errorColor;
