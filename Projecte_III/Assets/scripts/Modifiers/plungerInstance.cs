@@ -179,6 +179,11 @@ public class plungerInstance : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.name.Contains("Umbrella"))
+        {
+            quadTarget = null;
+            otherQuad = null;
+        }
         if (other.tag.Equals("Death Zone"))
             Destroy(gameObject);
     }
