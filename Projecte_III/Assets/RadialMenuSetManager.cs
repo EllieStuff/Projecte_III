@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public class RadialMenuSetManager : MonoBehaviour
 {
     [SerializeField] GameObject[] radialMenuSets;
+    [SerializeField] bool inBuild = false;
+    [SerializeField] GameObject[] radialMenuSetsBuild;
     PlayersManager playersManager;
     int prevSetupNum = 0;
     string sceneName = "";
@@ -15,6 +17,8 @@ public class RadialMenuSetManager : MonoBehaviour
     void Awake()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
+
+        if (inBuild) radialMenuSets = radialMenuSetsBuild;
     }
     private void Start()
     {
