@@ -21,14 +21,13 @@ public class ParticleController : MonoBehaviour
         DustParticleSys = this.transform.Find("WheelParticles").GetComponentInChildren<ParticleSystem>();
         SmokeParticleSys = this.transform.Find("SmokeParticles").GetComponentInChildren<ParticleSystem>();
         WaterParticleSys = this.transform.Find("WaterParticles").GetComponentInChildren<ParticleSystem>();
-        numOfWaterParticleSystems = 4;
     }
 
     // Update is called once per frame
     void Update()
     {
         //Ground Particles
-        for(int i = 0; i < numOfDustParticleSystems; i++)
+        for (int i = 0; i < numOfDustParticleSystems; i++)
         {
             DustParticleSys = transform.Find("WheelParticles").GetChild(i).GetComponent<ParticleSystem>();
 
@@ -48,9 +47,9 @@ public class ParticleController : MonoBehaviour
         //Water Particles
         for (int i = 0; i < numOfWaterParticleSystems; i++)
         {
-            WaterParticleSys = transform.Find("WaterParticles").GetChild(i).GetComponent<ParticleSystem>();
+            WaterParticleSys = this.transform.Find("WaterParticles").GetChild(i).GetComponent<ParticleSystem>();
 
-            if (Player.GetComponent<PlayerVehicleScript>().onWater && Player.GetComponent<PlayerFloater>().HasFloater && !WaterParticleSys.isPlaying)
+            if (Player.GetComponent<PlayerVehicleScript>().onWater /*&& Player.GetComponent<PlayerFloater>().HasFloater*/ && !WaterParticleSys.isPlaying)
                 WaterParticleSys.Play();
 
             else if (!Player.GetComponent<PlayerVehicleScript>().onWater && WaterParticleSys.isEmitting)
