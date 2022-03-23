@@ -148,13 +148,13 @@ public class DeathfallAndCheckpointsSystem : MonoBehaviour
 
                 // Fa falta el transform.parent??
                 PlayerVehicleScript currPlayerScript = other.GetComponentInParent<PlayerVehicleScript>();
-                currPlayerScript.transform.parent.position = vehicleScripts[currPlayerId].respawnPosition;
+                currPlayerScript.transform.position = vehicleScripts[currPlayerId].respawnPosition;
                 currPlayerScript.vehicleRB.velocity = vehicleScripts[currPlayerId].respawnVelocity;
                 currPlayerScript.vehicleRB.angularVelocity = vehicleScripts[currPlayerId].respawnVelocity;
                 currPlayerScript.vehicleRB.constraints = RigidbodyConstraints.FreezePositionX;
                 currPlayerScript.vehicleRB.constraints = RigidbodyConstraints.FreezePositionZ;
-                currPlayerScript.transform.parent.localEulerAngles = vehicleScripts[currPlayerId].respawnRotation;
-                currPlayerScript.transform.parent.localEulerAngles += new Vector3(0, 90, 0);
+                currPlayerScript.transform.localEulerAngles = vehicleScripts[currPlayerId].respawnRotation;
+                currPlayerScript.transform.localEulerAngles += new Vector3(0, 90, 0);
             }
 
         }
