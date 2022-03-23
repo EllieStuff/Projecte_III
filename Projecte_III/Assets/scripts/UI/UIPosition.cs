@@ -12,13 +12,19 @@ public class UIPosition : MonoBehaviour
 
     private void Start()
     {
+        PlayersManager.GameModes gameMode = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>().gameMode;
+        if (gameMode == PlayersManager.GameModes.MULTI_LOCAL)
+            gameObject.SetActive(false);
+
         if (UIScript)
             sliderPos = GetComponent<Slider>();
     }
 
     void Update()
     {
-        if(UIScript && sliderPos.value < actualCheckpoint)
-            sliderPos.value =  Mathf.Lerp(sliderPos.value, actualCheckpoint, Time.deltaTime * 0.2f);
+        if (UIScript && sliderPos.value < actualCheckpoint)
+        {
+            sliderPos.value = Mathf.Lerp(sliderPos.value, actualCheckpoint, Time.deltaTime * 0.2f);
+        }
     }
 }
