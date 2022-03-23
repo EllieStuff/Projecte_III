@@ -10,6 +10,7 @@ public class MenuFunctions : MonoBehaviour
     const float ANIMS_MARGIN = 0.8f;
 
     public GameObject settingsMenu;
+    public GameObject creditsMenu;
     public Slider localVoiceValue;
     private float changeSceneTime = 5;
     [SerializeField] Transform[] vehicles;
@@ -27,6 +28,11 @@ public class MenuFunctions : MonoBehaviour
     public void CloseSettings()
     {
         settingsMenu.SetActive(false);
+    }
+
+    public void ActiveCredits(bool active)
+    {
+        creditsMenu.SetActive(active);
     }
 
     public void PlaySingle()
