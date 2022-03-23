@@ -72,4 +72,21 @@ public class SceneSelector : MonoBehaviour
 
     }
 
+    public void Forward()
+    {
+        if(mapPos < mapQuantity - 1)
+        {
+            mapPos++;
+            newPos = new Vector3(newPos.x - 25.28f, newPos.y, newPos.z);
+        }
+    }
+
+    public void Backward()
+    {
+        if (mapPos > 0)
+        {
+            mapPos--;
+            newPos = new Vector3(newPos.x + 25.28f, newPos.y, newPos.z);
+        }
+    }
 }
