@@ -10,7 +10,7 @@ public class GetRadialMenu : MonoBehaviour
         RadialMenuSetManager radialMenuSetManager = GameObject.FindGameObjectWithTag("RadialMenuManager").GetComponent<RadialMenuSetManager>();
         //radialMenuSetManager.SetModifiersToAllRadialMenus();
         Transform radialMenu = radialMenuSetManager.GetActiveSet();
-        radialMenu.SetParent(transform);
+        //radialMenu.SetParent(transform);
     }
 
 }

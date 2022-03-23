@@ -18,7 +18,10 @@ public class RadialMenuSetManager : MonoBehaviour
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
 
-        if (inBuild) radialMenuSets = radialMenuSetsBuild;
+        if (inBuild)
+            radialMenuSets[0].transform.parent.gameObject.SetActive(false);
+        else
+            radialMenuSetsBuild[0].transform.parent.gameObject.SetActive(false);
     }
     private void Start()
     {
@@ -33,7 +36,7 @@ public class RadialMenuSetManager : MonoBehaviour
         {
             // Do nothing
         }
-        else if(!sceneChecked)
+        else if (!sceneChecked)
         {
             SetUpRadialMenu(playersManager.numOfPlayers - 1);
             sceneChecked = true;
@@ -44,12 +47,25 @@ public class RadialMenuSetManager : MonoBehaviour
 
     void SetUpRadialMenu(int _setupNum)
     {
-        for (int i = 0; i < radialMenuSets.Length; i++)
+        if (inBuild)
         {
-            if (i == _setupNum)
-                radialMenuSets[i].SetActive(true);
-            else
-                radialMenuSets[i].SetActive(false);
+            for (int i = 0; i < radialMenuSetsBuild.Length; i++)
+            {
+                if (i == _setupNum)
+                    radialMenuSetsBuild[i].SetActive(true);
+                else
+                    radialMenuSetsBuild[i].SetActive(false);
+            }
+        }
+        else
+        {
+            for (int i = 0; i < radialMenuSets.Length; i++)
+            {
+                if (i == _setupNum)
+                    radialMenuSets[i].SetActive(true);
+                else
+                    radialMenuSets[i].SetActive(false);
+            }
         }
         prevSetupNum = _setupNum;
     }
@@ -83,15 +99,25 @@ public class RadialMenuSetManager : MonoBehaviour
     //}
     public void SetModifiersToChosenRMSet(int _setupNum)
     {
-        if (playersManager.gameMode == PlayersManager.GameModes.MONO || prevSetupNum == _setupNum) 
+        if (playersManager.gameMode == PlayersManager.GameModes.MONO || prevSetupNum == _setupNum)
             return;
 
-        Transform prevRMSet = radialMenuSets[prevSetupNum].transform;
-        Transform currRMSet = radialMenuSets[_setupNum].transform;
-        currRMSet.gameObject.SetActive(true);
-        for(int i = 0; i < currRMSet.childCount; i++)
+        Transform prevRMSet;
+        Transform currRMSet;
+        if (inBuild)
         {
-            if(i >= prevRMSet.childCount)
+            prevRMSet = radialMenuSetsBuild[prevSetupNum].transform;
+            currRMSet = radialMenuSetsBuild[_setupNum].transform;
+        }
+        else
+        {
+            prevRMSet = radialMenuSets[prevSetupNum].transform;
+            currRMSet = radialMenuSets[_setupNum].transform;
+        }
+        currRMSet.gameObject.SetActive(true);
+        for (int i = 0; i < currRMSet.childCount; i++)
+        {
+            if (i >= prevRMSet.childCount)
             {
                 Debug.LogError("Previous RadialMenuSet amount shouldn't be bigger than current's");
                 return;
@@ -99,7 +125,7 @@ public class RadialMenuSetManager : MonoBehaviour
 
             Transform prevBuildingRM = prevRMSet.GetChild(i).GetChild(0);
             Transform currBuildingRM = currRMSet.GetChild(i).GetChild(0);
-            for(int j = 0; j < prevBuildingRM.childCount; j++)
+            for (int j = 0; j < prevBuildingRM.childCount; j++)
             {
                 GameObject.Instantiate(prevBuildingRM.GetChild(j), currBuildingRM);
             }
@@ -109,7 +135,10 @@ public class RadialMenuSetManager : MonoBehaviour
 
     public Transform GetActiveSet()
     {
-        return radialMenuSets[playersManager.numOfPlayers - 1].transform;
+        if (inBuild)
+            return radialMenuSetsBuild[playersManager.numOfPlayers - 1].transform;
+        else
+            return radialMenuSets[playersManager.numOfPlayers - 1].transform;
     }
 
 }
