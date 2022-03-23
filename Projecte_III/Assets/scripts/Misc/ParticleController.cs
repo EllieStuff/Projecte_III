@@ -49,7 +49,7 @@ public class ParticleController : MonoBehaviour
         {
             WaterParticleSys = this.transform.Find("WaterParticles").GetChild(i).GetComponent<ParticleSystem>();
 
-            if (Player.GetComponent<PlayerVehicleScript>().onWater /*&& Player.GetComponent<PlayerFloater>().HasFloater*/ && !WaterParticleSys.isPlaying)
+            if (Player.GetComponent<PlayerVehicleScript>().onWater && Player.GetComponent<PlayerFloater>().HasFloater && !WaterParticleSys.isPlaying)
                 WaterParticleSys.Play();
 
             else if (!Player.GetComponent<PlayerVehicleScript>().onWater && WaterParticleSys.isEmitting)
