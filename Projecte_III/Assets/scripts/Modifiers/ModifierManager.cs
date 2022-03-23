@@ -316,7 +316,7 @@ public class ModifierManager : MonoBehaviour
             Destroy(currentChild);
         }
 
-        Instantiate(obj, target.transform);
+        Transform modf = Instantiate(obj, target.transform).transform;
     }
 
     public void SetNewModifierSpots(Transform newModfs)
@@ -339,6 +339,10 @@ public class ModifierManager : MonoBehaviour
         else
         {
             target = Instantiate(new GameObject());
+
+            Quaternion targetRot = Quaternion.Euler(0.0f, -90.0f, 0.0f); 
+            target.transform.rotation = targetRot;
+
             if (inputs.ControlData[0].deviceType == InputSystem.DeviceTypes.KEYBOARD)
             {
                 target.name = "Mouse";
