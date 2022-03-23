@@ -328,9 +328,7 @@ public class ModifierManager : MonoBehaviour
         }
 
         newModfs.parent = transform;
-        //newModfs.localPosition = Vector3.zero;
         newModfs.localScale = transform.localScale;
-        newModfs.localRotation = transform.localRotation;
 
         newModfs.gameObject.SetActive(false);
     }
