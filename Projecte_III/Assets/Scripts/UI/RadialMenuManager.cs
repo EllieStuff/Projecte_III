@@ -15,6 +15,7 @@ public class RadialMenuManager : MonoBehaviour
     [SerializeField] PlayingSecondaryRadialMenu playingRM2_Script;
     [SerializeField] int playerId = 0;
     [SerializeField] RadialMenuState state = RadialMenuState.DEFAULT;
+    [SerializeField] GameObject playersManager;
 
     PlayerVehicleScript player;
     PlayerInputs playerInputs;
@@ -41,7 +42,7 @@ public class RadialMenuManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>().GetPlayer(playerId).GetComponent<PlayerVehicleScript>();
+        player = playersManager.GetComponent<PlayersManager>().GetPlayer(playerId).GetComponent<PlayerVehicleScript>();
         playerInputs = player.GetComponent<PlayerInputs>();
     }
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -80,6 +81,9 @@ public class RadialMenuManager : MonoBehaviour
     {
         if (state == RadialMenuState.PLAYING && playingRM1_Script.transform.childCount > 0)
         {
+            if (playerId == 0)
+                Debug.Log(playingRM1_Script.transform.position);
+            playingRM1_Script.gameObject.SetActive(true);
             if (playerInputs.EnableGadgetMenu && !triggered)
             {
                 triggered = true;
