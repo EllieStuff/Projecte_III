@@ -24,6 +24,7 @@ public class ButtonManager : MonoBehaviour
     ModifierManager modManager;
     Transform modSpotsTrans;
     Vector3 spotMargin = new Vector3(0.0f, 0.8f, 0.0f);
+    Color prevSelectedButtonColor;
 
     public enum MenuState { MAIN, SUB, EDIT_MODIFIERS, DONE };
     public MenuState menuState = MenuState.MAIN;
@@ -40,8 +41,8 @@ public class ButtonManager : MonoBehaviour
 
 
         //mainButtons[mainIdx].Select();
+        prevSelectedButtonColor = mainButtons[mainIdx].GetComponent<Image>().color;
         SelectButton(mainButtons[mainIdx]);
-
     }
 
     private void Update()
@@ -143,6 +144,7 @@ public class ButtonManager : MonoBehaviour
                 int subIdx = subButtons_Idx[mainIdx];
                 if (menuState == MenuState.MAIN)
                 {
+                    prevSelectedButtonColor = subButtons[mainIdx][subIdx].GetComponent<Image>().color;
                     mainButtons[mainIdx].onClick.Invoke();
                     //menuState = MenuState.SUB;
                     //subButtons[mainIdx][subIdx].Select();
@@ -157,6 +159,7 @@ public class ButtonManager : MonoBehaviour
                         subButtons[mainIdx][subIdx].onClick.Invoke();
                         Debug.Log(modManager.transform.GetChild(0).GetChild(0).name);
                         modSpotsTrans = modManager.transform.GetChild(0);
+                        bool found = false;
                         for (int i = 0; i < modSpotsTrans.childCount; i++)
                         {
                             GameObject spot = modSpotsTrans.GetChild(i).gameObject;
@@ -164,9 +167,12 @@ public class ButtonManager : MonoBehaviour
                             {
                                 modManager.SetTargetPos(spot.transform.position + spotMargin);
                                 modIdx = i;
+                                found = true;
                                 break;
                             }
                         }
+                        if (!found) 
+                            modManager.SetTargetPos(modSpotsTrans.GetChild(modIdx).position + spotMargin);
                     }
                 }
                 else if (menuState == MenuState.EDIT_MODIFIERS)
@@ -181,7 +187,9 @@ public class ButtonManager : MonoBehaviour
                     //menuState = MenuState.MAIN;
                     //mainButtons[mainIdx].onClick.Invoke();
                     //mainButtons[mainIdx].Select();
+                    subButtons[mainIdx][subButtons_Idx[mainIdx]].GetComponent<Image>().color = prevSelectedButtonColor;
                     mainButtons[mainIdx].GetComponent<ButtonScript>().ChangeListGeneral(mainIdx);
+                    prevSelectedButtonColor = mainButtons[mainIdx].GetComponent<Image>().color;
                     SelectButton(mainButtons[mainIdx]);
                 }
                 else if (menuState == MenuState.EDIT_MODIFIERS)
@@ -210,21 +218,25 @@ public class ButtonManager : MonoBehaviour
         lastSelectedSubButtons_Idx.Add(0);
     }
 
-    public void SelectButton(Button _buttonSelected)
+    public void SelectButton(Button _buttonSelected, bool _refreshPrevSelectedBttnColor = true)
     {
+        Image bttnImage = _buttonSelected.GetComponent<Image>();
         if (menuState == MenuState.MAIN)
         {
-            mainButtons[lastSelectedMainIdx].GetComponent<Image>().color = Color.white;
+            mainButtons[lastSelectedMainIdx].GetComponent<Image>().color = prevSelectedButtonColor;
             lastSelectedMainIdx = mainIdx;
-            _buttonSelected.GetComponentInChildren<Image>().color = selectedMainButtonColor;
+            if (_refreshPrevSelectedBttnColor)
+                prevSelectedButtonColor = bttnImage.color;
+            bttnImage.color = selectedMainButtonColor;
         }
         else if (menuState == MenuState.SUB)
         {
-            subButtons[lastSelectedMainIdx][lastSelectedSubButtons_Idx[lastSelectedMainIdx]].GetComponent<Image>().color = Color.white;
+            subButtons[lastSelectedMainIdx][lastSelectedSubButtons_Idx[lastSelectedMainIdx]].GetComponent<Image>().color = prevSelectedButtonColor;
             lastSelectedSubButtons_Idx[lastSelectedMainIdx] = subButtons_Idx[mainIdx];
-            _buttonSelected.GetComponentInChildren<Image>().color = selectedSubButtonColor;
+            if (_refreshPrevSelectedBttnColor)
+                prevSelectedButtonColor = bttnImage.color;
+            bttnImage.color = selectedSubButtonColor;
         }
-
 
     }
 
