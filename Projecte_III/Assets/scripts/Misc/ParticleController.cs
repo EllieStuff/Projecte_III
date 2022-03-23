@@ -8,8 +8,10 @@ public class ParticleController : MonoBehaviour
     public GameObject Player;
     QuadControls controls;
     public float numOfDustParticleSystems;
+    public float numOfWaterParticleSystems;
     private ParticleSystem DustParticleSys;
     private ParticleSystem SmokeParticleSys;
+    private ParticleSystem WaterParticleSys;
 
     // Start is called before the first frame update
     void Start()
@@ -18,20 +20,21 @@ public class ParticleController : MonoBehaviour
         controls.Enable();
         DustParticleSys = this.transform.Find("WheelParticles").GetComponentInChildren<ParticleSystem>();
         SmokeParticleSys = this.transform.Find("SmokeParticles").GetComponentInChildren<ParticleSystem>();
+        WaterParticleSys = this.transform.Find("WaterParticles").GetComponentInChildren<ParticleSystem>();
     }
 
     // Update is called once per frame
     void Update()
     {
         //Ground Particles
-        for(int i = 0; i < numOfDustParticleSystems; i++)
+        for (int i = 0; i < numOfDustParticleSystems; i++)
         {
             DustParticleSys = transform.Find("WheelParticles").GetChild(i).GetComponent<ParticleSystem>();
 
-            if (Player.GetComponent<PlayerVehicleScript>().touchingGround && !DustParticleSys.isPlaying)
+            if (Player.GetComponent<PlayerVehicleScript>().touchingGround && !DustParticleSys.isPlaying && !Player.GetComponent<PlayerVehicleScript>().onWater)
                 DustParticleSys.Play();
 
-            else if (!Player.GetComponent<PlayerVehicleScript>().touchingGround && DustParticleSys.isEmitting)
+            else if (DustParticleSys.isEmitting &&(!Player.GetComponent<PlayerVehicleScript>().touchingGround || Player.GetComponent<PlayerVehicleScript>().onWater))
                 DustParticleSys.Stop();
         }       
 
@@ -40,5 +43,17 @@ public class ParticleController : MonoBehaviour
             SmokeParticleSys.Play();
         else if (controls.Quad.Forward.ReadValue<float>() == 0 && SmokeParticleSys.isEmitting)
             SmokeParticleSys.Stop();
+
+        //Water Particles
+        for (int i = 0; i < numOfWaterParticleSystems; i++)
+        {
+            WaterParticleSys = this.transform.Find("WaterParticles").GetChild(i).GetComponent<ParticleSystem>();
+
+            if (Player.GetComponent<PlayerVehicleScript>().onWater /*&& Player.GetComponent<PlayerFloater>().HasFloater*/ && !WaterParticleSys.isPlaying)
+                WaterParticleSys.Play();
+
+            else if (!Player.GetComponent<PlayerVehicleScript>().onWater && WaterParticleSys.isEmitting)
+                WaterParticleSys.Stop();
+        }
     }
 }
