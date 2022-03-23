@@ -72,7 +72,6 @@ public class ButtonManager : MonoBehaviour
             }
             if (playerMenuInputs.MenuDownPressed)
             {
-                Debug.Log("downie");
                 if (menuState == MenuState.MAIN)
                 {
                     mainIdx++;
@@ -96,38 +95,46 @@ public class ButtonManager : MonoBehaviour
             {
                 if (menuState == MenuState.EDIT_MODIFIERS)
                 {
-                    int tmpIdx = modIdx;
-                    GameObject spot;
-                    bool spotAvailable;
-                    do
-                    {
-                        tmpIdx++;
-                        if (tmpIdx >= modSpotsTrans.childCount) tmpIdx = 0;
-                        spot = modSpotsTrans.GetChild(tmpIdx).gameObject;
-                        spotAvailable = spot.activeSelf && spot.GetComponent<ModifierSpotData>().IsAvailable(modManager.GetTargetContent());
-                    } while (tmpIdx != modIdx && !spotAvailable);
+                    //int tmpIdx = modIdx;
+                    //GameObject spot;
+                    //bool spotAvailable;
+                    //do
+                    //{
+                    //    tmpIdx++;
+                    //    if (tmpIdx >= modSpotsTrans.childCount) tmpIdx = 0;
+                    //    spot = modSpotsTrans.GetChild(tmpIdx).gameObject;
+                    //    spotAvailable = spot.activeSelf && spot.GetComponent<ModifierSpotData>().IsAvailable(modManager.GetTargetContent());
+                    //} while (tmpIdx != modIdx && !spotAvailable);
+                    //
+                    //modIdx = tmpIdx;
+                    //modManager.SetTargetPos(spot.transform.position + spotMargin);
 
-                    modIdx = tmpIdx;
-                    modManager.SetTargetPos(spot.transform.position + spotMargin);
+                    modIdx++;
+                    if (modIdx >= modSpotsTrans.childCount) modIdx = 0;
+                    modManager.SetTargetPos(modSpotsTrans.GetChild(modIdx).transform.position + spotMargin);
                 }
             }
             if (playerMenuInputs.MenuLeftPressed)
             {
                 if (menuState == MenuState.EDIT_MODIFIERS)
                 {
-                    int tmpIdx = modIdx;
-                    GameObject spot;
-                    bool spotAvailable;
-                    do
-                    {
-                        tmpIdx--;
-                        if (tmpIdx < 0) tmpIdx = modSpotsTrans.childCount - 1;
-                        spot = modSpotsTrans.GetChild(tmpIdx).gameObject;
-                        spotAvailable = spot.activeSelf && spot.GetComponent<ModifierSpotData>().IsAvailable(modManager.GetTargetContent());
-                    } while (tmpIdx != modIdx && !spotAvailable);
+                    //int tmpIdx = modIdx;
+                    //GameObject spot;
+                    //bool spotAvailable;
+                    //do
+                    //{
+                    //    tmpIdx--;
+                    //    if (tmpIdx < 0) tmpIdx = modSpotsTrans.childCount - 1;
+                    //    spot = modSpotsTrans.GetChild(tmpIdx).gameObject;
+                    //    spotAvailable = spot.activeSelf && spot.GetComponent<ModifierSpotData>().IsAvailable(modManager.GetTargetContent());
+                    //} while (tmpIdx != modIdx && !spotAvailable);
+                    //
+                    //modIdx = tmpIdx;
+                    //modManager.SetTargetPos(spot.transform.position + spotMargin);
 
-                    modIdx = tmpIdx;
-                    modManager.SetTargetPos(spot.transform.position + spotMargin);
+                    modIdx--;
+                    if (modIdx < 0) modIdx = modSpotsTrans.childCount - 1;
+                    modManager.SetTargetPos(modSpotsTrans.GetChild(modIdx).transform.position + spotMargin);
                 }
             }
             if (playerMenuInputs.MenuAcceptPressed)
