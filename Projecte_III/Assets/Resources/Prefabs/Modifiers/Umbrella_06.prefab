@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1583549956223310066}
   - component: {fileID: 916360315550495472}
   - component: {fileID: -1750055341544690568}
+  - component: {fileID: 7536005968297771121}
   m_Layer: 0
   m_Name: Umbrella_06
   m_TagString: Umbrella
@@ -115,3 +116,16 @@ MonoBehaviour:
     acceleration: 0
     maxVelocity: 0
     friction: 0
+--- !u!65 &7536005968297771121
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1583549956225238578}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 5.55, y: 13, z: 6.07}
+  m_Center: {x: 0, y: 1.3160894, z: 0.00000035762795}
