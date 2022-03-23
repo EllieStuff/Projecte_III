@@ -64,7 +64,7 @@ public class PlayerAlaDelta : MonoBehaviour
             if (alaDeltaTimer >= alaDeltaDuration - 0.9f)
             {
                 transform.rotation = new Quaternion(0, transform.rotation.y, 0, transform.rotation.w);
-                player.vehicleRB.velocity += new Vector3(0, 1, 0);
+                player.vehicleRB.velocity = new Vector3(player.vehicleRB.velocity.x, 5, player.vehicleRB.velocity.z);
             }
             else
             {
