@@ -44,10 +44,12 @@ public class PlayerVehicleScript : MonoBehaviour
     internal List<Transform> listOfModifiers;
     private float savedAcceleration;
     [SerializeField] private Material particleMat;
+    [SerializeField] private ParticleSystemRenderer smokeBoostParticles;
     [SerializeField] private Transform quadChasisShake;
     private float timerShake;
     private Color defaultColorMat;
     bool paintingChecked = false, oilChecked = false;
+    public bool onWater;
 
     public bool finishedRace;
     public Vector3 savedVelocity;
@@ -72,7 +74,10 @@ public class PlayerVehicleScript : MonoBehaviour
 
         defaultColorMat = Color.white;
         particleMat.color = defaultColorMat;
-        
+        Material mat = new Material(particleMat);
+        smokeBoostParticles.material = mat;
+        particleMat = mat;
+
         vehicleAcceleration = 2;
 
         savedAcceleration = vehicleAcceleration;
@@ -589,6 +594,7 @@ public class PlayerVehicleScript : MonoBehaviour
         if (other.CompareTag("Water"))
         {
             vehicleRB.AddForce(other.GetComponent<WaterStreamColliderScript>().Stream, ForceMode.Force);
+            onWater = true;
         }
 
         if (!paintingChecked && other.CompareTag("Painting"))
@@ -630,6 +636,11 @@ public class PlayerVehicleScript : MonoBehaviour
         if (other.CompareTag("Painting") || other.CompareTag("Oil"))
         {
             ResetFriction();
+        }
+
+        if(other.CompareTag("Water"))
+        {
+            onWater = false;
         }
 
         //Terrain
