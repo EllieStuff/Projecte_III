@@ -8,12 +8,15 @@ public class DoneButtonManager : MonoBehaviour
     [SerializeField] Color readyBttnImgColor;
 
     public int buttonsActive = 0;
+    bool loadingLevel = false;
 
+    PlayersManager playersManager;
     DoneButtonScript[] doneButtonScripts;
 
     // Start is called before the first frame update
     void Start()
     {
+        playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
         doneButtonScripts = new DoneButtonScript[transform.childCount];
         for(int i = 0; i < doneButtonScripts.Length; i++)
         {
@@ -24,13 +27,13 @@ public class DoneButtonManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (AllPlayersReady())
+        if (AllPlayersReady() && !loadingLevel)
         {
-            PlayersManager playerManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
-            for (int i = 0; i < playerManager.numOfPlayers; i++)
+            for (int i = 0; i < playersManager.numOfPlayers; i++)
             {
-                playerManager.GetPlayerModifier(i).GetComponent<ModifierManager>().HideAllModifiersSpots();
+                playersManager.GetPlayerModifier(i).GetComponent<ModifierManager>().HideAllModifiersSpots();
             }
+            loadingLevel = true;
             StartCoroutine(ChangeSceneEvent());
         }
     }
@@ -60,9 +63,10 @@ public class DoneButtonManager : MonoBehaviour
         {
             StartCoroutine(button.LerpBttnImgColor(readyBttnImgColor));
         }
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.2f);
         Debug.Log("Changing Scene");
-        GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>().numOfPlayers = buttonsActive;
+        playersManager.numOfPlayers = buttonsActive;
+        GameObject.FindGameObjectWithTag("RadialMenuManager").GetComponent<RadialMenuSetManager>().SetModifiersToChosenRMSet(playersManager.numOfPlayers - 1);
         LoadSceneManager sceneManager = GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>();
         sceneManager.ChangeScene(sceneManager.newScene);
     }

@@ -7,7 +7,9 @@ public class GetRadialMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Transform radialMenu = GameObject.Find("RadialMenus").transform;
+        RadialMenuSetManager radialMenuSetManager = GameObject.FindGameObjectWithTag("RadialMenuManager").GetComponent<RadialMenuSetManager>();
+        //radialMenuSetManager.SetModifiersToAllRadialMenus();
+        Transform radialMenu = radialMenuSetManager.GetActiveSet();
         radialMenu.SetParent(transform);
     }
 

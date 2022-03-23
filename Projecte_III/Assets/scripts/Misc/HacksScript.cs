@@ -91,16 +91,17 @@ public class HacksScript : MonoBehaviour
         {
             VechicleTP(tpTransforms.Length - 1);
         }
-        else if(Input.GetKeyDown(KeyCode.Escape))
+        
+        if(Input.GetKeyDown(KeyCode.Escape))
         {
-            //sceneLoader.ChangeScene("Menu");
+            //sceneLoader.ChangeScene("Menu_without_splash");
         }
 
     }
 
     private void VechicleTP(int _idx)
     {
-        if (_idx < tpTransforms.Length)
+        if (_idx >= 0 && _idx < tpTransforms.Length)
         {
             playerScript.transform.position = tpTransforms[_idx].position;
             playerScript.transform.rotation = tpTransforms[_idx].rotation * rotMargin;

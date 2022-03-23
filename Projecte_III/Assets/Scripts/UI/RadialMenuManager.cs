@@ -48,9 +48,9 @@ public class RadialMenuManager : MonoBehaviour
     {
         try
         {
-            if (scene.name == "Menu")
+            if (scene.name.Contains("Menu"))
             {
-                Destroy(gameObject.transform.parent.gameObject);
+                //Destroy(gameObject.transform.parent.gameObject);
             }
             else if (scene.name == "Building Scene" || scene.name == "Building Scene Multiplayer")
             {
