@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 
 public class ModifierManager : MonoBehaviour
 {
@@ -49,6 +48,8 @@ public class ModifierManager : MonoBehaviour
 
     void Update()
     {
+        if(GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().GetSceneName().Contains("Menu")) return;
+
         if (!controllerInited && inputs.ControlData[0] != null)
         {
             Debug.Log("A");

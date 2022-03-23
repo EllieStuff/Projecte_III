@@ -94,7 +94,7 @@ public class HacksScript : MonoBehaviour
         
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            //sceneLoader.ChangeScene("Menu_without_splash");
+            sceneLoader.ChangeScene("Menu_without_splash");
         }
 
     }
