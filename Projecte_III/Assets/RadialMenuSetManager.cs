@@ -24,19 +24,15 @@ public class RadialMenuSetManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        sceneChecked = false;
         sceneName = scene.name;
-        if (scene.name.Contains("Menu"))
-        {
-            Destroy(gameObject);
-        }
-        else if (scene.name.Contains("Building Scene"))
+        if (scene.name.Contains("Building Scene"))
         {
             // Do nothing
         }
-        else
+        else if(!sceneChecked)
         {
             SetUpRadialMenu(playersManager.numOfPlayers - 1);
+            sceneChecked = true;
         }
 
     }
