@@ -287,8 +287,6 @@ public class ModifierManager : MonoBehaviour
         mat.color = c;
         spot.GetComponent<MeshRenderer>().material = mat;
 
-        //Debug.Log(clone.transform.localRotation * transform.eulerAngles);
-
         Quaternion tmp = clone.transform.localRotation;
         tmp.z *= clone.transform.forward.z;
 

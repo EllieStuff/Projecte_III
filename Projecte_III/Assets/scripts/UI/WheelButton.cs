@@ -7,6 +7,7 @@ public class WheelButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     [SerializeField] private GameObject wheelSpot = null;
     [SerializeField] private GameObject currentWheel;
 
+    [SerializeField] StatsManager statsManager;
     PlayersManager playersManager;
     PlayerStatsManager playerStats;
     StatsSliderManager stats;
@@ -24,7 +25,7 @@ public class WheelButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         playerStats = playersManager.GetPlayer(playerId).GetComponent<PlayerStatsManager>();
         playerInputs = playersManager.GetPlayer(playerId).GetComponent<PlayerInputs>();
 
-        stats = GameObject.FindGameObjectWithTag("StatsManager").GetComponent<StatsManager>().GetPlayerStats(playerId);
+        stats = statsManager.GetPlayerStats(playerId);
     }
 
     private void Update()
