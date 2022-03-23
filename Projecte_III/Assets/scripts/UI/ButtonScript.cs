@@ -52,14 +52,14 @@ public class ButtonScript : MonoBehaviour
             manager.OpenButtons();
             manager.menuState = ButtonManager.MenuState.SUB;
             manager.mainIdx = _idx;
-            manager.SelectButton(bttn);
+            manager.SelectButton(bttn, false);
             //bttn.GetComponent<Image>().color = new Color(0.75f, 0.75f, 0.75f, 1);
         }
         else
         {
             manager.CloseButtons();
             manager.menuState = ButtonManager.MenuState.MAIN;
-            bttn.GetComponent<Image>().color = new Color(1, 1, 1, 1);
+            //bttn.GetComponent<Image>().color = new Color(1, 1, 1, 1);
         }
 
         SetListActive(!list.activeSelf);
