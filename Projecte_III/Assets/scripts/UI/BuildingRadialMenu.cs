@@ -25,7 +25,7 @@ public class BuildingRadialMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectsWithTag("Player")[playerId].transform;
+        player = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>().GetPlayer(playerId);
         playerInputs = player.GetComponent<PlayerInputs>();
 
         transform.Rotate(0, 0, -gapDegrees);
@@ -39,7 +39,7 @@ public class BuildingRadialMenu : MonoBehaviour
     }
     void InitModifierSpots()
     {
-        Transform modifiersFather = GameObject.FindGameObjectsWithTag("ModifierSpots")[playerId].transform.GetChild(0);
+        Transform modifiersFather = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>().GetPlayerModifier(playerId).GetChild(0);
         modifierSpots = new Transform[modifiersFather.childCount];
         modifierSpotsData = new ModifierSpotsData[modifierSpots.Length];
         for(int i = 0; i < modifierSpots.Length; i++)

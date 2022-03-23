@@ -20,7 +20,7 @@ public class PlayingMainRadialMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectsWithTag("Player")[menuToCopy.playerId].transform;
+        player = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>().GetPlayer(menuToCopy.playerId);
         playerInputs = player.GetComponent<PlayerInputs>();
 
         transform.Rotate(0, 0, -menuToCopy.gapDegrees);
