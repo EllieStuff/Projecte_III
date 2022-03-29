@@ -56,7 +56,7 @@ public class plungerInstance : MonoBehaviour
                 transform.position = otherQuad.transform.position;
                 
                 if (otherQuadRB.velocity.y < 1)
-                    otherQuad.GetComponent<PlayerVehicleScript>().vehicleMaxSpeed = -20;
+                    otherQuad.GetComponent<PlayerVehicleScript>().vehicleMaxSpeed = -50;
 
                 if (Vector3.Distance(transform.position, playerShotPlunger.transform.position) <= 2)
                     destroyPlunger = true;
@@ -66,22 +66,10 @@ public class plungerInstance : MonoBehaviour
 
             if (Vector3.Distance(transform.position, playerShotPlunger.transform.position) > 2 && !collisionTag.Equals("ground"))
             {
-                Rigidbody playerRB = playerShotPlunger.GetComponent<Rigidbody>();
                 timerDestroy -= Time.deltaTime;
                 
                 if (timerDestroy <= 0 || prepareToDestroy || Vector3.Distance(transform.position, playerShotPlunger.transform.position) >= 50)
                     destroyPlunger = true;
-
-                float oldSpeedY = playerRB.velocity.y;
-
-                if (Mathf.Abs(transform.TransformDirection(playerRB.velocity).z) > 0 && playerRB.velocity.y < 5)
-                {
-                    if (!prepareToDestroy)
-                        playerShotPlunger.GetComponent<PlayerVehicleScript>().vehicleMaxSpeed = 35;
-
-                    playerRB.velocity += playerShotPlunger.transform.TransformDirection(new Vector3(0, 0, 0.5f));
-                    playerRB.velocity = new Vector3(playerRB.velocity.x, oldSpeedY, playerRB.velocity.z);
-                }
             }
             else if (!collisionTag.Equals("ground"))
             {
@@ -129,9 +117,8 @@ public class plungerInstance : MonoBehaviour
                 quadTarget = null;
                 otherQuad = collision.gameObject;
                 AudioManager.Instance.Play_SFX("Plunger_Arrived_SFX");
+                transform.parent = collision.transform;
             }
-
-            transform.parent = collision.transform;
 
             if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out RaycastHit raycastHit, 100))
             {

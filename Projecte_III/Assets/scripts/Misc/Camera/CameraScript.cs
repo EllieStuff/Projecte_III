@@ -44,21 +44,18 @@ public class CameraScript : MonoBehaviour
     void Update()
     {
 
-        //float savedFov = new Vector3(vehicleRB.velocity.x, 0, vehicleRB.velocity.z).magnitude * 75 / pScript.vehicleMaxSpeed;
-        
-        /*if (pScript.vehicleMaxSpeed > pScript.savedMaxSpeed && savedFov >= 60)
-            cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, savedFov, Time.deltaTime * 0.8f);
-        else
-            cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, 60, Time.deltaTime * 5);*/
-
-        Vector3 targetPosP1 = new Vector3(playersManager.GetPlayer(0).position.x, playersManager.GetPlayer(0).position.y + 2, playersManager.GetPlayer(0).position.z);
+        Vector3 targetPosP1 = new Vector3(playersManager.GetPlayer(0).position.x, playersManager.GetPlayer(0).position.y + 5, playersManager.GetPlayer(0).position.z);
         Vector3 targetPosP2 = new Vector3(playersManager.GetPlayer(1).position.x, 0, playersManager.GetPlayer(1).position.z);
         Vector3 targetPosP3 = new Vector3(playersManager.GetPlayer(2).position.x, 0, playersManager.GetPlayer(2).position.z);
         Vector3 targetPosP4 = new Vector3(playersManager.GetPlayer(3).position.x, 0, playersManager.GetPlayer(3).position.z);
 
         Vector3 targetPos = Vector3.zero;
 
-        switch(playersManager.numOfPlayers)
+        float savedFov = 20 + Vector3.Distance(targetPosP1, targetPosP2);
+
+        cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, savedFov, Time.deltaTime * 1.5f);
+
+        switch (playersManager.numOfPlayers)
         {
             case 1:
                 targetPos = targetPosP1;

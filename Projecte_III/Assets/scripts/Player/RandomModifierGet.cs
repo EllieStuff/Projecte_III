@@ -8,6 +8,7 @@ public class RandomModifierGet : MonoBehaviour
     GameObject showModifierInstance;
     bool getModifier;
     float timerRoll = 0;
+    float timerModifier = 0;
     int modifierIndex;
     bool hasModifier;
     PlayerInputs inputs;
@@ -31,21 +32,34 @@ public class RandomModifierGet : MonoBehaviour
 
     private void Update()
     {
-        if(hasModifier && inputs.UseGadget) 
+        if(showModifierInstance != null)
+        {
+            showModifierInstance.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+        }
+
+        if (hasModifier && inputs.UseGadget && timerModifier <= 0) 
         {
             switch (modifierIndex)
             {
                 case 0:
                     GetComponent<PlayerThrowPlunger>().Activate();
+                    timerModifier = 5;
                     break;
                 case 1:
                     GetComponent<PlayerAlaDelta>().Activate();
+                    timerModifier = 5;
                     break;
                 case 2:
-
+                    GetComponent<Umbrella>().ActivateUmbrella();
                     break;
             }
         }
+        else
+        {
+                GetComponent<Umbrella>().StopUmbrella();
+        }
+        if (timerModifier > 0)
+            timerModifier -= Time.deltaTime;
     }
 
     IEnumerator ModifiersRoll()
@@ -58,15 +72,18 @@ public class RandomModifierGet : MonoBehaviour
                 timerRoll -= 0.5f;
                 randomInt = Random.Range(0, modifiers.Length);
                 showModifierInstance = Instantiate(modifiers[randomInt], new Vector3(transform.position.x , transform.position.y + 1, transform.position.z), transform.rotation);
+                showModifierInstance.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
                 yield return new WaitForSeconds(0.2f);
-                if(timerRoll > 0)
-                    Destroy(showModifierInstance);
+                Destroy(showModifierInstance);
             }
             else
             {
+                if(showModifierInstance != null)
+                    Destroy(showModifierInstance);
+                showModifierInstance = Instantiate(modifiers[randomInt], new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), transform.rotation);
+                showModifierInstance.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
                 for (int i = 0; i < 3; i++)
                 {
-                    showModifierInstance.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
                     yield return new WaitForSeconds(0.5f);
                 }
                 Debug.Log(randomInt);
@@ -82,7 +99,10 @@ public class RandomModifierGet : MonoBehaviour
                         GetComponent<PlayerAlaDelta>().hasAlaDelta = true;
                         break;
                     case 2:
-
+                        //Umbrella
+                        break;
+                    case 3:
+                        //Explosives
                         break;
                 }
                 modifierIndex = randomInt;

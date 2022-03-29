@@ -49,6 +49,7 @@ public class PlayerThrowPlunger : MonoBehaviour
     private void CheckPlungerThrow()
     {
         RaycastHit hit;
+        localTransform = null;
         if (Physics.SphereCast(modifierTransform.position, 10, modifierTransform.TransformDirection(Vector3.forward), out hit, 10))
         {
             if ((hit.transform.tag.Contains("Player") || hit.transform.tag.Contains("Tree") || hit.transform.tag.Contains("Valla")) && (hit.transform.position - modifierTransform.position).magnitude > 5 && hit.transform != transform)
@@ -101,13 +102,16 @@ public class PlayerThrowPlunger : MonoBehaviour
 
             plungerInstance = Instantiate(plungerPrefab, modifierTransform.position, this.transform.rotation);
             Physics.IgnoreCollision(plungerInstance.transform.GetChild(0).GetComponent<BoxCollider>(), transform.GetChild(0).GetComponent<BoxCollider>());
-            if(!localTransform.tag.Equals("Player"))
+
+            plungerInstance.GetComponent<plungerInstance>().playerShotPlunger = this.gameObject;
+
+            if (localTransform != null && !localTransform.tag.Equals("Player"))
             {
                 plungerInstance.GetComponent<plungerInstance>().playerShotPlunger = this.gameObject;
                 plungerInstance.GetComponent<plungerInstance>().playerNum = player.playerNum;
                 plungerInstance.GetComponent<plungerInstance>().normalDir = savedDirection;
             }
-            else
+            else if(localTransform != null)
             {
                 plungerInstance.GetComponent<plungerInstance>().playerShotPlunger = this.gameObject;
                 plungerInstance.GetComponent<plungerInstance>().playerNum = player.playerNum;

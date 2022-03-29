@@ -9,7 +9,7 @@ public class BoxModifierScript : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag.Contains("Player")) 
+        if(collision.gameObject.tag.Contains("Player") && !destroy) 
         {
             collision.transform.GetComponent<RandomModifierGet>().GetModifier();
             destroy = true;
