@@ -37,7 +37,7 @@ public class CameraScript : MonoBehaviour
         //else if(camIndex == 1)
         //    playerVehicle = GameObject.FindGameObjectWithTag("Player2").transform.GetChild(0).GetChild(0).gameObject;
        
-        transform.rotation = rotOffsetQuat;
+        //transform.rotation = rotOffsetQuat;
     }
 
     // Update is called once per frame
@@ -69,7 +69,7 @@ public class CameraScript : MonoBehaviour
         //transform.rotation = Quaternion.Euler(rotOffset);
         
         //transform.rotation = Quaternion.RotateTowards(transform.rotation, rotOffsetQuat, Time.deltaTime * camRotSpeed * 100);
-        transform.rotation = Quaternion.Lerp(transform.rotation, rotOffsetQuat, Time.deltaTime * camRotSpeed);
+        //transform.rotation = Quaternion.Lerp(transform.rotation, rotOffsetQuat, Time.deltaTime * camRotSpeed);
         
         //transform.rotation = rotOffsetQuat;
       
