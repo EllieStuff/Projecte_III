@@ -233,6 +233,16 @@ public class PlayerVehicleScript : MonoBehaviour
         //------Player Death------
         vehicleReversed = (other.gameObject.tag.Equals("ground"));
         //------------------------
+
+        if(other.gameObject.tag.Contains("Player"))
+        {
+            if((transform.position - other.transform.position).x > 0 && (transform.position - other.transform.position).z > 0)
+            {
+                PlayerVehicleScript pvs = other.gameObject.GetComponent<PlayerVehicleScript>();
+                pvs.vehicleMaxSpeed = -vehicleRB.velocity.magnitude * 2;
+                StartCoroutine(PlayerHit(pvs));
+            }
+        }
     }
 
     void vehicleMovement()
@@ -565,6 +575,12 @@ public class PlayerVehicleScript : MonoBehaviour
     {
         yield return new WaitForSeconds(boostPadDuration);
         reduceSpeed = true;
+    }
+
+    IEnumerator PlayerHit(PlayerVehicleScript pvs)
+    {
+        yield return new WaitForSeconds(boostPadDuration);
+        pvs.vehicleMaxSpeed = pvs.savedMaxSpeed;
     }
 
     private void OnTriggerStay(Collider other)
