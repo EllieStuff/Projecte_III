@@ -8,6 +8,14 @@ public class RandomModifierGet : MonoBehaviour
     GameObject showModifierInstance;
     bool getModifier;
     float timerRoll = 0;
+    int modifierIndex;
+    bool hasModifier;
+    PlayerInputs inputs;
+
+    private void Start()
+    {
+        inputs = GetComponent<PlayerInputs>();
+    }
 
     // Update is called once per frame
     public void GetModifier()
@@ -21,14 +29,34 @@ public class RandomModifierGet : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if(hasModifier && inputs.UseGadget) 
+        {
+            switch (modifierIndex)
+            {
+                case 0:
+                    GetComponent<PlayerThrowPlunger>().Activate();
+                    break;
+                case 1:
+                    GetComponent<PlayerAlaDelta>().Activate();
+                    break;
+                case 2:
+
+                    break;
+            }
+        }
+    }
+
     IEnumerator ModifiersRoll()
     {
-        while(getModifier)
+        int randomInt = 0;
+        while (getModifier)
         {
             if (timerRoll > 0)
             {
                 timerRoll -= 0.5f;
-                int randomInt = Random.Range(0, modifiers.Length);
+                randomInt = Random.Range(0, modifiers.Length);
                 showModifierInstance = Instantiate(modifiers[randomInt], new Vector3(transform.position.x , transform.position.y + 1, transform.position.z), transform.rotation);
                 yield return new WaitForSeconds(0.2f);
                 if(timerRoll > 0)
@@ -41,9 +69,25 @@ public class RandomModifierGet : MonoBehaviour
                     showModifierInstance.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
                     yield return new WaitForSeconds(0.5f);
                 }
+                Debug.Log(randomInt);
                 //put modifier
+                switch(randomInt)
+                {
+                    case 0:
+                        GetComponent<PlayerAlaDelta>().hasAlaDelta = false;
+                        GetComponent<PlayerThrowPlunger>().hasPlunger = true;
+                        break;
+                    case 1:
+                        GetComponent<PlayerThrowPlunger>().hasPlunger = false;
+                        GetComponent<PlayerAlaDelta>().hasAlaDelta = true;
+                        break;
+                    case 2:
 
+                        break;
+                }
+                modifierIndex = randomInt;
                 Destroy(showModifierInstance);
+                hasModifier = true;
                 //____________
                 getModifier = false;
             }

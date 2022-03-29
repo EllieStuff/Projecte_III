@@ -14,8 +14,8 @@ public class PlayerThrowPlunger : MonoBehaviour
     private GameObject plungerInstance;
     [SerializeField] private GameObject plungerPrefab;
     private PlayerVehicleScript player;
-    bool plungerEnabled = false;
-    bool hasPlunger;
+    internal bool plungerEnabled = false;
+    public bool hasPlunger;
     Transform modifierTransform;
     public LineRenderer line;
 

@@ -8,7 +8,7 @@ public class PlayerAlaDelta : MonoBehaviour
     [SerializeField] float alaDeltaDuration;
     [SerializeField] float alaDeltaTimer;
     PlayerVehicleScript player;
-    internal bool alaDeltaEnabled, hasAlaDelta;
+    public bool alaDeltaEnabled, hasAlaDelta;
     PlayerInputs inputs;
 
     public void Init(bool _active)
