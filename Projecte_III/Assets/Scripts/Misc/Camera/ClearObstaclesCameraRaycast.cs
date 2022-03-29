@@ -26,7 +26,7 @@ public class ClearObstaclesCameraRaycast : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        int playerId = GetComponent<CameraScript>().playerId;
+        int playerId = 0;
         player = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>().GetPlayer(playerId);
         camera = GetComponentInChildren<Camera>();
     }

@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Oasis_Water_Material
-  m_Shader: {fileID: -6465566751694194690, guid: 37aa9d91a0cc4cf438ae6f827b3e16dd, type: 3}
+  m_Shader: {fileID: 4800000, guid: 2f66376790c2a9a4b98f8aef1824c083, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -19,6 +19,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -37,9 +41,11 @@ Material:
     - _CellDensity: 300
     - _RippleSlimness: 20
     - _RippleSpeed: 1
+    - _Shininess: 10
     - _WaveSpeed: 0.1
     - _WavesHight: 1
     m_Colors:
     - _BaseColor: {r: 0.112530686, g: 0.4433962, b: 0.04392132, a: 0}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _RippleColor: {r: 1.0959017, g: 1.4610293, b: 0.37904063, a: 0}
   m_BuildTextureStacks: []

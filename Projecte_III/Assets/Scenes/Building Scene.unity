@@ -908,6 +908,22 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 38654283868662909, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
   m_PrefabInstance: {fileID: 6089789507022749367}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &345607908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 345607903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 660e7b50c3c0edc4e89116f4e3a436ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  modifiers:
+  - {fileID: 5119215797378497723, guid: a0ca6324618fccf4e9778b4ad860557e, type: 3}
+  - {fileID: 100000, guid: 82d41f0d479553d4c8f637c02d913ec0, type: 3}
+  - {fileID: 5361469591444040440, guid: 219bf062a280cce46b2310ddce67bd20, type: 3}
 --- !u!114 &345607915
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1207,6 +1223,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
+  m_XRTrackingOrigin: {fileID: 0}
   m_ActionsAsset: {fileID: -944628639613478452, guid: b1754614d46d13d45a7f0d43fc1f2798, type: 3}
   m_PointAction: {fileID: -1654692200621890270, guid: b1754614d46d13d45a7f0d43fc1f2798, type: 3}
   m_MoveAction: {fileID: 0}
