@@ -303,18 +303,7 @@ public class PlayerVehicleScript : MonoBehaviour
 
             //Vehicle recover zone
 
-            timerReversed += Time.deltaTime;
-            if(DeathScript.DeathByFlipping(timerReversed, transform, vehicleRB, respawnPosition, respawnRotation, respawnVelocity, out outTransform, out outVehicleRB))
-
-            {
-
-                transform.position = outTransform.position;
-
-                transform.rotation = outTransform.rotation;
-
-                vehicleRB.velocity = outVehicleRB.velocity;
-
-            }
+            transform.rotation *= Quaternion.Euler(new Vector3(inputs.RightFloat - inputs.LeftFloat, 0, 0));
 
             //_________________________________________________________________________________________________________________________________________________________________
 
