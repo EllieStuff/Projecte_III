@@ -31,23 +31,23 @@ public class GenerateNewTile : MonoBehaviour
             newObject = Instantiate(tiles[0], transform);
         }
         else if( 30 < random && random < 60)
-        { //Turn left
+        { //Turn right
             newObject = Instantiate(tiles[1], transform);
         }
         else
-        { // turn right
+        { //Turn left
             newObject = Instantiate(tiles[2], transform);
         }
 
         if (newObject == null) Debug.LogError("Upsie");
 
-        Transform child = lastTile.transform.Find("NewSpawn");
+        Transform child = lastTile.transform.GetChild(0).Find("NewSpawn");
 
         newObject.transform.position = child.position;
 
         Vector3 _scale = new Vector3(0.5f, 0.5f, 0.5f);
         newObject.transform.localScale = _scale;
-        newObject.transform.localRotation *= child.localRotation;
+        newObject.transform.rotation = Quaternion.RotateTowards(newObject.transform.rotation, child.rotation, 360);
 
         if(transform.childCount > 2)
             Destroy(transform.GetChild(0).gameObject);
