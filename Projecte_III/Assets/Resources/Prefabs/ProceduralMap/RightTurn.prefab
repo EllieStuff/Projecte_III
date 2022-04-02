@@ -2568,6 +2568,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8981626880390989721}
+  - component: {fileID: 6149859002462032676}
   m_Layer: 0
   m_Name: RightTurn
   m_TagString: Untagged
@@ -2590,6 +2591,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6149859002462032676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8981626880390699961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2098de8144c8d4445a9357e9f2989f58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roadType: 2
+  spawnRates:
+    straight: 65
+    left: 35
+    right: 0
 --- !u!1 &9205314508176872884
 GameObject:
   m_ObjectHideFlags: 0
