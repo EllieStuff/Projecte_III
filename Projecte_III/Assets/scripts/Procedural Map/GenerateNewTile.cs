@@ -15,6 +15,9 @@ public class GenerateNewTile : MonoBehaviour
     List<RoadData> leftRoads = new List<RoadData>();
     List<RoadData> rightRoads = new List<RoadData>();
 
+    Vector3 newScale = new Vector3(0.5f, 0.5f, 0.5f);
+
+    const int tilesMargin = 3;
 
     // Start is called before the first frame update
     void Start()
@@ -62,11 +65,11 @@ public class GenerateNewTile : MonoBehaviour
 
         newObject.transform.position = child.position;
 
-        Vector3 _scale = new Vector3(0.5f, 0.5f, 0.5f);
+        Vector3 _scale = newScale;
         newObject.transform.localScale = _scale;
         newObject.transform.rotation = Quaternion.RotateTowards(newObject.transform.rotation, child.rotation, 360);
 
-        if(transform.childCount > 2)
+        if(transform.childCount > tilesMargin)
             Destroy(transform.GetChild(0).gameObject);
 
         lastTile = newObject;
