@@ -43,16 +43,11 @@ public class GenerateNewTile : MonoBehaviour
        
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void CalculateNewTile()
     {
         float random = Random.Range(0, 100);
         RoadData.Type roadType = lastTile.GetRoadType(random);
+
         RoadData newObject = null;
         if (roadType == RoadData.Type.STRAIGHT)
             newObject = GetNewRoad(ref straightRoads, maxSpawnRates.straight);
@@ -62,7 +57,6 @@ public class GenerateNewTile : MonoBehaviour
             newObject = GetNewRoad(ref rightRoads, maxSpawnRates.right);
         
         if (newObject == null) Debug.LogError("Upsie");
-
 
         Transform child = lastTile.transform.GetChild(0).Find("NewSpawn");
 
@@ -77,7 +71,6 @@ public class GenerateNewTile : MonoBehaviour
 
         lastTile = newObject;
     }
-
 
     RoadData GetNewRoad(ref List<RoadData> _roadList, float _maxSpawnRate)
     {
@@ -96,5 +89,4 @@ public class GenerateNewTile : MonoBehaviour
 
         return null;
     }
-
 }

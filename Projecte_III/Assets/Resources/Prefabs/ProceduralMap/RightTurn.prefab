@@ -432,6 +432,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2168313700683964524}
   - component: {fileID: 5872727924651972427}
+  - component: {fileID: 6255366984234561121}
   m_Layer: 0
   m_Name: Collider
   m_TagString: Untagged
@@ -466,6 +467,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 15, y: 15, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6255366984234561121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1722780142273665709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcd97946e6d22234eb20c53be8870a4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 8981626880390989721}
 --- !u!1 &2122881783285380371
 GameObject:
   m_ObjectHideFlags: 0
@@ -2604,6 +2618,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roadType: 2
+  baseSpawnRate: 60
   spawnRates:
     straight: 65
     left: 35
