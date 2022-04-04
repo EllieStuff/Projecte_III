@@ -36,10 +36,9 @@ public class RoadData : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    public Transform GetCheckpoints()
     {
-        
+        return transform.GetChild(1);
     }
 
     public Type GetRoadType(float _percentage)

@@ -2,11 +2,13 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.AI;
 
 public class GenerateNewTile : MonoBehaviour
 {
     [SerializeField] RoadData[] tiles;
 
+    [SerializeField] CameraNavFollowScript cameraFollow = null;
     [SerializeField] RoadData lastTile = null;
 
     RoadData.SpawnRateSet maxSpawnRates = new RoadData.SpawnRateSet(0);
@@ -43,7 +45,21 @@ public class GenerateNewTile : MonoBehaviour
                 maxSpawnRates.right += tiles[i].SpawnRate;
             }
         }
-       
+
+        GetCheckpointPositions(ref lastTile);
+    }
+
+    void GetCheckpointPositions(ref RoadData tile)
+    {
+        List<Vector3> outList = new List<Vector3>();
+
+        Transform checkPoints = tile.GetCheckpoints();
+        for (int j = 0; j < checkPoints.childCount; j++)
+        {
+            outList.Add(checkPoints.GetChild(j).position);
+        }
+
+        cameraFollow.AddCheckPoints(ref outList);
     }
 
     public void CalculateNewTile()
@@ -62,17 +78,20 @@ public class GenerateNewTile : MonoBehaviour
         if (newObject == null) Debug.LogError("Upsie");
 
         Transform child = lastTile.transform.GetChild(0).Find("NewSpawn");
+        child.parent.GetComponent<NavMeshSurface>().BuildNavMesh();
+        newObject.transform.GetChild(0).GetComponent<NavMeshSurface>().BuildNavMesh();
 
         newObject.transform.position = child.position;
 
-        Vector3 _scale = newScale;
-        newObject.transform.localScale = _scale;
+        //Vector3 _scale = newScale;
+        //newObject.transform.localScale = _scale;
         newObject.transform.rotation = Quaternion.RotateTowards(newObject.transform.rotation, child.rotation, 360);
 
         if(transform.childCount > tilesMargin)
             Destroy(transform.GetChild(0).gameObject);
 
         lastTile = newObject;
+        GetCheckpointPositions(ref newObject);
     }
 
     RoadData GetNewRoad(ref List<RoadData> _roadList, float _maxSpawnRate)

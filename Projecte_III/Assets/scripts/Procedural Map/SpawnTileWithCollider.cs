@@ -21,7 +21,8 @@ public class SpawnTileWithCollider : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag.Contains("Camera"))
+        Debug.Log("Collider");
+        if(other.gameObject.tag.Contains("Main"))
         {
             prefab.parent.GetComponent<GenerateNewTile>().CalculateNewTile();
             _coll.enabled = false;
