@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ButtonScript : MonoBehaviour
 {
-    [SerializeField] private ButtonManager manager;
+/*    [SerializeField] private ButtonManager manager;
     [SerializeField] private GameObject list;
 
     [SerializeField] private ModifierManager modifierSpots = null;
@@ -75,5 +75,5 @@ public class ButtonScript : MonoBehaviour
                 modifierSpots.GetComponent<ModifierManager>().ShowTarget(active);
             }
         }
-    }
+    }*/
 }

@@ -9,21 +9,18 @@ public class PlayerVehicleScript : MonoBehaviour
     internal int playerNum;
 
     [SerializeField] Vector3 centerOfMass = new Vector3(0.0f, -0.7f, 0.0f);
-    [SerializeField] float boostPadDuration;
-    [SerializeField] float driftTorqueInc = 3.0f;
 
     private Material chasisMat;
 
-    private float timerReversed;
-    public float savedMaxSpeed;
-    private bool reduceSpeed;
-    private float savedAngularDrag;
+    internal float timerReversed;
+    internal float savedMaxSpeed;
+    internal float savedAngularDrag;
 
     internal QuadControlSystem controls;
-    PlayerInputs inputs;
+    internal PlayerInputs inputs;
 
     public Rigidbody vehicleRB;
-    private float vehicleAcceleration;
+    internal float vehicleAcceleration;
     public float vehicleTorque;
     public float vehicleMaxSpeed;
     public float vehicleMaxTorque;
@@ -32,26 +29,22 @@ public class PlayerVehicleScript : MonoBehaviour
     public bool touchingGround;
     public bool vehicleReversed;
     public float minDriftSpeed;
-    public Vector3 respawnPosition, respawnRotation, respawnVelocity;
-    public float boostPadMultiplier;
     public float maxClimbingAngle;
-    [SerializeField] private float sandVelocityMultiplier;
-    [SerializeField] private float sandAccelerationMultiplier;
+    [SerializeField] internal float sandVelocityMultiplier;
+    [SerializeField] internal float sandAccelerationMultiplier;
 
     [SerializeField] private GameObject wheelsPivot;
 
-    internal bool buildingScene;
     internal List<Transform> listOfModifiers;
-    private float savedAcceleration;
-    [SerializeField] private Material particleMat;
+    internal float savedAcceleration;
+    [SerializeField] internal Material particleMat;
     [SerializeField] private ParticleSystemRenderer smokeBoostParticles;
     [SerializeField] private Transform quadChasisShake;
     private float timerShake;
-    private Color defaultColorMat;
-    bool paintingChecked = false, oilChecked = false;
-    public bool onWater;
+    internal Color defaultColorMat;
+    
+    //public bool onWater;
 
-    public bool finishedRace;
     public Vector3 savedVelocity;
 
     [SerializeField] private AudioClip driftClip;
@@ -62,6 +55,7 @@ public class PlayerVehicleScript : MonoBehaviour
 
     private Transform outTransform;
     private Rigidbody outVehicleRB;
+    private float timerStart = 2;
 
     void Start()
     {
@@ -70,6 +64,7 @@ public class PlayerVehicleScript : MonoBehaviour
         controls = new QuadControlSystem();
 
         inputs = GetComponent<PlayerInputs>();
+        
         //inputs.SetGameMode(gameMode);
 
         defaultColorMat = Color.white;
@@ -104,135 +99,70 @@ public class PlayerVehicleScript : MonoBehaviour
 
     }
 
-    private void Awake()
-    {
-        transform.name = "Player";
-        respawnPosition = new Vector3(0, 0, 0);
-        respawnRotation = new Vector3(0, 0, 0);
-        respawnVelocity = new Vector3(0, 0, 0);
-        buildingScene = SceneManager.GetActiveScene().name == "Building Scene";
-    }
-
     void Update()
     {
         if (inputs.ControlData != null)
         {
             touchingGround = false;
-            paintingChecked = oilChecked = false;
 
             if (timerShake < 10000)
                 timerShake += Time.deltaTime;
             else
                 timerShake = 0;
 
-            try
-            {
-                if(buildingScene)
-                    quadChasisShake.localPosition += new Vector3(0, Mathf.Sin(timerShake * 75) / 400, 0);
-            }
-            catch (Exception ex)
-            {
-                quadChasisShake = transform.GetChild(0).GetChild(0);
-            }
+            //quadChasisShake.localPosition += new Vector3(0, Mathf.Sin(timerShake * 75) / 400, 0);
 
             //Here we set the position and rotation from the wheel renderers
+            Vector3 wheelPosition;
+            Quaternion wheelRotation;
 
-            if (!buildingScene)
+            for (int i = 0; i < wheelsPivot.transform.childCount; i++)
             {
-                Vector3 wheelPosition;
-                Quaternion wheelRotation;
-                for (int i = 0; i < wheelsPivot.transform.childCount; i++)
+                Transform wheel = wheels.transform.GetChild(0).GetChild(i);
+                wheelCollider[i].GetWorldPose(out wheelPosition, out wheelRotation);
+                if (wheelCollider[i].GetGroundHit(out var touchingGroundV))
                 {
-                    Transform wheel = wheels.transform.GetChild(0).GetChild(i);
-                    wheelCollider[i].GetWorldPose(out wheelPosition, out wheelRotation);
-                    if (wheelCollider[i].GetGroundHit(out var touchingGroundV))
-                    {
-                        touchingGround = true;
-                    }
-
-                    if(!wheel.name.Contains("Front"))
-                        wheel.position = wheelPosition;
-
-                    if (wheel.name.Contains("Front") && (inputs.Right || inputs.Left))
-                    {
-                        int left = 0;
-                        int right = 0;
-
-                        if (inputs.Left)
-                            left = 1;
-                        else if (inputs.Right)
-                            right = 1;
-
-                        wheel.transform.localRotation = Quaternion.Lerp(wheel.transform.localRotation, new Quaternion(0, Mathf.Clamp(right, -0.2f, 0.2f) - Mathf.Clamp(left, -0.2f, 0.2f), 0, 1), Time.deltaTime * 3);
-                    }
-                    else
-                        wheel.transform.rotation = wheelRotation;
-
-                    wheels.transform.localPosition = transform.localPosition;
-                    wheels.transform.localRotation = transform.localRotation;
-
-                    //Falldeath Check
-
-                    if (DeathScript.DeathByFalling(alaDelta.usingAlaDelta, transform, vehicleRB, respawnPosition, respawnRotation, respawnVelocity, out outTransform, out outVehicleRB))
-
-                    {
-
-                        transform.position = outTransform.position;
-
-                        transform.rotation = outTransform.rotation;
-
-                        vehicleRB.velocity = outVehicleRB.velocity;
-
-                    }
+                    touchingGround = true;
                 }
 
-                if (touchingGround && vehicleRB.constraints != RigidbodyConstraints.None)
-                {
-                    vehicleRB.constraints = RigidbodyConstraints.None;
-                }
+                if (!wheel.name.Contains("Front"))
+                    wheel.position = wheelPosition;
 
-                transform.parent.GetChild(2).localPosition = transform.localPosition;
+                if (wheel.name.Contains("Front") && (inputs.Right || inputs.Left))
+                {
+                    int left = 0;
+                    int right = 0;
+
+                    if (inputs.Left)
+                        left = 1;
+                    else if (inputs.Right)
+                        right = 1;
+
+                    wheel.transform.localRotation = Quaternion.Lerp(wheel.transform.localRotation, new Quaternion(0, Mathf.Clamp(right, -0.2f, 0.2f) - Mathf.Clamp(left, -0.2f, 0.2f), 0, 1), Time.deltaTime * 3);
+                }
+                else
+                    wheel.transform.rotation = wheelRotation;
+
+                wheels.transform.localPosition = transform.localPosition;
+                wheels.transform.localRotation = transform.localRotation;
             }
+
+            if (touchingGround && vehicleRB.constraints != RigidbodyConstraints.None)
+                vehicleRB.constraints = RigidbodyConstraints.None;
+
+            transform.parent.GetChild(2).localPosition = transform.localPosition;
         }
-
-    }
-
-    public void SetWheels()
-    {
-        wheels = gameObject.transform.parent.GetChild(1).gameObject;
     }
 
     void FixedUpdate()
     {
-        if(!SceneManager.GetActiveScene().name.Equals("Building Scene Multiplayer"))
-        {
-            if (controls == null)
-                controls = new QuadControlSystem();
+        if (controls == null)
+            controls = new QuadControlSystem();
 
-            controls.getAllInput(playerNum);
+        controls.getAllInput(playerNum);
 
-            //------Movement------
-
-            if (!finishedRace)
-                vehicleMovement();
-            else
-            {
-                if (transform.InverseTransformDirection(vehicleRB.velocity).z > 1)
-                    vehicleRB.velocity -= transform.TransformDirection(new Vector3(0, 0, vehicleAcceleration));
-                else if(transform.InverseTransformDirection(vehicleRB.velocity).z < -1)
-                    vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, vehicleAcceleration));
-                else
-                    vehicleRB.velocity = Vector3.zero;
-            }
-            //------------------------
-        }
-    }
-
-    void OnCollisionStay(Collision other)
-    {
-        //------Player Death------
-        vehicleReversed = (other.gameObject.tag.Equals("ground"));
-        //------------------------
+        //------Movement------
+        vehicleMovement();
     }
 
     void vehicleMovement()
@@ -241,7 +171,6 @@ public class PlayerVehicleScript : MonoBehaviour
 
         if(touchingGround && (vehicleRB.transform.rotation.x >= maxClimbingAngle || vehicleRB.transform.rotation.y >= maxClimbingAngle || vehicleRB.transform.rotation.z >= maxClimbingAngle))
             touchingGround = false;
-
 
         if (touchingGround)
         {
@@ -286,171 +215,16 @@ public class PlayerVehicleScript : MonoBehaviour
             //Speed Regulation Function
             SpeedRegulation();
 
-            //Drift Function
-            DriftFunction();
-
             savedVelocity = vehicleRB.velocity;
         }
         else
         {
             //Fall Function
-            if (!alaDelta.usingAlaDelta)
-                FallFunction();
+            FallFunction();
         }
-
-        if (vehicleReversed)
-        {
-
-            //Vehicle recover zone
-
-            timerReversed += Time.deltaTime;
-            if(DeathScript.DeathByFlipping(timerReversed, transform, vehicleRB, respawnPosition, respawnRotation, respawnVelocity, out outTransform, out outVehicleRB))
-
-            {
-
-                transform.position = outTransform.position;
-
-                transform.rotation = outTransform.rotation;
-
-                vehicleRB.velocity = outVehicleRB.velocity;
-
-            }
-
-            //_________________________________________________________________________________________________________________________________________________________________
-
-        }
-
-        if (reduceSpeed && vehicleMaxSpeed > savedMaxSpeed)
-        {
-            vehicleMaxSpeed -= Time.deltaTime * 10;
-        }
-        else if(reduceSpeed && vehicleMaxSpeed <= savedMaxSpeed)
-        {
-            reduceSpeed = false;
-            vehicleMaxSpeed = savedMaxSpeed;
-            vehicleAcceleration = savedAcceleration;
-        }
-
         //Vehicle sound pitch function
         VehicleSoundPitchFunction();
     }
-
-    float driftTimer = 0;
-    bool driftLeft;
-    bool driftRight;
-    Vector3 savedDir;
-    Quaternion savedRot;
-    Quaternion driftRot;
-
-    void DriftFunction()
-    {
-        if (vehicleRB.velocity.magnitude >= minDriftSpeed && inputs.Forward && !inputs.Backward)
-        {
-            if (inputs.Left && inputs.Drift)
-            {
-                if(!driftLeft)
-                {
-                    vehicleRB.AddTorque(0, -vehicleTorque * driftTorqueInc, 0);
-                    savedDir = vehicleRB.velocity;
-                    vehicleRB.velocity += new Vector3(0, 5, 0);
-                    driftRot = vehicleRB.rotation * new Quaternion(0, -0.5f * inputs.LeftFloat, 0, 1).normalized;
-                    savedRot = vehicleRB.rotation;
-                }
-                else if (driftRot.y <= savedRot.y)
-                    savedRot *= new Quaternion(0, -0.002f * inputs.RightFloat, 0, 1);
-
-                driftLeft = true;
-
-                savedDir += transform.TransformDirection(-0.4f * inputs.LeftFloat, 0, 0);
-                savedRot *= new Quaternion(0, -0.015f * inputs.LeftFloat, 0, 1).normalized;
-
-                vehicleRB.velocity = new Vector3(savedDir.x, vehicleRB.velocity.y, savedDir.z);
-                vehicleRB.rotation = savedRot;
-
-                if (driftRight)
-                {
-                    driftTimer = 1;
-                    driftRight = false;
-                }
-                if (driftTimer > 0)
-                {
-                    driftTimer -= Time.deltaTime;
-                    particleMat.color = Color.yellow;
-                }
-                else
-                    particleMat.color = Color.red;
-            }
-            else if (inputs.Right && inputs.Drift)
-            {
-                if (!driftRight)
-                {
-                    vehicleRB.AddTorque(0, vehicleTorque * driftTorqueInc, 0);
-                    savedDir = vehicleRB.velocity;
-                    vehicleRB.velocity += new Vector3(0, 5, 0);
-                    driftRot = vehicleRB.rotation * new Quaternion(0, 0.5f * inputs.RightFloat, 0, 1).normalized;
-                    savedRot = vehicleRB.rotation;
-                }
-                else if (driftRot.y >= savedRot.y)
-                    savedRot *= new Quaternion(0, 0.002f * inputs.RightFloat, 0, 1);
-
-                driftRight = true;
-
-                savedDir += transform.TransformDirection(0.4f * inputs.RightFloat, 0, 0);
-                savedRot *= new Quaternion(0, 0.015f * inputs.RightFloat, 0, 1).normalized;
-
-                vehicleRB.velocity = new Vector3(savedDir.x, vehicleRB.velocity.y, savedDir.z);
-                vehicleRB.rotation = savedRot;
-
-                if (driftLeft)
-                {
-                    driftTimer = 1;
-                    driftLeft = false;
-                }
-
-                if (driftTimer > 0)
-                {
-                    driftTimer -= Time.deltaTime;
-                    particleMat.color = Color.yellow;
-                }
-                else
-                    particleMat.color = Color.red;
-            }
-            else if (driftTimer <= 0)
-            {
-                particleMat.color = defaultColorMat;
-                vehicleAcceleration = 2;
-                vehicleMaxSpeed = 35.5f;
-                driftTimer = 1;
-                StartCoroutine(WaitEndBoost());
-            }
-            else
-            {
-                particleMat.color = defaultColorMat;
-                if (driftTimer != 1)
-                    driftTimer = 1;
-                driftLeft = false;
-                driftRight = false;
-            }
-        }
-        else if (driftTimer <= 0)
-        {
-            particleMat.color = defaultColorMat;
-            vehicleAcceleration = 2;
-            vehicleMaxSpeed = 35.5f;
-            driftTimer = 1;
-            StartCoroutine(WaitEndBoost());
-        }
-        else
-        {
-            particleMat.color = defaultColorMat;
-            if(driftTimer != 1)
-                driftTimer = 1;
-            driftLeft = false;
-            driftRight = false;
-        }
-    }
-
-    float timerStart = 2;
 
     void VehicleSoundPitchFunction()
     {
@@ -503,6 +277,7 @@ public class PlayerVehicleScript : MonoBehaviour
             timerStart -= Time.deltaTime;
     }
 
+
     void FallFunction()
     {
         if (savedVelocity.x > 0)
@@ -519,7 +294,6 @@ public class PlayerVehicleScript : MonoBehaviour
         else
             vehicleRB.velocity = new Vector3(savedVelocity.x, vehicleRB.velocity.y - 0.5f, savedVelocity.z);
     }
-
     void SpeedRegulation()
     {
         if (!inputs.Left && !inputs.Right)
@@ -557,137 +331,6 @@ public class PlayerVehicleScript : MonoBehaviour
                 if (vehicleRB.velocity.z < 0)
                     vehicleRB.velocity = transform.TransformDirection(new Vector3(0, 0, -vehicleMaxSpeed));
             }
-        }
-    }
-
-    void checkFallDeath()
-    {
-        if(vehicleRB.velocity.y <= -100)
-        {
-            AudioManager.Instance.Play_SFX("Fall_SFX");
-            transform.position = respawnPosition;
-            transform.localEulerAngles = respawnRotation;
-            transform.localEulerAngles += new Vector3(0, 90, 0);
-            vehicleRB.velocity = new Vector3(respawnVelocity.x, respawnVelocity.y, respawnVelocity.z);
-        }
-    }
-
-    IEnumerator WaitEndBoost()
-    {
-        yield return new WaitForSeconds(boostPadDuration);
-        reduceSpeed = true;
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.gameObject.CompareTag("Boost Pad"))
-        {
-            float angle = Vector3.Angle(transform.forward, other.transform.forward);
-            angle *= Mathf.Deg2Rad;
-            angle = Mathf.Cos(angle);
-            vehicleAcceleration = 2;
-            vehicleMaxSpeed = boostPadMultiplier * angle;
-            if (vehicleMaxSpeed < savedMaxSpeed)
-                vehicleMaxSpeed = savedMaxSpeed;
-        }
-
-        if (other.CompareTag("Water"))
-        {
-            vehicleRB.AddForce(other.GetComponent<WaterStreamColliderScript>().Stream, ForceMode.Force);
-            onWater = true;
-        }
-
-        if (!paintingChecked && other.CompareTag("Painting"))
-        {
-            paintingChecked = true;
-            if (vehicleRB.velocity.magnitude > 1.0f)
-            {
-                AddFriction(1000, 2.0f);
-            }
-        }
-        if (!oilChecked && other.CompareTag("Oil"))
-        {
-            oilChecked = true;
-            if (vehicleRB.velocity.magnitude > 1.0f)
-            {
-                AddFriction(-1200, 0.7f);
-            }
-        }
-
-        //Terrain
-        if (other.CompareTag("Sand") && touchingGround)
-            OnSand(other);
-
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.tag.Equals("Respawn") && !other.GetComponent<DeathfallAndCheckpointsSystem>().activated)
-        {
-            GameObject.Find("UI").transform.Find("SliderPosition").GetComponent<UIPosition>().actualCheckpoint++;
-            other.GetComponent<DeathfallAndCheckpointsSystem>().activated = true;
-        }
-        
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if(!other.CompareTag("Sand"))
-            StartCoroutine(WaitEndBoost());
-
-        if (other.CompareTag("Painting") || other.CompareTag("Oil"))
-        {
-            ResetFriction();
-        }
-
-        if(other.CompareTag("Water"))
-        {
-            onWater = false;
-        }
-
-        //Terrain
-        if (other.CompareTag("Sand") || !touchingGround)
-        {
-            //if (vehicleMaxSpeed == savedMaxSpeed / sandVelocityMultiplier)
-            //{
-                vehicleMaxSpeed = savedMaxSpeed;
-                vehicleAcceleration = savedAcceleration;
-            //}
-        }
-    }
-
-    void OnCollisionExit(Collision other)
-    {
-        vehicleReversed = false;
-        timerReversed = 0;
-    }
-    void ResetFriction()
-    {
-        vehicleRB.angularDrag = savedAngularDrag;
-    }
-    void AddFriction(float _frictionForce, float _dragInc)
-    {
-        Vector3 velFrictionVec = -vehicleRB.velocity.normalized * _frictionForce * vehicleRB.velocity.magnitude;
-        vehicleRB.AddForce(velFrictionVec, ForceMode.Force);
-        vehicleRB.angularDrag = savedAngularDrag * _dragInc;
-    }
-
-    void OnSand(Collider other)
-    {
-        if(vehicleMaxSpeed <= savedMaxSpeed && vehicleMaxSpeed > savedMaxSpeed / sandVelocityMultiplier)
-        {
-            vehicleMaxSpeed = savedMaxSpeed / sandVelocityMultiplier;
-            vehicleAcceleration = savedAcceleration / sandAccelerationMultiplier;
-        }
-    }
-
-
-    internal IEnumerator LerpVehicleMaxSpeed(float _targetValue, float _lerpTime)
-    {
-        float lerpTimer = 0;
-        while (vehicleMaxSpeed != _targetValue)
-        {
-            yield return new WaitForEndOfFrame();
-            lerpTimer += Time.deltaTime;
-            vehicleMaxSpeed = Mathf.Lerp(vehicleMaxSpeed, _targetValue, lerpTimer / _lerpTime);
         }
     }
 

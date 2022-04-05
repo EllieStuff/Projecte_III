@@ -31,10 +31,10 @@ public class ParticleController : MonoBehaviour
         {
             DustParticleSys = transform.Find("WheelParticles").GetChild(i).GetComponent<ParticleSystem>();
 
-            if (Player.GetComponent<PlayerVehicleScript>().touchingGround && !DustParticleSys.isPlaying && !Player.GetComponent<PlayerVehicleScript>().onWater)
+            if (Player.GetComponent<PlayerVehicleScript>().touchingGround && !DustParticleSys.isPlaying)
                 DustParticleSys.Play();
 
-            else if (DustParticleSys.isEmitting &&(!Player.GetComponent<PlayerVehicleScript>().touchingGround || Player.GetComponent<PlayerVehicleScript>().onWater))
+            else if (DustParticleSys.isEmitting &&(!Player.GetComponent<PlayerVehicleScript>().touchingGround))
                 DustParticleSys.Stop();
         }       
 
@@ -45,7 +45,7 @@ public class ParticleController : MonoBehaviour
             SmokeParticleSys.Stop();
 
         //Water Particles
-        for (int i = 0; i < numOfWaterParticleSystems; i++)
+        /*for (int i = 0; i < numOfWaterParticleSystems; i++)
         {
             WaterParticleSys = this.transform.Find("WaterParticles").GetChild(i).GetComponent<ParticleSystem>();
 
@@ -54,6 +54,6 @@ public class ParticleController : MonoBehaviour
 
             else if (!Player.GetComponent<PlayerVehicleScript>().onWater && WaterParticleSys.isEmitting)
                 WaterParticleSys.Stop();
-        }
+        }*/
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class PlayerPositions : MonoBehaviour
 {
-    public Transform[] checkpoints;
+/*    public Transform[] checkpoints;
     public bool tutorial;
     [SerializeField] private PlayersManager quads;
     float[] distances = new float[4];
@@ -87,5 +87,5 @@ public class PlayerPositions : MonoBehaviour
             }
 
         }
-    }
+    }*/
 }

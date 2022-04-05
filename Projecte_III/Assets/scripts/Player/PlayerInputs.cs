@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerInputs : MonoBehaviour
 {
-    PlayersManager playersManagers;
+    [SerializeField] PlayersManager playersManagers;
     //PlayersManager.GameModes gameMode = PlayersManager.GameModes.MONO;
     InputSystem inputSystem;
     InputSystem.ControlData[] controlData = new InputSystem.ControlData[1];
@@ -56,14 +56,6 @@ public class PlayerInputs : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        try
-        {
-            playersManagers = transform.parent.GetComponentInParent<PlayersManager>();
-        }
-        catch (Exception)
-        {
-            playersManagers = transform.GetComponent<PlayersManager>();
-        }
         try
         {
             playerId = transform.GetComponentInParent<QuadSceneManager>().playerId;

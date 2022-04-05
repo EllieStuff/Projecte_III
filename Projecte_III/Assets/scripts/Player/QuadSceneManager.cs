@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class QuadSceneManager : MonoBehaviour
 {
     public int playerId;
-
+    /*
     PlayersManager playersManager;
     GameObject player;
     PlayerVehicleScript playerScript;
@@ -167,6 +167,6 @@ public class QuadSceneManager : MonoBehaviour
             default:
                 break;
         }
-    }
+    }*/
 
 }

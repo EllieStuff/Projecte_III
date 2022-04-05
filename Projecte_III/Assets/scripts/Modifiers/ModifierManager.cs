@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 public class ModifierManager : MonoBehaviour
 {
-    [SerializeField] private GameObject statsManager;
+    /*[SerializeField] private GameObject statsManager;
     private GameObject target = null;
     QuadControls controls;
     private PlayerStatsManager stats;
@@ -370,6 +370,6 @@ public class ModifierManager : MonoBehaviour
     public void SetTargetPos(Vector3 _pos)
     {
         target.transform.position = _pos;
-    }
+    }*/
 
 }

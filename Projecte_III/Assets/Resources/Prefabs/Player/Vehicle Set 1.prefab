@@ -281,14 +281,14 @@ GameObject:
   m_Component:
   - component: {fileID: 38654283868662909}
   - component: {fileID: 38654283868662908}
-  - component: {fileID: 1082010707954979873}
   - component: {fileID: 38654283868662907}
   - component: {fileID: 7591572402878244577}
   - component: {fileID: 7535793092823729197}
   - component: {fileID: 4037877528717088745}
   - component: {fileID: 1631954268935534655}
+  - component: {fileID: 6641925558675677466}
+  - component: {fileID: 2446448053087385845}
   - component: {fileID: 38654283868662906}
-  - component: {fileID: 38654283868662902}
   m_Layer: 0
   m_Name: vehicleTest Variant
   m_TagString: Player
@@ -331,20 +331,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!114 &1082010707954979873
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 38654283868662901}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5dc4cfedb6577ae46b5c9332e18df7e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stats: {fileID: 0}
-  statsManager: {fileID: 0}
 --- !u!114 &38654283868662907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -358,9 +344,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   centerOfMass: {x: 0, y: -0.7, z: 0}
-  boostPadDuration: 0
-  driftTorqueInc: 3
-  savedMaxSpeed: 0
   vehicleRB: {fileID: 38654283868662908}
   vehicleTorque: 6000
   vehicleMaxSpeed: 16
@@ -368,10 +351,6 @@ MonoBehaviour:
   touchingGround: 1
   vehicleReversed: 0
   minDriftSpeed: 10
-  respawnPosition: {x: 0, y: 0, z: 0}
-  respawnRotation: {x: 0, y: 0, z: 0}
-  respawnVelocity: {x: 0, y: 0, z: 0}
-  boostPadMultiplier: 0
   maxClimbingAngle: 60
   sandVelocityMultiplier: 1.5
   sandAccelerationMultiplier: 2
@@ -379,8 +358,6 @@ MonoBehaviour:
   particleMat: {fileID: 0}
   smokeBoostParticles: {fileID: 2278175647307990639}
   quadChasisShake: {fileID: 0}
-  onWater: 0
-  finishedRace: 0
   savedVelocity: {x: 0, y: 0, z: 0}
   driftClip: {fileID: 0}
   normalClip: {fileID: 0}
@@ -433,6 +410,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1edf033e32af3c449540b78ea4e6924, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6641925558675677466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 38654283868662901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7afde1afacd3dc643a5cac9eb36fd831, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  driftTorqueInc: 3
+  driftDuration: 2
+--- !u!114 &2446448053087385845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 38654283868662901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c657fbf306bf3a48ae8608a3fe5a925, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  respawnPosition: {x: 0, y: 0, z: 0}
+  respawnRotation: {x: 0, y: 0, z: 0}
+  respawnVelocity: {x: 0, y: 0, z: 0}
+  boostPadDuration: 0
+  boostPadMultiplier: 0
 --- !u!82 &38654283868662906
 AudioSource:
   m_ObjectHideFlags: 0
@@ -529,68 +537,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!108 &38654283868662902
-Light:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 38654283868662901}
-  m_Enabled: 0
-  serializedVersion: 10
-  m_Type: 2
-  m_Shape: 0
-  m_Color: {r: 0.972549, g: 0.4, b: 0.14117648, a: 1}
-  m_Intensity: 5
-  m_Range: 50
-  m_SpotAngle: 30
-  m_InnerSpotAngle: 21.80208
-  m_CookieSize: 10
-  m_Shadows:
-    m_Type: 0
-    m_Resolution: -1
-    m_CustomResolution: -1
-    m_Strength: 1
-    m_Bias: 0.05
-    m_NormalBias: 0.4
-    m_NearPlane: 0.2
-    m_CullingMatrixOverride:
-      e00: 1
-      e01: 0
-      e02: 0
-      e03: 0
-      e10: 0
-      e11: 1
-      e12: 0
-      e13: 0
-      e20: 0
-      e21: 0
-      e22: 1
-      e23: 0
-      e30: 0
-      e31: 0
-      e32: 0
-      e33: 1
-    m_UseCullingMatrixOverride: 0
-  m_Cookie: {fileID: 0}
-  m_DrawHalo: 0
-  m_Flare: {fileID: 0}
-  m_RenderMode: 0
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RenderingLayerMask: 1
-  m_Lightmapping: 4
-  m_LightShadowCasterMode: 0
-  m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
-  m_ColorTemperature: 6570
-  m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
-  m_UseBoundingSphereOverride: 0
-  m_UseViewFrustumForShadowCasterCull: 1
-  m_ShadowRadius: 0
-  m_ShadowAngle: 0
 --- !u!1 &38654284546717500
 GameObject:
   m_ObjectHideFlags: 0
@@ -49159,7 +49105,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5550834916945680585}
-  - component: {fileID: 1727728832742073555}
   m_Layer: 0
   m_Name: Vehicle Set 1
   m_TagString: Untagged
@@ -49184,19 +49129,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1727728832742073555
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5550834916945680584}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea0eb50ccea8cd44e8ddc14eeb9399e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerId: 0
 --- !u!1 &5550834918872379202
 GameObject:
   m_ObjectHideFlags: 0
