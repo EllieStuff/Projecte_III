@@ -11,6 +11,8 @@ public class GenerateNewTile : MonoBehaviour
     [SerializeField] CameraNavFollowScript cameraFollow = null;
     [SerializeField] RoadData lastTile = null;
 
+    NavMeshSurface navMesh;
+
     RoadData.SpawnRateSet maxSpawnRates = new RoadData.SpawnRateSet(0);
 
     List<RoadData> straightRoads = new List<RoadData>();
@@ -24,6 +26,8 @@ public class GenerateNewTile : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        navMesh = GetComponent<NavMeshSurface>();
+
         GameObject[] tilesGO = Resources.LoadAll<GameObject>("Prefabs/ProceduralMap");
         tiles = new RoadData[tilesGO.Length];
         for (int i = 0; i < tilesGO.Length; i++)
@@ -78,8 +82,6 @@ public class GenerateNewTile : MonoBehaviour
         if (newObject == null) Debug.LogError("Upsie");
 
         Transform child = lastTile.transform.GetChild(0).Find("NewSpawn");
-        child.parent.GetComponent<NavMeshSurface>().BuildNavMesh();
-        newObject.transform.GetChild(0).GetComponent<NavMeshSurface>().BuildNavMesh();
 
         newObject.transform.position = child.position;
 
@@ -91,7 +93,11 @@ public class GenerateNewTile : MonoBehaviour
             Destroy(transform.GetChild(0).gameObject);
 
         lastTile = newObject;
+
         GetCheckpointPositions(ref newObject);
+
+        navMesh.BuildNavMesh();
+        cameraFollow.UpdateDestination();
     }
 
     RoadData GetNewRoad(ref List<RoadData> _roadList, float _maxSpawnRate)

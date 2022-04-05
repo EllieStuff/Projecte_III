@@ -22,7 +22,7 @@ public class SpawnTileWithCollider : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("Collider");
-        if(other.gameObject.tag.Contains("Main"))
+        if(other.gameObject.tag.Contains("Objective"))
         {
             prefab.parent.GetComponent<GenerateNewTile>().CalculateNewTile();
             _coll.enabled = false;
