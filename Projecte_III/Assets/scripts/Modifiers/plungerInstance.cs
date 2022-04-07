@@ -64,12 +64,12 @@ public class plungerInstance : MonoBehaviour
                     destroyPlunger = true;
             }
 
-            if (Vector3.Distance(transform.position, playerShotPlunger.transform.position) > 2 && !collisionTag.Equals("ground"))
+            if (Vector3.Distance(transform.position, playerShotPlunger.transform.position) > 5 && !collisionTag.Equals("ground"))
             {
                 Rigidbody playerRB = playerShotPlunger.GetComponent<Rigidbody>();
                 timerDestroy -= Time.deltaTime;
                 
-                if (timerDestroy <= 0 || prepareToDestroy || Vector3.Distance(transform.position, playerShotPlunger.transform.position) >= 50)
+                if (timerDestroy <= 0 || prepareToDestroy || Vector3.Distance(transform.position, playerShotPlunger.transform.position) >= 15)
                     destroyPlunger = true;
 
                 float oldSpeedY = playerRB.velocity.y;
@@ -87,7 +87,7 @@ public class plungerInstance : MonoBehaviour
             {
                 prepareToDestroy = true;
             }
-            else if (Vector3.Distance(transform.position, playerShotPlunger.transform.position) <= 2 || Vector3.Distance(transform.position, playerShotPlunger.transform.position) > 20)
+            else if (Vector3.Distance(transform.position, playerShotPlunger.transform.position) <= 5 || Vector3.Distance(transform.position, playerShotPlunger.transform.position) > 15)
             {
                 destroyPlunger = true;
             }
@@ -97,7 +97,7 @@ public class plungerInstance : MonoBehaviour
             transform.rotation = Quaternion.Lerp(transform.rotation, endQuad, Time.deltaTime * plungerSpeedLerp);
             transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(0, 180, 0), Time.deltaTime * plungerSpeedLerp);
         }
-        else if (Vector3.Distance(transform.position, playerShotPlunger.transform.position) <= 2 || Vector3.Distance(transform.position, playerShotPlunger.transform.position) <= 50 && !destroyPlunger)
+        else if (Vector3.Distance(transform.position, playerShotPlunger.transform.position) <= 2 || Vector3.Distance(transform.position, playerShotPlunger.transform.position) <= 15 && !destroyPlunger)
             this.transform.rotation = startRot;
         else if(!destroyPlunger)
             destroyPlunger = true;
