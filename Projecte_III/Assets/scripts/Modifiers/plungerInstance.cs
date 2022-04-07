@@ -56,7 +56,7 @@ public class plungerInstance : MonoBehaviour
                 transform.position = otherQuad.transform.position;
                 
                 if (otherQuadRB.velocity.y < 1)
-                    otherQuad.GetComponent<PlayerVehicleScript>().vehicleMaxSpeed = -20;
+                    otherQuad.GetComponent<PlayerVehicleScript>().vehicleMaxSpeed = -10;
 
                 if (Vector3.Distance(transform.position, playerShotPlunger.transform.position) <= 2)
                     destroyPlunger = true;
@@ -77,7 +77,7 @@ public class plungerInstance : MonoBehaviour
                 if (Mathf.Abs(transform.TransformDirection(playerRB.velocity).z) > 0 && playerRB.velocity.y < 5)
                 {
                     if (!prepareToDestroy)
-                        playerShotPlunger.GetComponent<PlayerVehicleScript>().vehicleMaxSpeed = 35;
+                        playerShotPlunger.GetComponent<PlayerVehicleScript>().vehicleMaxSpeed = 17.5f;
 
                     playerRB.velocity += playerShotPlunger.transform.TransformDirection(new Vector3(0, 0, 0.5f));
                     playerRB.velocity = new Vector3(playerRB.velocity.x, oldSpeedY, playerRB.velocity.z);

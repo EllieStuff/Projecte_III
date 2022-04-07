@@ -168,6 +168,9 @@ public class PlayerVehicleScript : MonoBehaviour
     {
         var locVel = transform.InverseTransformDirection(vehicleRB.velocity);
 
+        bool disableReverse = (vehicleMaxSpeed > savedMaxSpeed);
+
+
         if (touchingGround)
         {
             //Main Movement Keys______________________________________________________________________________________________________________________
@@ -194,7 +197,7 @@ public class PlayerVehicleScript : MonoBehaviour
             }
 
             //Backwards
-            if(inputs.Backward && !inputs.Forward)
+            if(inputs.Backward && !inputs.Forward && !disableReverse)
             {
                 if (vehicleRB.velocity.y > -minDriftSpeed / 2 && vehicleRB.velocity.y <= vehicleMaxSpeed / 2)
                     vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, -vehicleAcceleration));
@@ -209,7 +212,7 @@ public class PlayerVehicleScript : MonoBehaviour
             //Main Movements Keys______________________________________________________________________________________________________________________
 
             //Speed Regulation Function
-            SpeedRegulation();
+            SpeedRegulation(disableReverse);
 
             savedVelocity = vehicleRB.velocity;
         }
@@ -290,7 +293,7 @@ public class PlayerVehicleScript : MonoBehaviour
         else
             vehicleRB.velocity = new Vector3(savedVelocity.x, vehicleRB.velocity.y - 0.5f, savedVelocity.z);
     }
-    void SpeedRegulation()
+    void SpeedRegulation(bool disableReverse)
     {
         if (!inputs.Left && !inputs.Right)
             vehicleRB.angularVelocity = new Vector3(vehicleRB.angularVelocity.x, 0, vehicleRB.angularVelocity.z);
@@ -321,7 +324,7 @@ public class PlayerVehicleScript : MonoBehaviour
         {
             if (!inputs.Backward)
                 vehicleRB.velocity = transform.TransformDirection(new Vector3(0, 0, vehicleMaxSpeed));
-            else
+            else if(!disableReverse)
             {
                 vehicleRB.velocity = transform.TransformDirection(new Vector3(0, 0, -vehicleMaxSpeed));
                 if (vehicleRB.velocity.z < 0)
