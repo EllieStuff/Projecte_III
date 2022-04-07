@@ -29,7 +29,6 @@ public class PlayerVehicleScript : MonoBehaviour
     public bool touchingGround;
     public bool vehicleReversed;
     public float minDriftSpeed;
-    public float maxClimbingAngle;
     [SerializeField] internal float sandVelocityMultiplier;
     [SerializeField] internal float sandAccelerationMultiplier;
 
@@ -73,7 +72,7 @@ public class PlayerVehicleScript : MonoBehaviour
         smokeBoostParticles.material = mat;
         particleMat = mat;
 
-        vehicleAcceleration = 2;
+        vehicleAcceleration = 0.5f;
 
         savedAcceleration = vehicleAcceleration;
 
@@ -169,14 +168,11 @@ public class PlayerVehicleScript : MonoBehaviour
     {
         var locVel = transform.InverseTransformDirection(vehicleRB.velocity);
 
-        if(touchingGround && (vehicleRB.transform.rotation.x >= maxClimbingAngle || vehicleRB.transform.rotation.y >= maxClimbingAngle || vehicleRB.transform.rotation.z >= maxClimbingAngle))
-            touchingGround = false;
-
         if (touchingGround)
         {
             //Main Movement Keys______________________________________________________________________________________________________________________
             //Forward
-            if( inputs.Forward && !inputs.Backward && (transform.rotation * transform.eulerAngles).x > -1)
+            if(inputs.Forward && !inputs.Backward)
             {
                 if (vehicleRB.velocity.y <= vehicleMaxSpeed / 2)
                     vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, vehicleAcceleration));
@@ -198,7 +194,7 @@ public class PlayerVehicleScript : MonoBehaviour
             }
 
             //Backwards
-            if(inputs.Backward && !inputs.Forward && (transform.rotation * transform.eulerAngles).x > -1)
+            if(inputs.Backward && !inputs.Forward)
             {
                 if (vehicleRB.velocity.y > -minDriftSpeed / 2 && vehicleRB.velocity.y <= vehicleMaxSpeed / 2)
                     vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, -vehicleAcceleration));

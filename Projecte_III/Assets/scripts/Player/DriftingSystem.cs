@@ -6,8 +6,8 @@ public class DriftingSystem : MonoBehaviour
 {
     [SerializeField] float driftTorqueInc = 3.0f;
     [SerializeField] float driftDuration = 2;
+    [SerializeField] float driftForce = 0.015f;
     PlayerVehicleScript player;
-    float driftTimer = 0;
     bool driftLeft;
     bool driftRight;
     Vector3 savedDir;
@@ -38,11 +38,12 @@ public class DriftingSystem : MonoBehaviour
         {
             if (player.inputs.Left && player.inputs.Drift)
             {
+                player.vehicleMaxSpeed = player.savedMaxSpeed + 5f;
                 if (!driftLeft)
                 {
                     player.vehicleRB.AddTorque(0, -player.vehicleTorque * driftTorqueInc, 0);
                     savedDir = player.vehicleRB.velocity;
-                    player.vehicleRB.velocity += new Vector3(0, 5, 0);
+                    //player.vehicleRB.velocity += new Vector3(0, 5, 0);
                     driftRot = player.vehicleRB.rotation * new Quaternion(0, -0.5f * player.inputs.LeftFloat, 0, 1).normalized;
                     savedRot = player.vehicleRB.rotation;
                 }
@@ -52,31 +53,19 @@ public class DriftingSystem : MonoBehaviour
                 driftLeft = true;
 
                 savedDir += transform.TransformDirection(-0.4f * player.inputs.LeftFloat, 0, 0);
-                savedRot *= new Quaternion(0, -0.015f * player.inputs.LeftFloat, 0, 1).normalized;
+                savedRot *= new Quaternion(0, -driftForce * player.inputs.LeftFloat, 0, 1).normalized;
 
                 player.vehicleRB.velocity = new Vector3(savedDir.x, player.vehicleRB.velocity.y, savedDir.z);
                 player.vehicleRB.rotation = savedRot;
-
-                if (driftRight)
-                {
-                    driftTimer = 1;
-                    driftRight = false;
-                }
-                if (driftTimer > 0)
-                {
-                    driftTimer -= Time.deltaTime;
-                    player.particleMat.color = Color.yellow;
-                }
-                else
-                    player.particleMat.color = Color.red;
             }
             else if (player.inputs.Right && player.inputs.Drift)
             {
+                player.vehicleMaxSpeed = player.savedMaxSpeed + 5f;
                 if (!driftRight)
                 {
                     player.vehicleRB.AddTorque(0, player.vehicleTorque * driftTorqueInc, 0);
                     savedDir = player.vehicleRB.velocity;
-                    player.vehicleRB.velocity += new Vector3(0, 5, 0);
+                    //player.vehicleRB.velocity += new Vector3(0, 5, 0);
                     driftRot = player.vehicleRB.rotation * new Quaternion(0, 0.5f * player.inputs.RightFloat, 0, 1).normalized;
                     savedRot = player.vehicleRB.rotation;
                 }
@@ -86,63 +75,28 @@ public class DriftingSystem : MonoBehaviour
                 driftRight = true;
 
                 savedDir += transform.TransformDirection(0.4f * player.inputs.RightFloat, 0, 0);
-                savedRot *= new Quaternion(0, 0.015f * player.inputs.RightFloat, 0, 1).normalized;
+                savedRot *= new Quaternion(0, driftForce * player.inputs.RightFloat, 0, 1).normalized;
 
                 player.vehicleRB.velocity = new Vector3(savedDir.x, player.vehicleRB.velocity.y, savedDir.z);
                 player.vehicleRB.rotation = savedRot;
 
                 if (driftLeft)
-                {
-                    driftTimer = 1;
                     driftLeft = false;
-                }
-
-                if (driftTimer > 0)
-                {
-                    driftTimer -= Time.deltaTime;
-                    player.particleMat.color = Color.yellow;
-                }
-                else
-                    player.particleMat.color = Color.red;
-            }
-            else if (driftTimer <= 0)
-            {
-                player.particleMat.color = player.defaultColorMat;
-                player.vehicleAcceleration = 2;
-                player.vehicleMaxSpeed = 35.5f;
-                driftTimer = 1;
-                StartCoroutine(WaitEndBoost());
             }
             else
             {
-                player.particleMat.color = player.defaultColorMat;
-                if (driftTimer != 1)
-                    driftTimer = 1;
+                player.vehicleMaxSpeed = player.savedMaxSpeed;
+                player.vehicleAcceleration = player.savedAcceleration;
                 driftLeft = false;
                 driftRight = false;
             }
         }
-        else if (driftTimer <= 0)
-        {
-            player.particleMat.color = player.defaultColorMat;
-            player.vehicleAcceleration = 2;
-            player.vehicleMaxSpeed = 35.5f;
-            driftTimer = 1;
-            StartCoroutine(WaitEndBoost());
-        }
         else
         {
-            player.particleMat.color = player.defaultColorMat;
-            if (driftTimer != 1)
-                driftTimer = 1;
+            player.vehicleMaxSpeed = player.savedMaxSpeed;
+            player.vehicleAcceleration = player.savedAcceleration;
             driftLeft = false;
             driftRight = false;
         }
-    }
-
-    IEnumerator WaitEndBoost()
-    {
-        yield return new WaitForSeconds(driftDuration);
-        reduceSpeed = true;
     }
 }

@@ -14,8 +14,8 @@ public class PlayerThrowPlunger : MonoBehaviour
     private GameObject plungerInstance;
     [SerializeField] private GameObject plungerPrefab;
     private PlayerVehicleScript player;
-    bool plungerEnabled = false;
-    bool hasPlunger;
+    [SerializeField] bool plungerEnabled = false;
+    [SerializeField] internal bool hasPlunger;
     Transform modifierTransform;
     public LineRenderer line;
 
@@ -41,7 +41,7 @@ public class PlayerThrowPlunger : MonoBehaviour
     {
         if (hasPlunger)
         {
-            CheckPlungerThrow();
+            //CheckPlungerThrow();
             PlungerUpdate();
         }
     }
@@ -99,20 +99,13 @@ public class PlayerThrowPlunger : MonoBehaviour
                 createMaterial = true;
             }
 
-            plungerInstance = Instantiate(plungerPrefab, modifierTransform.position, this.transform.rotation);
+            plungerInstance = Instantiate(plungerPrefab, transform.position, this.transform.rotation);
             Physics.IgnoreCollision(plungerInstance.transform.GetChild(0).GetComponent<BoxCollider>(), transform.GetChild(0).GetComponent<BoxCollider>());
-            if(!localTransform.tag.Equals("Player"))
-            {
-                plungerInstance.GetComponent<plungerInstance>().playerShotPlunger = this.gameObject;
-                plungerInstance.GetComponent<plungerInstance>().playerNum = player.playerNum;
-                plungerInstance.GetComponent<plungerInstance>().normalDir = savedDirection;
-            }
-            else
-            {
-                plungerInstance.GetComponent<plungerInstance>().playerShotPlunger = this.gameObject;
-                plungerInstance.GetComponent<plungerInstance>().playerNum = player.playerNum;
-                plungerInstance.GetComponent<plungerInstance>().quadTarget = localTransform;
-            }
+            
+            plungerInstance.GetComponent<plungerInstance>().playerShotPlunger = this.gameObject;
+            plungerInstance.GetComponent<plungerInstance>().playerNum = player.playerNum;
+            plungerInstance.GetComponent<plungerInstance>().normalDir = savedDirection;
+            
             plunger = true;
             plungerDisappearCooldown = plungerBaseDisappearCooldown;
         }
