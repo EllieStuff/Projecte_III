@@ -70,7 +70,7 @@ public class RandomModifierGet : MonoBehaviour
             if (timerRoll > 0)
             {
                 timerRoll -= 0.5f;
-                randomInt = Random.Range(0, modifiers.Length);
+                randomInt = 0;//Random.Range(0, modifiers.Length);
                 showModifierInstance = Instantiate(modifiers[randomInt], new Vector3(transform.position.x , transform.position.y + 1, transform.position.z), transform.rotation);
                 showModifierInstance.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
                 yield return new WaitForSeconds(0.2f);

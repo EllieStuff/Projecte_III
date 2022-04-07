@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerVehicleScript : MonoBehaviour
 {
-    internal int playerNum;
+    [SerializeField] internal int playerNum;
 
     [SerializeField] Vector3 centerOfMass = new Vector3(0.0f, -0.7f, 0.0f);
 

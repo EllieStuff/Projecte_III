@@ -9,7 +9,7 @@ public class PlayerInputs : MonoBehaviour
     //PlayersManager.GameModes gameMode = PlayersManager.GameModes.MONO;
     InputSystem inputSystem;
     InputSystem.ControlData[] controlData = new InputSystem.ControlData[1];
-    int playerId;
+    [SerializeField] int playerId;
 
     bool generalInputsEnabled = true, menuInputsEnabled = true;
 
@@ -58,7 +58,7 @@ public class PlayerInputs : MonoBehaviour
     {
         try
         {
-            playerId = transform.GetComponentInParent<QuadSceneManager>().playerId;
+            playerId = GetComponent<PlayerVehicleScript>().playerNum;
         }
         catch (Exception)
         {
