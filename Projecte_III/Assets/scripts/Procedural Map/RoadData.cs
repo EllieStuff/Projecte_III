@@ -36,7 +36,7 @@ public class RoadData : MonoBehaviour
             spawnRates.left *= spawnDiff;
             spawnRates.right *= spawnDiff;
         }
-        transform.localScale -= new Vector3(0.5f, 0.5f, 0.5f);
+        transform.localScale -= new Vector3(0.2f, 0.2f, 0.2f);
     }
 
     private void Update()
