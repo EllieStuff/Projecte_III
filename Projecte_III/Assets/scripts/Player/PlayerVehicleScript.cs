@@ -128,7 +128,7 @@ public class PlayerVehicleScript : MonoBehaviour
                     touchingGround = true;
                 }
 
-                if (!wheel.name.Contains("Front"))
+                //if (!wheel.name.Contains("Front"))
                     wheel.position = wheelPosition;
 
                 if (wheel.name.Contains("Front") && (inputs.Right || inputs.Left))
