@@ -5,6 +5,7 @@ using UnityEngine;
 public class VehicleTriggerAndCollisionEvents : MonoBehaviour
 {
     private PlayerVehicleScript player;
+    private Transform centerRespawn;
     public Vector3 respawnPosition, respawnRotation, respawnVelocity;
     bool paintingChecked = false, oilChecked = false;
     [SerializeField] float boostPadDuration;
@@ -15,6 +16,7 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
 
     private void Start()
     {
+        centerRespawn = GameObject.Find("Main Camera").transform;
         player = GetComponent<PlayerVehicleScript>();
         respawnPosition = new Vector3(0, 0, 0);
         respawnRotation = new Vector3(0, 0, 0);
@@ -24,12 +26,14 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
 
     private void Update()
     {
+        respawnPosition = new Vector3(centerRespawn.position.x, centerRespawn.position.y - 25, centerRespawn.position.z);
+        respawnPosition += centerRespawn.TransformDirection(new Vector3(0, 0, 30)) + new Vector3(0, 25, 0);
+        respawnRotation = centerRespawn.rotation.eulerAngles;
         if (player.vehicleReversed)
         {
             //Vehicle recover zone
             player.timerReversed += Time.deltaTime;
             if (DeathScript.DeathByFlipping(player.timerReversed, transform, player.vehicleRB, respawnPosition, respawnRotation, respawnVelocity, out outTransform, out outVehicleRB))
-
             {
 
                 transform.position = outTransform.position;
@@ -37,9 +41,15 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
                 transform.rotation = outTransform.rotation;
 
                 player.vehicleRB.velocity = outVehicleRB.velocity;
-
             }
             //_________________________________________________________________________________________________________________________________________________________________
+        }
+        else if(DeathScript.DeathByFalling(false, transform, player.vehicleRB, respawnPosition, respawnRotation, respawnVelocity, out outTransform, out outVehicleRB))
+        {
+            transform.position = outTransform.position;
+            transform.rotation = outTransform.rotation;
+            player.vehicleRB.velocity = outVehicleRB.velocity;
+            player.lifes--;
         }
 
         if (reduceSpeed && player.vehicleMaxSpeed > player.savedMaxSpeed)
@@ -59,18 +69,6 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
         //------Player Death------
         player.vehicleReversed = (other.gameObject.tag.Equals("ground"));
         //------------------------
-    }
-
-    void checkFallDeath()
-    {
-        if (player.vehicleRB.velocity.y <= -100)
-        {
-            AudioManager.Instance.Play_SFX("Fall_SFX");
-            transform.position = respawnPosition;
-            transform.localEulerAngles = respawnRotation;
-            transform.localEulerAngles += new Vector3(0, 90, 0);
-            player.vehicleRB.velocity = new Vector3(respawnVelocity.x, respawnVelocity.y, respawnVelocity.z);
-        }
     }
 
     IEnumerator WaitEndBoost()

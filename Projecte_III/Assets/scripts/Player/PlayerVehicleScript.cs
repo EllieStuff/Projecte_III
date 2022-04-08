@@ -10,6 +10,8 @@ public class PlayerVehicleScript : MonoBehaviour
 
     [SerializeField] Vector3 centerOfMass = new Vector3(0.0f, -0.7f, 0.0f);
 
+    [SerializeField] internal int lifes;
+
     private Material chasisMat;
 
     internal float timerReversed;
@@ -58,6 +60,8 @@ public class PlayerVehicleScript : MonoBehaviour
 
     void Start()
     {
+        lifes = 3;
+
         alaDelta = GetComponent<PlayerAlaDelta>();
 
         controls = new QuadControlSystem();
