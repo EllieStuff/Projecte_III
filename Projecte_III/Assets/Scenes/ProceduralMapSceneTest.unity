@@ -376,6 +376,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Straight_1 Trial
       objectReference: {fileID: 0}
+    - target: {fileID: 6682963688663281846, guid: 1974f09e81e31dc41a81ad44df4451d4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.24
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8721577399142812032, guid: 1974f09e81e31dc41a81ad44df4451d4, type: 3}
     - {fileID: 3199511279018236881, guid: 1974f09e81e31dc41a81ad44df4451d4, type: 3}
@@ -438,7 +442,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 1
-  m_BaseOffset: 0.1
+  m_BaseOffset: 0.4
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!54 &473400912
