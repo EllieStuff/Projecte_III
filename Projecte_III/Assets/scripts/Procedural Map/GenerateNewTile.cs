@@ -19,8 +19,6 @@ public class GenerateNewTile : MonoBehaviour
     List<RoadData> leftRoads = new List<RoadData>();
     List<RoadData> rightRoads = new List<RoadData>();
 
-    Vector3 newScale = new Vector3(0.5f, 0.5f, 0.5f);
-
     const int tilesMargin = 3;
 
     // Start is called before the first frame update
