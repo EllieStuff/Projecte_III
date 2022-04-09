@@ -247,7 +247,7 @@ public class PlayerVehicleScript : MonoBehaviour
         {
             //Main Movement Keys______________________________________________________________________________________________________________________
             //Forward
-            if( inputs.Forward && !inputs.Backward && transform.rotation.ToEulerAngles().x > -1)
+            if( inputs.Forward && !inputs.Backward && (transform.rotation * transform.eulerAngles).x > -1)
             {
                 if (vehicleRB.velocity.y <= vehicleMaxSpeed / 2)
                     vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, vehicleAcceleration));
@@ -269,7 +269,7 @@ public class PlayerVehicleScript : MonoBehaviour
             }
 
             //Backwards
-            if(inputs.Backward && !inputs.Forward && transform.rotation.ToEulerAngles().x > -1)
+            if(inputs.Backward && !inputs.Forward && (transform.rotation * transform.eulerAngles).x > -1)
             {
                 if (vehicleRB.velocity.y > -minDriftSpeed / 2 && vehicleRB.velocity.y <= vehicleMaxSpeed / 2)
                     vehicleRB.velocity += transform.TransformDirection(new Vector3(0, 0, -vehicleAcceleration));

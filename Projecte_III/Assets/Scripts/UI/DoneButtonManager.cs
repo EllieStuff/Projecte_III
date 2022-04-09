@@ -8,6 +8,8 @@ public class DoneButtonManager : MonoBehaviour
     [SerializeField] Color readyBttnImgColor;
 
     public int buttonsActive = 0;
+    [SerializeField] string goToScene;
+
     bool loadingLevel = false;
 
     PlayersManager playersManager;
@@ -68,7 +70,7 @@ public class DoneButtonManager : MonoBehaviour
         playersManager.numOfPlayers = buttonsActive;
         GameObject.FindGameObjectWithTag("RadialMenuManager").GetComponent<RadialMenuSetManager>().SetModifiersToChosenRMSet(playersManager.numOfPlayers - 1);
         LoadSceneManager sceneManager = GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>();
-        sceneManager.ChangeScene(sceneManager.newScene);
+        sceneManager.ChangeScene(goToScene);
     }
 
 }
