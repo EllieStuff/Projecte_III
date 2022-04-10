@@ -109,7 +109,7 @@ public class PlayerThrowPlunger : MonoBehaviour
                 Vector3 euler = plungerInstance.transform.GetChild(0).localRotation.eulerAngles;
                 plungerInstance.transform.GetChild(0).localRotation = Quaternion.Euler(euler.x, -euler.y, euler.z);
                 savedDirection = new Vector3(savedDirection.x, savedDirection.y - 2.5f, savedDirection.z);
-                plungerInstance.GetComponent<plungerInstance>().plungerVelocity /= 2;
+                plungerInstance.GetComponent<plungerInstance>().plungerVelocity /= 1.5f;
             }
 
             Physics.IgnoreCollision(plungerInstance.transform.GetChild(0).GetComponent<BoxCollider>(), transform.GetChild(0).GetComponent<BoxCollider>());
