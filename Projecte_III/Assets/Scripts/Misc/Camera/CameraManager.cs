@@ -56,24 +56,25 @@ public class CameraManager : MonoBehaviour
     }
     public Camera GetCamera(int _idx = 0)
     {
-        if (inGameScene) return mainCamera;
+        return mainCamera;
+        //if (inGameScene) return mainCamera;
 
 
-        if (playersManager.gameMode == PlayersManager.GameModes.MONO) return renderCameras[0];
+        //if (playersManager.gameMode == PlayersManager.GameModes.MONO) return renderCameras[0];
 
-        return renderCameras[_idx];
+        //return renderCameras[_idx];
     }
     public Transform GetRendererCamera(int _idx = 0)
     {
         if (inGameScene)
         {
             Debug.LogError("Renderercamera was asked for in a game Scene");
-            return null;
         }
+        return null;
 
 
-        if (playersManager.gameMode == PlayersManager.GameModes.MONO) return rendTexManager.transform.GetChild(0);
+        //if (playersManager.gameMode == PlayersManager.GameModes.MONO) return rendTexManager.transform.GetChild(0);
 
-        return rendTexManager.transform.GetChild(_idx);
+        //return rendTexManager.transform.GetChild(_idx);
     }
 }
