@@ -17,7 +17,7 @@ public class PlayerInputs : MonoBehaviour
     float
         forward, backward, right, left, drift;
     bool
-        start, enableGadgetMenu, confirmGadget, useGadget;
+        start, enableGadgetMenu, confirmGadget, useGadget, shootForward, shootBackwards, shootLeft, shootRight;
     bool
         mUp, mDown, mRight, mLeft, mAccept, mDecline;
 
@@ -49,6 +49,10 @@ public class PlayerInputs : MonoBehaviour
     public bool MenuLeft { get { return mLeft; } }
     public bool MenuAccept { get { return mAccept; } }
     public bool MenuDecline { get { return mDecline; } }
+    public bool ShootForward { get { return shootForward; } }
+    public bool ShootBackwards { get { return shootBackwards; } }
+    public bool ShootLeft { get { return shootLeft; } }
+    public bool ShootRight { get { return shootRight; } }
 
     public Vector2 ChooseItem { get { return chooseItem; } }
 
@@ -123,6 +127,11 @@ public class PlayerInputs : MonoBehaviour
             enableGadgetMenu = inputSystem.GetKey(InputSystem.KeyCodes.ENABLE_GADGET_MENU, controlData);
             confirmGadget = inputSystem.GetKey(InputSystem.KeyCodes.CONFIRM_GADGET, controlData);
             useGadget = inputSystem.GetKey(InputSystem.KeyCodes.USE_GADGET, controlData);
+
+            shootForward = inputSystem.GetKey(InputSystem.KeyCodes.SHOOT_FORWARD, controlData);
+            shootBackwards = inputSystem.GetKey(InputSystem.KeyCodes.SHOOT_BACKWARD, controlData);
+            shootLeft = inputSystem.GetKey(InputSystem.KeyCodes.SHOOT_LEFT, controlData);
+            shootRight = inputSystem.GetKey(InputSystem.KeyCodes.SHOOT_RIGHT, controlData);
 
             // Axis
             chooseItem = inputSystem.GetAxis(InputSystem.AxisCodes.CHOOSE_ITEM, controlData);

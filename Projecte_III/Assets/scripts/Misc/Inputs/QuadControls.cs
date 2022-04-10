@@ -153,6 +153,38 @@ public class @QuadControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""ShootForward"",
+                    ""type"": ""Button"",
+                    ""id"": ""1aa5b9d0-690f-4e7c-8a14-31679fb40aae"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""ShootBackwards"",
+                    ""type"": ""Button"",
+                    ""id"": ""1df0e78a-6f07-4820-ace5-395dc1fcdde4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""ShootLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""f2cf0e3e-84de-444d-b21a-18d5c45fc3ae"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""ShootRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""788bdb96-ddee-49aa-999f-5641e4c8af11"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -472,6 +504,50 @@ public class @QuadControls : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Start"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""855c763d-2112-4307-ae89-4cfe68da83c0"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Player1"",
+                    ""action"": ""ShootForward"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e3687b39-e506-414a-9949-200ea855a7b8"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Player1"",
+                    ""action"": ""ShootBackwards"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8a773c1e-d791-423d-bca7-a32fd9edf254"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Player1"",
+                    ""action"": ""ShootLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dd215e1b-2760-4009-a88c-1d05b55030e2"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Player1"",
+                    ""action"": ""ShootRight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -893,6 +969,10 @@ public class @QuadControls : IInputActionCollection, IDisposable
         m_Quad_Start = m_Quad.FindAction("Start", throwIfNotFound: true);
         m_Quad_ChasisElevation = m_Quad.FindAction("ChasisElevation", throwIfNotFound: true);
         m_Quad_AlaDelta = m_Quad.FindAction("AlaDelta", throwIfNotFound: true);
+        m_Quad_ShootForward = m_Quad.FindAction("ShootForward", throwIfNotFound: true);
+        m_Quad_ShootBackwards = m_Quad.FindAction("ShootBackwards", throwIfNotFound: true);
+        m_Quad_ShootLeft = m_Quad.FindAction("ShootLeft", throwIfNotFound: true);
+        m_Quad_ShootRight = m_Quad.FindAction("ShootRight", throwIfNotFound: true);
         // QuadP2
         m_QuadP2 = asset.FindActionMap("QuadP2", throwIfNotFound: true);
         m_QuadP2_Forward = m_QuadP2.FindAction("Forward", throwIfNotFound: true);
@@ -980,6 +1060,10 @@ public class @QuadControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Quad_Start;
     private readonly InputAction m_Quad_ChasisElevation;
     private readonly InputAction m_Quad_AlaDelta;
+    private readonly InputAction m_Quad_ShootForward;
+    private readonly InputAction m_Quad_ShootBackwards;
+    private readonly InputAction m_Quad_ShootLeft;
+    private readonly InputAction m_Quad_ShootRight;
     public struct QuadActions
     {
         private @QuadControls m_Wrapper;
@@ -1001,6 +1085,10 @@ public class @QuadControls : IInputActionCollection, IDisposable
         public InputAction @Start => m_Wrapper.m_Quad_Start;
         public InputAction @ChasisElevation => m_Wrapper.m_Quad_ChasisElevation;
         public InputAction @AlaDelta => m_Wrapper.m_Quad_AlaDelta;
+        public InputAction @ShootForward => m_Wrapper.m_Quad_ShootForward;
+        public InputAction @ShootBackwards => m_Wrapper.m_Quad_ShootBackwards;
+        public InputAction @ShootLeft => m_Wrapper.m_Quad_ShootLeft;
+        public InputAction @ShootRight => m_Wrapper.m_Quad_ShootRight;
         public InputActionMap Get() { return m_Wrapper.m_Quad; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1061,6 +1149,18 @@ public class @QuadControls : IInputActionCollection, IDisposable
                 @AlaDelta.started -= m_Wrapper.m_QuadActionsCallbackInterface.OnAlaDelta;
                 @AlaDelta.performed -= m_Wrapper.m_QuadActionsCallbackInterface.OnAlaDelta;
                 @AlaDelta.canceled -= m_Wrapper.m_QuadActionsCallbackInterface.OnAlaDelta;
+                @ShootForward.started -= m_Wrapper.m_QuadActionsCallbackInterface.OnShootForward;
+                @ShootForward.performed -= m_Wrapper.m_QuadActionsCallbackInterface.OnShootForward;
+                @ShootForward.canceled -= m_Wrapper.m_QuadActionsCallbackInterface.OnShootForward;
+                @ShootBackwards.started -= m_Wrapper.m_QuadActionsCallbackInterface.OnShootBackwards;
+                @ShootBackwards.performed -= m_Wrapper.m_QuadActionsCallbackInterface.OnShootBackwards;
+                @ShootBackwards.canceled -= m_Wrapper.m_QuadActionsCallbackInterface.OnShootBackwards;
+                @ShootLeft.started -= m_Wrapper.m_QuadActionsCallbackInterface.OnShootLeft;
+                @ShootLeft.performed -= m_Wrapper.m_QuadActionsCallbackInterface.OnShootLeft;
+                @ShootLeft.canceled -= m_Wrapper.m_QuadActionsCallbackInterface.OnShootLeft;
+                @ShootRight.started -= m_Wrapper.m_QuadActionsCallbackInterface.OnShootRight;
+                @ShootRight.performed -= m_Wrapper.m_QuadActionsCallbackInterface.OnShootRight;
+                @ShootRight.canceled -= m_Wrapper.m_QuadActionsCallbackInterface.OnShootRight;
             }
             m_Wrapper.m_QuadActionsCallbackInterface = instance;
             if (instance != null)
@@ -1116,6 +1216,18 @@ public class @QuadControls : IInputActionCollection, IDisposable
                 @AlaDelta.started += instance.OnAlaDelta;
                 @AlaDelta.performed += instance.OnAlaDelta;
                 @AlaDelta.canceled += instance.OnAlaDelta;
+                @ShootForward.started += instance.OnShootForward;
+                @ShootForward.performed += instance.OnShootForward;
+                @ShootForward.canceled += instance.OnShootForward;
+                @ShootBackwards.started += instance.OnShootBackwards;
+                @ShootBackwards.performed += instance.OnShootBackwards;
+                @ShootBackwards.canceled += instance.OnShootBackwards;
+                @ShootLeft.started += instance.OnShootLeft;
+                @ShootLeft.performed += instance.OnShootLeft;
+                @ShootLeft.canceled += instance.OnShootLeft;
+                @ShootRight.started += instance.OnShootRight;
+                @ShootRight.performed += instance.OnShootRight;
+                @ShootRight.canceled += instance.OnShootRight;
             }
         }
     }
@@ -1343,6 +1455,10 @@ public class @QuadControls : IInputActionCollection, IDisposable
         void OnStart(InputAction.CallbackContext context);
         void OnChasisElevation(InputAction.CallbackContext context);
         void OnAlaDelta(InputAction.CallbackContext context);
+        void OnShootForward(InputAction.CallbackContext context);
+        void OnShootBackwards(InputAction.CallbackContext context);
+        void OnShootLeft(InputAction.CallbackContext context);
+        void OnShootRight(InputAction.CallbackContext context);
     }
     public interface IQuadP2Actions
     {

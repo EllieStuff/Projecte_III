@@ -9,7 +9,7 @@ public class plungerInstance : MonoBehaviour
     public bool destroyPlunger;
     public Transform quadTarget;
     [SerializeField] Rigidbody body;
-    [SerializeField] private float plungerVelocity;
+    [SerializeField] internal float plungerVelocity;
     [SerializeField] private float plungerSpeedLerp;
     public bool plungerHit;
     public GameObject playerShotPlunger;
@@ -32,8 +32,8 @@ public class plungerInstance : MonoBehaviour
         else
             body.velocity = transform.TransformDirection(new Vector3(0, 0.5f, plungerVelocity));
         
-        if (transform.InverseTransformDirection(body.velocity).z < 0)
-            Destroy(gameObject);
+        //if (transform.InverseTransformDirection(body.velocity).z < 0)
+            //Destroy(gameObject);
     }
 
     private void Update()

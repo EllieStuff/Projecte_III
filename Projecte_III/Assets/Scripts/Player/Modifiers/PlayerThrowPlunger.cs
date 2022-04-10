@@ -25,10 +25,13 @@ public class PlayerThrowPlunger : MonoBehaviour
         modifierTransform = transform;
     }
 
-    public void Activate()
+    public void Activate(Vector3 dir)
     {
         if (hasPlunger)
+        {
+            savedDirection = dir;
             plungerEnabled = true;
+        }
     }
 
     private void Start()
@@ -99,7 +102,16 @@ public class PlayerThrowPlunger : MonoBehaviour
                 createMaterial = true;
             }
 
-            plungerInstance = Instantiate(plungerPrefab, transform.position, this.transform.rotation);
+            plungerInstance = Instantiate(plungerPrefab, transform.position, transform.rotation);
+
+            if (transform.InverseTransformDirection(savedDirection).z < 0.5f)
+            {
+                Vector3 euler = plungerInstance.transform.GetChild(0).localRotation.eulerAngles;
+                plungerInstance.transform.GetChild(0).localRotation = Quaternion.Euler(euler.x, -euler.y, euler.z);
+                savedDirection = new Vector3(savedDirection.x, savedDirection.y - 2.5f, savedDirection.z);
+                plungerInstance.GetComponent<plungerInstance>().plungerVelocity /= 2;
+            }
+
             Physics.IgnoreCollision(plungerInstance.transform.GetChild(0).GetComponent<BoxCollider>(), transform.GetChild(0).GetComponent<BoxCollider>());
             
             plungerInstance.GetComponent<plungerInstance>().playerShotPlunger = this.gameObject;

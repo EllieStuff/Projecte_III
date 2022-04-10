@@ -30,19 +30,28 @@ public class RandomModifierGet : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if(showModifierInstance != null)
         {
             showModifierInstance.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
         }
 
-        if (hasModifier && inputs.UseGadget && timerModifier <= 0) 
+        if (hasModifier && (inputs.ShootForward || inputs.ShootBackwards || inputs.ShootLeft || inputs.ShootRight) && timerModifier <= 0) 
         {
             switch (modifierIndex)
             {
                 case 0:
-                    GetComponent<PlayerThrowPlunger>().Activate();
+
+                    if(inputs.ShootForward)
+                        GetComponent<PlayerThrowPlunger>().Activate(transform.TransformDirection(0, 0, 1));
+                    else if(inputs.ShootBackwards)
+                        GetComponent<PlayerThrowPlunger>().Activate(transform.TransformDirection(0, 0, -1));
+                    else if(inputs.ShootLeft)
+                        GetComponent<PlayerThrowPlunger>().Activate(transform.TransformDirection(-1, 0, 0));
+                    else if (inputs.ShootRight)
+                        GetComponent<PlayerThrowPlunger>().Activate(transform.TransformDirection(1, 0, 0));
+
                     timerModifier = 5;
                     break;
                 case 1:
