@@ -70,6 +70,7 @@ public class PlayerInputs : MonoBehaviour
         }
         //gameMode = transform.parent.GetComponentInParent<PlayersManager>().gameMode;
         //if(GameObject.FindGameObjectWithTag("InputSystem") != null)
+        playersManagers = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
         inputSystem = GameObject.FindGameObjectWithTag("InputSystem").GetComponent<InputSystem>();
         controlData[0] = null;
     }
@@ -95,7 +96,13 @@ public class PlayerInputs : MonoBehaviour
                     for (int i = 0; i <= playerId; i++)
                     {
                         if (i == playerId)
+                        { 
                             controlData[0] = inputSystem.GetActiveControllerData();
+                            if(controlData[0] != null)
+                            {
+                                int a = 0;
+                            }
+                        }
                         else if (!playersManagers.GetPlayer(i).GetComponent<PlayerInputs>().Inited())
                             break;
                     }

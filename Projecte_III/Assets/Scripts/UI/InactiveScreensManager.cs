@@ -6,7 +6,7 @@ using TMPro;
 
 public class InactiveScreensManager : MonoBehaviour
 {
-   /* PlayersManager playersManager;
+    PlayersManager playersManager;
     PlayerInputs currPlayerInputs;
     DoneButtonManager doneBttnManager;
     int playersInited = 0;
@@ -25,6 +25,11 @@ public class InactiveScreensManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        bool i = currPlayerInputs.Inited();
+        if (currPlayerInputs.Inited())
+        {
+            return;
+        }
         if (playersInited < playersManager.numOfPlayers && currPlayerInputs.Inited())
         {
             StartCoroutine(DisappearBlackScreen(playersInited));
@@ -53,5 +58,5 @@ public class InactiveScreensManager : MonoBehaviour
         doneBttnManager.buttonsActive = playersInited;
         doneBttnManager.GetButton(_idx).isActive = true;
     }
-   */
+
 }

@@ -280,5 +280,6 @@ public class ButtonManager : MonoBehaviour
                 backgrounds[0].SetActive(true);
                 backgrounds[1].SetActive(false);
             }
-        }*/
+        }
+    */
 }

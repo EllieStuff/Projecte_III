@@ -8,7 +8,6 @@ public class PlayersManager : MonoBehaviour
     public enum GameModes { MONO, MULTI_LOCAL /*, MULTI_ONLINE*/ };
     public GameModes gameMode = GameModes.MONO;
 
-    public InputSystem inputSystem;
     public int numOfPlayers = 1;
     public Transform[] players;
     [SerializeField] Transform[] modifiers;

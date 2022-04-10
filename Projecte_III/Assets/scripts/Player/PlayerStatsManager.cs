@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerStatsManager : MonoBehaviour
 {
-    /*[SerializeField] private Stats stats;
     [SerializeField] private GameObject statsManager;
     bool first = false;
     PlayersManager playersManager;
@@ -15,13 +14,13 @@ public class PlayerStatsManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        stats = gameObject.AddComponent<Stats>();
         playerId = GetComponentInParent<QuadSceneManager>().playerId;
         playersManager = transform.parent.GetComponentInParent<PlayersManager>();
         wheelsSpot = transform.parent.Find("Wheels Models").gameObject;
         quadSpot = transform.Find("vehicleChasis").gameObject;
     }
-
+    
+    /*
     public void SetStats()
     {
         stats.ResetStats();
