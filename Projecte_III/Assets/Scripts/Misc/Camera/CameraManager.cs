@@ -9,23 +9,34 @@ public class CameraManager : MonoBehaviour
 
     internal PlayersManager playersManager;
     internal RenderTexturesManager rendTexManager;
+    bool inGameScene;
 
     // Start is called before the first frame update
     void Awake()
     {
         playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
-        rendTexManager = GameObject.FindGameObjectWithTag("RenderTexturesManager").GetComponent<RenderTexturesManager>();
+        GameObject rendTexManagerGO = GameObject.FindGameObjectWithTag("RenderTexturesManager");
+        if(rendTexManagerGO != null)
+            rendTexManager = rendTexManagerGO.GetComponent<RenderTexturesManager>();
         //numOfPlayers = playersManager.numOfPlayers;
     }
 
     private void Start()
     {
-        for(int i = 0; i < renderCameras.Length; i++)
+        if (rendTexManager != null)
         {
-            if (i < playersManager.numOfPlayers)
-                renderCameras[i].gameObject.SetActive(true);
-            else
-                renderCameras[i].gameObject.SetActive(false);
+            inGameScene = false;
+            for (int i = 0; i < renderCameras.Length; i++)
+            {
+                if (i < playersManager.numOfPlayers)
+                    renderCameras[i].gameObject.SetActive(true);
+                else
+                    renderCameras[i].gameObject.SetActive(false);
+            }
+        }
+        else
+        {
+            inGameScene = true;
         }
     }
 
@@ -39,16 +50,31 @@ public class CameraManager : MonoBehaviour
     {
         return renderCameras.Length;
     }
+    public Camera GetCamera()
+    {
+        return mainCamera;
+    }
     public Camera GetCamera(int _idx = 0)
     {
-        if (playersManager.gameMode == PlayersManager.GameModes.MONO) return renderCameras[0];
+        return mainCamera;
+        //if (inGameScene) return mainCamera;
 
-        return renderCameras[_idx];
+
+        //if (playersManager.gameMode == PlayersManager.GameModes.MONO) return renderCameras[0];
+
+        //return renderCameras[_idx];
     }
     public Transform GetRendererCamera(int _idx = 0)
     {
-        if (playersManager.gameMode == PlayersManager.GameModes.MONO) return rendTexManager.transform.GetChild(0);
+        if (inGameScene)
+        {
+            Debug.LogError("Renderercamera was asked for in a game Scene");
+        }
+        return null;
 
-        return rendTexManager.transform.GetChild(_idx);
+
+        //if (playersManager.gameMode == PlayersManager.GameModes.MONO) return rendTexManager.transform.GetChild(0);
+
+        //return rendTexManager.transform.GetChild(_idx);
     }
 }

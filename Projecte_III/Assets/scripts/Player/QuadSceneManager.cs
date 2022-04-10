@@ -95,7 +95,6 @@ public class QuadSceneManager : MonoBehaviour
             GetComponentInChildren<PlayerVehicleScript>().buildingScene = false;
             GetComponentInChildren<PlayerVehicleScript>().SetWheels();
 
-            player.GetComponent<PlayerStatsManager>().HideVoidModifier();
             playerScript.SetWheels();
             playerScript.buildingScene = false;
 

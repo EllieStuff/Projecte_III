@@ -41,8 +41,6 @@ public class ModifierManager : MonoBehaviour
         inputs = playersManager.GetPlayer(playerId).GetComponent<PlayerInputs>();
         GameObject camerasManager = GameObject.FindGameObjectWithTag("CamerasManager");
         usedCamera = camerasManager.GetComponent<CameraManager>().GetCamera(playerId);
-        rendererCamera = camerasManager.GetComponent<CameraManager>().GetRendererCamera(playerId);
-        statsSliders = statsManager.GetComponent<StatsManager>().GetPlayerStats(playerId);
 
     }
 
@@ -65,8 +63,6 @@ public class ModifierManager : MonoBehaviour
 
     void UpdateTarget()
     {
-        Stats.Data playerStats = stats.transform.GetComponent<Stats>().GetStats();
-
         if (!GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().GetSceneName().Contains("Building Scene"))
         {
             Transform chasis = player.transform.parent.GetChild(0);
@@ -83,39 +79,39 @@ public class ModifierManager : MonoBehaviour
         Vector3 mousePos = Mouse.current.position.ReadValue();// * 2.0f;
         if (lastMousePos != mousePos && inputs.UsesKeyboard())
         {
-            if (playersManager.gameMode == PlayersManager.GameModes.MONO)
-            {
-                ray = usedCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
-                newPos = ray.origin + ray.direction * (transform.position.z + Mathf.Abs(usedCamera.transform.position.z));
-            }
-            else if (playersManager.gameMode == PlayersManager.GameModes.MULTI_LOCAL)
-            {
-                Debug.Log(playerId + " has " + inputs.ControlData[0].deviceType.ToString());
-                if (inputs.ControlData[0].deviceType == InputSystem.DeviceTypes.KEYBOARD)
-                {
-                    //mousePos.y -= Screen.height;
-                    //mousePos.z = usedCamera.transform.position.z;
-                    // ToDo: Trobar les distancies entre quad i sumar-les, potser agafar distancies entre initPoints pot ser bona idea
-                    //float quadDistances = Vector3.Distance(playersManager.GetPlayer(0).position, playersManager.GetPlayer(playerId).position);
-                    //mousePos.x += quadDistances;
-                    Vector3 rendererMousePos = mousePos - rendererCamera.position;
-                    rendererMousePos *= 2;
-                    rendererMousePos.z = 0;
-                    if (playerId == 0 || playerId == 2)
-                        rendererMousePos.x += Screen.width;
-                    if (playerId == 2 || playerId == 3)
-                        rendererMousePos.y += Screen.height * 1.25f;
-
-                    ray = usedCamera.ScreenPointToRay(rendererMousePos);
-
-                    newPos = ray.origin + ray.direction * (transform.position.z + Mathf.Abs(usedCamera.transform.position.z));
-                }
-            }
+            ray = usedCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
+            newPos = ray.origin + ray.direction * (transform.position.z + Mathf.Abs(usedCamera.transform.position.z));
             target.transform.position = newPos;
+            //if (playersManager.gameMode == PlayersManager.GameModes.MONO)
+            //{
+            //    ray = usedCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
+            //    newPos = ray.origin + ray.direction * (transform.position.z + Mathf.Abs(usedCamera.transform.position.z));
+            //}
+            //else if (playersManager.gameMode == PlayersManager.GameModes.MULTI_LOCAL)
+            //{
+            //    Debug.Log(playerId + " has " + inputs.ControlData[0].deviceType.ToString());
+            //    if (inputs.ControlData[0].deviceType == InputSystem.DeviceTypes.KEYBOARD)
+            //    {
+            //        //mousePos.y -= Screen.height;
+            //        //mousePos.z = usedCamera.transform.position.z;
+            //        // ToDo: Trobar les distancies entre quad i sumar-les, potser agafar distancies entre initPoints pot ser bona idea
+            //        //float quadDistances = Vector3.Distance(playersManager.GetPlayer(0).position, playersManager.GetPlayer(playerId).position);
+            //        //mousePos.x += quadDistances;
+            //        Vector3 rendererMousePos = mousePos - rendererCamera.position;
+            //        rendererMousePos *= 2;
+            //        rendererMousePos.z = 0;
+            //        if (playerId == 0 || playerId == 2)
+            //            rendererMousePos.x += Screen.width;
+            //        if (playerId == 2 || playerId == 3)
+            //            rendererMousePos.y += Screen.height * 1.25f;
+
+            //        ray = usedCamera.ScreenPointToRay(rendererMousePos);
+
+            //        newPos = ray.origin + ray.direction * (transform.position.z + Mathf.Abs(usedCamera.transform.position.z));
+            //    }
+            //}
         }
         lastMousePos = mousePos;
-
-        SetNewValues(playerStats);
 
         if (Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, layerMask))
         {
@@ -151,13 +147,13 @@ public class ModifierManager : MonoBehaviour
                 return;
             }
 
-            if (target.transform.childCount > 0 &&
-                (raycastHit.transform.childCount == 0 ||
-                (raycastHit.transform.childCount > 0 &&
-                target.transform.GetChild(0).tag != raycastHit.transform.GetChild(0).tag)))
-            {
-                SetNewValues(playerStats + target.transform.GetComponentInChildren<Stats>().GetStats());
-            }
+            //if (target.transform.childCount > 0 &&
+            //    (raycastHit.transform.childCount == 0 ||
+            //    (raycastHit.transform.childCount > 0 &&
+            //    target.transform.GetChild(0).tag != raycastHit.transform.GetChild(0).tag)))
+            //{
+            //    SetNewValues(playerStats + target.transform.GetComponentInChildren<Stats>().GetStats());
+            //}
 
         }
 

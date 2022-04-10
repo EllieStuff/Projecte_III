@@ -30,20 +30,8 @@ public class RendererCamerasManager : MonoBehaviour
         cameraManager.rendTexManager.SetRenderSetup(numOfPlayers);
 
         string sceneName = SceneManager.GetActiveScene().name;
-        if (sceneName == "Building Scene" || sceneName == "Building Scene Multiplayer") {
-            if (numOfPlayers == 2)
-            {
-                Transform camera = cameraManager.GetCamera(0).transform;
-                camera.position = camera.position + marginVector;
-                camera = cameraManager.GetCamera(1).transform;
-                camera.position = camera.position + marginVector;
-            }
-            else if (numOfPlayers == 3)
-            {
-                Transform camera = cameraManager.GetCamera(2).transform;
-                camera.position = camera.position + marginVector;
-            }
-        }
+        if (!sceneName.Contains("Building Scene"))
+            gameObject.SetActive(false);
 
     }
 
