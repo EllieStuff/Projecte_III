@@ -32,7 +32,7 @@ public class PlayerFloater : MonoBehaviour
     {
         if (other.tag.Equals("Water") && !hasFloater)
         {
-            StartCoroutine(player.LerpVehicleMaxSpeed(player.savedMaxSpeed * 2 / 3, 3.0f));
+            //StartCoroutine(player.LerpVehicleMaxSpeed(player.savedMaxSpeed * 2 / 3, 3.0f));
         }
     }
 
@@ -40,7 +40,7 @@ public class PlayerFloater : MonoBehaviour
     {
         if (other.tag.Equals("Water") && !hasFloater)
         {
-            StartCoroutine(player.LerpVehicleMaxSpeed(player.savedMaxSpeed, 1.5f));
+            //StartCoroutine(player.LerpVehicleMaxSpeed(player.savedMaxSpeed, 1.5f));
         }
     }
 

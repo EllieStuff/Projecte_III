@@ -28,7 +28,7 @@ public class CameraFollow : MonoBehaviour
         fovSystem();
         HandlePosition();
         HandleRotation();
-        RaycastCamera();
+        //RaycastCamera();
 
     }
 

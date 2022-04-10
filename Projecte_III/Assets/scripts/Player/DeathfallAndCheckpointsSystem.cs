@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class DeathfallAndCheckpointsSystem : MonoBehaviour
 {
-    public int checkpointNumber;
+    /*public int checkpointNumber;
     public bool finishRaceCP;
     public bool activated;
     private bool enableMusic;
@@ -158,5 +158,5 @@ public class DeathfallAndCheckpointsSystem : MonoBehaviour
             }
 
         }
-    }
+    }*/
 }

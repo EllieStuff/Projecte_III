@@ -113,7 +113,7 @@ public class WheelButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
         instance.GetComponent<AudioSource>().enabled = true;
 
-        playerStats.SetStats();
+        //playerStats.SetStats();
 
 
 

@@ -9,7 +9,7 @@ public class plungerInstance : MonoBehaviour
     public bool destroyPlunger;
     public Transform quadTarget;
     [SerializeField] Rigidbody body;
-    [SerializeField] private float plungerVelocity;
+    [SerializeField] internal float plungerVelocity;
     [SerializeField] private float plungerSpeedLerp;
     public bool plungerHit;
     public GameObject playerShotPlunger;
@@ -24,7 +24,7 @@ public class plungerInstance : MonoBehaviour
     private void Start()
     {
         line = GetComponent<LineRenderer>();
-        AudioManager.Instance.Play_SFX("Plunger_Hit_SFX");
+        //AudioManager.Instance.Play_SFX("Plunger_Hit_SFX");
         startRot = new Quaternion(0, transform.rotation.y, 0, transform.rotation.w);
         
         if(normalDir != Vector3.zero)
@@ -32,8 +32,8 @@ public class plungerInstance : MonoBehaviour
         else
             body.velocity = transform.TransformDirection(new Vector3(0, 0.5f, plungerVelocity));
         
-        if (transform.InverseTransformDirection(body.velocity).z < 0)
-            Destroy(gameObject);
+        //if (transform.InverseTransformDirection(body.velocity).z < 0)
+            //Destroy(gameObject);
     }
 
     private void Update()
@@ -56,7 +56,7 @@ public class plungerInstance : MonoBehaviour
                 transform.position = otherQuad.transform.position;
                 
                 if (otherQuadRB.velocity.y < 1)
-                    otherQuad.GetComponent<PlayerVehicleScript>().vehicleMaxSpeed = -20;
+                    otherQuad.GetComponent<PlayerVehicleScript>().vehicleRB.velocity = (playerShotPlunger.transform.position - otherQuad.transform.position).normalized * 5;
 
                 if (Vector3.Distance(transform.position, playerShotPlunger.transform.position) <= 2)
                     destroyPlunger = true;
@@ -64,20 +64,20 @@ public class plungerInstance : MonoBehaviour
                     destroyPlunger = true;
             }
 
-            if (Vector3.Distance(transform.position, playerShotPlunger.transform.position) > 2 && !collisionTag.Equals("ground"))
+            if (Vector3.Distance(transform.position, playerShotPlunger.transform.position) > 5 && !collisionTag.Equals("ground"))
             {
                 Rigidbody playerRB = playerShotPlunger.GetComponent<Rigidbody>();
                 timerDestroy -= Time.deltaTime;
                 
-                if (timerDestroy <= 0 || prepareToDestroy || Vector3.Distance(transform.position, playerShotPlunger.transform.position) >= 50)
+                if (timerDestroy <= 0 || prepareToDestroy || Vector3.Distance(transform.position, playerShotPlunger.transform.position) >= 15)
                     destroyPlunger = true;
 
                 float oldSpeedY = playerRB.velocity.y;
 
                 if (Mathf.Abs(transform.TransformDirection(playerRB.velocity).z) > 0 && playerRB.velocity.y < 5)
                 {
-                    if (!prepareToDestroy)
-                        playerShotPlunger.GetComponent<PlayerVehicleScript>().vehicleMaxSpeed = 35;
+                    if (!prepareToDestroy && otherQuad != null)
+                        playerShotPlunger.GetComponent<PlayerVehicleScript>().vehicleRB.velocity = (otherQuad.transform.position - playerShotPlunger.transform.position).normalized * 5;
 
                     playerRB.velocity += playerShotPlunger.transform.TransformDirection(new Vector3(0, 0, 0.5f));
                     playerRB.velocity = new Vector3(playerRB.velocity.x, oldSpeedY, playerRB.velocity.z);
@@ -87,7 +87,7 @@ public class plungerInstance : MonoBehaviour
             {
                 prepareToDestroy = true;
             }
-            else if (Vector3.Distance(transform.position, playerShotPlunger.transform.position) <= 2 || Vector3.Distance(transform.position, playerShotPlunger.transform.position) > 20)
+            else if (Vector3.Distance(transform.position, playerShotPlunger.transform.position) <= 5 || Vector3.Distance(transform.position, playerShotPlunger.transform.position) > 15)
             {
                 destroyPlunger = true;
             }
@@ -97,7 +97,7 @@ public class plungerInstance : MonoBehaviour
             transform.rotation = Quaternion.Lerp(transform.rotation, endQuad, Time.deltaTime * plungerSpeedLerp);
             transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(0, 180, 0), Time.deltaTime * plungerSpeedLerp);
         }
-        else if (Vector3.Distance(transform.position, playerShotPlunger.transform.position) <= 2 || Vector3.Distance(transform.position, playerShotPlunger.transform.position) <= 50 && !destroyPlunger)
+        else if (Vector3.Distance(transform.position, playerShotPlunger.transform.position) <= 2 || Vector3.Distance(transform.position, playerShotPlunger.transform.position) <= 15 && !destroyPlunger)
             this.transform.rotation = startRot;
         else if(!destroyPlunger)
             destroyPlunger = true;
@@ -121,17 +121,17 @@ public class plungerInstance : MonoBehaviour
     {
         if (!plungerHit)
         {
-            AudioManager.Instance.Play_SFX("Plunger_Arrived_SFX");
+            //AudioManager.Instance.Play_SFX("Plunger_Arrived_SFX");
             collisionTag = collision.gameObject.tag;
 
             if(collision.gameObject.tag.Contains("Player") && collision.gameObject != playerShotPlunger)
             {
                 quadTarget = null;
                 otherQuad = collision.gameObject;
-                AudioManager.Instance.Play_SFX("Plunger_Arrived_SFX");
+                //AudioManager.Instance.Play_SFX("Plunger_Arrived_SFX");
             }
 
-            transform.parent = collision.transform;
+            //transform.parent = collision.transform;
 
             if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out RaycastHit raycastHit, 100))
             {
@@ -151,17 +151,17 @@ public class plungerInstance : MonoBehaviour
     {
         if (!plungerHit)
         {
-            AudioManager.Instance.Play_SFX("Plunger_Arrived_SFX");
+            //AudioManager.Instance.Play_SFX("Plunger_Arrived_SFX");
             collisionTag = collision.gameObject.tag;
 
             if (collision.gameObject.tag.Contains("Player") && collision.gameObject != playerShotPlunger)
             {
                 quadTarget = null;
                 otherQuad = collision.gameObject;
-                AudioManager.Instance.Play_SFX("Plunger_Arrived_SFX");
+                //AudioManager.Instance.Play_SFX("Plunger_Arrived_SFX");
             }
 
-            transform.parent = collision.transform;
+            //transform.parent = collision.transform;
 
             if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out RaycastHit raycastHit, 100))
             {

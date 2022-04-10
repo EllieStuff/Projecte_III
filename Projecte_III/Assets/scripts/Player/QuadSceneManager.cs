@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class QuadSceneManager : MonoBehaviour
 {
     public int playerId;
-
+    /*
     PlayersManager playersManager;
     GameObject player;
     PlayerVehicleScript playerScript;
@@ -95,7 +95,6 @@ public class QuadSceneManager : MonoBehaviour
             GetComponentInChildren<PlayerVehicleScript>().buildingScene = false;
             GetComponentInChildren<PlayerVehicleScript>().SetWheels();
 
-            player.GetComponent<PlayerStatsManager>().HideVoidModifier();
             playerScript.SetWheels();
             playerScript.buildingScene = false;
 
@@ -167,6 +166,6 @@ public class QuadSceneManager : MonoBehaviour
             default:
                 break;
         }
-    }
+    }*/
 
 }

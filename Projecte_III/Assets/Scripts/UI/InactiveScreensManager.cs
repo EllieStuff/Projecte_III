@@ -6,7 +6,7 @@ using TMPro;
 
 public class InactiveScreensManager : MonoBehaviour
 {
-    PlayersManager playersManager;
+   /* PlayersManager playersManager;
     PlayerInputs currPlayerInputs;
     DoneButtonManager doneBttnManager;
     int playersInited = 0;
@@ -53,5 +53,5 @@ public class InactiveScreensManager : MonoBehaviour
         doneBttnManager.buttonsActive = playersInited;
         doneBttnManager.GetButton(_idx).isActive = true;
     }
-
+   */
 }

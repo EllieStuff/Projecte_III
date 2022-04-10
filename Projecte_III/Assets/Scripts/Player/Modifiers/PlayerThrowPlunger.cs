@@ -14,8 +14,8 @@ public class PlayerThrowPlunger : MonoBehaviour
     private GameObject plungerInstance;
     [SerializeField] private GameObject plungerPrefab;
     private PlayerVehicleScript player;
-    bool plungerEnabled = false;
-    bool hasPlunger;
+    [SerializeField] bool plungerEnabled = false;
+    [SerializeField] internal bool hasPlunger;
     Transform modifierTransform;
     public LineRenderer line;
 
@@ -25,10 +25,13 @@ public class PlayerThrowPlunger : MonoBehaviour
         modifierTransform = transform;
     }
 
-    public void Activate()
+    public void Activate(Vector3 dir)
     {
         if (hasPlunger)
+        {
+            savedDirection = dir;
             plungerEnabled = true;
+        }
     }
 
     private void Start()
@@ -41,7 +44,7 @@ public class PlayerThrowPlunger : MonoBehaviour
     {
         if (hasPlunger)
         {
-            CheckPlungerThrow();
+            //CheckPlungerThrow();
             PlungerUpdate();
         }
     }
@@ -99,20 +102,22 @@ public class PlayerThrowPlunger : MonoBehaviour
                 createMaterial = true;
             }
 
-            plungerInstance = Instantiate(plungerPrefab, modifierTransform.position, this.transform.rotation);
+            plungerInstance = Instantiate(plungerPrefab, transform.position, transform.rotation);
+
+            if (transform.InverseTransformDirection(savedDirection).z < 0.5f)
+            {
+                Vector3 euler = plungerInstance.transform.GetChild(0).localRotation.eulerAngles;
+                plungerInstance.transform.GetChild(0).localRotation = Quaternion.Euler(euler.x, -euler.y, euler.z);
+                savedDirection = new Vector3(savedDirection.x, savedDirection.y - 2.5f, savedDirection.z);
+                plungerInstance.GetComponent<plungerInstance>().plungerVelocity /= 1.5f;
+            }
+
             Physics.IgnoreCollision(plungerInstance.transform.GetChild(0).GetComponent<BoxCollider>(), transform.GetChild(0).GetComponent<BoxCollider>());
-            if(!localTransform.tag.Equals("Player"))
-            {
-                plungerInstance.GetComponent<plungerInstance>().playerShotPlunger = this.gameObject;
-                plungerInstance.GetComponent<plungerInstance>().playerNum = player.playerNum;
-                plungerInstance.GetComponent<plungerInstance>().normalDir = savedDirection;
-            }
-            else
-            {
-                plungerInstance.GetComponent<plungerInstance>().playerShotPlunger = this.gameObject;
-                plungerInstance.GetComponent<plungerInstance>().playerNum = player.playerNum;
-                plungerInstance.GetComponent<plungerInstance>().quadTarget = localTransform;
-            }
+            
+            plungerInstance.GetComponent<plungerInstance>().playerShotPlunger = this.gameObject;
+            plungerInstance.GetComponent<plungerInstance>().playerNum = player.playerNum;
+            plungerInstance.GetComponent<plungerInstance>().normalDir = savedDirection;
+            
             plunger = true;
             plungerDisappearCooldown = plungerBaseDisappearCooldown;
         }

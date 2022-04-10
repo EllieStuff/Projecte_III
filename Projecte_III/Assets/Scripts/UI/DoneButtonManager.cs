@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DoneButtonManager : MonoBehaviour
 {
-    [SerializeField] internal Color selectedBttnImgColor;
+/*    [SerializeField] internal Color selectedBttnImgColor;
     [SerializeField] Color readyBttnImgColor;
 
     public int buttonsActive = 0;
@@ -72,5 +72,5 @@ public class DoneButtonManager : MonoBehaviour
         LoadSceneManager sceneManager = GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>();
         sceneManager.ChangeScene(goToScene);
     }
-
+*/
 }

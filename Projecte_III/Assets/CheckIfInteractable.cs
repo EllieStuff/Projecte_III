@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class CheckIfInteractable : MonoBehaviour
 {
-    ButtonManager manager;
+    /*ButtonManager manager;
     PlayerInputs playerInputs;
     bool bttnInited;
 
@@ -35,5 +35,5 @@ public class CheckIfInteractable : MonoBehaviour
                 }
             }
         }
-    }
+    }*/
 }

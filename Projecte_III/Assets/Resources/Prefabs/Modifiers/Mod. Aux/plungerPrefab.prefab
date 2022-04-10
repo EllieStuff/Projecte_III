@@ -24,25 +24,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1904546439257776825}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -2.65}
+  m_LocalPosition: {x: 0, y: 0, z: -1.325}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5494614787086116353}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &4569914630596325991
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4217287097237849186}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.2, y: 0.5, z: 0.2}
-  m_Center: {x: -0.014967125, y: 0.038002312, z: -0.013160273}
 --- !u!54 &1701954889910864321
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -190,11 +177,25 @@ MonoBehaviour:
   playerNum: 0
   normalDir: {x: 0, y: 0, z: 0}
   destroyPlunger: 0
+  quadTarget: {fileID: 0}
   body: {fileID: 1701954889910864321}
   plungerVelocity: 50
   plungerSpeedLerp: 5
   plungerHit: 0
   playerShotPlunger: {fileID: 0}
+--- !u!65 &4569914630596325991
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4217287097237849186}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.2, y: 0.5, z: 0.2}
+  m_Center: {x: -0.014967125, y: 0.038002312, z: -0.013160273}
 --- !u!1001 &5461303344966205930
 PrefabInstance:
   m_ObjectHideFlags: 0
