@@ -135,10 +135,10 @@ public class RadialMenuManager : MonoBehaviour
             case "Plunger":
                 // ToDo: Adaptar amb els nous scripts
                 LineRenderer line = player.GetComponent<PlayerThrowPlunger>().line;
-                if (line.material.color.Equals(Color.green) || line.GetPosition(1) == Vector3.zero)
+                /*if (line.material.color.Equals(Color.green) || line.GetPosition(1) == Vector3.zero)
                     player.GetComponent<PlayerThrowPlunger>().Activate();
                 else
-                    hasBeenUsed = false;
+                    hasBeenUsed = false;*/
                 break;
 
             case "AlaDelta":

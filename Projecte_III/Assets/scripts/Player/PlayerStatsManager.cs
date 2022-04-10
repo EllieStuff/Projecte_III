@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerStatsManager : MonoBehaviour
 {
-    [SerializeField] private Stats stats;
+    /*[SerializeField] private Stats stats;
     [SerializeField] private GameObject statsManager;
     bool first = false;
     PlayersManager playersManager;
@@ -70,5 +70,5 @@ public class PlayerStatsManager : MonoBehaviour
                 child.gameObject.SetActive(false);
             }
         }
-    }
+    }*/
 }

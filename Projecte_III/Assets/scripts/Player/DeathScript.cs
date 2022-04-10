@@ -17,7 +17,7 @@ public static class DeathScript
         outPlayerTransform = playerTransform;
         if (timeInFlippedState >= 1)
         {
-            AudioManager.Instance.Play_SFX("Fall_SFX");
+            //AudioManager.Instance.Play_SFX("Fall_SFX");
             outPlayerTransform.position = respawnPosition;
             outPlayerTransform.localEulerAngles = respawnRotation;
             outPlayerTransform.localEulerAngles += new Vector3(0, 90, 0);
@@ -32,12 +32,13 @@ public static class DeathScript
     {
         outPlayerRB = playerRB;
         outPlayerTransform = playerTransform;
-        if (!gliderActive && playerRB.velocity.y <= -100)
+        if (!gliderActive && playerRB.velocity.y <= -30)
         {
-            AudioManager.Instance.Play_SFX("Fall_SFX");
+            //AudioManager.Instance.Play_SFX("Fall_SFX");
             outPlayerTransform.position = respawnPosition;
             outPlayerTransform.localEulerAngles = respawnRotation;
-            outPlayerTransform.localEulerAngles += new Vector3(0, 90, 0);
+            outPlayerTransform.localEulerAngles += new Vector3(0, 180, 0);
+            outPlayerTransform.localEulerAngles = new Vector3(0, outPlayerTransform.localEulerAngles.y, outPlayerTransform.localEulerAngles.z);
             outPlayerRB.velocity = new Vector3(respawnVelocity.x, respawnVelocity.y, respawnVelocity.z);
             return true;
         }

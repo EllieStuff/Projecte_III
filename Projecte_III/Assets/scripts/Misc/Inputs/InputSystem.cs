@@ -6,7 +6,7 @@ public class InputSystem : MonoBehaviour
 {
     public const float INPUT_THRESHOLD = 0.3f;
 
-    public enum KeyCodes { FORWARD, BACKWARD, LEFT, RIGHT, START, DRIFT, ENABLE_GADGET_MENU, CONFIRM_GADGET, USE_GADGET, MENU_UP, MENU_DOWN, MENU_RIGHT, MENU_LEFT, MENU_ACCEPT, MENU_DECLINE };
+    public enum KeyCodes { FORWARD, BACKWARD, LEFT, RIGHT, START, DRIFT, ENABLE_GADGET_MENU, CONFIRM_GADGET, USE_GADGET, SHOOT_FORWARD, SHOOT_BACKWARD, SHOOT_LEFT, SHOOT_RIGHT, MENU_UP, MENU_DOWN, MENU_RIGHT, MENU_LEFT, MENU_ACCEPT, MENU_DECLINE };
     public enum AxisCodes { CHOOSE_ITEM };
     public enum DeviceTypes { DEFAULT, KEYBOARD, CONTROLLER };
 
@@ -365,6 +365,50 @@ public class InputSystem : MonoBehaviour
                         }
                     }
 
+                    break;
+
+                case KeyCodes.SHOOT_FORWARD:
+                    for (int i = 0; i < controls.Quad.ShootForward.controls.Count; i++)
+                    {
+                        if (controls.Quad.ShootForward.controls[i].device.deviceId == mainDeviceId)
+                        {
+                            //Debug.Log("BuildingMenu.Up is " + controls.BuildingMenu.Up.controls[i].EvaluateMagnitude());
+                            if (controls.Quad.ShootForward.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return true;
+                        }
+                    }
+                    break;
+
+                case KeyCodes.SHOOT_BACKWARD:
+                    for (int i = 0; i < controls.Quad.ShootBackwards.controls.Count; i++)
+                    {
+                        if (controls.Quad.ShootBackwards.controls[i].device.deviceId == mainDeviceId)
+                        {
+                            //Debug.Log("BuildingMenu.Up is " + controls.BuildingMenu.Up.controls[i].EvaluateMagnitude());
+                            if (controls.Quad.ShootBackwards.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return true;
+                        }
+                    }
+                    break;
+
+                case KeyCodes.SHOOT_LEFT:
+                    for (int i = 0; i < controls.Quad.ShootLeft.controls.Count; i++)
+                    {
+                        if (controls.Quad.ShootLeft.controls[i].device.deviceId == mainDeviceId)
+                        {
+                            //Debug.Log("BuildingMenu.Up is " + controls.BuildingMenu.Up.controls[i].EvaluateMagnitude());
+                            if (controls.Quad.ShootLeft.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return true;
+                        }
+                    }
+                    break;
+
+                case KeyCodes.SHOOT_RIGHT:
+                    for (int i = 0; i < controls.Quad.ShootRight.controls.Count; i++)
+                    {
+                        if (controls.Quad.ShootRight.controls[i].device.deviceId == mainDeviceId)
+                        {
+                            //Debug.Log("BuildingMenu.Up is " + controls.BuildingMenu.Up.controls[i].EvaluateMagnitude());
+                            if (controls.Quad.ShootRight.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return true;
+                        }
+                    }
                     break;
 
                 //MENU_UP, MENU_DOWN, MENU_RIGHT, MENU_LEFT, MENU_ACCEPT, MENU_DECLINE

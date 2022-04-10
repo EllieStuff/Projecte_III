@@ -31,8 +31,8 @@ public class LoadSceneManager : MonoBehaviour
         PlayersManager playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
         if (currentSceneName.Contains("Menu"))
         {
-            for (int i = 0; i < playersManager.numOfPlayers; i++)
-                playersManager.GetPlayer(i).GetComponent<PlayerStatsManager>().SetStats();
+            //for (int i = 0; i < playersManager.numOfPlayers; i++)
+                //playersManager.GetPlayer(i).GetComponent<PlayerStatsManager>().SetStats();
         }
 
         changeScene = true;
