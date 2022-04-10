@@ -38,7 +38,7 @@ public class DriftingSystem : MonoBehaviour
         {
             if (player.inputs.Left && player.inputs.Drift)
             {
-                player.vehicleMaxSpeed = player.savedMaxSpeed + 5f;
+                player.vehicleMaxSpeed = player.savedMaxSpeed + 0.2f;
                 if (!driftLeft)
                 {
                     player.vehicleRB.AddTorque(0, -player.vehicleTorque * driftTorqueInc, 0);
