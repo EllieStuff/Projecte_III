@@ -16,6 +16,10 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
 
     private void Start()
     {
+        Init();
+    }
+    internal void Init()
+    {
         centerRespawn = GameObject.Find("Main Camera").transform;
         player = GetComponent<PlayerVehicleScript>();
         respawnPosition = new Vector3(0, 0, 0);

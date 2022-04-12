@@ -6,7 +6,7 @@ public class PlayerChasisElevation : MonoBehaviour
 {
     float chasisElevationTimer;
     [SerializeField] private bool chasisElevation;
-    QuadControlSystem controls;
+    PlayerInputs inputs;
     bool chasisEnabled;
     bool hasChasis;
 
@@ -23,7 +23,7 @@ public class PlayerChasisElevation : MonoBehaviour
 
     private void Start()
     {
-        controls = GetComponent<PlayerVehicleScript>().controls;
+        inputs = GetComponent<PlayerInputs>();
     }
 
     private void Update()
@@ -36,7 +36,7 @@ public class PlayerChasisElevation : MonoBehaviour
     {
         Transform chasisTransform = transform.GetChild(0);
 
-        if ((controls.Quad.ChasisElevation || chasisEnabled) && !chasisElevation && chasisTransform.localPosition.y <= 0)
+        if ((inputs.ShootAny || chasisEnabled) && !chasisElevation && chasisTransform.localPosition.y <= 0)
         {
             chasisEnabled = false;
             chasisElevation = true;

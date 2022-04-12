@@ -42,14 +42,14 @@ public class PlayingMainRadialMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gameObject.activeSelf && rmPieces.Length > 0)
-        {
-            HighlightActiveElement(activeElement);
-            if (playerInputs.ConfirmGadget) SelectGadget();
+        //if (gameObject.activeSelf && rmPieces.Length > 0)
+        //{
+        //    HighlightActiveElement(activeElement);
+        //    if (playerInputs.ConfirmGadget) SelectGadget();
 
-            lastActiveElement = activeElement;
-            activeElement = GetActiveElement();
-        }
+        //    lastActiveElement = activeElement;
+        //    activeElement = GetActiveElement();
+        //}
 
     }
 
