@@ -50,6 +50,16 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
             transform.rotation = outTransform.rotation;
             player.vehicleRB.velocity = outVehicleRB.velocity;
             player.lifes--;
+
+            GameObject parent = transform.parent.gameObject;
+
+            if (player.lifes <= 0)
+                parent.SetActive(false);
+            else
+            {
+                GetComponent<ParticleSystem>().Play();
+                parent.GetComponent<AudioSource>().Play();
+            }
         }
 
         if (reduceSpeed && player.vehicleMaxSpeed > player.savedMaxSpeed)
