@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Umbrella : MonoBehaviour
 {
-    public bool umbrellaEnabled;
+    bool umbrellaActivated;
+    float umbrellaTimer = 10;
     [SerializeField] GameObject umbrellaGameObject;
 
     // Start is called before the first frame update
@@ -14,13 +15,24 @@ public class Umbrella : MonoBehaviour
         umbrellaGameObject.SetActive(false);
     }
 
-    public void ActivateUmbrella()
+    private void Update()
     {
-        umbrellaGameObject.SetActive(true);
+        if(umbrellaActivated)
+        {
+            umbrellaGameObject.SetActive(true);
+            umbrellaTimer -= Time.deltaTime;
+
+            if(umbrellaTimer <= 0)
+            {
+                umbrellaTimer = 10;
+                umbrellaActivated = false;
+                umbrellaGameObject.SetActive(false);
+            }
+        }
     }
 
-    public void StopUmbrella()
+    public void ActivateUmbrella()
     {
-        umbrellaGameObject.SetActive(false);
+        umbrellaActivated = true;
     }
 }
