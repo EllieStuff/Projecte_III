@@ -10,7 +10,7 @@ public class PlayersManager : MonoBehaviour
 
     public int numOfPlayers = 1;
     public Transform[] players;
-    [SerializeField] Transform[] modifiers;
+    //[SerializeField] Transform[] modifiers;
 
 
     // Start is called before the first frame update
@@ -64,11 +64,11 @@ public class PlayersManager : MonoBehaviour
 
         return players[_idx];
     }
-    public Transform GetPlayerModifier(int _idx = 0)
-    {
-        if (gameMode == GameModes.MONO) return modifiers[0];
+    //public Transform GetPlayerModifier(int _idx = 0)
+    //{
+    //    if (gameMode == GameModes.MONO) return modifiers[0];
 
-        return modifiers[_idx];
-    }
+    //    return modifiers[_idx];
+    //}
 
 }

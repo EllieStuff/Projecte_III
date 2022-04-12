@@ -39,14 +39,14 @@ public class BuildingRadialMenu : MonoBehaviour
     }
     void InitModifierSpots()
     {
-        Transform modifiersFather = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>().GetPlayerModifier(playerId).GetChild(0);
-        modifierSpots = new Transform[modifiersFather.childCount];
-        modifierSpotsData = new ModifierSpotsData[modifierSpots.Length];
-        for(int i = 0; i < modifierSpots.Length; i++)
-        {
-            modifierSpots[i] = modifiersFather.GetChild(i);
-            modifierSpotsData[i] = new ModifierSpotsData();
-        }
+        //Transform modifiersFather = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>().GetPlayerModifier(playerId).GetChild(0);
+        //modifierSpots = new Transform[modifiersFather.childCount];
+        //modifierSpotsData = new ModifierSpotsData[modifierSpots.Length];
+        //for(int i = 0; i < modifierSpots.Length; i++)
+        //{
+        //    modifierSpots[i] = modifiersFather.GetChild(i);
+        //    modifierSpotsData[i] = new ModifierSpotsData();
+        //}
 
     }
 
