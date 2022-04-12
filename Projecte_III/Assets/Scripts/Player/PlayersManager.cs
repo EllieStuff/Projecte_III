@@ -18,7 +18,7 @@ public class PlayersManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -27,9 +27,9 @@ public class PlayersManager : MonoBehaviour
         {
             // Do nothing
         }
-        else if (scene.name.Equals("SceneSelector"))
+        else if (scene.name.Contains("Building Scene"))
             disableFunctions = true;
-        else if (scene.name == "Building Scene Multiplayer" && !disableFunctions)
+        if (scene.name == "Building Scene Multiplayer" && !disableFunctions)
         {
             for (int i = 0; i < transform.childCount; i++)
             {

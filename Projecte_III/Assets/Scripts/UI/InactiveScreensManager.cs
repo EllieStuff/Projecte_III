@@ -6,10 +6,10 @@ using TMPro;
 
 public class InactiveScreensManager : MonoBehaviour
 {
-   /* PlayersManager playersManager;
-    PlayerInputs currPlayerInputs;
-    DoneButtonManager doneBttnManager;
-    int playersInited = 0;
+    [SerializeField] PlayersManager playersManager;
+    [SerializeField] PlayerInputs currPlayerInputs;
+    [SerializeField] DoneButtonManager doneBttnManager;
+    [SerializeField] int playersInited = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -53,5 +53,4 @@ public class InactiveScreensManager : MonoBehaviour
         doneBttnManager.buttonsActive = playersInited;
         doneBttnManager.GetButton(_idx).isActive = true;
     }
-   */
 }
