@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BarrelScript : MonoBehaviour
 {
-    enum BarrelType { EXPLOSIVE, MOBIL, COUNT};
+    public enum BarrelType { EXPLOSIVE, MOBIL, COUNT};
 
     [SerializeField] BarrelType type;
 
@@ -14,20 +14,30 @@ public class BarrelScript : MonoBehaviour
 
     Rigidbody rb = null;
 
+    BarrelColision barrel;
+
+    [SerializeField] bool hasExploded = false;
     Transform explosion = null;
 
     // Start is called before the first frame update
     void Start()
     {
+        barrel = transform.GetChild(0).GetComponent<BarrelColision>();
+
+        rb = barrel.gameObject.AddComponent<Rigidbody>();
+        rb.constraints = RigidbodyConstraints.FreezeRotation;
+
         switch (type)
         {
             case BarrelType.EXPLOSIVE:
-                explosion = transform.GetChild(0);
-                //transform.GetComponentInChildren<BarrelExplosion>().Player = player;
+                explosion = barrel.transform.GetChild(0);
+                explosion.GetComponent<SphereCollider>().enabled = false;
+
+                transform.GetComponentInChildren<BarrelExplosion>().Player = player;
 
                 break;
             case BarrelType.MOBIL:
-                rb = gameObject.AddComponent<Rigidbody>();
+                barrel.Player = player;
                 
                 break;
             case BarrelType.COUNT:
@@ -38,23 +48,30 @@ public class BarrelScript : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if(type == BarrelType.MOBIL)
+        if (type == BarrelType.MOBIL)
         {
+            Debug.Log("Forward: " + transform.forward);
             //Move Barrel forward
             rb.velocity = transform.forward * speed;
         }
-
-        
+        else if(type == BarrelType.EXPLOSIVE)
+        {
+            if(hasExploded)
+            {
+                explosion.GetComponent<SphereCollider>().enabled = true;
+            }
+        }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    public BarrelType GetType()
     {
-        if(collision.gameObject.CompareTag(player.tag))
-        {
-            Debug.Log("Collision with player");
-        }
+        return type;
+    }
+
+    public void Explode()
+    {
+        hasExploded = true;
     }
 }

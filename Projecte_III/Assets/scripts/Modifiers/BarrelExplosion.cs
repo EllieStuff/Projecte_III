@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class BarrelExplosion : MonoBehaviour
 {
-    PlayerVehicleScript player;
+    Transform player;
 
-    public PlayerVehicleScript Player
+    public Transform Player
     {
         get => player;
         set => player = value;
@@ -14,6 +14,9 @@ public class BarrelExplosion : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        
+        if (other.gameObject.tag.Contains("Player"))
+        {
+            Debug.Log("Player inside exlosion");
+        }
     }
 }
