@@ -10,7 +10,7 @@ public class PlayerData : MonoBehaviour
     PlayersManager playersManager;
     GameObject player;
     PlayerVehicleScript playerScript;
-    bool sceneLoaded;
+    bool sceneLoaded = false;
 
     private void Awake()
     {
@@ -28,7 +28,9 @@ public class PlayerData : MonoBehaviour
     }
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name.Contains("Menu") && !sceneLoaded)
+        if (sceneLoaded) return;
+
+        if (scene.name.Contains("Menu"))
         {
 
             //for (int i = 0; i < transform.childCount; i++)
@@ -38,7 +40,7 @@ public class PlayerData : MonoBehaviour
             //        child.SetActive(false);
             //}
         }
-        else if (scene.name.Contains("Building Scene") && !sceneLoaded)
+        else if (scene.name.Contains("Building Scene"))
         {
             //for (int i = 0; i < transform.childCount; i++)
             //{
@@ -74,7 +76,7 @@ public class PlayerData : MonoBehaviour
                 Destroy(objs[1]);
             }
         }
-        else if (scene.name != "Menu" && scene.name != "SceneSelector" && !sceneLoaded)
+        else if (scene.name != "Menu" && scene.name != "SceneSelector")
         {
             Transform initial = GameObject.FindGameObjectWithTag("InitPos").GetComponent<InitPosManager>().GetInitPos(id);
             gameObject.transform.position = initial.position;

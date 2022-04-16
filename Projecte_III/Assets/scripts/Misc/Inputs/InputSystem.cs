@@ -152,6 +152,39 @@ public class InputSystem : MonoBehaviour
         return null;
     }
 
+    public ControlData GetControllerData(int _deviceId)
+    {
+        ControlData controller = new ControlData();
+        for (int i = 0; i < controls.Quad.ActivateController.controls.Count; i++)
+        {
+            if (controls.Quad.ActivateController.controls[i].device.deviceId != _deviceId)
+                continue;
+
+            if (controls.Quad.ActivateController.controls[i].path.Contains("Keyboard"))
+            {
+                for (int j = 0; j < controls.Quad.ActivateController.controls.Count; j++)
+                {
+                    if (controls.Quad.ActivateController.controls[j].path.Contains("Mouse"))
+                    {
+                        controller.InitKeyboard(controls, i, j);
+                        activatedControllers.Add(controller);
+                        return controller;
+                    }
+                }
+            }
+            else
+            {
+                controller.InitController(controls, i);
+                activatedControllers.Add(controller);
+                return controller;
+            }
+
+        }
+
+        return null;
+    }
+
+
     public float GetKeyFloat(KeyCodes _key, ControlData[] _controlData)   // Si dones problemes, adaptar tots perque vagin amb la "complexCasesReturnAux" en contres de amb returns
     {
         for (int idx = 0; idx < _controlData.Length; idx++)

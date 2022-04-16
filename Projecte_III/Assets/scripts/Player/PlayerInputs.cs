@@ -10,6 +10,8 @@ public class PlayerInputs : MonoBehaviour
     InputSystem inputSystem;
     InputSystem.ControlData[] controlData = new InputSystem.ControlData[1];
     int playerId;
+    string playerInputPath = "PlayerInputData";
+    bool inputPathChecked = false;
 
     bool generalInputsEnabled = true, menuInputsEnabled = true;
 
@@ -70,6 +72,7 @@ public class PlayerInputs : MonoBehaviour
         //if(GameObject.FindGameObjectWithTag("InputSystem") != null)
         inputSystem = GameObject.FindGameObjectWithTag("InputSystem").GetComponent<InputSystem>();
         controlData[0] = null;
+        playerInputPath = playerInputPath + playerId.ToString();
     }
 
     // Update is called once per frame
@@ -93,7 +96,24 @@ public class PlayerInputs : MonoBehaviour
                     for (int i = 0; i <= playerId; i++)
                     {
                         if (i == playerId)
-                            controlData[0] = inputSystem.GetActiveControllerData();
+                        {
+                            if (!inputPathChecked)
+                            {
+                                inputPathChecked = true;
+                                int deviceId = PlayerPrefs.GetInt(playerInputPath, -1);
+                                if (PlayerPrefs.GetInt(playerInputPath, -1) >= 0)
+                                {
+                                    controlData[0] = inputSystem.GetControllerData(PlayerPrefs.GetInt(playerInputPath));
+                                    return;
+                                }
+                            }
+                            else
+                            {
+                                controlData[0] = inputSystem.GetActiveControllerData();
+                                if (controlData[0] != null)
+                                    PlayerPrefs.SetInt(playerInputPath, controlData[0].mainDeviceId);
+                            }
+                        }
                         else if (!playersManagers.GetPlayer(i).GetComponent<PlayerInputs>().Inited())
                             break;
                     }
