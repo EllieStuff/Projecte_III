@@ -23,6 +23,7 @@ public class BarrelScript : MonoBehaviour
     void Start()
     {
         barrel = transform.GetChild(0).GetComponent<BarrelColision>();
+        barrel.Player = player;
 
         rb = barrel.gameObject.AddComponent<Rigidbody>();
         rb.constraints = RigidbodyConstraints.FreezeRotation;
@@ -37,7 +38,6 @@ public class BarrelScript : MonoBehaviour
 
                 break;
             case BarrelType.MOBIL:
-                barrel.Player = player;
                 
                 break;
             case BarrelType.COUNT:

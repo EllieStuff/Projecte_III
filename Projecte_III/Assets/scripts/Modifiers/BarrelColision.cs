@@ -5,9 +5,10 @@ using UnityEngine;
 public class BarrelColision : MonoBehaviour
 {
     Transform player;
-    CapsuleCollider col;
 
     BarrelScript barrel;
+
+    [SerializeField] float pushForce = 0.0f;
 
     public Transform Player
     {
@@ -18,7 +19,6 @@ public class BarrelColision : MonoBehaviour
     private void Start()
     {
         barrel = transform.parent.GetComponent<BarrelScript>();
-        col = GetComponent<CapsuleCollider>();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -27,7 +27,18 @@ public class BarrelColision : MonoBehaviour
         {
             Debug.Log("Collision with player");
 
-            if(barrel.GetType() == BarrelScript.BarrelType.EXPLOSIVE)
+            //Get the vector between the player and the center of the explosion and sets the value of the magnitude between 0-1
+            Vector3 pushVector = collision.transform.position - transform.position;
+
+            //Normalize and set the pushForce as the new magnitude of this vector
+            pushVector = pushVector.normalized * pushForce;
+
+            //----------
+                //Apply pushVector to the player velocity
+
+            //----------
+
+            if (barrel.GetType() == BarrelScript.BarrelType.EXPLOSIVE)
                 barrel.Explode();
         }
     }
