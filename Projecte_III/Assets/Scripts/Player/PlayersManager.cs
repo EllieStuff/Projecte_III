@@ -11,6 +11,7 @@ public class PlayersManager : MonoBehaviour
     public int numOfPlayers = 1;
     public Transform[] players;
     //[SerializeField] Transform[] modifiers;
+    bool sceneLoaded = false;
 
 
     // Start is called before the first frame update
@@ -21,6 +22,8 @@ public class PlayersManager : MonoBehaviour
     }
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        if (sceneLoaded) return;
+
         if (scene.name.Contains("Menu"))
         {
             // Do nothing
@@ -43,12 +46,20 @@ public class PlayersManager : MonoBehaviour
             {
                 for (int i = 0; i < transform.childCount; i++)
                 {
+                    GameObject player = transform.GetChild(i).gameObject;
                     if (i < numOfPlayers)
-                        transform.GetChild(i).gameObject.SetActive(true);
+                    {
+                        player.SetActive(true);
+                        //player.GetComponentInChildren<VehicleTriggerAndCollisionEvents>().Init();
+                    }
                     else
-                        transform.GetChild(i).gameObject.SetActive(false);
+                    {
+                        player.SetActive(false);
+                    }
                 }
             }
+
+            sceneLoaded = true;
         }
     }
 

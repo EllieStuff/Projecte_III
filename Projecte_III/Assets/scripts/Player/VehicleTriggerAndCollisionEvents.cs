@@ -30,6 +30,8 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
 
     private void Update()
     {
+        if (centerRespawn == null) Init();
+
         respawnPosition = new Vector3(centerRespawn.position.x, centerRespawn.position.y - 25, centerRespawn.position.z);
         respawnPosition += centerRespawn.TransformDirection(new Vector3(0, 0, 30)) + new Vector3(0, 25, 0);
         respawnRotation = centerRespawn.rotation.eulerAngles;

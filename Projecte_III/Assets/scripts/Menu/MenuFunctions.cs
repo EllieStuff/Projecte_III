@@ -18,9 +18,22 @@ public class MenuFunctions : MonoBehaviour
     [SerializeField] Transform menuTitle;
     [SerializeField] Transform mainMenuButtonsFather;
 
+    bool enableButtons = false;
+
+
+    private void Update()
+    {
+        if (!enableButtons)
+        {
+            if (menuCutScene == null || !menuCutScene.activeSelf)
+                enableButtons = true;
+        }
+    }
 
     public void OpenSettings()
     {
+        if (!enableButtons) return;
+
         //localVoiceValue.value = AudioListener.volume;
         settingsMenu.SetActive(true);
     }
@@ -32,24 +45,35 @@ public class MenuFunctions : MonoBehaviour
 
     public void ActiveCredits(bool active)
     {
+        if (!enableButtons) return;
+
         creditsMenu.SetActive(active);
     }
 
-    public void PlaySingle()
+    public void Play()
     {
+        if (!enableButtons) return;
+
         transform.parent.GetComponent<Animator>().enabled = true;
         StartCoroutine(ExitMenuAnimationCoroutine());
-        PlayerPrefs.SetString("GameMode", "Single");
     }
-    public void PlayMultiLocal()
-    {
-        transform.parent.GetComponent<Animator>().enabled = true;
-        StartCoroutine(ExitMenuAnimationCoroutine());
-        PlayerPrefs.SetString("GameMode", "MultiLocal");
-    }
+    //public void PlaySingle()
+    //{
+    //    transform.parent.GetComponent<Animator>().enabled = true;
+    //    StartCoroutine(ExitMenuAnimationCoroutine());
+    //    PlayerPrefs.SetString("GameMode", "Single");
+    //}
+    //public void PlayMultiLocal()
+    //{
+    //    transform.parent.GetComponent<Animator>().enabled = true;
+    //    StartCoroutine(ExitMenuAnimationCoroutine());
+    //    PlayerPrefs.SetString("GameMode", "MultiLocal");
+    //}
 
     public void ExitGame()
     {
+        if (!enableButtons) return;
+
         Application.Quit();
     }
 
@@ -100,7 +124,7 @@ public class MenuFunctions : MonoBehaviour
         }
 
         Destroy(menuCutScene);
-        SceneManager.LoadScene("SceneSelector");
+        SceneManager.LoadScene("Current Building Scene");
 
     }
 
