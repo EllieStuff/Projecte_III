@@ -5,11 +5,13 @@ using UnityEngine;
 
 public class PlayerInputs : MonoBehaviour
 {
-    [SerializeField] PlayersManager playersManagers;
+    PlayersManager playersManagers;
     //PlayersManager.GameModes gameMode = PlayersManager.GameModes.MONO;
     InputSystem inputSystem;
     InputSystem.ControlData[] controlData = new InputSystem.ControlData[1];
-    [SerializeField] int playerId;
+    int playerId;
+    string playerInputPath = "PlayerInputData";
+    bool inputPathChecked = false;
 
     bool generalInputsEnabled = true, menuInputsEnabled = true;
 
@@ -17,7 +19,7 @@ public class PlayerInputs : MonoBehaviour
     float
         forward, backward, right, left, drift;
     bool
-        start, enableGadgetMenu, confirmGadget, useGadget, shootForward, shootBackwards, shootLeft, shootRight;
+        start, shootForward, shootBackward, shootLeft, shootRight;
     bool
         mUp, mDown, mRight, mLeft, mAccept, mDecline;
 
@@ -40,9 +42,6 @@ public class PlayerInputs : MonoBehaviour
     public bool Left { get { return left > InputSystem.INPUT_THRESHOLD; } }
     public bool Start { get { return start; } }
     public bool Drift { get { return drift > InputSystem.INPUT_THRESHOLD; } }
-    public bool EnableGadgetMenu { get { return enableGadgetMenu; } }
-    public bool ConfirmGadget { get { return confirmGadget; } }
-    public bool UseGadget { get { return useGadget; } }
     public bool MenuUp { get { return mUp; } }
     public bool MenuDown { get { return mDown; } }
     public bool MenuRight { get { return mRight; } }
@@ -50,9 +49,10 @@ public class PlayerInputs : MonoBehaviour
     public bool MenuAccept { get { return mAccept; } }
     public bool MenuDecline { get { return mDecline; } }
     public bool ShootForward { get { return shootForward; } }
-    public bool ShootBackwards { get { return shootBackwards; } }
+    public bool ShootBackwards { get { return shootBackward; } }
     public bool ShootLeft { get { return shootLeft; } }
     public bool ShootRight { get { return shootRight; } }
+    public bool ShootAny { get { return shootForward || shootBackward || shootLeft || shootRight; } }
 
     public Vector2 ChooseItem { get { return chooseItem; } }
 
@@ -62,16 +62,17 @@ public class PlayerInputs : MonoBehaviour
     {
         try
         {
-            playerId = GetComponent<PlayerVehicleScript>().playerNum;
+            playerId = GetComponentInParent<PlayerData>().id;
         }
         catch (Exception)
         {
             playerId = 1;
         }
-        //gameMode = transform.parent.GetComponentInParent<PlayersManager>().gameMode;
+        playersManagers = transform.parent.GetComponentInParent<PlayersManager>();
         //if(GameObject.FindGameObjectWithTag("InputSystem") != null)
         inputSystem = GameObject.FindGameObjectWithTag("InputSystem").GetComponent<InputSystem>();
         controlData[0] = null;
+        playerInputPath = playerInputPath + playerId.ToString();
     }
 
     // Update is called once per frame
@@ -95,7 +96,24 @@ public class PlayerInputs : MonoBehaviour
                     for (int i = 0; i <= playerId; i++)
                     {
                         if (i == playerId)
-                            controlData[0] = inputSystem.GetActiveControllerData();
+                        {
+                            if (!inputPathChecked)
+                            {
+                                inputPathChecked = true;
+                                int deviceId = PlayerPrefs.GetInt(playerInputPath, -1);
+                                if (PlayerPrefs.GetInt(playerInputPath, -1) >= 0)
+                                {
+                                    controlData[0] = inputSystem.GetControllerData(PlayerPrefs.GetInt(playerInputPath));
+                                    return;
+                                }
+                            }
+                            else
+                            {
+                                controlData[0] = inputSystem.GetActiveControllerData();
+                                if (controlData[0] != null)
+                                    PlayerPrefs.SetInt(playerInputPath, controlData[0].mainDeviceId);
+                            }
+                        }
                         else if (!playersManagers.GetPlayer(i).GetComponent<PlayerInputs>().Inited())
                             break;
                     }
@@ -124,17 +142,14 @@ public class PlayerInputs : MonoBehaviour
             left = inputSystem.GetKeyFloat(InputSystem.KeyCodes.LEFT, controlData);
             start = inputSystem.GetKey(InputSystem.KeyCodes.START, controlData);
             drift = inputSystem.GetKeyFloat(InputSystem.KeyCodes.DRIFT, controlData);
-            enableGadgetMenu = inputSystem.GetKey(InputSystem.KeyCodes.ENABLE_GADGET_MENU, controlData);
-            confirmGadget = inputSystem.GetKey(InputSystem.KeyCodes.CONFIRM_GADGET, controlData);
-            useGadget = inputSystem.GetKey(InputSystem.KeyCodes.USE_GADGET, controlData);
 
             shootForward = inputSystem.GetKey(InputSystem.KeyCodes.SHOOT_FORWARD, controlData);
-            shootBackwards = inputSystem.GetKey(InputSystem.KeyCodes.SHOOT_BACKWARD, controlData);
+            shootBackward = inputSystem.GetKey(InputSystem.KeyCodes.SHOOT_BACKWARD, controlData);
             shootLeft = inputSystem.GetKey(InputSystem.KeyCodes.SHOOT_LEFT, controlData);
             shootRight = inputSystem.GetKey(InputSystem.KeyCodes.SHOOT_RIGHT, controlData);
 
             // Axis
-            chooseItem = inputSystem.GetAxis(InputSystem.AxisCodes.CHOOSE_ITEM, controlData);
+            //chooseItem = inputSystem.GetAxis(InputSystem.AxisCodes.CHOOSE_ITEM, controlData);
         }
 
         /// Menu Inputs

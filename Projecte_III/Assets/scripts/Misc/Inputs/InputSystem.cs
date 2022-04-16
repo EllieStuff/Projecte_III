@@ -6,7 +6,7 @@ public class InputSystem : MonoBehaviour
 {
     public const float INPUT_THRESHOLD = 0.3f;
 
-    public enum KeyCodes { FORWARD, BACKWARD, LEFT, RIGHT, START, DRIFT, ENABLE_GADGET_MENU, CONFIRM_GADGET, USE_GADGET, SHOOT_FORWARD, SHOOT_BACKWARD, SHOOT_LEFT, SHOOT_RIGHT, MENU_UP, MENU_DOWN, MENU_RIGHT, MENU_LEFT, MENU_ACCEPT, MENU_DECLINE };
+    public enum KeyCodes { FORWARD, BACKWARD, LEFT, RIGHT, START, DRIFT, SHOOT_FORWARD, SHOOT_BACKWARD, SHOOT_LEFT, SHOOT_RIGHT, MENU_UP, MENU_DOWN, MENU_RIGHT, MENU_LEFT, MENU_ACCEPT, MENU_DECLINE };
     public enum AxisCodes { CHOOSE_ITEM };
     public enum DeviceTypes { DEFAULT, KEYBOARD, CONTROLLER };
 
@@ -152,6 +152,39 @@ public class InputSystem : MonoBehaviour
         return null;
     }
 
+    public ControlData GetControllerData(int _deviceId)
+    {
+        ControlData controller = new ControlData();
+        for (int i = 0; i < controls.Quad.ActivateController.controls.Count; i++)
+        {
+            if (controls.Quad.ActivateController.controls[i].device.deviceId != _deviceId)
+                continue;
+
+            if (controls.Quad.ActivateController.controls[i].path.Contains("Keyboard"))
+            {
+                for (int j = 0; j < controls.Quad.ActivateController.controls.Count; j++)
+                {
+                    if (controls.Quad.ActivateController.controls[j].path.Contains("Mouse"))
+                    {
+                        controller.InitKeyboard(controls, i, j);
+                        activatedControllers.Add(controller);
+                        return controller;
+                    }
+                }
+            }
+            else
+            {
+                controller.InitController(controls, i);
+                activatedControllers.Add(controller);
+                return controller;
+            }
+
+        }
+
+        return null;
+    }
+
+
     public float GetKeyFloat(KeyCodes _key, ControlData[] _controlData)   // Si dones problemes, adaptar tots perque vagin amb la "complexCasesReturnAux" en contres de amb returns
     {
         for (int idx = 0; idx < _controlData.Length; idx++)
@@ -236,7 +269,6 @@ public class InputSystem : MonoBehaviour
 
     public bool GetKey(KeyCodes _key, ControlData[] _controlData)   // Si dones problemes, adaptar tots perque vagin amb la "complexCasesReturnAux" en contres de amb returns
     {
-        bool complexCasesReturnAux = false;
         for (int idx = 0; idx < _controlData.Length; idx++)
         {
             int mainDeviceId = _controlData[idx].mainDeviceId;
@@ -314,65 +346,12 @@ public class InputSystem : MonoBehaviour
 
                     break;
 
-                case KeyCodes.ENABLE_GADGET_MENU:
-                    for (int i = 0; i < controls.Quad.EnableRadialMenu.controls.Count; i++)
-                    {
-                        if (controls.Quad.EnableRadialMenu.controls[i].device.deviceId == mainDeviceId)
-                        {
-                            //Debug.Log("EnableRadialMenu is " + controls.Quad.EnableRadialMenu.controls[i].EvaluateMagnitude());
-                            if (controls.Quad.EnableRadialMenu.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return true;
-                        }
-                    }
-
-                    break;
-
-                case KeyCodes.CONFIRM_GADGET:
-                    // If using Keyboard
-                    if (_controlData[idx].deviceType == DeviceTypes.KEYBOARD)
-                    {
-                        for (int i = 0; i < controls.Quad.ConfirmChosenGadget.controls.Count; i++)
-                        {
-                            if (controls.Quad.ConfirmChosenGadget.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD
-                                && controls.Quad.ConfirmChosenGadget.controls[i].device.deviceId == _controlData[idx].mouseDeviceId)
-                                complexCasesReturnAux = true;
-                            //return true;
-                        }
-                    }
-                    // If using Controller
-                    else
-                    {
-                        for (int i = 0; i < controls.Quad.ConfirmChosenGadget.controls.Count; i++)
-                        {
-                            if (controls.Quad.ConfirmChosenGadget.controls[i].device.deviceId == mainDeviceId)
-                            {
-                                if (lateJ2Dirs.ContainsKey(mainDeviceId))
-                                {
-                                    complexCasesReturnAux = IsInThreshold(j2Dirs[mainDeviceId]) && !IsInThreshold(lateJ2Dirs[mainDeviceId]);
-                                }
-                            }
-                        }
-                    }
-
-                    break;
-
-                case KeyCodes.USE_GADGET:
-                    for (int i = 0; i < controls.Quad.UseChosenGadget.controls.Count; i++)
-                    {
-                        if (controls.Quad.UseChosenGadget.controls[i].device.deviceId == mainDeviceId)
-                        {
-                            //Debug.Log("UseChosenGadget is " + controls.Quad.UseChosenGadget.controls[i].EvaluateMagnitude());
-                            if (controls.Quad.UseChosenGadget.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return true;
-                        }
-                    }
-
-                    break;
-
                 case KeyCodes.SHOOT_FORWARD:
                     for (int i = 0; i < controls.Quad.ShootForward.controls.Count; i++)
                     {
                         if (controls.Quad.ShootForward.controls[i].device.deviceId == mainDeviceId)
                         {
-                            //Debug.Log("BuildingMenu.Up is " + controls.BuildingMenu.Up.controls[i].EvaluateMagnitude());
+                            //Debug.Log("BuildingMenu.Up is " + controls.Quad.ShootForward.controls[i].EvaluateMagnitude());
                             if (controls.Quad.ShootForward.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return true;
                         }
                     }
@@ -383,7 +362,7 @@ public class InputSystem : MonoBehaviour
                     {
                         if (controls.Quad.ShootBackwards.controls[i].device.deviceId == mainDeviceId)
                         {
-                            //Debug.Log("BuildingMenu.Up is " + controls.BuildingMenu.Up.controls[i].EvaluateMagnitude());
+                            //Debug.Log("BuildingMenu.Up is " + controls.Quad.ShootBackwards.controls[i].EvaluateMagnitude());
                             if (controls.Quad.ShootBackwards.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return true;
                         }
                     }
@@ -394,7 +373,7 @@ public class InputSystem : MonoBehaviour
                     {
                         if (controls.Quad.ShootLeft.controls[i].device.deviceId == mainDeviceId)
                         {
-                            //Debug.Log("BuildingMenu.Up is " + controls.BuildingMenu.Up.controls[i].EvaluateMagnitude());
+                            //Debug.Log("BuildingMenu.Up is " + controls.Quad.ShootLeft.controls[i].EvaluateMagnitude());
                             if (controls.Quad.ShootLeft.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return true;
                         }
                     }
@@ -405,7 +384,7 @@ public class InputSystem : MonoBehaviour
                     {
                         if (controls.Quad.ShootRight.controls[i].device.deviceId == mainDeviceId)
                         {
-                            //Debug.Log("BuildingMenu.Up is " + controls.BuildingMenu.Up.controls[i].EvaluateMagnitude());
+                            //Debug.Log("BuildingMenu.Up is " + controls.Quad.ShootRight.controls[i].EvaluateMagnitude());
                             if (controls.Quad.ShootRight.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return true;
                         }
                     }
@@ -491,9 +470,6 @@ public class InputSystem : MonoBehaviour
 
         }
 
-        if (_key == KeyCodes.CONFIRM_GADGET)
-            return complexCasesReturnAux;
-
         return false;
 
     }
@@ -505,39 +481,39 @@ public class InputSystem : MonoBehaviour
             int mainDeviceId = _controlData[idx].mainDeviceId;
             switch (_joystick)
             {
-                case AxisCodes.CHOOSE_ITEM:
-                    // If using Keyboard
-                    if (_controlData[idx].deviceType == DeviceTypes.KEYBOARD)
-                    {
-                        for (int i = 0; i < controls.Quad.ChooseItemMouse.controls.Count; i++)
-                        {
-                            if (controls.Quad.ChooseItemMouse.controls[i].device.deviceId == _controlData[idx].mouseDeviceId)
-                            {
-                                Vector3 screenCenter = new Vector3(Screen.width / 2.0f, Screen.height / 2.0f);
-                                return (Input.mousePosition - screenCenter).normalized;
-                            }
-                        }
-                    }
-                    else    // If using Controller
-                    {
-                        for (int i = 0; i < controls.Quad.ChooseItemRight.controls.Count; i++)
-                        {
-                            if (controls.Quad.ChooseItemRight.controls[i].device.deviceId == mainDeviceId)
-                            {
-                                Vector2 tmpVec = new Vector2(
-                                    controls.Quad.ChooseItemRight.controls[i].EvaluateMagnitude() - controls.Quad.ChooseItemLeft.controls[i].EvaluateMagnitude(),
-                                    controls.Quad.ChooseItemUp.controls[i].EvaluateMagnitude() - controls.Quad.ChooseItemDown.controls[i].EvaluateMagnitude()
-                                );
-                                RefreshJ2Dirs(mainDeviceId, tmpVec);
+                //case AxisCodes.CHOOSE_ITEM:
+                //    // If using Keyboard
+                //    if (_controlData[idx].deviceType == DeviceTypes.KEYBOARD)
+                //    {
+                //        for (int i = 0; i < controls.Quad.ChooseItemMouse.controls.Count; i++)
+                //        {
+                //            if (controls.Quad.ChooseItemMouse.controls[i].device.deviceId == _controlData[idx].mouseDeviceId)
+                //            {
+                //                Vector3 screenCenter = new Vector3(Screen.width / 2.0f, Screen.height / 2.0f);
+                //                return (Input.mousePosition - screenCenter).normalized;
+                //            }
+                //        }
+                //    }
+                //    else    // If using Controller
+                //    {
+                //        for (int i = 0; i < controls.Quad.ChooseItemRight.controls.Count; i++)
+                //        {
+                //            if (controls.Quad.ChooseItemRight.controls[i].device.deviceId == mainDeviceId)
+                //            {
+                //                Vector2 tmpVec = new Vector2(
+                //                    controls.Quad.ChooseItemRight.controls[i].EvaluateMagnitude() - controls.Quad.ChooseItemLeft.controls[i].EvaluateMagnitude(),
+                //                    controls.Quad.ChooseItemUp.controls[i].EvaluateMagnitude() - controls.Quad.ChooseItemDown.controls[i].EvaluateMagnitude()
+                //                );
+                //                RefreshJ2Dirs(mainDeviceId, tmpVec);
 
-                                if (!IsInThreshold(tmpVec))
-                                    return tmpVec;
+                //                if (!IsInThreshold(tmpVec))
+                //                    return tmpVec;
 
-                            }
-                        }
-                    }
+                //            }
+                //        }
+                //    }
 
-                    break;
+                //    break;
 
 
                 default:

@@ -7,8 +7,11 @@ public class DestroyObjs : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Destroy(GameObject.Find("DontDestroyOnLoad_UI"));
-        Destroy(GameObject.FindGameObjectWithTag("PlayersManager"));
+        GameObject UI = GameObject.Find("DontDestroyOnLoad_UI");
+        if(UI != null) Destroy(UI);
+
+        GameObject playersManager = GameObject.FindGameObjectWithTag("PlayersManager");
+        if(playersManager != null) Destroy(playersManager);
 
         Destroy(gameObject);
     }

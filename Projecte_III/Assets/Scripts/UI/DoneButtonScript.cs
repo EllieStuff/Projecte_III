@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class DoneButtonScript : MonoBehaviour
 {
-/*    [SerializeField] internal bool isActive = false;
+    [SerializeField] internal bool isActive = false;
     [SerializeField] int playerId;
 
     internal bool isReady = false;
@@ -71,11 +71,11 @@ public class DoneButtonScript : MonoBehaviour
     {
         Color initColor = buttonImage.color;
         float timer = 0, maxTime = 0.05f;
-        while(timer < maxTime)
+        while (timer < maxTime)
         {
             yield return new WaitForEndOfFrame();
             timer += Time.deltaTime;
             buttonImage.color = Color.Lerp(initColor, _targetColor, timer / maxTime);
         }
-    }*/
+    }
 }

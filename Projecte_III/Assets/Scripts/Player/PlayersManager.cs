@@ -8,12 +8,11 @@ public class PlayersManager : MonoBehaviour
     public enum GameModes { MONO, MULTI_LOCAL /*, MULTI_ONLINE*/ };
     public GameModes gameMode = GameModes.MONO;
 
-    public InputSystem inputSystem;
     public int numOfPlayers = 1;
     public Transform[] players;
-    [SerializeField] Transform[] modifiers;
+    //[SerializeField] Transform[] modifiers;
+    bool sceneLoaded = false;
 
-    bool disableFunctions;
 
     // Start is called before the first frame update
     void Awake()
@@ -23,28 +22,20 @@ public class PlayersManager : MonoBehaviour
     }
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        if (sceneLoaded) return;
+
         if (scene.name.Contains("Menu"))
         {
             // Do nothing
         }
-        else if (scene.name.Equals("SceneSelector"))
-            disableFunctions = true;
-        else if (scene.name == "Building Scene Multiplayer" && !disableFunctions)
+        if (scene.name.Contains("Building Scene"))
         {
-            for (int i = 0; i < transform.childCount; i++)
-            {
-                transform.GetChild(i).gameObject.SetActive(true);
-            }
+            //for (int i = 0; i < transform.childCount; i++)
+            //{
+            //    transform.GetChild(i).gameObject.SetActive(true);
+            //}
         }
-        else if (scene.name == "Building Scene" && !disableFunctions)
-        {
-            transform.GetChild(0).gameObject.SetActive(true);
-            for (int i = 1; i < transform.childCount; i++)
-            {
-                transform.GetChild(i).gameObject.SetActive(false);
-            }
-        }
-        else if(!disableFunctions)
+        else
         {
             if (gameMode == GameModes.MONO)
             {
@@ -55,12 +46,20 @@ public class PlayersManager : MonoBehaviour
             {
                 for (int i = 0; i < transform.childCount; i++)
                 {
+                    GameObject player = transform.GetChild(i).gameObject;
                     if (i < numOfPlayers)
-                        transform.GetChild(i).gameObject.SetActive(true);
+                    {
+                        player.SetActive(true);
+                        //player.GetComponentInChildren<VehicleTriggerAndCollisionEvents>().Init();
+                    }
                     else
-                        transform.GetChild(i).gameObject.SetActive(false);
+                    {
+                        player.SetActive(false);
+                    }
                 }
             }
+
+            sceneLoaded = true;
         }
     }
 
@@ -76,11 +75,11 @@ public class PlayersManager : MonoBehaviour
 
         return players[_idx];
     }
-    public Transform GetPlayerModifier(int _idx = 0)
-    {
-        if (gameMode == GameModes.MONO) return modifiers[0];
+    //public Transform GetPlayerModifier(int _idx = 0)
+    //{
+    //    if (gameMode == GameModes.MONO) return modifiers[0];
 
-        return modifiers[_idx];
-    }
+    //    return modifiers[_idx];
+    //}
 
 }

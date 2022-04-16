@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerVehicleScript : MonoBehaviour
 {
-    [SerializeField] internal int playerNum;
+    internal int playerNum;
 
     [SerializeField] Vector3 centerOfMass = new Vector3(0.0f, -0.7f, 0.0f);
 
@@ -18,7 +18,7 @@ public class PlayerVehicleScript : MonoBehaviour
     internal float savedMaxSpeed;
     internal float savedAngularDrag;
 
-    internal QuadControlSystem controls;
+    //internal QuadControlSystem controls;
     internal PlayerInputs inputs;
 
     public Rigidbody vehicleRB;
@@ -58,13 +58,18 @@ public class PlayerVehicleScript : MonoBehaviour
     private Rigidbody outVehicleRB;
     private float timerStart = 2;
 
+    private void Awake()
+    {
+        playerNum = GetComponentInParent<PlayerData>().id;
+    }
+
     void Start()
     {
         lifes = 3;
 
         alaDelta = GetComponent<PlayerAlaDelta>();
 
-        controls = new QuadControlSystem();
+        //controls = new QuadControlSystem();
 
         inputs = GetComponent<PlayerInputs>();
         
@@ -159,10 +164,10 @@ public class PlayerVehicleScript : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (controls == null)
-            controls = new QuadControlSystem();
+        //if (controls == null)
+        //    controls = new QuadControlSystem();
 
-        controls.getAllInput(playerNum);
+        //controls.getAllInput(playerNum);
 
         //------Movement------
         vehicleMovement();

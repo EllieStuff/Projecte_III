@@ -20,7 +20,7 @@ public class LoadSceneManager : MonoBehaviour
 
         if (newScene != currentSceneName && timer <= 0)
         {
-            if (newScene == "Menu") PlayerPrefs.SetString("InitCutsceneEnabled", "false");
+            //if (newScene == "Menu") PlayerPrefs.SetString("InitCutsceneEnabled", "false");
             SceneManager.LoadScene(newScene);
             changeScene = false;
         }
@@ -28,12 +28,12 @@ public class LoadSceneManager : MonoBehaviour
 
     public void ChangeScene(string _newScene)
     {
-        PlayersManager playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
-        if (currentSceneName.Contains("Menu"))
-        {
-            //for (int i = 0; i < playersManager.numOfPlayers; i++)
-                //playersManager.GetPlayer(i).GetComponent<PlayerStatsManager>().SetStats();
-        }
+        //PlayersManager playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
+        //if (currentSceneName.Contains("Menu"))
+        //{
+        //    //for (int i = 0; i < playersManager.numOfPlayers; i++)
+        //        //playersManager.GetPlayer(i).GetComponent<PlayerStatsManager>().SetStats();
+        //}
 
         changeScene = true;
         newScene = _newScene;

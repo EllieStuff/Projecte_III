@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DoneButtonManager : MonoBehaviour
 {
-/*    [SerializeField] internal Color selectedBttnImgColor;
+    [SerializeField] internal Color selectedBttnImgColor;
     [SerializeField] Color readyBttnImgColor;
 
     public int buttonsActive = 0;
@@ -31,10 +31,6 @@ public class DoneButtonManager : MonoBehaviour
     {
         if (AllPlayersReady() && !loadingLevel)
         {
-            for (int i = 0; i < playersManager.numOfPlayers; i++)
-            {
-                playersManager.GetPlayerModifier(i).GetComponent<ModifierManager>().HideAllModifiersSpots();
-            }
             loadingLevel = true;
             StartCoroutine(ChangeSceneEvent());
         }
@@ -72,5 +68,4 @@ public class DoneButtonManager : MonoBehaviour
         LoadSceneManager sceneManager = GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>();
         sceneManager.ChangeScene(goToScene);
     }
-*/
 }

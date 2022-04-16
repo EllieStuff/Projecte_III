@@ -23,7 +23,7 @@ public class RandomModifierGet : MonoBehaviour
     {
         if(timerRoll <= 0)
         {
-            timerRoll = 2;
+            timerRoll = 5;
             getModifier = true;
             IEnumerator coroutine = ModifiersRoll();
             StartCoroutine(coroutine);
@@ -60,12 +60,9 @@ public class RandomModifierGet : MonoBehaviour
                     break;
                 case 2:
                     GetComponent<Umbrella>().ActivateUmbrella();
+                    hasModifier = false;
                     break;
             }
-        }
-        else
-        {
-                GetComponent<Umbrella>().StopUmbrella();
         }
         if (timerModifier > 0)
             timerModifier -= Time.deltaTime;
@@ -73,13 +70,18 @@ public class RandomModifierGet : MonoBehaviour
 
     IEnumerator ModifiersRoll()
     {
-        int randomInt = 0;
+        int randomInt = Random.Range(0, modifiers.Length);
         while (getModifier)
         {
             if (timerRoll > 0)
             {
                 timerRoll -= 0.5f;
-                randomInt = 0;//Random.Range(0, modifiers.Length);
+
+                if (randomInt < modifiers.Length - 1)
+                    randomInt++;
+                else
+                    randomInt = 0;
+
                 showModifierInstance = Instantiate(modifiers[randomInt], new Vector3(transform.position.x , transform.position.y + 1, transform.position.z), transform.rotation);
                 showModifierInstance.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
                 yield return new WaitForSeconds(0.2f);

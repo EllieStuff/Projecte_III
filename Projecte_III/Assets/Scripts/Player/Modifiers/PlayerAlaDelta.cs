@@ -50,7 +50,7 @@ public class PlayerAlaDelta : MonoBehaviour
 
     public void AlaDeltaUpdate()
     {
-        if (!usingAlaDelta && player.touchingGround && (alaDeltaEnabled || player.controls.Quad.AlaDelta))
+        if (!usingAlaDelta && player.touchingGround && (alaDeltaEnabled || inputs.ShootAny))
         {
             alaDeltaEnabled = false;
             usingAlaDelta = true;

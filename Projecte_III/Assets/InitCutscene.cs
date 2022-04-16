@@ -9,16 +9,7 @@ public class InitCutscene : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        string watchInitCutscene = PlayerPrefs.GetString("InitCutsceneEnabled", "true");
-        if (watchInitCutscene == "false")
-        {
-            PlayerPrefs.SetString("InitCutsceneEnabled", "true");
-            gameObject.SetActive(false);
-        }
-        else if(watchInitCutscene == "true")
-        {
-            StartCoroutine(WaitForDisable());
-        }
+        StartCoroutine(WaitForDisable());
 
     }
 
