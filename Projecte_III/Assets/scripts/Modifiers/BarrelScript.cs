@@ -34,7 +34,8 @@ public class BarrelScript : MonoBehaviour
 
                 break;
             case BarrelType.MOBIL:
-                
+                //rb.isKinematic = true;
+
                 break;
             case BarrelType.COUNT:
 
