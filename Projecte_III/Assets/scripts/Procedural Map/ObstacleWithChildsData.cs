@@ -47,6 +47,7 @@ public class ObstacleWithChildsData : MonoBehaviour
 
         if (col != null) col.enabled = true;
 
+        //No va idk why
         for (int i = numOfPositions; i < countOfChildsWithoutPP; i++)
         {
             childObjects[i].transform.position = transform.GetChild(i).position;
