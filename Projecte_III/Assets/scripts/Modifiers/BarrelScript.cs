@@ -8,8 +8,6 @@ public class BarrelScript : MonoBehaviour
 
     [SerializeField] BarrelType type;
 
-    [SerializeField] Transform player;
-
     [SerializeField] float speed = 0.0f;
     [SerializeField] Vector3 rotSpeed = new Vector3(0.0f, 5.0f, 0.0f);
 
@@ -24,7 +22,6 @@ public class BarrelScript : MonoBehaviour
     void Start()
     {
         barrel = transform.GetChild(0).GetComponent<BarrelColision>();
-        barrel.Player = player;
 
         rb = barrel.gameObject.AddComponent<Rigidbody>();
         rb.constraints = RigidbodyConstraints.FreezeRotation;
@@ -34,8 +31,6 @@ public class BarrelScript : MonoBehaviour
             case BarrelType.EXPLOSIVE:
                 explosion = barrel.transform.GetChild(0);
                 explosion.GetComponent<SphereCollider>().enabled = false;
-
-                transform.GetComponentInChildren<BarrelExplosion>().Player = player;
 
                 break;
             case BarrelType.MOBIL:
@@ -53,12 +48,10 @@ public class BarrelScript : MonoBehaviour
     {
         if (type == BarrelType.MOBIL)
         {
-            Debug.Log("Forward: " + transform.forward);
             //Move Barrel forward
             rb.velocity = transform.forward * speed;
             Quaternion currRot = Quaternion.Euler(barrel.transform.localRotation.eulerAngles + rotSpeed);
             barrel.transform.localRotation = currRot;
-            Debug.Log("Rotation: " + currRot.eulerAngles);
         }
         else if(type == BarrelType.EXPLOSIVE)
         {

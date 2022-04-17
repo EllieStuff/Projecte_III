@@ -4,17 +4,9 @@ using UnityEngine;
 
 public class BarrelColision : MonoBehaviour
 {
-    Transform player;
-
     BarrelScript barrel;
 
     [SerializeField] float pushForce = 0.0f;
-
-    public Transform Player
-    {
-        get => player;
-        set => player = value;
-    }
 
     private void Start()
     {

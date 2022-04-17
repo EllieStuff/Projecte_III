@@ -4,16 +4,8 @@ using UnityEngine;
 
 public class BarrelExplosion : MonoBehaviour
 {
-    Transform player;
-
     [SerializeField] float pushMaxForce = 0.0f;
     float currentForce = 0.0f;
-
-    public Transform Player
-    {
-        get => player;
-        set => player = value;
-    }
 
     private void OnTriggerEnter(Collider other)
     {
