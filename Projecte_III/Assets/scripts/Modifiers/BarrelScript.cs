@@ -11,6 +11,7 @@ public class BarrelScript : MonoBehaviour
     [SerializeField] Transform player;
 
     [SerializeField] float speed = 0.0f;
+    [SerializeField] Vector3 rotSpeed = new Vector3(0.0f, 5.0f, 0.0f);
 
     Rigidbody rb = null;
 
@@ -55,6 +56,9 @@ public class BarrelScript : MonoBehaviour
             Debug.Log("Forward: " + transform.forward);
             //Move Barrel forward
             rb.velocity = transform.forward * speed;
+            Quaternion currRot = Quaternion.Euler(barrel.transform.localRotation.eulerAngles + rotSpeed);
+            barrel.transform.localRotation = currRot;
+            Debug.Log("Rotation: " + currRot.eulerAngles);
         }
         else if(type == BarrelType.EXPLOSIVE)
         {
