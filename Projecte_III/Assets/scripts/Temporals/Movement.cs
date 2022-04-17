@@ -15,6 +15,7 @@ public class Movement : MonoBehaviour
         inputs = GetComponent<PlayerInputs>();
 
         vehicleRB = gameObject.AddComponent<Rigidbody>();
+        vehicleRB.isKinematic = true;
 
         vehicleRB.freezeRotation = true;
     }
