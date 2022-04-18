@@ -339,19 +339,4 @@ public class PlayerVehicleScript : MonoBehaviour
         }
     }
 
-
-    //public void IgnoreCollisions(List<Collider> _collisions, bool _ignore = true)
-    //{
-    //    Collider chasisCol = transform.Find("vehicleChasis").GetComponent<Collider>();
-    //    Collider[] wheelCols = new Collider[wheelCollider.Length];
-    //    for (int i = 0; i < wheelCollider.Length; i++) wheelCols[i] = wheelCollider[i];
-
-    //    for (int i = 0; i < _collisions.Count; i++)
-    //    {
-    //        Physics.IgnoreCollision(chasisCol, _collisions[i], _ignore);
-    //        for (int j = 0; j < wheelCollider.Length; j++)
-    //            Physics.IgnoreCollision(wheelCols[j], _collisions[i], _ignore);
-    //    }
-    //}
-
 }
