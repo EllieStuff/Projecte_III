@@ -29,7 +29,7 @@ public class CameraNavFollowScript : MonoBehaviour
     void Update()
     {
 
-        Debug.Log(navMeshAgent.destination);
+        //Debug.Log(navMeshAgent.destination);
         if (Vector3.Distance(transform.position, cameraCheckpoints[0]) < MARGIN)
         {
             cameraCheckpoints.RemoveAt(0);

@@ -30,6 +30,8 @@ public class ObstacleWithChildsData : MonoBehaviour
                 _mesh.enabled = false;
         }
 
+
+
         SpawnObstacle();
     }
 
