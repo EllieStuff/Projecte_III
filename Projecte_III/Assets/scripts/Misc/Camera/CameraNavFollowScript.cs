@@ -30,6 +30,7 @@ public class CameraNavFollowScript : MonoBehaviour
     {
 
         //Debug.Log(Vector3.Distance(transform.position, cameraCheckpoints[0]));
+        //Debug.Log(navMeshAgent.destination);
         if (Vector3.Distance(transform.position, cameraCheckpoints[0]) < MARGIN)
         {
             cameraCheckpoints.RemoveAt(0);
@@ -52,6 +53,7 @@ public class CameraNavFollowScript : MonoBehaviour
 
     public void ReachedGoal()
     {
+        Debug.Log("Goal Reached");
         StartCoroutine(StopCarCoroutine());
     }
 
