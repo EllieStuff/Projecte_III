@@ -7,12 +7,23 @@ public class BoxModifierScript : MonoBehaviour
     bool destroy;
     float timer = 2;
 
+    public PlayersHUDManager hudManager;
+
+
+    private void Start()
+    {
+        
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.tag.Contains("Player") && !destroy) 
         {
             collision.transform.GetComponent<RandomModifierGet>().GetModifier();
             destroy = true;
+
+            PlayersHUD currHud = hudManager.GetPlayerHUD(collision.transform.parent.GetComponent<PlayerData>().id);
+            currHud.RollModifiers(0);
         }
     }
 

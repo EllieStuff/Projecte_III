@@ -13,12 +13,13 @@ public class RandomModifierGet : MonoBehaviour
     bool hasModifier;
     PlayerInputs inputs;
 
+    [SerializeField] PlayersHUDManager hudManager;
+
     private void Start()
     {
         inputs = GetComponent<PlayerInputs>();
     }
 
-    // Update is called once per frame
     public void GetModifier()
     {
         if(timerRoll <= 0)
@@ -27,6 +28,8 @@ public class RandomModifierGet : MonoBehaviour
             getModifier = true;
             IEnumerator coroutine = ModifiersRoll();
             StartCoroutine(coroutine);
+
+            int randomInt = Random.Range(0, modifiers.Length);
         }
     }
 
