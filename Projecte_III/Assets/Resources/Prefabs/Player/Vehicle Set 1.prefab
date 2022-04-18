@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 38654282782597990}
   - component: {fileID: 38654282782597988}
   - component: {fileID: 38654282782597989}
+  - component: {fileID: 8522704827651332057}
   m_Layer: 0
   m_Name: Front_Left_Col
   m_TagString: vehicleElement
@@ -70,6 +71,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 38654282782597987}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!135 &8522704827651332057
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 38654282782597987}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Center: {x: 0, y: -0.15, z: 0}
 --- !u!1 &38654283041918287
 GameObject:
   m_ObjectHideFlags: 0
@@ -81,6 +95,7 @@ GameObject:
   - component: {fileID: 38654283041918290}
   - component: {fileID: 38654283041918288}
   - component: {fileID: 38654283041918289}
+  - component: {fileID: 9205294005421549924}
   m_Layer: 0
   m_Name: Front_Right_Col
   m_TagString: vehicleElement
@@ -140,6 +155,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 38654283041918287}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!135 &9205294005421549924
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 38654283041918287}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Center: {x: 0, y: -0.15, z: 0}
 --- !u!1 &38654283335074432
 GameObject:
   m_ObjectHideFlags: 0
@@ -150,6 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 38654283335074434}
   - component: {fileID: 38654283335074433}
+  - component: {fileID: 6773403909659158215}
   m_Layer: 0
   m_Name: Rear_Right_Col
   m_TagString: vehicleElement
@@ -201,6 +230,19 @@ WheelCollider:
     m_AsymptoteValue: 0.75
     m_Stiffness: 1
   m_Enabled: 1
+--- !u!135 &6773403909659158215
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 38654283335074432}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Center: {x: 0, y: -0.15, z: 0}
 --- !u!1 &38654283663855622
 GameObject:
   m_ObjectHideFlags: 0
@@ -212,6 +254,7 @@ GameObject:
   - component: {fileID: 38654283663855625}
   - component: {fileID: 38654283663855623}
   - component: {fileID: 38654283663855624}
+  - component: {fileID: 9002121490598382547}
   m_Layer: 0
   m_Name: Rear_Left_Col
   m_TagString: vehicleElement
@@ -271,6 +314,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 38654283663855622}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!135 &9002121490598382547
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 38654283663855622}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Center: {x: 0, y: -0.15, z: 0}
 --- !u!1 &38654283868662901
 GameObject:
   m_ObjectHideFlags: 0
@@ -343,7 +399,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d1c02ba319a6e444b52b0e19ad5bec3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerNum: 0
   centerOfMass: {x: 0, y: -0.7, z: 0}
   lifes: 0
   vehicleRB: {fileID: 38654283868662908}
@@ -49093,6 +49148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55be7fe950c09a446b223948a8b7f936, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 0
 --- !u!1 &5550834918872379202
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,24 +4,61 @@ using UnityEngine;
 
 public class VoidObstacleScript : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    List<Collider> affectedRoads = new List<Collider>();
+
+    private void Start()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Road"))
         {
+            Debug.Log(other.transform.position);
             other.GetComponent<MeshRenderer>().material.renderQueue = 3002;
-            other.GetComponent<MeshCollider>().enabled = false;
+            affectedRoads.Add(other);
+        }
+        if (other.CompareTag("PlayerVehicle"))
+        {
+            for (int i = 0; i < affectedRoads.Count; i++)
+            {
+                Physics.IgnoreCollision(other, affectedRoads[i], true);
+            }
+        }
+        if (other.CompareTag("vehicleElement"))
+        {
+            for (int i = 0; i < affectedRoads.Count; i++)
+            {
+                other.GetComponent<WheelCollider>().enabled = false;
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Road"))
+        {
+            Debug.Log(other.transform.position);
+            other.GetComponent<MeshRenderer>().material.renderQueue = 2000;
+            //Collider _col = affectedRoads.Find(_col => _col == other);
+            //if (_col != null) affectedRoads.Remove(other);
+            affectedRoads.Remove(other);
+        }
+        if (other.CompareTag("PlayerVehicle"))
+        {
+            for (int i = 0; i < affectedRoads.Count; i++)
+            {
+                Physics.IgnoreCollision(other, affectedRoads[i], false);
+            }
+        }
+        if (other.CompareTag("vehicleElement"))
+        {
+            for (int i = 0; i < affectedRoads.Count; i++)
+            {
+                other.GetComponent<WheelCollider>().enabled = true;
+            }
         }
     }
 }
