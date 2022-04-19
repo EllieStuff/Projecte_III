@@ -31,19 +31,22 @@ public class PlayersHUD : MonoBehaviour
         }
     }
 
-    public void UpdateLives(int _currentLifes)
+    public void UpdateLifes(int _currentLifes)
     {
         if (_currentLifes == currentLifes) return;
 
-        if(lifes[_currentLifes - 1].gameObject.activeSelf)
+        if(lifes[_currentLifes].gameObject.activeSelf)
         {
-            lifes[_currentLifes - 1].gameObject.SetActive(false);
+            lifes[_currentLifes].gameObject.SetActive(false);
         }
         else
         {
-            lifes[_currentLifes - 1].gameObject.SetActive(true);
+            lifes[_currentLifes].gameObject.SetActive(true);
         }
         currentLifes = _currentLifes;
+
+        player.ResetModifiers();
+        modifier.gameObject.SetActive(false);
     }
 
     public void RollModifiers()

@@ -14,6 +14,8 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
     private Transform outTransform;
     private Rigidbody outVehicleRB;
 
+    PlayersHUD playerHud = null;
+
     private void Start()
     {
         Init();
@@ -37,6 +39,10 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
         respawnRotation = centerRespawn.rotation.eulerAngles;
         if (player.vehicleReversed)
         {
+            if (playerHud == null)
+            {
+                playerHud = GameObject.Find("HUD").transform.GetComponentInChildren<PlayersHUDManager>().GetPlayerHUD(transform.parent.GetComponent<PlayerData>().id);
+            }
             //Vehicle recover zone
             player.timerReversed += Time.deltaTime;
             if (DeathScript.DeathByFlipping(player.timerReversed, transform, player.vehicleRB, respawnPosition, respawnRotation, respawnVelocity, out outTransform, out outVehicleRB))
@@ -53,10 +59,17 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
         else if(DeathScript.DeathByFalling(false, transform, player.vehicleRB, respawnPosition, respawnRotation, respawnVelocity, out outTransform, out outVehicleRB)
             || DeathScript.DeathByExitCamera(exitCamera, transform, player.vehicleRB, respawnPosition, respawnRotation, respawnVelocity, out outTransform, out outVehicleRB))
         {
+            if (playerHud == null)
+            {
+                playerHud = GameObject.Find("HUD").transform.GetComponentInChildren<PlayersHUDManager>().GetPlayerHUD(transform.parent.GetComponent<PlayerData>().id);
+            }
+
             transform.position = outTransform.position;
             transform.rotation = outTransform.rotation;
             player.vehicleRB.velocity = outVehicleRB.velocity;
             player.lifes--;
+
+            playerHud.UpdateLifes(player.lifes);
 
             GameObject parent = transform.parent.gameObject;
 

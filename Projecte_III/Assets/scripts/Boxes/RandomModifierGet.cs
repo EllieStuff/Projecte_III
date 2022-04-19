@@ -108,6 +108,30 @@ public class RandomModifierGet : MonoBehaviour
         }
     }
 
+    public void ResetModifiers()
+    {
+        switch (currentModifier)
+        {
+            case ModifierTypes.PLUNGER:
+                GetComponent<PlayerThrowPlunger>().hasPlunger = false;
+                break;
+            case ModifierTypes.HANG_GLIDER:
+                GetComponent<PlayerAlaDelta>().hasAlaDelta = false;
+                break;
+            case ModifierTypes.UMBRELLA:
+                break;
+            case ModifierTypes.OIL:
+                break;
+            case ModifierTypes.PAINT_GUN:
+                break;
+            case ModifierTypes.COUNT:
+            case ModifierTypes.NONE:
+            default:
+                break;
+        }
+        currentModifier = ModifierTypes.NONE;
+    }
+
     //IEnumerator ModifiersRoll()
     //{
     //    int randomInt = Random.Range(0, modifiers.Length);
