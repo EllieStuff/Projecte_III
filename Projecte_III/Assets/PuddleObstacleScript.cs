@@ -10,7 +10,15 @@ public class PuddleObstacleScript : MonoBehaviour
     [SerializeField] float angularDragIncrease = 0.01f;
     [SerializeField] float maxSpeedIncrease = 999.9f;
     
-    List<Rigidbody> playerRBs = new List<Rigidbody>();
+    //class PlayerData
+    //{
+    //    public Rigidbody rb;
+    //    public Vector3 lastPos = Vector3.zero;
+    //    public Vector3 currDir = Vector3.zero;
+    //    public PlayerData(Rigidbody _rb) { rb = _rb; }
+    //}
+    //List<PlayerData> playersData = new List<PlayerData>();
+    List<Rigidbody> playersRB = new List<Rigidbody>();
     float initMaxSpeed, initMaxAngularSpeed;
 
     void Start()
@@ -20,13 +28,36 @@ public class PuddleObstacleScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (playerRBs.Count > 0)
+        if(playersRB.Count > 0)
         {
-            for (int i = 0; i < playerRBs.Count; i++)
+            for (int i = 0; i < playersRB.Count; i++)
             {
-                playerRBs[i].AddForce(playerRBs[i].velocity * puddleFricction, ForceMode.Force);
+                playersRB[i].AddForce(playersRB[i].velocity * puddleFricction, ForceMode.Force);
             }
         }
+
+        //if (playersData.Count > 0)
+        //{
+        //    for (int i = 0; i < playersData.Count; i++)
+        //    {
+        //        /// Funciona pero es una mica meh
+        //        //playersData[i].rb.AddForce(playersData[i].rb.velocity * puddleFricction, ForceMode.Force);
+
+        //        PlayerData tmpPlayer = playersData[i];
+        //        if (tmpPlayer.lastPos != Vector3.zero)
+        //        {
+        //            tmpPlayer.currDir = (tmpPlayer.rb.position - tmpPlayer.lastPos).normalized * 8;
+        //            Debug.Log("CurrDir: " + tmpPlayer.currDir);
+        //            Debug.Log("CurrVel: " + tmpPlayer.rb.velocity);
+        //        }
+        //        tmpPlayer.lastPos = tmpPlayer.rb.position;
+        //        if (tmpPlayer.currDir != Vector3.zero)
+        //        {
+        //            playersData[i].rb.AddForce(tmpPlayer.currDir * puddleFricction, ForceMode.Force);
+        //        }
+        //        playersData[i] = tmpPlayer;
+        //    }
+        //}
 
     }
 
@@ -43,7 +74,8 @@ public class PuddleObstacleScript : MonoBehaviour
 
             Rigidbody playerRB = playerScript.GetComponent<Rigidbody>();
             playerRB.angularDrag *= angularDragIncrease;
-            playerRBs.Add(playerRB);
+            playersRB.Add(playerRB);
+            //playersData.Add(new PlayerData(playerRB));
         }
     }
     private void OnTriggerExit(Collider other)
@@ -56,7 +88,9 @@ public class PuddleObstacleScript : MonoBehaviour
 
             Rigidbody playerRB = playerScript.GetComponent<Rigidbody>();
             playerRB.angularDrag = INIT_ANGULAR_DRAG;
-            playerRBs.Remove(playerRB);
+            playersRB.Remove(playerRB);
+            //int playerIdx = playersData.FindIndex(_players => _players.rb == playerRB);
+            //playersData.RemoveAt(playerIdx);
         }
     }
 }
