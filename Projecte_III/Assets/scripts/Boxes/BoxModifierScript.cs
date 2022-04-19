@@ -12,7 +12,7 @@ public class BoxModifierScript : MonoBehaviour
 
     private void Start()
     {
-        
+        hudManager = GameObject.Find("HUD").transform.GetComponentInChildren<PlayersHUDManager>();
     }
 
     private void OnCollisionEnter(Collision collision)
