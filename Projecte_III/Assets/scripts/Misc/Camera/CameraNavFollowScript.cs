@@ -29,6 +29,7 @@ public class CameraNavFollowScript : MonoBehaviour
     void Update()
     {
 
+        //Debug.Log(Vector3.Distance(transform.position, cameraCheckpoints[0]));
         //Debug.Log(navMeshAgent.destination);
         if (cameraCheckpoints.Count > 0 && Vector3.Distance(transform.position, cameraCheckpoints[0]) < MARGIN)
         {
