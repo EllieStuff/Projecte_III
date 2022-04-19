@@ -7,7 +7,7 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
     private PlayerVehicleScript player;
     private Transform centerRespawn;
     public Vector3 respawnPosition, respawnRotation, respawnVelocity;
-    bool paintingChecked = false, oilChecked = false;
+    bool paintingChecked = false, oilChecked = false, exitCamera;
     [SerializeField] float boostPadDuration;
     private bool reduceSpeed;
     public float boostPadMultiplier;
@@ -50,7 +50,8 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
             }
             //_________________________________________________________________________________________________________________________________________________________________
         }
-        else if(DeathScript.DeathByFalling(false, transform, player.vehicleRB, respawnPosition, respawnRotation, respawnVelocity, out outTransform, out outVehicleRB))
+        else if(DeathScript.DeathByFalling(false, transform, player.vehicleRB, respawnPosition, respawnRotation, respawnVelocity, out outTransform, out outVehicleRB)
+            || DeathScript.DeathByExitCamera(exitCamera, transform, player.vehicleRB, respawnPosition, respawnRotation, respawnVelocity, out outTransform, out outVehicleRB))
         {
             transform.position = outTransform.position;
             transform.rotation = outTransform.rotation;
@@ -66,6 +67,9 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
                 GetComponent<ParticleSystem>().Play();
                 parent.GetComponent<AudioSource>().Play();
             }
+
+            if (exitCamera)
+                exitCamera = false;
         }
 
         if (reduceSpeed && player.vehicleMaxSpeed > player.savedMaxSpeed)
@@ -106,6 +110,9 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
             if (player.vehicleMaxSpeed < player.savedMaxSpeed)
                 player.vehicleMaxSpeed = player.savedMaxSpeed;
         }
+
+        if (other.CompareTag("CamLimit"))
+            exitCamera = true;
 
         /*if (other.CompareTag("Water"))
         {
