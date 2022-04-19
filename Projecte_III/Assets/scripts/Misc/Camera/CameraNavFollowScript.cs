@@ -29,17 +29,19 @@ public class CameraNavFollowScript : MonoBehaviour
     void Update()
     {
 
-        Debug.Log(navMeshAgent.destination);
-        if (Vector3.Distance(transform.position, cameraCheckpoints[0]) < MARGIN)
+        //Debug.Log(navMeshAgent.destination);
+        if (cameraCheckpoints.Count > 0 && Vector3.Distance(transform.position, cameraCheckpoints[0]) < MARGIN)
         {
-            cameraCheckpoints.RemoveAt(0);
+            if(cameraCheckpoints.Count > 1)
+                cameraCheckpoints.RemoveAt(0);
             UpdateDestination();
         }
     }
 
     public void UpdateDestination()
     {
-        navMeshAgent.destination = cameraCheckpoints[0];
+        if(cameraCheckpoints.Count > 0)
+            navMeshAgent.destination = cameraCheckpoints[0];
     }
 
     public void AddCheckPoints(ref List<Vector3> newCheckpoints)

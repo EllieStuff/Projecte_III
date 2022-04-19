@@ -311,8 +311,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 19.953035, y: 15, z: 8.357789}
-  m_Center: {x: 0, y: 0, z: 3.6788945}
+  m_Size: {x: 19.953035, y: 15, z: 9.758721}
+  m_Center: {x: 0, y: 0, z: 4.3793597}
 --- !u!114 &6255366984234561121
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5537,7 +5537,7 @@ Transform:
   - {fileID: 7273592930845203781}
   - {fileID: 442423751515624378}
   m_Father: {fileID: 8981626880390989721}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4877506528584866090
 GameObject:
@@ -10469,6 +10469,53 @@ Transform:
   m_Father: {fileID: 6252274957833760251}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6375973553223867233
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6882396300177782432}
+  - component: {fileID: 5429660723555690288}
+  m_Layer: 0
+  m_Name: Obstacles
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6882396300177782432
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6375973553223867233}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 18}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8981626880390989721}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5429660723555690288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6375973553223867233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7d903e2f5afca042a6cbc2022f60952, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObstacleSelection:
+  - {fileID: 3413318754234699507, guid: 1ed6b3389927e74479a4dda8804ed03c, type: 3}
+  - {fileID: 3413318754234699507, guid: 4735b9c74d72bf949b621fc0878ba595, type: 3}
+  - {fileID: 3413318754234699507, guid: d608227f93667b947a8c42edc6655d02, type: 3}
 --- !u!1 &6559398283349198206
 GameObject:
   m_ObjectHideFlags: 0
@@ -15756,7 +15803,7 @@ Transform:
   - {fileID: 1525392982732525215}
   - {fileID: 5992487865577044168}
   m_Father: {fileID: 8981626880390989721}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8314403594513771770
 GameObject:
@@ -30372,7 +30419,7 @@ GameObject:
   - component: {fileID: 6149859002462032676}
   - component: {fileID: 2584707037904629852}
   m_Layer: 0
-  m_Name: Void_RightTurn 1
+  m_Name: Obstacle_RightTurn 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30392,6 +30439,7 @@ Transform:
   - {fileID: 112740938994830973}
   - {fileID: 5441271988555148826}
   - {fileID: 2126248952100876569}
+  - {fileID: 6882396300177782432}
   - {fileID: 1263806415526509194}
   - {fileID: 5559458659849750099}
   m_Father: {fileID: 0}
