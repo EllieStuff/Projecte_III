@@ -8,11 +8,8 @@ public class RandomModifierGet : MonoBehaviour
 
     public GameObject[] modifiers;
     GameObject showModifierInstance;
-    bool getModifier;
-    float timerRoll = 0;
     float timerModifier = 0;
-    int modifierIndex;
-    bool hasModifier;
+
     PlayerInputs inputs;
 
     ModifierTypes currentModifier = ModifierTypes.NONE;
@@ -44,7 +41,7 @@ public class RandomModifierGet : MonoBehaviour
             showModifierInstance.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
         }
 
-        if (hasModifier && (inputs.ShootForward || inputs.ShootBackwards || inputs.ShootLeft || inputs.ShootRight) && timerModifier <= 0) 
+        if (currentModifier != ModifierTypes.NONE && (inputs.ShootForward || inputs.ShootBackwards || inputs.ShootLeft || inputs.ShootRight) && timerModifier <= 0) 
         {
             if(playerHud == null)
             {
@@ -53,15 +50,15 @@ public class RandomModifierGet : MonoBehaviour
 
             playerHud.ClearModifiers();
 
-            switch (modifierIndex)
+            switch (currentModifier)
             {
-                case 0:
+                case ModifierTypes.PLUNGER:
                     PlayerThrowPlunger plunger = GetComponent<PlayerThrowPlunger>();
                     if (inputs.ShootForward)
                         plunger.Activate(transform.TransformDirection(0, 0, 1));
-                    else if(inputs.ShootBackwards)
+                    else if (inputs.ShootBackwards)
                         plunger.Activate(transform.TransformDirection(0, 0, -1));
-                    else if(inputs.ShootLeft)
+                    else if (inputs.ShootLeft)
                         plunger.Activate(transform.TransformDirection(-1, 0, 0));
                     else if (inputs.ShootRight)
                         plunger.Activate(transform.TransformDirection(1, 0, 0));
@@ -69,19 +66,23 @@ public class RandomModifierGet : MonoBehaviour
                     //plunger.hasPlunger = false;
                     timerModifier = 5;
                     break;
-                case 1:
+                case ModifierTypes.HANG_GLIDER:
                     PlayerAlaDelta hangGlider = GetComponent<PlayerAlaDelta>();
                     hangGlider.Activate();
 
                     //hangGlider.hasAlaDelta = false;
                     timerModifier = 5;
                     break;
-                case 2:
+                case ModifierTypes.UMBRELLA:
                     Umbrella umbrella = GetComponent<Umbrella>();
                     umbrella.ActivateUmbrella();
-                    hasModifier = false;
+                    break;
+                case ModifierTypes.OIL:
+                    break;
+                case ModifierTypes.PAINT_GUN:
                     break;
             }
+            currentModifier = ModifierTypes.NONE;
         }
         if (timerModifier > 0)
             timerModifier -= Time.deltaTime;
