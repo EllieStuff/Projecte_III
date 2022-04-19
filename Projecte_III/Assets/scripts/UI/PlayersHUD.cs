@@ -11,7 +11,9 @@ public class PlayersHUD : MonoBehaviour
     public int id;
 
     Image modifier;
-    Transform[] lives;
+    Transform[] lifes;
+
+    int currentLifes;
 
     // Start is called before the first frame update
     void Start()
@@ -20,24 +22,28 @@ public class PlayersHUD : MonoBehaviour
         modifier.gameObject.SetActive(false);
 
         player = GameObject.Find("PlayersManager").GetComponent<PlayersManager>().GetPlayer(id).GetComponentInChildren<RandomModifierGet>();
+        currentLifes = player.transform.GetComponent<PlayerVehicleScript>().lifes;
 
-        lives = new Transform[transform.GetChild(0).childCount];
-        for (int i = 0; i < lives.Length; i++)
+        lifes = new Transform[transform.GetChild(0).childCount];
+        for (int i = 0; i < lifes.Length; i++)
         {
-            lives[i] = transform.GetChild(0).GetChild(i);
+            lifes[i] = transform.GetChild(0).GetChild(i);
         }
     }
 
-    public void UpdateLives(int currentLives)
+    public void UpdateLives(int _currentLifes)
     {
-        if(lives[currentLives-1].gameObject.activeSelf)
+        if (_currentLifes == currentLifes) return;
+
+        if(lifes[_currentLifes - 1].gameObject.activeSelf)
         {
-            lives[currentLives - 1].gameObject.SetActive(false);
+            lifes[_currentLifes - 1].gameObject.SetActive(false);
         }
         else
         {
-            lives[currentLives - 1].gameObject.SetActive(true);
+            lifes[_currentLifes - 1].gameObject.SetActive(true);
         }
+        currentLifes = _currentLifes;
     }
 
     public void RollModifiers()
