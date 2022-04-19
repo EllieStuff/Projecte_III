@@ -23,7 +23,7 @@ public class BarrelScript : MonoBehaviour
     {
         barrel = transform.GetChild(0).GetComponent<BarrelColision>();
 
-        rb = barrel.gameObject.AddComponent<Rigidbody>();
+        rb = gameObject.AddComponent<Rigidbody>();
         rb.constraints = RigidbodyConstraints.FreezeRotation;
 
         switch (type)

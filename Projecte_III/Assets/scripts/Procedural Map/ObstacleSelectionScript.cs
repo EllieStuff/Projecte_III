@@ -15,7 +15,7 @@ public class ObstacleSelectionScript : MonoBehaviour
         //basic random for now, may change it later to manage game difficulties
         int _random = Random.Range(0, ObstacleSelection.Length);
 
-        ObjectSelected = Instantiate(ObstacleSelection[_random], this.transform);
+        ObjectSelected = Instantiate(ObstacleSelection[_random], transform);
 
         roadType = (int)GetComponentInParent<RoadData>().RoadType;
 
