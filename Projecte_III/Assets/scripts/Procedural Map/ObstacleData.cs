@@ -17,7 +17,7 @@ public class ObstacleData : MonoBehaviour
     void Start()
     {
         _randomObject = Random.Range(0, obstacleArray.Length);
-        obstacleToSpawn = Instantiate(obstacleArray[_randomObject]);
+        obstacleToSpawn = Instantiate(obstacleArray[_randomObject], transform);
 
         //mesh = obstacleMeshArray[_randomMesh].GetComponent<MeshRenderer>();
         //col = obstacleMeshArray[_randomMesh].GetComponent<MeshCollider>();
@@ -46,7 +46,7 @@ public class ObstacleData : MonoBehaviour
 
         Transform _spawnedPosition = possiblePositions[_random];
 
-        obstacleToSpawn.transform.position = _spawnedPosition.position;
+        obstacleToSpawn.transform.localPosition = _spawnedPosition.localPosition;
         obstacleToSpawn.transform.rotation = _spawnedPosition.rotation;
         obstacleToSpawn.transform.localScale = _spawnedPosition.localScale;
 
