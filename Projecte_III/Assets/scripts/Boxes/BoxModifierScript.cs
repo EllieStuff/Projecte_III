@@ -19,11 +19,11 @@ public class BoxModifierScript : MonoBehaviour
     {
         if(collision.gameObject.tag.Contains("Player") && !destroy) 
         {
-            collision.transform.GetComponent<RandomModifierGet>().GetModifier();
+            //collision.transform.GetComponent<RandomModifierGet>().GetModifier();
             destroy = true;
 
             PlayersHUD currHud = hudManager.GetPlayerHUD(collision.transform.parent.GetComponent<PlayerData>().id);
-            currHud.RollModifiers(0);
+            currHud.RollModifiers();
         }
     }
 

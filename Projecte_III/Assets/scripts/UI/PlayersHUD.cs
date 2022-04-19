@@ -7,6 +7,9 @@ public class PlayersHUD : MonoBehaviour
 {
     [SerializeField] Sprite[] possibleModifiers;
 
+    [SerializeField] RandomModifierGet player;
+    public int id;
+
     Image modifier;
     Transform[] lives;
 
@@ -15,6 +18,8 @@ public class PlayersHUD : MonoBehaviour
     {
         modifier = transform.GetChild(1).GetChild(0).GetComponent<Image>();
         modifier.gameObject.SetActive(false);
+
+        player = GameObject.Find("PlayersManager").GetComponent<PlayersManager>().GetPlayer(id).GetComponentInChildren<RandomModifierGet>();
 
         lives = new Transform[transform.GetChild(0).childCount];
         for (int i = 0; i < lives.Length; i++)
@@ -35,21 +40,29 @@ public class PlayersHUD : MonoBehaviour
         }
     }
 
-    public void RollModifiers(int _modifierIdx)
+    public void RollModifiers()
     {
-        Debug.Log("Eyyyy, I'm rolling");
-
-        IEnumerator roll = RollModifier(_modifierIdx);
-        StartCoroutine(roll);
+        if(!modifier.gameObject.activeSelf)
+        {
+            IEnumerator roll = RollModifier();
+            StartCoroutine(roll);
+        }
     }
 
-    IEnumerator RollModifier(int _modifierIdx)
+    IEnumerator RollModifier()
     {
+        int _modifierIdx = Random.Range(0, possibleModifiers.Length);
         int timesShown = 0;
-        int initial = _modifierIdx + Random.Range(0, possibleModifiers.Length);
+        int initial;
+        do
+        {
+            initial = Random.Range(0, possibleModifiers.Length);
+
+        } while (initial == _modifierIdx);
+        
         if (initial >= possibleModifiers.Length) initial -= possibleModifiers.Length;
         int currentSprite = initial + 1;
-        while(timesShown < 3)
+        while(timesShown < 10)
         {
             if (currentSprite >= possibleModifiers.Length) currentSprite = 0;
             if (currentSprite == initial)
@@ -61,16 +74,19 @@ public class PlayersHUD : MonoBehaviour
                 modifier.gameObject.SetActive(true);
 
             currentSprite++;
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.05f);
         }
 
         modifier.sprite = possibleModifiers[_modifierIdx];
+        RandomModifierGet.ModifierTypes _mod = (RandomModifierGet.ModifierTypes)_modifierIdx;
+        player.SetModifier(_mod);
 
         yield return 0;
     }
 
     public void ClearModifiers()
     {
-        modifier.gameObject.SetActive(false);
+        if(modifier.gameObject.activeSelf)
+            modifier.gameObject.SetActive(false);
     }
 }
