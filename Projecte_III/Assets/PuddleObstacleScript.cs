@@ -6,16 +6,16 @@ public class PuddleObstacleScript : MonoBehaviour
 {
     const float INIT_ANGULAR_DRAG = 5.0f;
 
-    [SerializeField] float puddleFricction = 300.0f;
-    [SerializeField] float angularDragIncrease = 1.5f;
-    [SerializeField] float maxSpeedIncrease = 1.5f;
+    [SerializeField] float puddleFricction = 9999.9f;
+    [SerializeField] float angularDragIncrease = 0.01f;
+    [SerializeField] float maxSpeedIncrease = 999.9f;
     
     List<Rigidbody> playerRBs = new List<Rigidbody>();
     float initMaxSpeed, initMaxAngularSpeed;
 
     void Start()
     {
-
+        transform.rotation = Quaternion.Euler(-90.0f, Random.Range(0.0f, 360.0f), 0.0f);
     }
 
     private void FixedUpdate()
@@ -41,8 +41,7 @@ public class PuddleObstacleScript : MonoBehaviour
             playerScript.vehicleMaxSpeed = initMaxSpeed * maxSpeedIncrease;
             playerScript.vehicleMaxTorque = initMaxAngularSpeed * maxSpeedIncrease;
 
-            Rigidbody playerRB = other.transform.parent.GetComponent<Rigidbody>();
-            Debug.Log("angular drag: " + playerRB.angularDrag);
+            Rigidbody playerRB = playerScript.GetComponent<Rigidbody>();
             playerRB.angularDrag *= angularDragIncrease;
             playerRBs.Add(playerRB);
         }
@@ -55,7 +54,7 @@ public class PuddleObstacleScript : MonoBehaviour
             playerScript.vehicleMaxSpeed = initMaxSpeed;
             playerScript.vehicleMaxTorque = initMaxAngularSpeed;
 
-            Rigidbody playerRB = other.transform.parent.GetComponent<Rigidbody>();
+            Rigidbody playerRB = playerScript.GetComponent<Rigidbody>();
             playerRB.angularDrag = INIT_ANGULAR_DRAG;
             playerRBs.Remove(playerRB);
         }
