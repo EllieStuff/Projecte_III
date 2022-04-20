@@ -57,6 +57,7 @@ public class PlayerVehicleScript : MonoBehaviour
     private Transform outTransform;
     private Rigidbody outVehicleRB;
     private float timerStart = 2;
+    private float baseMaxSpeed;
 
     private void Awake()
     {
@@ -98,6 +99,8 @@ public class PlayerVehicleScript : MonoBehaviour
         vehicleRB = GetComponent<Rigidbody>();
         vehicleRB.centerOfMass = centerOfMass;
         savedMaxSpeed = vehicleMaxSpeed;
+        baseMaxSpeed = vehicleMaxSpeed;
+        savedMaxSpeed -= 3;
         savedAngularDrag = vehicleRB.angularDrag;
 
         wheelsModels = transform.parent.GetChild(1).gameObject;
@@ -176,6 +179,11 @@ public class PlayerVehicleScript : MonoBehaviour
 
         bool disableReverse = (vehicleMaxSpeed > savedMaxSpeed);
 
+        if(savedMaxSpeed < baseMaxSpeed)
+        {
+            savedMaxSpeed += Time.deltaTime * 0.04f;
+            vehicleMaxSpeed = savedMaxSpeed;
+        }
 
         if (touchingGround)
         {

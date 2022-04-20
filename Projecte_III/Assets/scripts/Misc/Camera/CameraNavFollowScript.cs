@@ -22,12 +22,16 @@ public class CameraNavFollowScript : MonoBehaviour
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
 
+        navMeshAgent.speed = 7;
+
         StartCoroutine(StartDelayCoroutine());
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (navMeshAgent.speed < 10)
+            navMeshAgent.speed += Time.deltaTime * 0.04f;
 
         //Debug.Log(Vector3.Distance(transform.position, cameraCheckpoints[0]));
         //Debug.Log(navMeshAgent.destination);
