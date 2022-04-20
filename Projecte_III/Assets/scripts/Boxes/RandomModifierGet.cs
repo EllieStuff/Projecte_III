@@ -75,7 +75,15 @@ public class RandomModifierGet : MonoBehaviour
                     break;
                 case ModifierTypes.UMBRELLA:
                     Umbrella umbrella = GetComponent<Umbrella>();
-                    umbrella.ActivateUmbrella();
+                    if (inputs.ShootForward)
+                        umbrella.ActivateUmbrella(Quaternion.Euler(90, 180, 0), true);
+                    else if (inputs.ShootBackwards)
+                        umbrella.ActivateUmbrella(Quaternion.Euler(-90, 180, 0), false);
+                    else if (inputs.ShootLeft)
+                        umbrella.ActivateUmbrella(Quaternion.Euler(90, 180, 90), true);
+                    else if (inputs.ShootRight)
+                        umbrella.ActivateUmbrella(Quaternion.Euler(90, 180, -90), true);
+
                     break;
                 case ModifierTypes.OIL:
                     break;
