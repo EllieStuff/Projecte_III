@@ -13,8 +13,15 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
     public float boostPadMultiplier;
     private Transform outTransform;
     private Rigidbody outVehicleRB;
+    private PlayersManager playersManager;
 
     PlayersHUD playerHud = null;
+    [SerializeField] private float timerRespawn = 5;
+    private BoxCollider collisionBox;
+    [SerializeField] private Material ghostMat;
+    [SerializeField] private Material defaultMat;
+    private MeshRenderer carRender;
+    private bool inmunity;
 
     private void Start()
     {
@@ -22,6 +29,11 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
     }
     internal void Init()
     {
+        carRender = transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>();
+        carRender.material = defaultMat;
+        timerRespawn = 10;
+        playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
+        collisionBox = transform.GetChild(0).GetComponent<BoxCollider>();
         centerRespawn = GameObject.Find("Main Camera").transform;
         player = GetComponent<PlayerVehicleScript>();
         respawnPosition = new Vector3(0, 0, 0);
@@ -33,6 +45,16 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
     private void Update()
     {
         if (centerRespawn == null) Init();
+
+        if (timerRespawn > 0)
+            timerRespawn -= Time.deltaTime;
+        else if(inmunity)
+        {
+            carRender.material = defaultMat;
+            for (int i = 0; i < 4; i++)
+                Physics.IgnoreCollision(collisionBox, playersManager.GetPlayer(i).GetChild(0).GetComponent<BoxCollider>(), false);
+            inmunity = false;
+        }
 
         respawnPosition = new Vector3(centerRespawn.position.x, centerRespawn.position.y - 25, centerRespawn.position.z);
         respawnPosition += centerRespawn.TransformDirection(new Vector3(0, 0, 30)) + new Vector3(0, 35, 0);
@@ -79,6 +101,15 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
             {
                 GetComponent<ParticleSystem>().Play();
                 parent.GetComponent<AudioSource>().Play();
+
+                for (int i = 0; i < 4; i++)
+                    Physics.IgnoreCollision(collisionBox, playersManager.GetPlayer(i).GetChild(0).GetComponent<BoxCollider>(), true);
+
+                carRender.material = ghostMat;
+
+                timerRespawn = 10;
+
+                inmunity = true;
             }
 
             if (exitCamera)

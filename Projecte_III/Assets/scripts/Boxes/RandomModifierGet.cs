@@ -70,7 +70,7 @@ public class RandomModifierGet : MonoBehaviour
                     PlayerAlaDelta hangGlider = GetComponent<PlayerAlaDelta>();
                     hangGlider.Activate();
 
-                    //hangGlider.hasAlaDelta = false;
+                    hangGlider.hasAlaDelta = false;
                     timerModifier = 5;
                     break;
                 case ModifierTypes.UMBRELLA:

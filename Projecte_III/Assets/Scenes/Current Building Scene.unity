@@ -880,6 +880,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2446448053087385845, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+      propertyPath: ghostMat
+      value: 
+      objectReference: {fileID: 2100000, guid: 6a02617efa7ac1643a12312d46cbad2d, type: 2}
+    - target: {fileID: 2446448053087385845, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+      propertyPath: defaultMat
+      value: 
+      objectReference: {fileID: 2100000, guid: f6adc1c4f8b3c814481965688ea58145, type: 2}
     - target: {fileID: 5550834916945680584, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: m_Name
       value: Player1
@@ -7065,7 +7073,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 38654283868662907, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: vehicleMaxSpeed
-      value: 8.75
+      value: 10.75
       objectReference: {fileID: 0}
     - target: {fileID: 38654283868662907, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: alaDeltaDuration
@@ -7375,6 +7383,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -0.15
       objectReference: {fileID: 0}
+    - target: {fileID: 2446448053087385845, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+      propertyPath: ghostMat
+      value: 
+      objectReference: {fileID: 2100000, guid: 6a02617efa7ac1643a12312d46cbad2d, type: 2}
+    - target: {fileID: 2446448053087385845, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+      propertyPath: defaultMat
+      value: 
+      objectReference: {fileID: 2100000, guid: f6adc1c4f8b3c814481965688ea58145, type: 2}
     - target: {fileID: 2667035655152942860, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -8146,7 +8162,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 38654283868662907, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: vehicleMaxSpeed
-      value: 8.75
+      value: 10.75
       objectReference: {fileID: 0}
     - target: {fileID: 38654283868662907, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: alaDeltaDuration
@@ -8456,6 +8472,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -0.15
       objectReference: {fileID: 0}
+    - target: {fileID: 2446448053087385845, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+      propertyPath: ghostMat
+      value: 
+      objectReference: {fileID: 2100000, guid: 6a02617efa7ac1643a12312d46cbad2d, type: 2}
+    - target: {fileID: 2446448053087385845, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+      propertyPath: defaultMat
+      value: 
+      objectReference: {fileID: 2100000, guid: f6adc1c4f8b3c814481965688ea58145, type: 2}
     - target: {fileID: 2667035655152942860, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -19182,7 +19206,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 38654283868662907, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: vehicleMaxSpeed
-      value: 8.75
+      value: 10.75
       objectReference: {fileID: 0}
     - target: {fileID: 38654283868662907, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: alaDeltaDuration
@@ -19492,6 +19516,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -0.15
       objectReference: {fileID: 0}
+    - target: {fileID: 2446448053087385845, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+      propertyPath: ghostMat
+      value: 
+      objectReference: {fileID: 2100000, guid: 6a02617efa7ac1643a12312d46cbad2d, type: 2}
+    - target: {fileID: 2446448053087385845, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+      propertyPath: defaultMat
+      value: 
+      objectReference: {fileID: 2100000, guid: f6adc1c4f8b3c814481965688ea58145, type: 2}
     - target: {fileID: 2667035655152942860, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -43221,6 +43253,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
+  m_XRTrackingOrigin: {fileID: 0}
   m_ActionsAsset: {fileID: -944628639613478452, guid: b1754614d46d13d45a7f0d43fc1f2798, type: 3}
   m_PointAction: {fileID: -1654692200621890270, guid: b1754614d46d13d45a7f0d43fc1f2798, type: 3}
   m_MoveAction: {fileID: 0}
@@ -46710,6 +46743,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
