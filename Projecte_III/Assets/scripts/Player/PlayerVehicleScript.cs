@@ -48,15 +48,12 @@ public class PlayerVehicleScript : MonoBehaviour
 
     public Vector3 savedVelocity;
 
-    [SerializeField] private AudioClip driftClip;
     [SerializeField] private AudioClip normalClip;
-    [SerializeField] private AudioClip boostClip;
 
     private PlayerAlaDelta alaDelta;
 
     private Transform outTransform;
     private Rigidbody outVehicleRB;
-    private float timerStart = 2;
     private float baseMaxSpeed;
 
     private void Awake()
@@ -250,44 +247,6 @@ public class PlayerVehicleScript : MonoBehaviour
 
         if (audio.enabled)
            audio.pitch = (vehicleRB.velocity.magnitude * 1) / vehicleMaxSpeed/2;
-
-        if (inputs.Drift && (inputs.Left || inputs.Right) && vehicleMaxSpeed <= savedMaxSpeed && vehicleRB.velocity.magnitude > 0.5f)
-        {
-            audio.pitch = 1;
-            if (audio.clip != driftClip)
-            {
-                audio.loop = true;
-                audio.volume = 0.05f;
-                audio.clip = driftClip;
-                audio.enabled = false;
-                audio.enabled = true;
-            }
-        }
-        else if (vehicleMaxSpeed <= savedMaxSpeed)
-        {
-            if (audio.clip != normalClip)
-            {
-                audio.loop = true;
-                audio.volume = 0.5f;
-                audio.clip = normalClip;
-                audio.enabled = false;
-                audio.enabled = true;
-            }
-        }
-        else if (timerStart <= 0)
-        {
-            audio.pitch = 1;
-            if (audio.clip != boostClip && vehicleMaxSpeed > savedMaxSpeed + 5)
-            {
-                audio.volume = 0.2f;
-                audio.clip = boostClip;
-                audio.enabled = false;
-                audio.enabled = true;
-                audio.loop = false;
-            }
-        }
-        else
-            timerStart -= Time.deltaTime;
     }
 
 
