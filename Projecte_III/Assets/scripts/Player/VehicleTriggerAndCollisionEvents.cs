@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class VehicleTriggerAndCollisionEvents : MonoBehaviour
 {
@@ -155,8 +156,10 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
                 player.vehicleMaxSpeed = player.savedMaxSpeed;
         }
 
-        if (other.CompareTag("CamLimit"))
+        if (other.CompareTag("CamLimit") && other.name.Equals("Backward"))
             exitCamera = true;
+        else if (other.CompareTag("CamLimit"))
+            player.vehicleRB.velocity += transform.TransformDirection(Vector3.back * Time.deltaTime * 5);
 
         /*if (other.CompareTag("Water"))
         {
@@ -189,6 +192,7 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+
         if (!other.CompareTag("Sand"))
             StartCoroutine(WaitEndBoost());
 
