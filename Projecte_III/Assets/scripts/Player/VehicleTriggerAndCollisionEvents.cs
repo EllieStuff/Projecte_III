@@ -17,12 +17,13 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
     private PlayersManager playersManager;
 
     PlayersHUD playerHud = null;
-    [SerializeField] private float timerRespawn = 5;
+    [SerializeField] private float timerRespawn = 3;
     private BoxCollider collisionBox;
     [SerializeField] private Material ghostMat;
     [SerializeField] private Material defaultMat;
     private MeshRenderer carRender;
     private bool inmunity;
+    private bool ghostTextureEnabled;
 
     private void Start()
     {
@@ -47,8 +48,17 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
     {
         if (centerRespawn == null) Init();
 
-        if (timerRespawn > 0)
+        if (timerRespawn > 0 && inmunity)
+        {
             timerRespawn -= Time.deltaTime;
+
+            if (!ghostTextureEnabled)
+                carRender.material = defaultMat;
+            else
+                carRender.material = ghostMat;
+
+            ghostTextureEnabled = !ghostTextureEnabled;
+        }
         else if(inmunity)
         {
             carRender.material = defaultMat;
@@ -107,8 +117,9 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
                     Physics.IgnoreCollision(collisionBox, playersManager.GetPlayer(i).GetChild(0).GetComponent<BoxCollider>(), true);
 
                 carRender.material = ghostMat;
+                ghostTextureEnabled = true;
 
-                timerRespawn = 10;
+                timerRespawn = 3;
 
                 inmunity = true;
             }
