@@ -47,6 +47,7 @@ public class PlayerVehicleScript : MonoBehaviour
     //public bool onWater;
 
     public Vector3 savedVelocity;
+    private float timerStartRace;
 
     [SerializeField] private AudioClip normalClip;
 
@@ -64,6 +65,7 @@ public class PlayerVehicleScript : MonoBehaviour
     void Start()
     {
         lifes = 3;
+        timerStartRace = 7;
 
         alaDelta = GetComponent<PlayerAlaDelta>();
 
@@ -167,7 +169,13 @@ public class PlayerVehicleScript : MonoBehaviour
         //controls.getAllInput(playerNum);
 
         //------Movement------
-        vehicleMovement();
+        if (timerStartRace <= 0)
+            vehicleMovement();
+        else if (touchingGround)
+        {
+            timerStartRace -= Time.deltaTime;
+            vehicleRB.velocity = transform.TransformDirection(Vector3.forward * 5);
+        }
     }
 
     void vehicleMovement()
