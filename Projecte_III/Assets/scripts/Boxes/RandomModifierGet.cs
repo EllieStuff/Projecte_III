@@ -12,7 +12,7 @@ public class RandomModifierGet : MonoBehaviour
 
     PlayerInputs inputs;
 
-    ModifierTypes currentModifier = ModifierTypes.NONE;
+    [SerializeField] ModifierTypes currentModifier = ModifierTypes.NONE;
 
     PlayersHUD playerHud = null;
 

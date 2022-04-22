@@ -13,7 +13,7 @@ public class PlayersHUDManager : MonoBehaviour
         for (int i = 0; i < playerHud.Length; i++)
         {
             playerHud[i] = transform.GetChild(i).GetComponent<PlayersHUD>();
-            playerHud[i].id = 1;
+            playerHud[i].id = i;
         }
     }
 
