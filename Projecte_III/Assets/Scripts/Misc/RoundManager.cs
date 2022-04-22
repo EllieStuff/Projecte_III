@@ -42,6 +42,7 @@ public class RoundManager : MonoBehaviour
             Transform _initPos = initPos.GetInitPos(i);
             player.transform.position = _initPos.position;
             player.transform.rotation = _initPos.rotation * Quaternion.Euler(0, 180, 0);
+            player.gameObject.SetActive(true);
         }
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
