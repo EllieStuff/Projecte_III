@@ -34,7 +34,7 @@ public class RoundManager : MonoBehaviour
 
     public void ResetScene()
     {
-        for (int i = 0; i < playersManager.players.Length; i++)
+        for (int i = 0; i < playersManager.numOfPlayers; i++)
         {
             PlayerVehicleScript player = playersManager.GetPlayer(i).GetComponent<PlayerVehicleScript>();
             player.lifes = 3;
