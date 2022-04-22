@@ -47,7 +47,7 @@ public class PlayerVehicleScript : MonoBehaviour
     //public bool onWater;
 
     public Vector3 savedVelocity;
-    private float timerStartRace;
+    internal float timerStartRace;
 
     [SerializeField] private AudioClip normalClip;
 
