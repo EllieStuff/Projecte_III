@@ -88,6 +88,15 @@ public class RandomModifierGet : MonoBehaviour
                 case ModifierTypes.OIL:
                     break;
                 case ModifierTypes.PAINT_GUN:
+                    PlayerPaintGun paintGun = GetComponent<PlayerPaintGun>();
+                    if (inputs.ShootForward)
+                        paintGun.Activate(Quaternion.Euler(0, 180, 0));
+                    else if (inputs.ShootBackwards)
+                        paintGun.Activate(Quaternion.Euler(0, 0, 0));
+                    else if (inputs.ShootLeft)
+                        paintGun.Activate(Quaternion.Euler(0, 90, 0));
+                    else if (inputs.ShootRight)
+                        paintGun.Activate(Quaternion.Euler(0, -90, 0));
                     break;
             }
             currentModifier = ModifierTypes.NONE;
@@ -112,6 +121,7 @@ public class RandomModifierGet : MonoBehaviour
             case ModifierTypes.OIL:
                 break;
             case ModifierTypes.PAINT_GUN:
+                GetComponent<PlayerPaintGun>().hasPaintGun = true;
                 break;
         }
     }
@@ -131,6 +141,7 @@ public class RandomModifierGet : MonoBehaviour
             case ModifierTypes.OIL:
                 break;
             case ModifierTypes.PAINT_GUN:
+                GetComponent<PlayerPaintGun>().hasPaintGun = false;
                 break;
             case ModifierTypes.COUNT:
             case ModifierTypes.NONE:

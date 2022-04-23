@@ -22,11 +22,13 @@ public class PaintBulletScript : MonoBehaviour
             //GameObject instancedGO = GameObject.Instantiate(decalPrefab, transform.position, decalPrefab.transform.rotation, other.transform);
             //instancedGO.transform.localScale = instancedGO.transform.localScale * transform.localScale.x;
             //instancedGO.tag = "Untagged";
-
+            GameObject instancedGO = GameObject.Instantiate(decalPrefab, transform.position, decalPrefab.transform.rotation, other.transform);
+            instancedGO.transform.localScale = instancedGO.transform.localScale * transform.localScale.x * sizeInc;
+            instancedGO.transform.GetComponent<Collider>().enabled = false;
         }
         else
         {
-            if (!(other.CompareTag("Decal") || other.CompareTag("Painting") || other.CompareTag("Oil") || other.CompareTag("Respawn") || other.CompareTag("CameraTrigger") || other.CompareTag("Untagged")))
+            if (!TagToIgnore(other.tag))
             {
                 //Vector3 closesPoint = other.ClosestPoint(transform.position);
                 //Vector3 spawnPoint = closesPoint + ((transform.position - closesPoint).normalized * decalPrefab.transform.localScale.x);
@@ -39,6 +41,12 @@ public class PaintBulletScript : MonoBehaviour
 
         }
 
+    }
+
+    bool TagToIgnore(string _tag)
+    {
+        return (_tag.Equals("Decal") || _tag.Equals("Painting") || _tag.Equals("Oil") || _tag.Equals("Respawn")
+            || _tag.Equals("CameraTrigger") || _tag.Equals("Untagged") || _tag.Equals("CameraObjective") || _tag.Equals("CamLimit"));
     }
 
 

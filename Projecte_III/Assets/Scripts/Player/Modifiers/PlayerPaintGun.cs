@@ -5,10 +5,8 @@ using UnityEngine;
 public class PlayerPaintGun : MonoBehaviour
 {
     //PlayerVehicleScript player;
-    PaintGunScript paintGun;
-    bool hasPaintGun = false;
-
-    public bool HasPaintGun { get { return hasPaintGun; } }
+    [SerializeField] PaintGunScript paintGun;
+    public bool hasPaintGun = false;
 
 
     // Start is called before the first frame update
@@ -34,11 +32,22 @@ public class PlayerPaintGun : MonoBehaviour
     }
 
 
-    public void Activate()
+    public void Activate(Quaternion _gunRot)
     {
         Debug.Log("in paint gun, " + hasPaintGun.ToString());
-        if(hasPaintGun)
+        if (hasPaintGun)
+        {
+            paintGun.transform.localRotation = _gunRot;
             paintGun.Activate();
+        }
+    }
+
+    [ContextMenu("SetPaintGunModifier")]
+    public void SetPaintGunModifier()
+    {
+        RandomModifierGet modGetter = GetComponent<RandomModifierGet>();
+        modGetter.ResetModifiers();
+        modGetter.SetModifier(RandomModifierGet.ModifierTypes.PAINT_GUN);
     }
 
 }

@@ -5,6 +5,8 @@ using UnityEngine;
 public class PaintGunScript : MonoBehaviour
 {
     [SerializeField] GameObject prefab;
+    [SerializeField] GameObject model;
+    [SerializeField] Transform bulletOrigin;
     //[SerializeField] Vector3 dir;
     [SerializeField] float timeActive = 5;
     [SerializeField] float rechargeTime = 5;
@@ -13,7 +15,6 @@ public class PaintGunScript : MonoBehaviour
     [SerializeField] Utils.MinMaxFloat size = new Utils.MinMaxFloat(0.01f, 0.1f);
     [SerializeField] Utils.MinMaxVec3 dirDiff = new Utils.MinMaxVec3(-Vector3.one, Vector3.one);
 
-    GameObject model;
     bool gunUsable = true;
     float gunSizeIncSpeed = 30.0f;
     Vector3 originalModelSize;
@@ -21,17 +22,16 @@ public class PaintGunScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        model = transform.GetChild(0).gameObject;
         originalModelSize = model.transform.localScale;
-        //model.transform.localScale = Vector3.zero;
-        //model.SetActive(false);
+        model.transform.localScale = Vector3.zero;
+        model.SetActive(false);
 
-        LoadSceneManager scene = GameObject.Find("SceneManager").GetComponent<LoadSceneManager>();
-        if(scene == null || !scene.GetSceneName().Contains("Building Scene"))
-        {
-            model.transform.localScale = Vector3.zero;
-            model.SetActive(false);
-        }
+
+        //if(scene == null || !scene.GetSceneName().Contains("Building Scene"))
+        //{
+        //    model.transform.localScale = Vector3.zero;
+        //    model.SetActive(false);
+        //}
     }
 
     // Update is called once per frame
@@ -44,10 +44,12 @@ public class PaintGunScript : MonoBehaviour
 
     public void Activate()
     {
+        Debug.Log("1");
         if (gunUsable)
         {
-            Debug.Log("In");
-            gunUsable = false;
+            Debug.Log("2");
+            //Debug.Break();
+            //gunUsable = false;
             StartCoroutine(ShootGun());
         }
     }
@@ -67,7 +69,7 @@ public class PaintGunScript : MonoBehaviour
         float currTime = 0.0f;
         while(currTime < timeActive)
         {
-            GameObject currBullet = GameObject.Instantiate(prefab, transform.position, prefab.transform.rotation);
+            GameObject currBullet = GameObject.Instantiate(prefab, bulletOrigin.position, prefab.transform.rotation);
             float newScale = size.GetRndValue();
             currBullet.transform.localScale = new Vector3(newScale, newScale, newScale);
             currBullet.GetComponent<Rigidbody>().AddForce((transform.forward + dirDiff.GetRndValue().normalized/10.0f) * force.GetRndValue(), ForceMode.Impulse);
@@ -86,21 +88,21 @@ public class PaintGunScript : MonoBehaviour
 
 
         model.SetActive(false);
-        StartCoroutine(RechargeTime());
+        //StartCoroutine(RechargeTime());
     }
 
-    // Nota: esta fet aixi perque es pugui mostrar el temps que falta amb un slider facilment
-    IEnumerator RechargeTime()
-    {
-        float currTime = 0.0f;
-        while (currTime < rechargeTime)
-        {
-            yield return new WaitForEndOfFrame();
-            currTime += Time.deltaTime;
-        }
+    //// Nota: esta fet aixi perque es pugui mostrar el temps que falta amb un slider facilment
+    //IEnumerator RechargeTime()
+    //{
+    //    float currTime = 0.0f;
+    //    while (currTime < rechargeTime)
+    //    {
+    //        yield return new WaitForEndOfFrame();
+    //        currTime += Time.deltaTime;
+    //    }
 
-        gunUsable = true;
-    }
+    //    gunUsable = true;
+    //}
 
 
 }

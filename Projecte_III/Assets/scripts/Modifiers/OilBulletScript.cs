@@ -44,8 +44,8 @@ public class OilBulletScript : MonoBehaviour
 
     bool TagToIgnore(string _tag)
     {
-        return (_tag.Equals("Decal") || _tag.Equals("Painting") || _tag.Equals("Oil") || _tag.Equals("Respawn") || _tag.Equals("CameraTrigger") || _tag.Equals("Untagged"));
-        //return (_other.CompareTag("Decal") || _other.CompareTag("Painting") || _other.CompareTag("Oil") || _other.CompareTag("Respawn") || _other.CompareTag("CameraTrigger") || _other.CompareTag("Untagged"));
+        return (_tag.Equals("Decal") || _tag.Equals("Painting") || _tag.Equals("Oil") || _tag.Equals("Respawn") 
+            || _tag.Equals("CameraTrigger") || _tag.Equals("Untagged") || _tag.Equals("CameraObjective") || _tag.Equals("CamLimit"));
     }
 
 
