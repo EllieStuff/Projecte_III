@@ -4,26 +4,23 @@ using UnityEngine;
 
 public class PlayerOilGun : MonoBehaviour
 {
-    OilGunScript oilGun;
-    bool hasOilGun = false;
-
-    public bool HasPaintGun { get { return hasOilGun; } }
-
+    [SerializeField] OilGunScript oilGun;
+    public bool hasOilGun = false;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        oilGun.originTransform = transform.Find("vehicleChasis");
     }
-    internal void Init(Transform _modifier, bool _active)
-    {
-        hasOilGun = _active;
-        if (_active)
-            oilGun = _modifier.GetComponent<OilGunScript>();
-        else
-            oilGun = null;
+    //internal void Init(Transform _modifier, bool _active)
+    //{
+    //    hasOilGun = _active;
+    //    if (_active)
+    //        oilGun = _modifier.GetComponent<OilGunScript>();
+    //    else
+    //        oilGun = null;
 
-    }
+    //}
 
     // Update is called once per frame
     void Update()
@@ -36,6 +33,23 @@ public class PlayerOilGun : MonoBehaviour
     {
         if (hasOilGun)
             oilGun.Activate();
+    }
+
+
+    [ContextMenu("SetOilGunModifier")]
+    public void SetOilGunModifier()
+    {
+        RandomModifierGet.ModifierTypes modType = RandomModifierGet.ModifierTypes.OIL;
+        RandomModifierGet modGetter = GetComponent<RandomModifierGet>();
+        modGetter.ResetModifiers();
+        modGetter.SetModifier(modType);
+
+        try
+        {
+            int playerId = GetComponentInParent<PlayerData>().id;
+            GameObject.Find("HUD").GetComponentInChildren<PlayersHUDManager>().GetPlayerHUD(playerId).SetModifierImage((int)modType);
+        }
+        catch { Debug.LogError("PlayersHUD not found"); }
     }
 
 }

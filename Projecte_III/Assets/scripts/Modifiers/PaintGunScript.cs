@@ -15,9 +15,10 @@ public class PaintGunScript : MonoBehaviour
     [SerializeField] Utils.MinMaxFloat size = new Utils.MinMaxFloat(0.01f, 0.1f);
     [SerializeField] Utils.MinMaxVec3 dirDiff = new Utils.MinMaxVec3(-Vector3.one, Vector3.one);
 
-    bool gunUsable = true;
+    //bool gunUsable = true;
     float gunSizeIncSpeed = 30.0f;
     Vector3 originalModelSize;
+    internal Transform originTransform;
 
     // Start is called before the first frame update
     void Start()
@@ -44,14 +45,7 @@ public class PaintGunScript : MonoBehaviour
 
     public void Activate()
     {
-        Debug.Log("1");
-        if (gunUsable)
-        {
-            Debug.Log("2");
-            //Debug.Break();
-            //gunUsable = false;
-            StartCoroutine(ShootGun());
-        }
+        StartCoroutine(ShootGun());
     }
 
 
@@ -70,6 +64,7 @@ public class PaintGunScript : MonoBehaviour
         while(currTime < timeActive)
         {
             GameObject currBullet = GameObject.Instantiate(prefab, bulletOrigin.position, prefab.transform.rotation);
+            currBullet.GetComponent<PaintBulletScript>().SetOriginTransform(originTransform);
             float newScale = size.GetRndValue();
             currBullet.transform.localScale = new Vector3(newScale, newScale, newScale);
             currBullet.GetComponent<Rigidbody>().AddForce((transform.forward + dirDiff.GetRndValue().normalized/10.0f) * force.GetRndValue(), ForceMode.Impulse);

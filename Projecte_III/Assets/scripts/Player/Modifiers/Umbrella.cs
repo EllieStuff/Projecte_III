@@ -43,4 +43,22 @@ public class Umbrella : MonoBehaviour
         
         umbrellaActivated = true;
     }
+
+
+    [ContextMenu("SetUmbrellaModifier")]
+    public void SetUmbrellaModifier()
+    {
+        RandomModifierGet.ModifierTypes modType = RandomModifierGet.ModifierTypes.UMBRELLA;
+        RandomModifierGet modGetter = GetComponent<RandomModifierGet>();
+        modGetter.ResetModifiers();
+        modGetter.SetModifier(modType);
+
+        try
+        {
+            int playerId = GetComponentInParent<PlayerData>().id;
+            GameObject.Find("HUD").GetComponentInChildren<PlayersHUDManager>().GetPlayerHUD(playerId).SetModifierImage((int)modType);
+        }
+        catch { Debug.LogError("PlayersHUD not found"); }
+    }
+
 }

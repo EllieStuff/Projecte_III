@@ -98,4 +98,11 @@ public class PlayersHUD : MonoBehaviour
         if(modifier.gameObject.activeSelf)
             modifier.gameObject.SetActive(false);
     }
+
+    public void SetModifierImage(int _modIdx)
+    {
+        ClearModifiers();
+        modifier.gameObject.SetActive(true);
+        modifier.sprite = possibleModifiers[_modIdx];
+    }
 }

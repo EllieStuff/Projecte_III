@@ -12,7 +12,7 @@ public class PlayerPaintGun : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //player = GetComponent<PlayerVehicleScript>();
+        paintGun.originTransform = transform.Find("vehicleChasis");
     }
     internal void Init(Transform _modifier, bool _active)
     {
@@ -45,9 +45,17 @@ public class PlayerPaintGun : MonoBehaviour
     [ContextMenu("SetPaintGunModifier")]
     public void SetPaintGunModifier()
     {
+        RandomModifierGet.ModifierTypes modType = RandomModifierGet.ModifierTypes.PAINT_GUN;
         RandomModifierGet modGetter = GetComponent<RandomModifierGet>();
         modGetter.ResetModifiers();
-        modGetter.SetModifier(RandomModifierGet.ModifierTypes.PAINT_GUN);
+        modGetter.SetModifier(modType);
+
+        try
+        {
+            int playerId = GetComponentInParent<PlayerData>().id;
+            GameObject.Find("HUD").GetComponentInChildren<PlayersHUDManager>().GetPlayerHUD(playerId).SetModifierImage((int)modType);
+        }
+        catch { Debug.LogError("PlayersHUD not found"); }
     }
 
 }

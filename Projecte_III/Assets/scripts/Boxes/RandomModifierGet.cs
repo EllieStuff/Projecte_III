@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class RandomModifierGet : MonoBehaviour
 {
+    const float INIT_TIMER_MODIFIER = 5.0f;
+
     public enum ModifierTypes { PLUNGER, HANG_GLIDER, UMBRELLA, OIL, PAINT_GUN, COUNT, NONE };
 
     public GameObject[] modifiers;
@@ -64,15 +66,17 @@ public class RandomModifierGet : MonoBehaviour
                         plunger.Activate(transform.TransformDirection(1, 0, 0));
 
                     //plunger.hasPlunger = false;
-                    timerModifier = 5;
+                    timerModifier = INIT_TIMER_MODIFIER;
                     break;
+
                 case ModifierTypes.HANG_GLIDER:
                     PlayerAlaDelta hangGlider = GetComponent<PlayerAlaDelta>();
                     hangGlider.Activate();
 
-                    hangGlider.hasAlaDelta = false;
-                    timerModifier = 5;
+                    //hangGlider.hasAlaDelta = false;
+                    timerModifier = INIT_TIMER_MODIFIER;
                     break;
+
                 case ModifierTypes.UMBRELLA:
                     Umbrella umbrella = GetComponent<Umbrella>();
                     if (inputs.ShootForward)
@@ -84,9 +88,16 @@ public class RandomModifierGet : MonoBehaviour
                     else if (inputs.ShootRight)
                         umbrella.ActivateUmbrella(Quaternion.Euler(90, 180, -90), true);
 
+                    timerModifier = INIT_TIMER_MODIFIER;
                     break;
+
                 case ModifierTypes.OIL:
+                    PlayerOilGun oilGun = GetComponent<PlayerOilGun>();
+                    oilGun.Activate();
+
+                    timerModifier = INIT_TIMER_MODIFIER;
                     break;
+
                 case ModifierTypes.PAINT_GUN:
                     PlayerPaintGun paintGun = GetComponent<PlayerPaintGun>();
                     if (inputs.ShootForward)
@@ -97,6 +108,11 @@ public class RandomModifierGet : MonoBehaviour
                         paintGun.Activate(Quaternion.Euler(0, 90, 0));
                     else if (inputs.ShootRight)
                         paintGun.Activate(Quaternion.Euler(0, -90, 0));
+
+                    timerModifier = INIT_TIMER_MODIFIER;
+                    break;
+
+                default:
                     break;
             }
             currentModifier = ModifierTypes.NONE;
@@ -119,6 +135,7 @@ public class RandomModifierGet : MonoBehaviour
             case ModifierTypes.UMBRELLA:
                 break;
             case ModifierTypes.OIL:
+                GetComponent<PlayerOilGun>().hasOilGun = true;
                 break;
             case ModifierTypes.PAINT_GUN:
                 GetComponent<PlayerPaintGun>().hasPaintGun = true;
@@ -139,6 +156,7 @@ public class RandomModifierGet : MonoBehaviour
             case ModifierTypes.UMBRELLA:
                 break;
             case ModifierTypes.OIL:
+                GetComponent<PlayerOilGun>().hasOilGun = false;
                 break;
             case ModifierTypes.PAINT_GUN:
                 GetComponent<PlayerPaintGun>().hasPaintGun = false;

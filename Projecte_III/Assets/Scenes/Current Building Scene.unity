@@ -278,6 +278,17 @@ WheelCollider:
   m_CorrespondingSourceObject: {fileID: 38654283041918288, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
   m_PrefabInstance: {fileID: 1705894714}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &124126063 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6522073796784484100, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+  m_PrefabInstance: {fileID: 1705894714}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45b2a604ac1717f499347fe425f97145, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &125007123
 GameObject:
   m_ObjectHideFlags: 0
@@ -880,6 +891,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1631954268935534655, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+      propertyPath: oilGun
+      value: 
+      objectReference: {fileID: 828894706}
     - target: {fileID: 2446448053087385845, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: ghostMat
       value: 
@@ -5918,6 +5933,17 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &692264422 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6522073796784484100, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+  m_PrefabInstance: {fileID: 1464576189}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45b2a604ac1717f499347fe425f97145, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &705744894
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6400,6 +6426,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 827677839}
   m_CullTransparentMesh: 1
+--- !u!114 &828894706 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6522073796784484100, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+  m_PrefabInstance: {fileID: 544694459}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45b2a604ac1717f499347fe425f97145, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &927943450
 GameObject:
   m_ObjectHideFlags: 0
@@ -7572,6 +7609,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 6457435736812260652, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6468821771490017155, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: m_TagString
       value: ModifierSpots
@@ -8421,6 +8462,10 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1631954268935534655, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+      propertyPath: oilGun
+      value: 
+      objectReference: {fileID: 692264422}
     - target: {fileID: 2121126740340143591, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -8668,6 +8713,10 @@ PrefabInstance:
     - target: {fileID: 6089789508452674747, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: m_TagString
       value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 6457435736812260652, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6468821771490017155, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: m_TagString
@@ -19479,6 +19528,10 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1631954268935534655, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+      propertyPath: oilGun
+      value: 
+      objectReference: {fileID: 124126063}
     - target: {fileID: 2121126740340143591, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -19726,6 +19779,10 @@ PrefabInstance:
     - target: {fileID: 6089789508452674747, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: m_TagString
       value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 6457435736812260652, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6468821771490017155, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: m_TagString

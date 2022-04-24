@@ -8,6 +8,8 @@ public class OilBulletScript : MonoBehaviour
     [SerializeField] SphereCollider col;
     [SerializeField] float sizeInc = 5.0f;
 
+    Transform originTransform = null;
+
     private void OnEnable()
     {
         StartCoroutine(DespawnCoroutine());
@@ -15,13 +17,14 @@ public class OilBulletScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("PlayerVehicle"))
+        if (CollidingWithPlayer(other))
         {
             // Ho silencio perque el joc peta molt si no
 
-            //GameObject instancedGO = GameObject.Instantiate(decalPrefab, transform.position, decalPrefab.transform.rotation, other.transform);
-            //instancedGO.transform.localScale = instancedGO.transform.localScale * transform.localScale.x;
+            GameObject instancedGO = GameObject.Instantiate(decalPrefab, transform.position, decalPrefab.transform.rotation, other.transform);
+            instancedGO.transform.localScale = instancedGO.transform.localScale * transform.localScale.x;
             //instancedGO.tag = "Untagged";
+            other.GetComponentInParent<Rigidbody>().AddExplosionForce(1000, transform.position, col.radius * transform.localScale.x);
 
         }
         else
@@ -45,7 +48,17 @@ public class OilBulletScript : MonoBehaviour
     bool TagToIgnore(string _tag)
     {
         return (_tag.Equals("Decal") || _tag.Equals("Painting") || _tag.Equals("Oil") || _tag.Equals("Respawn") 
-            || _tag.Equals("CameraTrigger") || _tag.Equals("Untagged") || _tag.Equals("CameraObjective") || _tag.Equals("CamLimit"));
+            || _tag.Equals("CameraTrigger") || _tag.Equals("Untagged") || _tag.Equals("CameraObjective") || _tag.Equals("CamLimit")
+            || _tag.Equals("PlayerVehicle"));
+    }
+    bool CollidingWithPlayer(Collider other)
+    {
+        return other.CompareTag("PlayerVehicle") && originTransform != other.transform;
+    }
+
+    public void SetOriginTransform(Transform _transform)
+    {
+        originTransform = _transform;
     }
 
 
