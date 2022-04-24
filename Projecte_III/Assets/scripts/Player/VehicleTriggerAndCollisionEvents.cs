@@ -25,6 +25,9 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
     private bool inmunity;
     private bool ghostTextureEnabled;
 
+    public bool applyingForce = false;
+    public float previousMaxSpeed;
+
     private void Start()
     {
         Init();
@@ -138,6 +141,29 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
             player.vehicleMaxSpeed = player.savedMaxSpeed;
             player.vehicleAcceleration = player.savedAcceleration;
         }
+    }
+
+    public void ApplyForce(float forceValue)
+    {
+        previousMaxSpeed = player.vehicleMaxSpeed;
+        player.vehicleMaxSpeed = forceValue;
+        applyingForce = true;
+    }
+
+    private void FixedUpdate()
+    {
+        if(applyingForce)
+        {
+            StartCoroutine(ResetVelocity());
+        }
+    }
+
+    IEnumerator ResetVelocity()
+    {
+        applyingForce = false;
+        yield return new WaitForSeconds(5.0f);
+        player.vehicleMaxSpeed = previousMaxSpeed;
+        Debug.Log("Velocity reseted");
     }
 
     void OnCollisionStay(Collision other)
