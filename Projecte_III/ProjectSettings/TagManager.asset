@@ -48,6 +48,9 @@ TagManager:
   - Raft
   - FinishedGame
   - CameraObjective
+  - Road
+  - CamLimit
+  - SlowSpeedCollider
   layers:
   - Default
   - TransparentFX
@@ -57,7 +60,7 @@ TagManager:
   - UI
   - Modifiers
   - Player2
-  - 
+  - Road
   - 
   - 
   - 
@@ -84,4 +87,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: UI
+    uniqueID: 16014327
     locked: 0

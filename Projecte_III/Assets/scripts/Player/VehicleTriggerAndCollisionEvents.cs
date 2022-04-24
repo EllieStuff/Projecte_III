@@ -1,18 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class VehicleTriggerAndCollisionEvents : MonoBehaviour
 {
     private PlayerVehicleScript player;
     private Transform centerRespawn;
     public Vector3 respawnPosition, respawnRotation, respawnVelocity;
-    bool paintingChecked = false, oilChecked = false;
+    bool paintingChecked = false, oilChecked = false, exitCamera;
     [SerializeField] float boostPadDuration;
     private bool reduceSpeed;
     public float boostPadMultiplier;
     private Transform outTransform;
     private Rigidbody outVehicleRB;
+    private PlayersManager playersManager;
+
+    PlayersHUD playerHud = null;
+    [SerializeField] private float timerRespawn = 3;
+    private BoxCollider collisionBox;
+    [SerializeField] private Material ghostMat;
+    [SerializeField] private Material defaultMat;
+    private MeshRenderer carRender;
+    private bool inmunity;
+    private bool ghostTextureEnabled;
 
     private void Start()
     {
@@ -20,6 +31,11 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
     }
     internal void Init()
     {
+        carRender = transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>();
+        carRender.material = defaultMat;
+        timerRespawn = 10;
+        playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
+        collisionBox = transform.GetChild(0).GetComponent<BoxCollider>();
         centerRespawn = GameObject.Find("Main Camera").transform;
         player = GetComponent<PlayerVehicleScript>();
         respawnPosition = new Vector3(0, 0, 0);
@@ -32,11 +48,34 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
     {
         if (centerRespawn == null) Init();
 
+        if (timerRespawn > 0 && inmunity)
+        {
+            timerRespawn -= Time.deltaTime;
+
+            if (!ghostTextureEnabled)
+                carRender.material = defaultMat;
+            else
+                carRender.material = ghostMat;
+
+            ghostTextureEnabled = !ghostTextureEnabled;
+        }
+        else if(inmunity)
+        {
+            carRender.material = defaultMat;
+            for (int i = 0; i < 4; i++)
+                Physics.IgnoreCollision(collisionBox, playersManager.GetPlayer(i).GetChild(0).GetComponent<BoxCollider>(), false);
+            inmunity = false;
+        }
+
         respawnPosition = new Vector3(centerRespawn.position.x, centerRespawn.position.y - 25, centerRespawn.position.z);
-        respawnPosition += centerRespawn.TransformDirection(new Vector3(0, 0, 30)) + new Vector3(0, 25, 0);
+        respawnPosition += centerRespawn.TransformDirection(new Vector3(0, 0, 30)) + new Vector3(0, 35, 0);
         respawnRotation = centerRespawn.rotation.eulerAngles;
         if (player.vehicleReversed)
         {
+            if (playerHud == null)
+            {
+                playerHud = GameObject.Find("HUD").transform.GetComponentInChildren<PlayersHUDManager>().GetPlayerHUD(transform.parent.GetComponent<PlayerData>().id);
+            }
             //Vehicle recover zone
             player.timerReversed += Time.deltaTime;
             if (DeathScript.DeathByFlipping(player.timerReversed, transform, player.vehicleRB, respawnPosition, respawnRotation, respawnVelocity, out outTransform, out outVehicleRB))
@@ -50,12 +89,20 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
             }
             //_________________________________________________________________________________________________________________________________________________________________
         }
-        else if(DeathScript.DeathByFalling(false, transform, player.vehicleRB, respawnPosition, respawnRotation, respawnVelocity, out outTransform, out outVehicleRB))
+        else if(DeathScript.DeathByFalling(false, transform, player.vehicleRB, respawnPosition, respawnRotation, respawnVelocity, out outTransform, out outVehicleRB)
+            || DeathScript.DeathByExitCamera(exitCamera, transform, player.vehicleRB, respawnPosition, respawnRotation, respawnVelocity, out outTransform, out outVehicleRB))
         {
+            if (playerHud == null)
+            {
+                playerHud = GameObject.Find("HUD").transform.GetComponentInChildren<PlayersHUDManager>().GetPlayerHUD(transform.parent.GetComponent<PlayerData>().id);
+            }
+
             transform.position = outTransform.position;
             transform.rotation = outTransform.rotation;
             player.vehicleRB.velocity = outVehicleRB.velocity;
             player.lifes--;
+
+            playerHud.UpdateLifes(player.lifes);
 
             GameObject parent = transform.parent.gameObject;
 
@@ -65,7 +112,20 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
             {
                 GetComponent<ParticleSystem>().Play();
                 parent.GetComponent<AudioSource>().Play();
+
+                for (int i = 0; i < 4; i++)
+                    Physics.IgnoreCollision(collisionBox, playersManager.GetPlayer(i).GetChild(0).GetComponent<BoxCollider>(), true);
+
+                carRender.material = ghostMat;
+                ghostTextureEnabled = true;
+
+                timerRespawn = 3;
+
+                inmunity = true;
             }
+
+            if (exitCamera)
+                exitCamera = false;
         }
 
         if (reduceSpeed && player.vehicleMaxSpeed > player.savedMaxSpeed)
@@ -107,6 +167,11 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
                 player.vehicleMaxSpeed = player.savedMaxSpeed;
         }
 
+        if (other.CompareTag("CamLimit") && other.name.Equals("Backward"))
+            exitCamera = true;
+        else if (other.CompareTag("CamLimit"))
+            player.vehicleRB.velocity += transform.TransformDirection(Vector3.back * Time.deltaTime * 5);
+
         /*if (other.CompareTag("Water"))
         {
             vehicleRB.AddForce(other.GetComponent<WaterStreamColliderScript>().Stream, ForceMode.Force);
@@ -138,6 +203,7 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+
         if (!other.CompareTag("Sand"))
             StartCoroutine(WaitEndBoost());
 

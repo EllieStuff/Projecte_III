@@ -31,6 +31,7 @@ public class GenerateNewTile : MonoBehaviour
         for (int i = 0; i < tilesGO.Length; i++)
         {
             tiles[i] = tilesGO[i].GetComponent<RoadData>();
+            
             if (tiles[i].RoadType == RoadData.Type.STRAIGHT)
             {
                 straightRoads.Add(tiles[i]);
@@ -53,6 +54,7 @@ public class GenerateNewTile : MonoBehaviour
 
     void GetCheckpointPositions(ref RoadData tile)
     {
+        
         List<Vector3> outList = new List<Vector3>();
 
         Transform checkPoints = tile.GetCheckpoints();

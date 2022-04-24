@@ -17,6 +17,7 @@ public class MenuFunctions : MonoBehaviour
     [SerializeField] GameObject menuCutScene;
     [SerializeField] Transform menuTitle;
     [SerializeField] Transform mainMenuButtonsFather;
+    [SerializeField] Transform tunelTransform;
 
     bool enableButtons = false;
 
@@ -100,6 +101,7 @@ public class MenuFunctions : MonoBehaviour
         float timer = 0, moveCarsTime = 2.0f;
         while(timer < changeSceneTime)
         {
+            tunelTransform.position += new Vector3(0, 0, Time.deltaTime * 20);
             yield return new WaitForEndOfFrame();
             timer += Time.deltaTime;
             if (timer > moveCarsTime)

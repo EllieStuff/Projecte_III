@@ -27,7 +27,7 @@ public class PlayerVehicleScript : MonoBehaviour
     public float vehicleMaxSpeed;
     public float vehicleMaxTorque;
     private WheelCollider[] wheelCollider;
-    private GameObject wheels;
+    private GameObject wheelsModels;
     public bool touchingGround;
     public bool vehicleReversed;
     public float minDriftSpeed;
@@ -47,16 +47,15 @@ public class PlayerVehicleScript : MonoBehaviour
     //public bool onWater;
 
     public Vector3 savedVelocity;
+    internal float timerStartRace;
 
-    [SerializeField] private AudioClip driftClip;
     [SerializeField] private AudioClip normalClip;
-    [SerializeField] private AudioClip boostClip;
 
     private PlayerAlaDelta alaDelta;
 
     private Transform outTransform;
     private Rigidbody outVehicleRB;
-    private float timerStart = 2;
+    private float baseMaxSpeed;
 
     private void Awake()
     {
@@ -66,6 +65,7 @@ public class PlayerVehicleScript : MonoBehaviour
     void Start()
     {
         lifes = 3;
+        timerStartRace = 7;
 
         alaDelta = GetComponent<PlayerAlaDelta>();
 
@@ -86,24 +86,23 @@ public class PlayerVehicleScript : MonoBehaviour
         savedAcceleration = vehicleAcceleration;
 
         wheelCollider = new WheelCollider[4];
-
-        Transform _wheels = transform.GetChild(1);
-
+        Transform _wheels = transform.Find("Wheels Colliders");
         for (int i = 0; i < wheelCollider.Length; i++)
         {
             wheelCollider[i] = _wheels.GetChild(i).GetComponent<WheelCollider>();
         }
-
-        wheelsPivot = transform.GetChild(1).gameObject;
+        wheelsPivot = _wheels.gameObject;
 
         GetComponent<AudioSource>().enabled = false;
         Physics.gravity = new Vector3(0, -9.8f * 2, 0);
         vehicleRB = GetComponent<Rigidbody>();
         vehicleRB.centerOfMass = centerOfMass;
         savedMaxSpeed = vehicleMaxSpeed;
+        baseMaxSpeed = vehicleMaxSpeed;
+        savedMaxSpeed -= 3;
         savedAngularDrag = vehicleRB.angularDrag;
 
-        wheels = transform.parent.GetChild(1).gameObject;
+        wheelsModels = transform.parent.GetChild(1).gameObject;
 
     }
 
@@ -126,7 +125,7 @@ public class PlayerVehicleScript : MonoBehaviour
 
             for (int i = 0; i < wheelsPivot.transform.childCount; i++)
             {
-                Transform wheel = wheels.transform.GetChild(0).GetChild(i);
+                Transform wheel = wheelsModels.transform.GetChild(0).GetChild(i);
                 wheelCollider[i].GetWorldPose(out wheelPosition, out wheelRotation);
                 if (wheelCollider[i].GetGroundHit(out var touchingGroundV))
                 {
@@ -151,14 +150,14 @@ public class PlayerVehicleScript : MonoBehaviour
                 else
                     wheel.transform.rotation = wheelRotation;
 
-                wheels.transform.localPosition = transform.localPosition;
-                wheels.transform.localRotation = transform.localRotation;
+                wheelsModels.transform.localPosition = transform.localPosition;
+                wheelsModels.transform.localRotation = transform.localRotation;
             }
 
             if (touchingGround && vehicleRB.constraints != RigidbodyConstraints.None)
                 vehicleRB.constraints = RigidbodyConstraints.None;
 
-            transform.parent.GetChild(2).localPosition = transform.localPosition;
+            //transform.parent.GetChild(2).localPosition = transform.localPosition;
         }
     }
 
@@ -170,7 +169,13 @@ public class PlayerVehicleScript : MonoBehaviour
         //controls.getAllInput(playerNum);
 
         //------Movement------
-        vehicleMovement();
+        if (timerStartRace <= 0)
+            vehicleMovement();
+        else if (touchingGround)
+        {
+            timerStartRace -= Time.deltaTime;
+            vehicleRB.velocity = transform.TransformDirection(Vector3.forward * 5);
+        }
     }
 
     void vehicleMovement()
@@ -179,6 +184,11 @@ public class PlayerVehicleScript : MonoBehaviour
 
         bool disableReverse = (vehicleMaxSpeed > savedMaxSpeed);
 
+        if(savedMaxSpeed < baseMaxSpeed)
+        {
+            savedMaxSpeed += Time.deltaTime * 0.04f;
+            vehicleMaxSpeed = savedMaxSpeed;
+        }
 
         if (touchingGround)
         {
@@ -245,44 +255,6 @@ public class PlayerVehicleScript : MonoBehaviour
 
         if (audio.enabled)
            audio.pitch = (vehicleRB.velocity.magnitude * 1) / vehicleMaxSpeed/2;
-
-        if (inputs.Drift && (inputs.Left || inputs.Right) && vehicleMaxSpeed <= savedMaxSpeed && vehicleRB.velocity.magnitude > 0.5f)
-        {
-            audio.pitch = 1;
-            if (audio.clip != driftClip)
-            {
-                audio.loop = true;
-                audio.volume = 0.05f;
-                audio.clip = driftClip;
-                audio.enabled = false;
-                audio.enabled = true;
-            }
-        }
-        else if (vehicleMaxSpeed <= savedMaxSpeed)
-        {
-            if (audio.clip != normalClip)
-            {
-                audio.loop = true;
-                audio.volume = 0.5f;
-                audio.clip = normalClip;
-                audio.enabled = false;
-                audio.enabled = true;
-            }
-        }
-        else if (timerStart <= 0)
-        {
-            audio.pitch = 1;
-            if (audio.clip != boostClip && vehicleMaxSpeed > savedMaxSpeed + 5)
-            {
-                audio.volume = 0.2f;
-                audio.clip = boostClip;
-                audio.enabled = false;
-                audio.enabled = true;
-                audio.loop = false;
-            }
-        }
-        else
-            timerStart -= Time.deltaTime;
     }
 
 

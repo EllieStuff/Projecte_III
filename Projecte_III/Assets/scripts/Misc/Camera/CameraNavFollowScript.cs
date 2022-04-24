@@ -22,24 +22,31 @@ public class CameraNavFollowScript : MonoBehaviour
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
 
+        navMeshAgent.speed = 7;
+
         StartCoroutine(StartDelayCoroutine());
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (navMeshAgent.speed < 10)
+            navMeshAgent.speed += Time.deltaTime * 0.04f;
 
         //Debug.Log(Vector3.Distance(transform.position, cameraCheckpoints[0]));
-        if (Vector3.Distance(transform.position, cameraCheckpoints[0]) < MARGIN)
+        //Debug.Log(navMeshAgent.destination);
+        if (cameraCheckpoints.Count > 0 && Vector3.Distance(transform.position, cameraCheckpoints[0]) < MARGIN)
         {
-            cameraCheckpoints.RemoveAt(0);
+            if(cameraCheckpoints.Count > 1)
+                cameraCheckpoints.RemoveAt(0);
             UpdateDestination();
         }
     }
 
     public void UpdateDestination()
     {
-        navMeshAgent.destination = cameraCheckpoints[0];
+        if(cameraCheckpoints.Count > 0)
+            navMeshAgent.destination = cameraCheckpoints[0];
     }
 
     public void AddCheckPoints(ref List<Vector3> newCheckpoints)
@@ -52,6 +59,7 @@ public class CameraNavFollowScript : MonoBehaviour
 
     public void ReachedGoal()
     {
+        Debug.Log("Goal Reached");
         StartCoroutine(StopCarCoroutine());
     }
 
