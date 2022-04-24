@@ -5,16 +5,14 @@ using UnityEngine;
 public class PlayerPaintGun : MonoBehaviour
 {
     //PlayerVehicleScript player;
-    PaintGunScript paintGun;
-    bool hasPaintGun = false;
-
-    public bool HasPaintGun { get { return hasPaintGun; } }
+    [SerializeField] PaintGunScript paintGun;
+    public bool hasPaintGun = false;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        //player = GetComponent<PlayerVehicleScript>();
+        paintGun.originTransform = transform.Find("vehicleChasis");
     }
     internal void Init(Transform _modifier, bool _active)
     {
@@ -34,11 +32,30 @@ public class PlayerPaintGun : MonoBehaviour
     }
 
 
-    public void Activate()
+    public void Activate(Quaternion _gunRot)
     {
         Debug.Log("in paint gun, " + hasPaintGun.ToString());
-        if(hasPaintGun)
+        if (hasPaintGun)
+        {
+            paintGun.transform.localRotation = _gunRot;
             paintGun.Activate();
+        }
+    }
+
+    [ContextMenu("SetPaintGunModifier")]
+    public void SetPaintGunModifier()
+    {
+        RandomModifierGet.ModifierTypes modType = RandomModifierGet.ModifierTypes.PAINT_GUN;
+        RandomModifierGet modGetter = GetComponent<RandomModifierGet>();
+        modGetter.ResetModifiers();
+        modGetter.SetModifier(modType);
+
+        try
+        {
+            int playerId = GetComponentInParent<PlayerData>().id;
+            GameObject.Find("HUD").GetComponentInChildren<PlayersHUDManager>().GetPlayerHUD(playerId).SetModifierImage((int)modType);
+        }
+        catch { Debug.LogError("PlayersHUD not found"); }
     }
 
 }
