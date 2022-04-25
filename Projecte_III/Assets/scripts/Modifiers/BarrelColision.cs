@@ -18,12 +18,6 @@ public class BarrelColision : MonoBehaviour
         {
             Debug.Log("Collision with player");
 
-            //Get the vector between the player and the center of the explosion and sets the value of the magnitude between 0-1
-            //Vector3 pushVector = transform.position - other.transform.position;
-
-            //Normalize and set the pushForce as the new magnitude of this vector
-            //pushVector = pushVector.normalized * pushForce;
-
             //----------
             //Apply pushVector to the player velocity
             other.transform.parent.GetComponent<VehicleTriggerAndCollisionEvents>().ApplyForce(pushForce);
