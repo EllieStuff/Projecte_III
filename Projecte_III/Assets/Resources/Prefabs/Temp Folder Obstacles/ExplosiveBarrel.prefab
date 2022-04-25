@@ -112,6 +112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pushForce: 1
+  collisionTimedown: 2
 --- !u!136 &3097056962570747566
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -170,7 +171,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77405634e714b704cb7eb06386df921f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pushMaxForce: 0
+  maxPushForce: 7
+  minPushForce: 3
+  collisionTimedown: 2
 --- !u!135 &6414066369786478368
 SphereCollider:
   m_ObjectHideFlags: 0

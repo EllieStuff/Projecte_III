@@ -143,25 +143,21 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
         }
     }
 
-    public void ApplyForce(float forceValue)
+    public void ApplyForce(float forceValue, float _seconds)
     {
         player.speedIncrementEnabled = false;
         player.vehicleMaxSpeed = forceValue;
-        applyingForce = true;
+        StartCoroutine(ResetVelocity(_seconds));
     }
 
     private void FixedUpdate()
     {
-        if(applyingForce)
-        {
-            StartCoroutine(ResetVelocity());
-        }
+
     }
 
-    IEnumerator ResetVelocity()
+    IEnumerator ResetVelocity(float _seconds)
     {
-        applyingForce = false;
-        yield return new WaitForSeconds(5.0f);
+        yield return new WaitForSeconds(_seconds);
         player.vehicleMaxSpeed = player.savedMaxSpeed;
         player.speedIncrementEnabled = true;
         Debug.Log("Velocity reseted");

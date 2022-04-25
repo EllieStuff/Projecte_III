@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class BarrelExplosion : MonoBehaviour
 {
-    [SerializeField] float pushMaxForce = 0.0f;
+    [SerializeField] float maxPushForce = 0.0f;
+    [SerializeField] float minPushForce = 0.0f;
+    [SerializeField] float collisionTimedown = 1.0f;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -14,13 +16,14 @@ public class BarrelExplosion : MonoBehaviour
             float distance = Vector3.Magnitude(other.transform.position - transform.position) / GetComponent<SphereCollider>().radius;
 
             //Normalize and set the currentForce as the new magnitude of this vector
-            float currentForce = pushMaxForce * (1 - distance);
+            float currentForce = maxPushForce * (1 - distance) + minPushForce;
 
             //----------
             //Apply pushVector to the player velocity
-            other.transform.parent.GetComponent<VehicleTriggerAndCollisionEvents>().ApplyForce(currentForce);
+            other.transform.parent.GetComponent<VehicleTriggerAndCollisionEvents>().ApplyForce(currentForce, collisionTimedown);
 
             //----------
+            GetComponent<SphereCollider>().enabled = false;
 
             Debug.Log("Player inside exlosion");
         }
