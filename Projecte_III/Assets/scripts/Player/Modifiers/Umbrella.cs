@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class Umbrella : MonoBehaviour
 {
-    bool umbrellaActivated;
-    float umbrellaTimer = 10;
+    const float INIT_UMBRELLA_TIME = 3.0f;
+    const float UMBRELLA_LERP_SPEED = 0.1f;
+
+    bool umbrellaActivated, umbrellaActive;
+    float umbrellaTimer = INIT_UMBRELLA_TIME;
     [SerializeField] GameObject umbrellaGameObject;
-    Vector3 originalPos;
+    Vector3 originalPos, originalScale;
 
     // Start is called before the first frame update
 
@@ -15,21 +18,30 @@ public class Umbrella : MonoBehaviour
     {
         umbrellaGameObject.SetActive(false);
         originalPos = umbrellaGameObject.transform.localPosition;
+        originalScale = umbrellaGameObject.transform.localScale;
     }
 
     private void Update()
     {
         if(umbrellaActivated)
         {
-            umbrellaGameObject.SetActive(true);
+            if (!umbrellaActive)
+            {
+                umbrellaActive = true;
+                //umbrellaGameObject.SetActive(true);
+                StartCoroutine(Appear());
+            }
             umbrellaTimer -= Time.deltaTime;
 
             if(umbrellaTimer <= 0)
             {
-                umbrellaTimer = 10;
-                umbrellaActivated = false;
-                umbrellaGameObject.SetActive(false);
-                umbrellaGameObject.transform.localPosition = originalPos;
+                umbrellaTimer = INIT_UMBRELLA_TIME;
+                umbrellaActive = umbrellaActivated = false;
+                StartCoroutine(Dissappear());
+                //umbrellaActivated = false;
+                //umbrellaGameObject.SetActive(false);
+                //umbrellaGameObject.transform.localPosition = originalPos;
+                //umbrellaGameObject.transform.localScale = originalScale;
             }
         }
     }
@@ -59,6 +71,30 @@ public class Umbrella : MonoBehaviour
             GameObject.Find("HUD").GetComponentInChildren<PlayersHUDManager>().GetPlayerHUD(playerId).SetModifierImage((int)modType);
         }
         catch { Debug.LogError("PlayersHUD not found"); }
+    }
+
+    IEnumerator Appear()
+    {
+        umbrellaGameObject.SetActive(true);
+        float timer = 0, maxTime = UMBRELLA_LERP_SPEED;
+        while(timer < maxTime)
+        {
+            yield return new WaitForEndOfFrame();
+            timer += Time.deltaTime;
+            umbrellaGameObject.transform.localScale = Vector3.Lerp(Vector3.zero, originalScale, timer / maxTime);
+        }
+    }
+    IEnumerator Dissappear()
+    {
+        float timer = 0, maxTime = UMBRELLA_LERP_SPEED;
+        while(timer < maxTime)
+        {
+            yield return new WaitForEndOfFrame();
+            timer += Time.deltaTime;
+            umbrellaGameObject.transform.localScale = Vector3.Lerp(originalScale, Vector3.zero, timer / maxTime);
+        }
+        //umbrellaActivated = false;
+        umbrellaGameObject.SetActive(false);
     }
 
 }
