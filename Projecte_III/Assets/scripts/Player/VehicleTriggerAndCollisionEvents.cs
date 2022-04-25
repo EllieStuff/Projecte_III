@@ -145,6 +145,7 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
 
     public void ApplyForce(float forceValue)
     {
+        player.speedIncrementEnabled = false;
         player.vehicleMaxSpeed = forceValue;
         applyingForce = true;
     }
@@ -162,6 +163,7 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
         applyingForce = false;
         yield return new WaitForSeconds(5.0f);
         player.vehicleMaxSpeed = player.savedMaxSpeed;
+        player.speedIncrementEnabled = true;
         Debug.Log("Velocity reseted");
     }
 
