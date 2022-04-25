@@ -227,8 +227,8 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
 
-        if (!other.CompareTag("Sand"))
-            StartCoroutine(WaitEndBoost());
+        //if (!other.CompareTag("Sand"))
+            //StartCoroutine(WaitEndBoost());
 
         if (other.CompareTag("Painting") || other.CompareTag("Oil"))
         {
