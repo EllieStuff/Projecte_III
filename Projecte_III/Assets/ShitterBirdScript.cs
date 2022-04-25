@@ -27,6 +27,8 @@ public class ShitterBirdScript : MonoBehaviour
 
         //InitRndValues();
         InitValues(moveDir, moveSpeed);
+
+        Destroy(gameObject, 10.0f);
     }
 
     // Update is called once per frame
@@ -102,21 +104,15 @@ public class ShitterBirdScript : MonoBehaviour
 
     private IEnumerator DiarrheaCoroutine()
     {
-        yield return new WaitForSeconds(Random.Range(1.0f, 6.0f));
+        yield return new WaitForSecondsRealtime(Random.Range(0.5f, 2.0f));
 
-        int diarrheaShitAmount = Random.Range(3, 10), currDiarrheaAmount = 0;
-        float diarrheaTimer = 0, diarrheaDelay = 0.3f;
-        while(currDiarrheaAmount < diarrheaShitAmount)
+        int diarrheaShitAmount = Random.Range(3, 8), currDiarrheaAmount = 0;
+        float diarrheaDelay = Random.Range(0.1f, 0.7f);
+        while (currDiarrheaAmount < diarrheaShitAmount)
         {
-            if(diarrheaTimer >= diarrheaDelay)
-            {
-                diarrheaTimer = 0.0f;
-                currDiarrheaAmount++;
-                Instantiate(shitPrefab, transform.position, shitPrefab.transform.rotation);
-                break;
-            }
-            yield return new WaitForEndOfFrame();
-            diarrheaTimer += Time.deltaTime;
+            yield return new WaitForSeconds(diarrheaDelay);
+            currDiarrheaAmount++;
+            Instantiate(shitPrefab, transform.position, shitPrefab.transform.rotation);
         }
     }
 

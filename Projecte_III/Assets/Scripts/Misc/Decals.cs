@@ -12,6 +12,17 @@ public static class Decals
         public SetUpDecalData(Vector3 _pos, Vector3 _scale, Quaternion _rot) { pos = _pos; scale = _scale; rot = _rot; }
     }
 
+    public static bool TagToIgnore(string _tag)
+    {
+        return (_tag.Equals("Decal") || _tag.Equals("Painting") || _tag.Equals("Oil") || _tag.Equals("Respawn")
+            || _tag.Equals("CameraTrigger") || _tag.Equals("Untagged") || _tag.Equals("CameraObjective") || _tag.Equals("CamLimit")
+            || _tag.Equals("PlayerVehicle"));
+    }
+    public static bool CollidingWithPlayer(Collider _other, Transform _originTransform)
+    {
+        return _other.CompareTag("PlayerVehicle") && _originTransform != _other.transform;
+    }
+
 
     public static GameObject SpawnDecal(GameObject _decalPrefab, RaycastHit _raycastHit)
     {

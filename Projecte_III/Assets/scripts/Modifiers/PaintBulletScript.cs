@@ -17,7 +17,7 @@ public class PaintBulletScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (CollidingWithPlayer(other))
+        if (Decals.CollidingWithPlayer(other, originTransform))
         {
             // Ho silencio perque el joc peta molt si no
 
@@ -30,7 +30,7 @@ public class PaintBulletScript : MonoBehaviour
         }
         else
         {
-            if (!TagToIgnore(other.tag))
+            if (!Decals.TagToIgnore(other.tag))
             {
                 //Vector3 closesPoint = other.ClosestPoint(transform.position);
                 //Vector3 spawnPoint = closesPoint + ((transform.position - closesPoint).normalized * decalPrefab.transform.localScale.x);
@@ -45,16 +45,7 @@ public class PaintBulletScript : MonoBehaviour
 
     }
 
-    bool TagToIgnore(string _tag)
-    {
-        return (_tag.Equals("Decal") || _tag.Equals("Painting") || _tag.Equals("Oil") || _tag.Equals("Respawn")
-            || _tag.Equals("CameraTrigger") || _tag.Equals("Untagged") || _tag.Equals("CameraObjective") || _tag.Equals("CamLimit")
-            || _tag.Equals("PlayerVehicle"));
-    }
-    bool CollidingWithPlayer(Collider other)
-    {
-        return other.CompareTag("PlayerVehicle") && originTransform != other.transform;
-    }
+
 
     public void SetOriginTransform(Transform _transform)
     {
