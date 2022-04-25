@@ -15,7 +15,7 @@ public class ShitterBirdScript : MonoBehaviour
     [SerializeField] Transform shadow;
     [SerializeField] float scaleFactor = 0.1f;
 
-    Rigidbody parentRB;
+    Rigidbody rb;
     float initY;
     Vector3 initShadowScale;
     bool inSameCollision = false;
@@ -23,15 +23,18 @@ public class ShitterBirdScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InitRndValues();
+        rb = transform.GetComponent<Rigidbody>();
+
+        //InitRndValues();
+        InitValues(moveDir, moveSpeed);
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        parentRB.MovePosition(parentRB.position + moveDir * moveSpeed * Time.deltaTime);
+        rb.MovePosition(rb.position + moveDir * moveSpeed * Time.deltaTime);
         RaycastHit hit;
-        Debug.DrawRay(parentRB.position, Vector3.zero, Color.red);
+        Debug.DrawRay(rb.position, Vector3.zero, Color.red);
         if(Physics.Raycast(GetRaycastRay(), out hit))
         {
             if (shitType == ShitType.AIM && hit.transform.CompareTag("PlayerVehicle") && !inSameCollision)
@@ -45,9 +48,9 @@ public class ShitterBirdScript : MonoBehaviour
                 shadow.position = GetCorrectedPosition(hit.point, -0.3f);
             }
         }
-        if(initY != parentRB.position.y)
+        if(initY != rb.position.y)
         {
-            float scaleModifier = (initY - parentRB.position.y) * scaleFactor;
+            float scaleModifier = (initY - rb.position.y) * scaleFactor;
             if (scaleModifier <= -initShadowScale.x) 
                 shadow.localScale = Vector3.zero;
             else 
@@ -61,7 +64,7 @@ public class ShitterBirdScript : MonoBehaviour
     }
     Ray GetRaycastRay()
     {
-        return new Ray(GetCorrectedPosition(parentRB.position, RAY_MARGIN), Vector3.down);
+        return new Ray(GetCorrectedPosition(rb.position, RAY_MARGIN), Vector3.down);
     }
 
     public void InitRndValues()
@@ -82,16 +85,15 @@ public class ShitterBirdScript : MonoBehaviour
     }
     void GenericInit()
     {
-        parentRB = transform.GetComponentInParent<Rigidbody>();
-        parentRB.transform.rotation *= Quaternion.FromToRotation(parentRB.transform.forward, moveDir);
-        shadow.rotation *= Quaternion.FromToRotation(shadow.forward, moveDir);
+        rb.transform.rotation *= Quaternion.FromToRotation(rb.transform.forward, moveDir);
+        //shadow.rotation *= Quaternion.FromToRotation(shadow.forward, moveDir);
         //transform.rotation *= Quaternion.FromToRotation(-transform.up, Vector3.down);
 
-        Vector3 newScale = parentRB.transform.localScale * size;
-        parentRB.transform.localScale = shadow.localScale /*= transform.localScale*/ = newScale;
+        Vector3 newScale = rb.transform.localScale * size;
+        rb.transform.localScale = shadow.localScale /*= transform.localScale*/ = newScale;
 
-        initY = parentRB.position.y;
-        initShadowScale = parentRB.transform.localScale;
+        initY = rb.position.y;
+        initShadowScale = rb.transform.localScale;
 
         StopAllCoroutines();
         if (shitType == ShitType.DIARRHEA)
