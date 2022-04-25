@@ -95,10 +95,10 @@ public class ShitterBirdScript : MonoBehaviour
 
         StopAllCoroutines();
         if (shitType == ShitType.DIARRHEA)
-            StartCoroutine(DiarrheaCorroutine());
+            StartCoroutine(DiarrheaCoroutine());
     }
 
-    private IEnumerator DiarrheaCorroutine()
+    private IEnumerator DiarrheaCoroutine()
     {
         yield return new WaitForSeconds(Random.Range(1.0f, 6.0f));
 
