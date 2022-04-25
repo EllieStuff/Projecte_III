@@ -1362,7 +1362,6 @@ GameObject:
   m_Component:
   - component: {fileID: 519062041}
   - component: {fileID: 519062043}
-  - component: {fileID: 519062042}
   m_Layer: 0
   m_Name: ShitterBirdManager
   m_TagString: Untagged
@@ -1384,19 +1383,6 @@ Transform:
   m_Father: {fileID: 8458618875420569852}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &519062042
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519062040}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 5.460374, z: 1}
-  m_Center: {x: 0, y: -2.230187, z: 0}
 --- !u!114 &519062043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1409,6 +1395,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45bd6821f0d4d0146b802eda038bc0b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shitType: 0
   moveDir: {x: 1, y: 0, z: -0.4}
   moveSpeed: 7
   size: 1
@@ -12186,7 +12173,7 @@ GameObject:
   - component: {fileID: 8369847583338738602}
   - component: {fileID: 8463945225741464871}
   m_Layer: 0
-  m_Name: SCharacter_Bird1
+  m_Name: ShitterBird
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
