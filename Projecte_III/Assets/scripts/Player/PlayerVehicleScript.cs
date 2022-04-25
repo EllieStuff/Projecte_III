@@ -16,7 +16,7 @@ public class PlayerVehicleScript : MonoBehaviour
 
     internal float timerReversed;
     internal float savedMaxSpeed;
-    internal float savedAngularDrag;
+    [HideInInspector] public float savedAngularDrag;
 
     //internal QuadControlSystem controls;
     internal PlayerInputs inputs;

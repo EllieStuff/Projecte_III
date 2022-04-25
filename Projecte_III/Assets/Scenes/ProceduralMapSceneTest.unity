@@ -629,87 +629,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1 &124901610
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 124901611}
-  - component: {fileID: 124901613}
-  - component: {fileID: 124901612}
-  m_Layer: 0
-  m_Name: Shadow
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &124901611
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 124901610}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: -4.9, z: 1.1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 8458618875420569852}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &124901612
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 124901610}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 1d15759d4f164be459e9f8ec8214d846, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &124901613
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 124901610}
-  m_Mesh: {fileID: 4300000, guid: 175febab25a133545bb941cb948a5bf3, type: 3}
 --- !u!4 &216093415 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4650015739293945062, guid: a30db648f84a03b4c8426877868b7fdb, type: 3}
@@ -1352,56 +1271,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: e31145fe672b8574381fcbd09d2f7b8f, type: 3}
   player: {fileID: 0}
   id: 0
---- !u!1 &519062040
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 519062041}
-  - component: {fileID: 519062043}
-  m_Layer: 0
-  m_Name: ShitterBirdManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &519062041
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519062040}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.52, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 8458618875420569852}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &519062043
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519062040}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45bd6821f0d4d0146b802eda038bc0b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shitType: 0
-  moveDir: {x: 1, y: 0, z: -0.4}
-  moveSpeed: 7
-  size: 1
-  shitPrefab: {fileID: 0}
-  shadow: {fileID: 1946566373}
-  scaleFactor: 0.005
 --- !u!1 &534027660
 GameObject:
   m_ObjectHideFlags: 0
@@ -11148,7 +11017,7 @@ Transform:
   - {fileID: 556066740}
   - {fileID: 815599114}
   m_Father: {fileID: 8458618875420569852}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: -90.673, z: 0}
 --- !u!95 &1946566374
 Animator:
@@ -11799,11 +11668,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8464390162853737252}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: -9.96}
+  m_LocalPosition: {x: 11.03, y: 0, z: -16.64}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8458618875420569852}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &8458353758345627380
 Transform:
@@ -11905,13 +11774,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8463945225741464870}
   m_LocalRotation: {x: -0, y: -0.71124977, z: -0, w: 0.7029394}
-  m_LocalPosition: {x: 15.04, y: 5, z: 7.82}
+  m_LocalPosition: {x: 24.96, y: 5, z: 54.81}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 519062041}
   - {fileID: 8458330858148598470}
   - {fileID: 1946566373}
-  - {fileID: 124901611}
   - {fileID: 8458797417220026472}
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -11986,7 +11853,7 @@ Transform:
   - {fileID: 8458805622623099206}
   - {fileID: 8458425434891419980}
   m_Father: {fileID: 8458618875420569852}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &8458805622623099206
 Transform:
@@ -12171,6 +12038,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8458618875420569852}
   - component: {fileID: 8369847583338738602}
+  - component: {fileID: 8463945225741464872}
   - component: {fileID: 8463945225741464871}
   m_Layer: 0
   m_Name: ShitterBird
@@ -12195,6 +12063,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &8463945225741464872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8463945225741464870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45bd6821f0d4d0146b802eda038bc0b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shitType: 1
+  moveDir: {x: -1, y: 0, z: 0.3}
+  moveSpeed: 8
+  size: 1
+  shitPrefab: {fileID: 2676722182366870990, guid: fc937852317483b4e9d38f357c171462, type: 3}
+  shadow: {fileID: 1946566373}
+  scaleFactor: 0.01
 --- !u!1 &8463969279593137074
 GameObject:
   m_ObjectHideFlags: 0
