@@ -20,7 +20,11 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
     [SerializeField] private float timerRespawn = 3;
     private BoxCollider collisionBox;
     [SerializeField] private Material ghostMat;
-    [SerializeField] private Material defaultMat;
+    [SerializeField] private Material defaultMat;    public Material DefaultMaterial
+    {
+        get { return defaultMat; }
+        set { defaultMat = value; }
+    }
     private MeshRenderer carRender;
     private bool inmunity;
     private bool ghostTextureEnabled;

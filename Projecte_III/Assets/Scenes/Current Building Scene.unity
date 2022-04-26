@@ -132,6 +132,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 47345319}
+  - component: {fileID: 47345320}
   m_Layer: 5
   m_Name: Player1
   m_TagString: Untagged
@@ -162,6 +163,20 @@ RectTransform:
   m_AnchoredPosition: {x: -288, y: -52}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &47345320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 47345318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d0fb299fa3a206418df2e9282fa3ecb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentValue: 0
+  player: {fileID: 450993785}
 --- !u!1 &86146010
 GameObject:
   m_ObjectHideFlags: 0
@@ -680,6 +695,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 38654283868662909, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
   m_PrefabInstance: {fileID: 514036009}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &448888211 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2446448053087385845, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+  m_PrefabInstance: {fileID: 514036009}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c657fbf306bf3a48ae8608a3fe5a925, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &450993774 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 38654283868662901, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
@@ -700,6 +726,17 @@ MonoBehaviour:
   saltoDuration: 1.5
   explosionRange: 8
   saltoTimer: 0
+--- !u!114 &450993785 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2446448053087385845, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+  m_PrefabInstance: {fileID: 544694459}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 450993774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c657fbf306bf3a48ae8608a3fe5a925, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &514036009
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -766,6 +803,10 @@ PrefabInstance:
     - target: {fileID: 5550834916945680585, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8005247557539419492, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+      propertyPath: m_Name
+      value: Sedan P4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
@@ -920,6 +961,10 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8005247557539419492, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+      propertyPath: m_Name
+      value: Sedan P1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
 --- !u!4 &544694460 stripped
@@ -937,6 +982,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 38654283868662909, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
   m_PrefabInstance: {fileID: 2061714313}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &591473761 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2446448053087385845, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+  m_PrefabInstance: {fileID: 2061714313}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c657fbf306bf3a48ae8608a3fe5a925, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &751293106
 GameObject:
   m_ObjectHideFlags: 0
@@ -1168,7 +1224,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 817937878}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 47345320}
+        m_TargetAssemblyTypeName: ChangeColor, Assembly-CSharp
+        m_MethodName: SetNewColor
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: -1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &817937878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1264,7 +1332,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: car name
+  m_text: 'Player '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7dda8759c850bef47a23225877615c1a, type: 2}
   m_sharedMaterial: {fileID: -253761986307912052, guid: 7dda8759c850bef47a23225877615c1a, type: 2}
@@ -1572,6 +1640,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 993000036}
+  - component: {fileID: 993000037}
   m_Layer: 5
   m_Name: Player3
   m_TagString: Untagged
@@ -1602,6 +1671,20 @@ RectTransform:
   m_AnchoredPosition: {x: 95, y: -52}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &993000037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 993000035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d0fb299fa3a206418df2e9282fa3ecb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentValue: 0
+  player: {fileID: 1230803741}
 --- !u!1 &1107098068
 GameObject:
   m_ObjectHideFlags: 0
@@ -1890,6 +1973,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8005247557539419492, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+      propertyPath: m_Name
+      value: Sedan P3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
 --- !u!4 &1230803731 stripped
@@ -1897,6 +1984,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 38654283868662909, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
   m_PrefabInstance: {fileID: 1212503059}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1230803741 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2446448053087385845, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+  m_PrefabInstance: {fileID: 1212503059}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c657fbf306bf3a48ae8608a3fe5a925, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1265423155
 GameObject:
   m_ObjectHideFlags: 0
@@ -2085,7 +2183,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1303506323}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 47345320}
+        m_TargetAssemblyTypeName: ChangeColor, Assembly-CSharp
+        m_MethodName: SetNewColor
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1303506323
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2133,6 +2243,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1310840810}
+  - component: {fileID: 1310840811}
   m_Layer: 5
   m_Name: Player4
   m_TagString: Untagged
@@ -2163,6 +2274,20 @@ RectTransform:
   m_AnchoredPosition: {x: 303, y: -52}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1310840811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1310840809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d0fb299fa3a206418df2e9282fa3ecb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentValue: 0
+  player: {fileID: 448888211}
 --- !u!1 &1323372878
 GameObject:
   m_ObjectHideFlags: 0
@@ -2422,6 +2547,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1498525208}
+  - component: {fileID: 1498525209}
   m_Layer: 5
   m_Name: Player2
   m_TagString: Untagged
@@ -2452,6 +2578,20 @@ RectTransform:
   m_AnchoredPosition: {x: -87, y: -52}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1498525209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1498525207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d0fb299fa3a206418df2e9282fa3ecb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentValue: 0
+  player: {fileID: 591473761}
 --- !u!1 &1553935217
 GameObject:
   m_ObjectHideFlags: 0
@@ -3362,6 +3502,10 @@ PrefabInstance:
     - target: {fileID: 5550834916945680585, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8005247557539419492, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+      propertyPath: m_Name
+      value: Sedan P2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
