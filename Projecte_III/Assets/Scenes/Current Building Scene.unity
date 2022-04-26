@@ -964,6 +964,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 433964860}
   m_CullTransparentMesh: 1
+--- !u!1 &450993774 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 38654283868662901, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+  m_PrefabInstance: {fileID: 544694459}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &450993775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 450993774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f29bd317172d2242b180af8bb1eb3d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saltoDuration: 1.5
+  explosionRange: 8
+  saltoTimer: 0
 --- !u!4 &479879042 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3014420310080180277, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
@@ -976,6 +996,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6920070520231266521}
     m_Modifications:
+    - target: {fileID: 544694467, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1583549956586008342, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -6058,6 +6082,21 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &570707099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 570707089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f29bd317172d2242b180af8bb1eb3d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saltoDuration: 1.5
+  explosionRange: 8
+  saltoTimer: 0
 --- !u!1001 &677902545
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7220,6 +7259,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6920070520231266521}
     m_Modifications:
+    - target: {fileID: 544694467, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 38654282782597987, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -8321,6 +8364,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6920070520231266521}
     m_Modifications:
+    - target: {fileID: 544694467, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 38654282782597987, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -9014,6 +9061,21 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 38654283868662901, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
   m_PrefabInstance: {fileID: 1464576189}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1464576196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1464576195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f29bd317172d2242b180af8bb1eb3d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saltoDuration: 1.5
+  explosionRange: 8
+  saltoTimer: 0
 --- !u!114 &1464576197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19380,6 +19442,21 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &1691527851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1691527841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f29bd317172d2242b180af8bb1eb3d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saltoDuration: 1.5
+  explosionRange: 8
+  saltoTimer: 0
 --- !u!1001 &1705894714
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19387,6 +19464,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6920070520231266521}
     m_Modifications:
+    - target: {fileID: 544694467, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 38654282782597987, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -43576,6 +43657,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
+  m_XRTrackingOrigin: {fileID: 0}
   m_ActionsAsset: {fileID: -944628639613478452, guid: b1754614d46d13d45a7f0d43fc1f2798, type: 3}
   m_PointAction: {fileID: -1654692200621890270, guid: b1754614d46d13d45a7f0d43fc1f2798, type: 3}
   m_MoveAction: {fileID: 0}
@@ -47065,6 +47147,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2

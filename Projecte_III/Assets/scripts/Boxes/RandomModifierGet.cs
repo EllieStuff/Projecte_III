@@ -6,7 +6,7 @@ public class RandomModifierGet : MonoBehaviour
 {
     const float INIT_TIMER_MODIFIER = 5.0f;
 
-    public enum ModifierTypes { PLUNGER, HANG_GLIDER, UMBRELLA, OIL, PAINT_GUN, COUNT, NONE };
+    public enum ModifierTypes { PLUNGER, HANG_GLIDER, UMBRELLA, OIL, PAINT_GUN, SALTO_BOMBA, COUNT, NONE };
 
     public GameObject[] modifiers;
     GameObject showModifierInstance;
@@ -109,6 +109,14 @@ public class RandomModifierGet : MonoBehaviour
                     else if (inputs.ShootRight)
                         paintGun.Activate(Quaternion.Euler(0, -90, 0));
 
+                    timerModifier = INIT_TIMER_MODIFIER;
+                    break;
+
+                case ModifierTypes.SALTO_BOMBA:
+                    SaltoBomba salto = GetComponent<SaltoBomba>();
+                    salto.hasSalto = true;
+                    salto.Activate();
+                    
                     timerModifier = INIT_TIMER_MODIFIER;
                     break;
 
