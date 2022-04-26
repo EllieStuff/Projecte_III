@@ -80,4 +80,22 @@ public class PlayerAlaDelta : MonoBehaviour
             }
         }
     }
+
+
+    [ContextMenu("SetHangGliderGunModifier")]
+    public void SetHangGliderModifier()
+    {
+        RandomModifierGet.ModifierTypes modType = RandomModifierGet.ModifierTypes.HANG_GLIDER;
+        RandomModifierGet modGetter = GetComponent<RandomModifierGet>();
+        modGetter.ResetModifiers();
+        modGetter.SetModifier(modType);
+
+        try
+        {
+            int playerId = GetComponentInParent<PlayerData>().id;
+            GameObject.Find("HUD").GetComponentInChildren<PlayersHUDManager>().GetPlayerHUD(playerId).SetModifierImage((int)modType);
+        }
+        catch { Debug.LogError("PlayersHUD not found"); }
+    }
+
 }

@@ -8,6 +8,8 @@ public class PaintBulletScript : MonoBehaviour
     [SerializeField] SphereCollider col;
     [SerializeField] float sizeInc = 5.0f;
 
+    Transform originTransform = null;
+
     private void OnEnable()
     {
         StartCoroutine(DespawnCoroutine());
@@ -15,18 +17,20 @@ public class PaintBulletScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("PlayerVehicle"))
+        if (Decals.CollidingWithPlayer(other, originTransform))
         {
             // Ho silencio perque el joc peta molt si no
 
             //GameObject instancedGO = GameObject.Instantiate(decalPrefab, transform.position, decalPrefab.transform.rotation, other.transform);
             //instancedGO.transform.localScale = instancedGO.transform.localScale * transform.localScale.x;
             //instancedGO.tag = "Untagged";
-
+            GameObject instancedGO = GameObject.Instantiate(decalPrefab, transform.position, decalPrefab.transform.rotation, other.transform);
+            instancedGO.transform.localScale = instancedGO.transform.localScale * transform.localScale.x * sizeInc;
+            //instancedGO.GetComponent<Collider>().enabled = false;
         }
         else
         {
-            if (!(other.CompareTag("Decal") || other.CompareTag("Painting") || other.CompareTag("Oil") || other.CompareTag("Respawn") || other.CompareTag("CameraTrigger") || other.CompareTag("Untagged")))
+            if (!Decals.TagToIgnore(other.tag))
             {
                 //Vector3 closesPoint = other.ClosestPoint(transform.position);
                 //Vector3 spawnPoint = closesPoint + ((transform.position - closesPoint).normalized * decalPrefab.transform.localScale.x);
@@ -39,6 +43,13 @@ public class PaintBulletScript : MonoBehaviour
 
         }
 
+    }
+
+
+
+    public void SetOriginTransform(Transform _transform)
+    {
+        originTransform = _transform;
     }
 
 

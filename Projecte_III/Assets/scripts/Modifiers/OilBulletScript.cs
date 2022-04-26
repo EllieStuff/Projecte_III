@@ -8,25 +8,29 @@ public class OilBulletScript : MonoBehaviour
     [SerializeField] SphereCollider col;
     [SerializeField] float sizeInc = 5.0f;
 
+    Transform originTransform = null;
+
     private void OnEnable()
     {
-        StartCoroutine(DespawnCoroutine());
+        Destroy(gameObject, 10.0f);
+        //StartCoroutine(DespawnCoroutine());
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("PlayerVehicle"))
+        if (Decals.CollidingWithPlayer(other, originTransform))
         {
             // Ho silencio perque el joc peta molt si no
 
-            //GameObject instancedGO = GameObject.Instantiate(decalPrefab, transform.position, decalPrefab.transform.rotation, other.transform);
-            //instancedGO.transform.localScale = instancedGO.transform.localScale * transform.localScale.x;
+            GameObject instancedGO = GameObject.Instantiate(decalPrefab, transform.position, decalPrefab.transform.rotation, other.transform);
+            instancedGO.transform.localScale = instancedGO.transform.localScale * transform.localScale.x;
             //instancedGO.tag = "Untagged";
+            other.GetComponentInParent<Rigidbody>().AddExplosionForce(1000, transform.position, col.radius * transform.localScale.x);
 
         }
         else
         {
-            if (!TagToIgnore(other.tag))
+            if (!Decals.TagToIgnore(other.tag))
             {
                 //Vector3 closesPoint = other.ClosestPoint(transform.position);
                 //Vector3 spawnPoint = closesPoint + ((transform.position - closesPoint).normalized * decalPrefab.transform.localScale.x);
@@ -42,16 +46,16 @@ public class OilBulletScript : MonoBehaviour
     }
 
 
-    bool TagToIgnore(string _tag)
+
+    public void SetOriginTransform(Transform _transform)
     {
-        return (_tag.Equals("Decal") || _tag.Equals("Painting") || _tag.Equals("Oil") || _tag.Equals("Respawn") || _tag.Equals("CameraTrigger") || _tag.Equals("Untagged"));
-        //return (_other.CompareTag("Decal") || _other.CompareTag("Painting") || _other.CompareTag("Oil") || _other.CompareTag("Respawn") || _other.CompareTag("CameraTrigger") || _other.CompareTag("Untagged"));
+        originTransform = _transform;
     }
 
 
-    IEnumerator DespawnCoroutine()
-    {
-        yield return new WaitForSeconds(10.0f);
-        Destroy(gameObject);
-    }
+    //IEnumerator DespawnCoroutine()
+    //{
+    //    yield return new WaitForSeconds(10.0f);
+    //    Destroy(gameObject);
+    //}
 }

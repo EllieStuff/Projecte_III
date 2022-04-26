@@ -103,6 +103,7 @@ public class PlayerThrowPlunger : MonoBehaviour
             }
 
             plungerInstance = Instantiate(plungerPrefab, transform.position, transform.rotation);
+            plungerInstance.transform.rotation *= Quaternion.FromToRotation(-plungerInstance.transform.forward, savedDirection);
 
             if (transform.InverseTransformDirection(savedDirection).z < 0.5f)
             {
@@ -150,4 +151,22 @@ public class PlayerThrowPlunger : MonoBehaviour
             }
         }
     }
+
+
+    [ContextMenu("SetPlungerModifier")]
+    public void SetPlungerModifier()
+    {
+        RandomModifierGet.ModifierTypes modType = RandomModifierGet.ModifierTypes.PLUNGER;
+        RandomModifierGet modGetter = GetComponent<RandomModifierGet>();
+        modGetter.ResetModifiers();
+        modGetter.SetModifier(modType);
+
+        try
+        {
+            int playerId = GetComponentInParent<PlayerData>().id;
+            GameObject.Find("HUD").GetComponentInChildren<PlayersHUDManager>().GetPlayerHUD(playerId).SetModifierImage((int)modType);
+        }
+        catch { Debug.LogError("PlayersHUD not found"); }
+    }
+
 }

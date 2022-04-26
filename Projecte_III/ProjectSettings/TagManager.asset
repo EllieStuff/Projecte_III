@@ -49,6 +49,9 @@ TagManager:
   - FinishedGame
   - CameraObjective
   - Road
+  - CamLimit
+  - SlowSpeedCollider
+  - BirdPoop
   layers:
   - Default
   - TransparentFX
@@ -85,4 +88,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: UI
+    uniqueID: 16014327
     locked: 0

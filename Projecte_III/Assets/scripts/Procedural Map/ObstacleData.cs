@@ -12,6 +12,7 @@ public class ObstacleData : MonoBehaviour
     int _randomObject;
 
     public int roadType;
+    public float carWeight = 1700.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -49,6 +50,9 @@ public class ObstacleData : MonoBehaviour
         obstacleToSpawn.transform.localPosition = _spawnedPosition.localPosition;
         obstacleToSpawn.transform.rotation = _spawnedPosition.rotation;
         obstacleToSpawn.transform.localScale = _spawnedPosition.localScale;
+
+        Rigidbody spawnRB = obstacleToSpawn.AddComponent<Rigidbody>();
+        spawnRB.mass = carWeight;
 
         //if (mesh != null) mesh.enabled = true;
 
