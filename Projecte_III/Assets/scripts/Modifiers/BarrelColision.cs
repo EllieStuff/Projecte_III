@@ -26,6 +26,12 @@ public class BarrelColision : MonoBehaviour
             //----------
 
             Physics.IgnoreCollision(other, GetComponent<MeshCollider>());
+
+            //Particules d'explosio del barril (si es el barril explosiu fum i tal)
+
+            //
+
+            GetComponent<MeshRenderer>().enabled = false;
             if (barrel.GetType() == BarrelScript.BarrelType.EXPLOSIVE)
             {
                 barrel.Explode();
