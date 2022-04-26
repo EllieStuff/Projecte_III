@@ -56,6 +56,7 @@ public class PlayerVehicleScript : MonoBehaviour
     private Transform outTransform;
     private Rigidbody outVehicleRB;
     private float baseMaxSpeed;
+    internal bool speedIncrementEnabled;
 
     private void Awake()
     {
@@ -64,6 +65,8 @@ public class PlayerVehicleScript : MonoBehaviour
 
     void Start()
     {
+        speedIncrementEnabled = true;
+
         lifes = 3;
         timerStartRace = 7;
 
@@ -184,7 +187,7 @@ public class PlayerVehicleScript : MonoBehaviour
 
         bool disableReverse = (vehicleMaxSpeed > savedMaxSpeed);
 
-        if(savedMaxSpeed < baseMaxSpeed)
+        if(speedIncrementEnabled && savedMaxSpeed < baseMaxSpeed)
         {
             savedMaxSpeed += Time.deltaTime * 0.04f;
             vehicleMaxSpeed = savedMaxSpeed;

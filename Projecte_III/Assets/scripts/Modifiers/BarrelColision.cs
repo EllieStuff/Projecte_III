@@ -6,32 +6,39 @@ public class BarrelColision : MonoBehaviour
 {
     BarrelScript barrel;
 
-    [SerializeField] float pushForce = 0.0f;
-
+    [SerializeField] float pushForce = 2.0f;
+    [SerializeField] float collisionTimedown = 1.0f;
     private void Start()
     {
         barrel = transform.parent.GetComponent<BarrelScript>();
-    }
 
-    private void OnCollisionEnter(Collision collision)
+        
+    }
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.tag.Contains("Player"))
+        if (other.gameObject.tag.Contains("Player"))
         {
             Debug.Log("Collision with player");
 
-            //Get the vector between the player and the center of the explosion and sets the value of the magnitude between 0-1
-            Vector3 pushVector = collision.transform.position - transform.position;
-
-            //Normalize and set the pushForce as the new magnitude of this vector
-            pushVector = pushVector.normalized * pushForce;
-
             //----------
-                //Apply pushVector to the player velocity
-
+            //Apply pushVector to the player velocity
+            other.transform.parent.GetComponent<VehicleTriggerAndCollisionEvents>().ApplyForce(pushForce, collisionTimedown);
             //----------
 
+            Physics.IgnoreCollision(other, GetComponent<MeshCollider>());
+
+            //Particules d'explosio del barril (si es el barril explosiu fum i tal)
+
+            //
+
+            GetComponent<MeshRenderer>().enabled = false;
             if (barrel.GetType() == BarrelScript.BarrelType.EXPLOSIVE)
+            {
                 barrel.Explode();
+                Physics.IgnoreCollision(other, transform.GetComponentInChildren<SphereCollider>());
+            }
+
+            GetComponent<CapsuleCollider>().enabled = false;
         }
     }
 }
