@@ -24,26 +24,31 @@ public class ChangeColor : MonoBehaviour
             }
         }
 
-        currentColor = colorList[0];
-        colorList.RemoveAt(0);
+        int _rand = Random.Range(0, colorList.Count);
+
+        currentColor = colorList[_rand];
+        colorList.RemoveAt(_rand);
 
         player.DefaultMaterial = currentColor;
     }
 
     public void SetNewColor(int _direction)
     {
-        colorList.Add(currentColor);
+        Material _currentColor = null;
 
         if(_direction > 0)
         {
-            currentColor = colorList[colorList.Count - 1];
+            _currentColor = colorList[colorList.Count - 1];
             colorList.RemoveAt(colorList.Count - 1);
+            colorList.Insert(0, currentColor);
         }
         else if(_direction < 0)
         {
-            currentColor = colorList[0];
+            _currentColor = colorList[0];
             colorList.RemoveAt(0);
+            colorList.Add(currentColor);
         }
+        currentColor = _currentColor;
 
         player.DefaultMaterial = currentColor;
     }

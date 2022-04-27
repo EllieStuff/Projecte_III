@@ -10,6 +10,7 @@ public class InactiveScreensManager : MonoBehaviour
     PlayerInputs currPlayerInputs;
     DoneButtonManager doneBttnManager;
     [SerializeField] int playersInited = 0;
+    [SerializeField] Transform changeColorManager;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +28,9 @@ public class InactiveScreensManager : MonoBehaviour
     {
         if (playersInited < playersManager.numOfPlayers && currPlayerInputs.Inited())
         {
+            //Activate Change Color Script
+            changeColorManager.GetChild(playersInited).GetComponent<ChangeColor>().enabled = true;
+            //
             StartCoroutine(DisappearBlackScreen(playersInited));
             playersInited++;
             currPlayerInputs = playersManager.GetPlayer(playersInited).GetComponent<PlayerInputs>();
