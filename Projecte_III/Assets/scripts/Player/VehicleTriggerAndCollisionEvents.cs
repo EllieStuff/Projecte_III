@@ -55,13 +55,14 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
     {
         if (centerRespawn == null) Init();
 
+        if (!ghostTextureEnabled && carRender.material != defaultMat)
+            carRender.material = defaultMat;
+
         if (timerRespawn > 0 && inmunity)
         {
             timerRespawn -= Time.deltaTime;
 
-            if (!ghostTextureEnabled)
-                carRender.material = defaultMat;
-            else
+            if (ghostTextureEnabled)
                 carRender.material = ghostMat;
 
             ghostTextureEnabled = !ghostTextureEnabled;
