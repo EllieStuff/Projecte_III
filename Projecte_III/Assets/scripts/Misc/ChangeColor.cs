@@ -10,14 +10,22 @@ public class ChangeColor : MonoBehaviour
 
     static List<Material> colorList = new List<Material>();
     [SerializeField] VehicleTriggerAndCollisionEvents player;
+    bool gradient = false;
 
     // Start is called before the first frame update
     void Start()
     {
+        gradient = transform.parent.GetComponent<UseGradientMaterials>().gradient;
+
         Debug.Log("List size: " + colorList.Count);
         if(colorList.Count <= 0)
         {
-            Material[] mats = Resources.LoadAll<Material>("Materials/CarMaterials");
+            Material[] mats;
+            if (!gradient)
+                mats = Resources.LoadAll<Material>("Materials/CarMaterials/Flat");
+            else
+                mats = Resources.LoadAll<Material>("Materials/CarMaterials/Gradient");
+
             for (int i = 0; i < mats.Length; i++)
             {
                 colorList.Add(mats[i]);
