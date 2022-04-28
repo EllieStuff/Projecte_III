@@ -20,7 +20,11 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
     [SerializeField] private float timerRespawn = 3;
     private BoxCollider collisionBox;
     [SerializeField] private Material ghostMat;
-    [SerializeField] private Material defaultMat;
+    [SerializeField] private Material defaultMat;    public Material DefaultMaterial
+    {
+        get { return defaultMat; }
+        set { defaultMat = value; }
+    }
     private MeshRenderer carRender;
     private bool inmunity;
     private bool ghostTextureEnabled;
@@ -51,13 +55,14 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
     {
         if (centerRespawn == null) Init();
 
+        if (!ghostTextureEnabled && carRender.material != defaultMat)
+            carRender.material = defaultMat;
+
         if (timerRespawn > 0 && inmunity)
         {
             timerRespawn -= Time.deltaTime;
 
-            if (!ghostTextureEnabled)
-                carRender.material = defaultMat;
-            else
+            if (ghostTextureEnabled)
                 carRender.material = ghostMat;
 
             ghostTextureEnabled = !ghostTextureEnabled;
