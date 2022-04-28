@@ -43,7 +43,11 @@ public class CameraNavFollowScript : MonoBehaviour
             savedSpeed += Time.deltaTime * 0.04f;
 
         if (nearestPlayer != -1)
-            navMeshAgent.speed = players.GetPlayer(nearestPlayer).GetComponent<PlayerVehicleScript>().vehicleRB.velocity.magnitude;
+        {
+            Vector3 velocity = players.GetPlayer(nearestPlayer).GetComponent<PlayerVehicleScript>().vehicleRB.velocity;
+            velocity = new Vector3(velocity.x, 0, velocity.z);
+            navMeshAgent.speed = velocity.magnitude - 0.2f;
+        }
         else if(navMeshAgent.speed < savedSpeed)
             navMeshAgent.speed += Time.deltaTime * 0.5f;
         else if(navMeshAgent.speed > savedSpeed)
