@@ -197,8 +197,8 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
 
         if (other.CompareTag("CamLimit") && other.name.Equals("Backward"))
             exitCamera = true;
-        else if (other.CompareTag("CamLimit"))
-            player.vehicleRB.velocity += transform.TransformDirection(Vector3.back * Time.deltaTime * 5);
+        //else if (other.CompareTag("CamLimit"))
+            //player.vehicleRB.velocity += transform.TransformDirection(Vector3.back * Time.deltaTime * 5);
 
         /*if (other.CompareTag("Water"))
         {

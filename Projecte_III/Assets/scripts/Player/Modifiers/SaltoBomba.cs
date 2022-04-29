@@ -52,7 +52,7 @@ public class SaltoBomba : MonoBehaviour
     {
         if(saltoEnabled)
         {
-            transform.rotation = savedRot;
+            transform.rotation = new Quaternion(savedRot.x, transform.rotation.y, savedRot.z, transform.rotation.w);
             saltoTimer -= Time.deltaTime;
             if(saltoTimer <= 0)
             {
