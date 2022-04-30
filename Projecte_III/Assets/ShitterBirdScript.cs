@@ -24,7 +24,7 @@ public class ShitterBirdScript : MonoBehaviour
     void Start()
     {
         rb = transform.GetComponent<Rigidbody>();
-
+        AudioManager.Instance.Play_SFX("Bird_SFX");
         //InitRndValues();
         InitValues(moveDir, moveSpeed);
 

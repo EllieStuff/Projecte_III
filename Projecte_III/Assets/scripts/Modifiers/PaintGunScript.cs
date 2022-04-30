@@ -60,6 +60,8 @@ public class PaintGunScript : MonoBehaviour
         }
         model.transform.localScale = originalModelSize;
 
+        AudioManager.Instance.Play_SFX("PaintGun_SFX");
+
         float currTime = 0.0f;
         while(currTime < timeActive)
         {

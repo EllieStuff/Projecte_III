@@ -31,6 +31,8 @@ public class OilGunScript : MonoBehaviour
 
     public void Activate()
     {
+        AudioManager.Instance.Play_SFX("OilPuddle_SFX");
+
         for (int i = 0; i < dropsAmount; i++)
         {
             GameObject currBullet = GameObject.Instantiate(prefab, transform.position, prefab.transform.rotation);
