@@ -63,10 +63,10 @@ public class ObstacleSelectionScript : MonoBehaviour
 
         for (int i = 1; i <= numOfObstacleTypes; i++)
         {
-            int _random = 1; // Random.Range(0, ObstacleSelection.Length);
+            int _random = Random.Range(0, ObstacleSelection.Length);
 
-            //if (!pickedObstacles.Contains(_random))
-            //{
+            if (!pickedObstacles.Contains(_random))
+            {
                 ObjectSelected[i-1] = Instantiate(ObstacleSelection[_random], transform);
 
                 roadType = (int)GetComponentInParent<RoadData>().RoadType;
@@ -74,9 +74,9 @@ public class ObstacleSelectionScript : MonoBehaviour
                 ObjectSelected[i-1].GetComponent<ObstacleData>().roadType = roadType;
 
                 pickedObstacles.Add(_random);
-            //}
-            //else
-                //i--;            
+            }
+            else
+                i--;            
         }
 
     }
