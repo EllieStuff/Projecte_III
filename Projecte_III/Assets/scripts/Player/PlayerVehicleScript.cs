@@ -24,6 +24,7 @@ public class PlayerVehicleScript : MonoBehaviour
     public Rigidbody vehicleRB;
     internal float vehicleAcceleration;
     public float vehicleTorque;
+    internal float savedVehicleTorque;
     public float vehicleMaxSpeed;
     public float vehicleMaxTorque;
     private WheelCollider[] wheelCollider;
@@ -66,6 +67,8 @@ public class PlayerVehicleScript : MonoBehaviour
     void Start()
     {
         speedIncrementEnabled = true;
+
+        savedVehicleTorque = vehicleTorque;
 
         lifes = 3;
         timerStartRace = 7;

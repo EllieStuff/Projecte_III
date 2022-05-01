@@ -6,7 +6,7 @@ public class RandomModifierGet : MonoBehaviour
 {
     const float INIT_TIMER_MODIFIER = 5.0f;
 
-    public enum ModifierTypes { PLUNGER, HANG_GLIDER, UMBRELLA, OIL, PAINT_GUN, SALTO_BOMBA, COUNT, NONE };
+    public enum ModifierTypes { PLUNGER, UMBRELLA, OIL, PAINT_GUN, SALTO_BOMBA, COUNT, NONE };
 
     public GameObject[] modifiers;
     GameObject showModifierInstance;
@@ -14,13 +14,15 @@ public class RandomModifierGet : MonoBehaviour
 
     PlayerInputs inputs;
 
-    [SerializeField] ModifierTypes currentModifier = ModifierTypes.NONE;
+    public ModifierTypes currentModifier = ModifierTypes.NONE;
 
     PlayersHUD playerHud = null;
 
     private void Start()
     {
         inputs = GetComponent<PlayerInputs>();
+        GetComponent<PlayerThrowPlunger>().SetPlungerModifier();
+        ResetModifiers();
     }
 
     //public void GetModifier()
@@ -43,7 +45,7 @@ public class RandomModifierGet : MonoBehaviour
             showModifierInstance.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
         }
 
-        if (currentModifier != ModifierTypes.NONE && (inputs.ShootForward || inputs.ShootBackwards || inputs.ShootLeft || inputs.ShootRight) && timerModifier <= 0) 
+        if (/*currentModifier != ModifierTypes.NONE && */(inputs.ShootForward || inputs.ShootBackwards || inputs.ShootLeft || inputs.ShootRight) && timerModifier <= 0) 
         {
             if(playerHud == null)
             {
@@ -66,14 +68,6 @@ public class RandomModifierGet : MonoBehaviour
                         plunger.Activate(transform.TransformDirection(1, 0, 0));
 
                     //plunger.hasPlunger = false;
-                    timerModifier = INIT_TIMER_MODIFIER;
-                    break;
-
-                case ModifierTypes.HANG_GLIDER:
-                    PlayerAlaDelta hangGlider = GetComponent<PlayerAlaDelta>();
-                    hangGlider.Activate();
-
-                    //hangGlider.hasAlaDelta = false;
                     timerModifier = INIT_TIMER_MODIFIER;
                     break;
 
@@ -137,9 +131,6 @@ public class RandomModifierGet : MonoBehaviour
             case ModifierTypes.PLUNGER:
                 GetComponent<PlayerThrowPlunger>().hasPlunger = true;
                 break;
-            case ModifierTypes.HANG_GLIDER:
-                GetComponent<PlayerAlaDelta>().hasAlaDelta = true;
-                break;
             case ModifierTypes.UMBRELLA:
                 break;
             case ModifierTypes.OIL:
@@ -157,9 +148,6 @@ public class RandomModifierGet : MonoBehaviour
         {
             case ModifierTypes.PLUNGER:
                 GetComponent<PlayerThrowPlunger>().hasPlunger = false;
-                break;
-            case ModifierTypes.HANG_GLIDER:
-                GetComponent<PlayerAlaDelta>().hasAlaDelta = false;
                 break;
             case ModifierTypes.UMBRELLA:
                 break;

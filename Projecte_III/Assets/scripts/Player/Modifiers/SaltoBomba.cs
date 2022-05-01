@@ -68,7 +68,7 @@ public class SaltoBomba : MonoBehaviour
                     Debug.Log(explosionDistance);
                     if (transform != otherPlayer && explosionDistance <= explosionRange)
                     {
-                        otherPlayer.GetComponent<PlayerVehicleScript>().vehicleRB.velocity = new Vector3(0, (explosionRange - explosionDistance) * 5, 0);
+                        otherPlayer.GetComponent<PlayerVehicleScript>().vehicleRB.velocity = new Vector3(0, (explosionRange - explosionDistance) * 8, 0);
                     }
                 }
 
