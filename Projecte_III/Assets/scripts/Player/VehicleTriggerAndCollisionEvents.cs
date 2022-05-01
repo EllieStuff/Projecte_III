@@ -181,6 +181,12 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
         reduceSpeed = true;
     }
 
+    IEnumerator WaitTorque()
+    {
+        yield return new WaitForSeconds(5);
+        player.vehicleTorque = player.savedVehicleTorque;
+    }
+
 
     private void OnTriggerStay(Collider other)
     {
@@ -211,7 +217,8 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
             paintingChecked = true;
             if (player.vehicleRB.velocity.magnitude > 1.0f)
             {
-                AddFriction(1000, 2.0f);
+                Debug.Log("enter Paint");
+                AddFriction(player.savedVehicleTorque / 2);
             }
         }
         if (!oilChecked && other.CompareTag("Oil"))
@@ -219,7 +226,8 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
             oilChecked = true;
             if (player.vehicleRB.velocity.magnitude > 1.0f)
             {
-                AddFriction(-1200, 0.7f);
+                Debug.Log("enter Oil");
+                AddFriction(player.savedVehicleTorque*2);
             }
         }
 
@@ -231,20 +239,6 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-
-        //if (!other.CompareTag("Sand"))
-            //StartCoroutine(WaitEndBoost());
-
-        if (other.CompareTag("Painting") || other.CompareTag("Oil"))
-        {
-            ResetFriction();
-        }
-
-        /*if(other.CompareTag("Water"))
-        {
-            onWater = false;
-        }*/
-
         //Terrain
         if (other.CompareTag("Sand") || !player.touchingGround)
         {
@@ -264,14 +258,17 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
 
     void ResetFriction()
     {
-        player.vehicleRB.angularDrag = player.savedAngularDrag;
+        //player.vehicleRB.angularDrag = player.savedAngularDrag;
+        player.vehicleTorque = player.savedVehicleTorque;
     }
 
-    void AddFriction(float _frictionForce, float _dragInc)
+    void AddFriction(float _torque)
     {
-        Vector3 velFrictionVec = -player.vehicleRB.velocity.normalized * _frictionForce * player.vehicleRB.velocity.magnitude;
-        player.vehicleRB.AddForce(velFrictionVec, ForceMode.Force);
-        player.vehicleRB.angularDrag = player.savedAngularDrag * _dragInc;
+        //Vector3 velFrictionVec = -player.vehicleRB.velocity.normalized * _frictionForce * player.vehicleRB.velocity.magnitude;
+        //player.vehicleRB.AddForce(velFrictionVec, ForceMode.Force);
+        //player.vehicleRB.angularDrag = player.savedAngularDrag * _dragInc;
+        player.vehicleTorque = _torque;
+        StartCoroutine(WaitTorque());
     }
 
     void OnSand(Collider other)
