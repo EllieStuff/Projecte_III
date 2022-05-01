@@ -21,6 +21,7 @@ public class ButterflyBehaviour : MonoBehaviour
     Transform camera;
     Quaternion initModelRot;
     float actualSpeed, actualAngularSpeed;
+    bool disableMove = false;
 
     // Start is called before the first frame update
     void Start()
@@ -37,6 +38,9 @@ public class ButterflyBehaviour : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (disableMove) 
+            return;
+
         butterflyModel.rotation = Quaternion.Lerp(butterflyModel.rotation, target.rotation, actualAngularSpeed * Time.deltaTime);
         rb.MovePosition(butterflyModel.position + butterflyModel.forward * actualSpeed * Time.deltaTime);
 
@@ -49,10 +53,19 @@ public class ButterflyBehaviour : MonoBehaviour
         if (modelToTarget_Dist < MARGIN || Physics.Raycast(butterflyModel.position, butterflyModel.forward, MARGIN)
             || Vector3.Distance(butterflyModel.position, camera.position) < CAMERA_MARGIN)
         {
+            int itCounter = 20;
             do
             {
                 SetNewTargetLocation();
-            } while (Physics.Raycast(butterflyModel.position, target.position - butterflyModel.position, modelToTarget_Dist));
+                itCounter--;
+                //if (counter <= 0) Debug.LogError("Yeeeeh...");
+            } while (Physics.Raycast(butterflyModel.position, target.position - butterflyModel.position, modelToTarget_Dist) && itCounter > 0);
+
+            if (itCounter <= 0)
+            {
+                Debug.LogWarning("Too many iterations, move disabled");
+                disableMove = true;
+            }
         }
     }
     void SetNewTargetLocation()
@@ -74,6 +87,7 @@ public class ButterflyBehaviour : MonoBehaviour
             SetNewTargetLocation();
             yield return new WaitForSeconds(changeTargetLocRate.GetRndValue());
         }
+        yield return new WaitForEndOfFrame();
     }
 
 }
