@@ -19,21 +19,21 @@ public class TutorialWindow : MonoBehaviour
         if (Input.anyKey)
             closed = true;
 
-        if(timer > 0)
-            timer -= Time.deltaTime; 
+        if (Time.timeScale > 0.000001f)
+            Time.timeScale -= Time.deltaTime * 0.75f;
         else
+            Time.timeScale = 0.000001f;
+
+        if (timer > 0) 
         {
-            if(!closed)
-            {
-                Time.timeScale = 0.000001f;
-            }
-            else
-            {
-                GetComponent<Image>().enabled = false;
-                transform.GetChild(0).gameObject.SetActive(true);
-                Time.timeScale = 1;
-                Destroy(this);
-            }
+            timer -= Time.deltaTime;
+        }
+        else if(closed)
+        {
+            GetComponent<Image>().enabled = false;
+            transform.GetChild(0).gameObject.SetActive(true);
+            Time.timeScale = 1;
+            Destroy(this);
         }
     }
 }
