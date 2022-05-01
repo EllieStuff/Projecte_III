@@ -16,7 +16,7 @@ public class VoidObstacleScript : MonoBehaviour
     {
         if (other.CompareTag("Road"))
         {
-            Debug.Log(other.transform.position);
+            //Debug.Log(other.transform.position);
             other.GetComponent<MeshRenderer>().material.renderQueue = 3002;
             affectedRoads.Add(other);
         }

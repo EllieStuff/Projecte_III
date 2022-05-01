@@ -47,6 +47,16 @@ public class Utils
 
     public class Vectors : MonoBehaviour
     {
+        public static Vector3 Randomize(Vector3 minV, Vector3 maxV)
+        {
+            return new Vector3(Random.Range(minV.x, maxV.x), Random.Range(minV.y, maxV.y), Random.Range(minV.z, maxV.z));
+        }
+
+        public static Vector3 Multiply(Vector3 v1, Vector3 v2)
+        {
+            return new Vector3(v1.x * v2.x, v1.y * v2.y, v1.z * v2.z);
+        }
+
         public static Vector3 GetRelativePosition2D(Vector3 v1, Vector3 v2)
         {
 
