@@ -61,7 +61,10 @@ public class DoneButtonScript : MonoBehaviour
     {
         isReady = !isReady;
         if (isReady)
+        {
+            AudioManager.Instance.Play_SFX("Engine_Ignition_SFX 1");
             StartCoroutine(LerpBttnImgColor(bttnManager.selectedBttnImgColor));
+        }
         else
             StartCoroutine(LerpBttnImgColor(savedBttnImgColor));
     }

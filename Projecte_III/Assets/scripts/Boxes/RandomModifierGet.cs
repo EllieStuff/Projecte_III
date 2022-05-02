@@ -108,7 +108,7 @@ public class RandomModifierGet : MonoBehaviour
 
                 case ModifierTypes.SALTO_BOMBA:
                     SaltoBomba salto = GetComponent<SaltoBomba>();
-                    salto.hasSalto = true;
+                    salto.hasJumped = true;
                     salto.Activate();
                     
                     timerModifier = INIT_TIMER_MODIFIER;

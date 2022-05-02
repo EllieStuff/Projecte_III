@@ -114,12 +114,15 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
 
             GameObject parent = transform.parent.gameObject;
 
+            if(player.lifes > 0)
+                AudioManager.Instance.Play_SFX("Respawn_SFX");
+
             if (player.lifes <= 0)
                 parent.SetActive(false);
             else
             {
                 GetComponent<ParticleSystem>().Play();
-                parent.GetComponent<AudioSource>().Play();
+                //parent.GetComponent<AudioSource>().Play();
 
                 for (int i = 0; i < 4; i++)
                     Physics.IgnoreCollision(collisionBox, playersManager.GetPlayer(i).GetChild(0).GetComponent<BoxCollider>(), true);

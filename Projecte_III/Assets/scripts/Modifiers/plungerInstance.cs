@@ -24,7 +24,7 @@ public class plungerInstance : MonoBehaviour
     private void Start()
     {
         line = GetComponent<LineRenderer>();
-        //AudioManager.Instance.Play_SFX("Plunger_Hit_SFX");
+        AudioManager.Instance.Play_SFX("Plunger_Hit_SFX");
         startRot = new Quaternion(0, transform.rotation.y, 0, transform.rotation.w);
         
         if(normalDir != Vector3.zero)
@@ -121,14 +121,14 @@ public class plungerInstance : MonoBehaviour
     {
         if (!plungerHit)
         {
-            //AudioManager.Instance.Play_SFX("Plunger_Arrived_SFX");
+            AudioManager.Instance.Play_SFX("Plunger_Arrived_SFX");
             collisionTag = collision.gameObject.tag;
 
             if(collision.gameObject.tag.Contains("Player") && collision.gameObject != playerShotPlunger)
             {
                 quadTarget = null;
                 otherQuad = collision.gameObject;
-                //AudioManager.Instance.Play_SFX("Plunger_Arrived_SFX");
+                AudioManager.Instance.Play_SFX("Plunger_Arrived_SFX");
             }
 
             //transform.parent = collision.transform;
@@ -151,14 +151,14 @@ public class plungerInstance : MonoBehaviour
     {
         if (!plungerHit)
         {
-            //AudioManager.Instance.Play_SFX("Plunger_Arrived_SFX");
+            AudioManager.Instance.Play_SFX("Plunger_Arrived_SFX");
             collisionTag = collision.gameObject.tag;
 
             if (collision.gameObject.tag.Contains("Player") && collision.gameObject != playerShotPlunger)
             {
                 quadTarget = null;
                 otherQuad = collision.gameObject;
-                //AudioManager.Instance.Play_SFX("Plunger_Arrived_SFX");
+                AudioManager.Instance.Play_SFX("Plunger_Arrived_SFX");
             }
 
             //transform.parent = collision.transform;
