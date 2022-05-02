@@ -8,7 +8,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] [Range(0, 1)] float SFX_Volume = 1.0f;
     [SerializeField] [Range(0, 1)] float OST_Volume = 1.0f;
     [SerializeField] AudioSource SFX_AudioSource;
-    [SerializeField] AudioSource OST_AudioSource;
+    [SerializeField] internal AudioSource OST_AudioSource;
 
     private static AudioManager instance = null;
     public static AudioManager Instance { get { return instance; } }

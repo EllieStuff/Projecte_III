@@ -31,6 +31,10 @@ public class RoundManager : MonoBehaviour
             WinnerText.text = "Player: "+ (playerWinner + 1) + " Wins!";
             roundFinished = true;
         }
+        else if(_carsAlive == 2 && playersManager.numOfPlayers > 2)
+        {
+            AudioManager.Instance.OST_AudioSource.pitch = 1.3f;
+        }
     }
 
     public void ResetScene()
