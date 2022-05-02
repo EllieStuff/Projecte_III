@@ -31099,6 +31099,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8793082014670234475}
     m_Modifications:
+    - target: {fileID: 313755449895151013, guid: 9b69d0a2e1bdfea47b92f8688822d640, type: 3}
+      propertyPath: m_Volume
+      value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 313755449895151013, guid: 9b69d0a2e1bdfea47b92f8688822d640, type: 3}
+      propertyPath: MaxDistance
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 313755449895151013, guid: 9b69d0a2e1bdfea47b92f8688822d640, type: 3}
+      propertyPath: MinDistance
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 313755449895151013, guid: 9b69d0a2e1bdfea47b92f8688822d640, type: 3}
+      propertyPath: rolloffMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 313755449895151013, guid: 9b69d0a2e1bdfea47b92f8688822d640, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -520945449439563406, guid: c53828cacc7a5d042b2aee58076faeb7, type: 2}
     - target: {fileID: 4555161435571944186, guid: 9b69d0a2e1bdfea47b92f8688822d640, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -31521,7 +31541,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: SmallHouse_01
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 313755449895151013, guid: 9b69d0a2e1bdfea47b92f8688822d640, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 9b69d0a2e1bdfea47b92f8688822d640, type: 3}
 --- !u!4 &8763033614767171760 stripped
 Transform:
