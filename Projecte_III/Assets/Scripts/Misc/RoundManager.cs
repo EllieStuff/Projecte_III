@@ -24,7 +24,7 @@ public class RoundManager : MonoBehaviour
     void Update()
     {
         _carsAlive = CheckPlayersAlive();
-        if(_carsAlive == 1 && !roundFinished)
+        if(playersManager.numOfPlayers > 1 && _carsAlive == 1 && !roundFinished)
         {
             playerWinner = GetPlayerWinner();
             WinnerUI.SetActive(true);
