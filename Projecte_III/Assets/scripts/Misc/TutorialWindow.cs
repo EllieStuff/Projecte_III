@@ -10,7 +10,7 @@ public class TutorialWindow : MonoBehaviour
 
     void Start()
     {
-        
+        GetComponent<Image>().enabled = true;
     }
 
     // Update is called once per frame
