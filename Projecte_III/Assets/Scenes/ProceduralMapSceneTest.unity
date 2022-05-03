@@ -1128,6 +1128,7 @@ GameObject:
   m_Component:
   - component: {fileID: 496565113}
   - component: {fileID: 496565114}
+  - component: {fileID: 496565115}
   m_Layer: 5
   m_Name: Player_1
   m_TagString: Untagged
@@ -1176,6 +1177,44 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 72a08cb2678396b45ab26645fddc0ae1, type: 3}
   player: {fileID: 0}
   id: 0
+--- !u!114 &496565115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 496565112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fd01597098a8b048b4abc890e44fc8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gradient: 0
+  UsedColors:
+  - colorName: BlueDark
+    color: {r: 0.14901961, g: 0.28627452, b: 0.41176474, a: 1}
+  - colorName: Blue
+    color: {r: 0.08627451, g: 0.5294118, b: 0.8470589, a: 1}
+  - colorName: Brown
+    color: {r: 0.6039216, g: 0.21176472, b: 0, a: 1}
+  - colorName: Gray
+    color: {r: 0.34901962, g: 0.47058827, b: 0.5803922, a: 1}
+  - colorName: Green
+    color: {r: 0.30588236, g: 0.59607846, b: 0, a: 1}
+  - colorName: Orange
+    color: {r: 1, g: 0.427451, b: 0.07450981, a: 1}
+  - colorName: Pink
+    color: {r: 1, g: 0.34509805, b: 0.80392164, a: 1}
+  - colorName: Red
+    color: {r: 1, g: 0.054901965, b: 0.058823533, a: 1}
+  - colorName: Turquoise
+    color: {r: 0, g: 0.7058824, b: 0.5882353, a: 1}
+  - colorName: Violet
+    color: {r: 0.07450981, g: 0.027450982, b: 0.6313726, a: 1}
+  - colorName: White
+    color: {r: 0.8313726, g: 0.80392164, b: 0.7607844, a: 1}
+  - colorName: Yellow
+    color: {r: 1, g: 0.65882355, b: 0.07450981, a: 1}
 --- !u!1 &505354397
 GameObject:
   m_ObjectHideFlags: 0
@@ -1186,6 +1225,7 @@ GameObject:
   m_Component:
   - component: {fileID: 505354398}
   - component: {fileID: 505354399}
+  - component: {fileID: 505354400}
   m_Layer: 5
   m_Name: Player_4
   m_TagString: Untagged
@@ -1234,6 +1274,44 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 72a08cb2678396b45ab26645fddc0ae1, type: 3}
   player: {fileID: 0}
   id: 3
+--- !u!114 &505354400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 505354397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fd01597098a8b048b4abc890e44fc8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gradient: 0
+  UsedColors:
+  - colorName: BlueDark
+    color: {r: 0.14901961, g: 0.28627452, b: 0.41176474, a: 1}
+  - colorName: Blue
+    color: {r: 0.08627451, g: 0.5294118, b: 0.8470589, a: 1}
+  - colorName: Brown
+    color: {r: 0.6039216, g: 0.21176472, b: 0, a: 1}
+  - colorName: Gray
+    color: {r: 0.34901962, g: 0.47058827, b: 0.5803922, a: 1}
+  - colorName: Green
+    color: {r: 0.30588236, g: 0.59607846, b: 0, a: 1}
+  - colorName: Orange
+    color: {r: 1, g: 0.427451, b: 0.07450981, a: 1}
+  - colorName: Pink
+    color: {r: 1, g: 0.34509805, b: 0.80392164, a: 1}
+  - colorName: Red
+    color: {r: 1, g: 0.054901965, b: 0.058823533, a: 1}
+  - colorName: Turquoise
+    color: {r: 0, g: 0.7058824, b: 0.5882353, a: 1}
+  - colorName: Violet
+    color: {r: 0.07450981, g: 0.027450982, b: 0.6313726, a: 1}
+  - colorName: White
+    color: {r: 0.8313726, g: 0.80392164, b: 0.7607844, a: 1}
+  - colorName: Yellow
+    color: {r: 1, g: 0.65882355, b: 0.07450981, a: 1}
 --- !u!1 &534027660
 GameObject:
   m_ObjectHideFlags: 0
@@ -8940,6 +9018,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1399150355}
   - component: {fileID: 1399150356}
+  - component: {fileID: 1399150357}
   m_Layer: 5
   m_Name: Player_3
   m_TagString: Untagged
@@ -8988,6 +9067,44 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 72a08cb2678396b45ab26645fddc0ae1, type: 3}
   player: {fileID: 0}
   id: 2
+--- !u!114 &1399150357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1399150354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fd01597098a8b048b4abc890e44fc8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gradient: 0
+  UsedColors:
+  - colorName: BlueDark
+    color: {r: 0.14901961, g: 0.28627452, b: 0.41176474, a: 1}
+  - colorName: Blue
+    color: {r: 0.08627451, g: 0.5294118, b: 0.8470589, a: 1}
+  - colorName: Brown
+    color: {r: 0.6039216, g: 0.21176472, b: 0, a: 1}
+  - colorName: Gray
+    color: {r: 0.34901962, g: 0.47058827, b: 0.5803922, a: 1}
+  - colorName: Green
+    color: {r: 0.30588236, g: 0.59607846, b: 0, a: 1}
+  - colorName: Orange
+    color: {r: 1, g: 0.427451, b: 0.07450981, a: 1}
+  - colorName: Pink
+    color: {r: 1, g: 0.34509805, b: 0.80392164, a: 1}
+  - colorName: Red
+    color: {r: 1, g: 0.054901965, b: 0.058823533, a: 1}
+  - colorName: Turquoise
+    color: {r: 0, g: 0.7058824, b: 0.5882353, a: 1}
+  - colorName: Violet
+    color: {r: 0.07450981, g: 0.027450982, b: 0.6313726, a: 1}
+  - colorName: White
+    color: {r: 0.8313726, g: 0.80392164, b: 0.7607844, a: 1}
+  - colorName: Yellow
+    color: {r: 1, g: 0.65882355, b: 0.07450981, a: 1}
 --- !u!1 &1417977938
 GameObject:
   m_ObjectHideFlags: 0
@@ -9964,6 +10081,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1769288020}
   - component: {fileID: 1769288021}
+  - component: {fileID: 1769288022}
   m_Layer: 5
   m_Name: Player_2
   m_TagString: Untagged
@@ -10012,6 +10130,44 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 72a08cb2678396b45ab26645fddc0ae1, type: 3}
   player: {fileID: 0}
   id: 1
+--- !u!114 &1769288022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1769288019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fd01597098a8b048b4abc890e44fc8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gradient: 0
+  UsedColors:
+  - colorName: BlueDark
+    color: {r: 0.14901961, g: 0.28627452, b: 0.41176474, a: 1}
+  - colorName: Blue
+    color: {r: 0.08627451, g: 0.5294118, b: 0.8470589, a: 1}
+  - colorName: Brown
+    color: {r: 0.6039216, g: 0.21176472, b: 0, a: 1}
+  - colorName: Gray
+    color: {r: 0.34901962, g: 0.47058827, b: 0.5803922, a: 1}
+  - colorName: Green
+    color: {r: 0.30588236, g: 0.59607846, b: 0, a: 1}
+  - colorName: Orange
+    color: {r: 1, g: 0.427451, b: 0.07450981, a: 1}
+  - colorName: Pink
+    color: {r: 1, g: 0.34509805, b: 0.80392164, a: 1}
+  - colorName: Red
+    color: {r: 1, g: 0.054901965, b: 0.058823533, a: 1}
+  - colorName: Turquoise
+    color: {r: 0, g: 0.7058824, b: 0.5882353, a: 1}
+  - colorName: Violet
+    color: {r: 0.07450981, g: 0.027450982, b: 0.6313726, a: 1}
+  - colorName: White
+    color: {r: 0.8313726, g: 0.80392164, b: 0.7607844, a: 1}
+  - colorName: Yellow
+    color: {r: 1, g: 0.65882355, b: 0.07450981, a: 1}
 --- !u!1 &1795672374
 GameObject:
   m_ObjectHideFlags: 0
