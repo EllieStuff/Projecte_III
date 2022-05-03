@@ -64,7 +64,7 @@ public class DoneButtonManager : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         Debug.Log("Changing Scene");
         playersManager.numOfPlayers = buttonsActive;
-        GameObject.FindGameObjectWithTag("RadialMenuManager").GetComponent<RadialMenuSetManager>().SetModifiersToChosenRMSet(playersManager.numOfPlayers - 1);
+        //GameObject.FindGameObjectWithTag("RadialMenuManager").GetComponent<RadialMenuSetManager>().SetModifiersToChosenRMSet(playersManager.numOfPlayers - 1);
         LoadSceneManager sceneManager = GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>();
         sceneManager.ChangeScene(goToScene);
     }

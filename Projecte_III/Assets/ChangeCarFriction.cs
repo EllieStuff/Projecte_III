@@ -29,6 +29,7 @@ public class ChangeCarFriction : MonoBehaviour
         {
             // ToDo: afegir canvi de velocitat en player
             PlayerVehicleScript currPlayer = other.GetComponentInParent<PlayerVehicleScript>();
+            currPlayer.speedIncrementEnabled = true;
             currPlayer.vehicleMaxSpeed = maxSpeed /** timeMultiplier*/;
             //collidingPlayers.Add(currPlayer);
             Rigidbody currPlayerRB = other.GetComponentInParent<Rigidbody>();
@@ -42,6 +43,7 @@ public class ChangeCarFriction : MonoBehaviour
         {
             PlayerVehicleScript currPlayer = other.GetComponentInParent<PlayerVehicleScript>();
             currPlayer.vehicleMaxSpeed = currPlayer.savedMaxSpeed;
+            currPlayer.speedIncrementEnabled = false;
             Rigidbody currPlayerRB = other.GetComponentInParent<Rigidbody>();
             currPlayerRB.angularDrag = currPlayer.savedAngularDrag;
             //collidingPlayers.Remove(currPlayer);
