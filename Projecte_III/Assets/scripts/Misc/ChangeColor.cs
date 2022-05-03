@@ -13,6 +13,11 @@ public class ChangeColor : MonoBehaviour
     [SerializeField] VehicleTriggerAndCollisionEvents player;
     [SerializeField] Button buttonRight, buttonLeft;
 
+    [SerializeField] SpriteRenderer backgroundColor;
+    Image textBackgroundColor;
+
+    UseGradientMaterials parent;
+
     PlayerMenuInputsPressed playerInputs;
     Button lastButton = null;
     bool gradient = false;
@@ -20,8 +25,11 @@ public class ChangeColor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gradient = transform.parent.GetComponent<UseGradientMaterials>().gradient;
+        parent = transform.parent.GetComponent<UseGradientMaterials>();
+        gradient = parent.gradient;
         playerInputs = GetComponent<PlayerMenuInputsPressed>();
+
+        textBackgroundColor = transform.GetChild(0).GetComponent<Image>();
 
         buttonRight.GetComponent<Image>().color = Color.yellow;
         buttonLeft.GetComponent<Image>().color = Color.yellow;
@@ -47,6 +55,10 @@ public class ChangeColor : MonoBehaviour
         colorList.RemoveAt(_rand);
 
         player.DefaultMaterial = currentColor;
+        Color _curr = parent.GetColor(currentColor.name);
+
+        backgroundColor.color = new Color(_curr.r, _curr.g, _curr.b, 0.4f);
+        textBackgroundColor.color = _curr;
     }
 
     private void Update()
@@ -85,25 +97,33 @@ public class ChangeColor : MonoBehaviour
     }
     public void IncreaseColorId()
     {
-        Material _currentColor = null;
-
-        _currentColor = colorList[colorList.Count - 1];
+        Material _currentColor = colorList[colorList.Count - 1];
         colorList.RemoveAt(colorList.Count - 1);
         colorList.Insert(0, currentColor);
+        
         currentColor = _currentColor;
 
         player.DefaultMaterial = currentColor;
+
+        Color _curr = parent.GetColor(currentColor.name);
+
+        backgroundColor.color = new Color(_curr.r, _curr.g, _curr.b, 0.4f);
+        textBackgroundColor.color = _curr;
     }
     public void DecreaseColorId()
     {
-        Material _currentColor = null;
-
-        _currentColor = colorList[0];
+        Material _currentColor = colorList[0];
         colorList.RemoveAt(0);
         colorList.Add(currentColor);
+       
         currentColor = _currentColor;
 
         player.DefaultMaterial = currentColor;
+
+        Color _curr = parent.GetColor(currentColor.name);
+
+        backgroundColor.color = new Color(_curr.r, _curr.g, _curr.b, 0.4f);
+        textBackgroundColor.color = _curr;
     }
 
     void PressButton(Button _button)
