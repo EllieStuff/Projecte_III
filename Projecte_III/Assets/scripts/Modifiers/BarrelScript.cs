@@ -13,7 +13,7 @@ public class BarrelScript : MonoBehaviour
 
     Rigidbody rb = null;
 
-    BarrelColision barrel;
+    BarrelCollision barrel;
 
     [SerializeField] bool hasExploded = false;
     Transform explosion = null;
@@ -21,7 +21,7 @@ public class BarrelScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        barrel = transform.GetChild(0).GetComponent<BarrelColision>();
+        barrel = transform.GetChild(0).GetComponent<BarrelCollision>();
 
         rb = gameObject.AddComponent<Rigidbody>();
         rb.constraints = RigidbodyConstraints.FreezeRotation;

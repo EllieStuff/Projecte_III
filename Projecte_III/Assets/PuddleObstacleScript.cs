@@ -28,34 +28,11 @@ public class PuddleObstacleScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(playersRB.Count > 0)
-        {
-            for (int i = 0; i < playersRB.Count; i++)
-            {
-                playersRB[i].AddForce(playersRB[i].velocity * puddleFricction, ForceMode.Force);
-            }
-        }
-
-        //if (playersData.Count > 0)
+        //if(playersRB.Count > 0)
         //{
-        //    for (int i = 0; i < playersData.Count; i++)
+        //    for (int i = 0; i < playersRB.Count; i++)
         //    {
-        //        /// Funciona pero es una mica meh
-        //        //playersData[i].rb.AddForce(playersData[i].rb.velocity * puddleFricction, ForceMode.Force);
-
-        //        PlayerData tmpPlayer = playersData[i];
-        //        if (tmpPlayer.lastPos != Vector3.zero)
-        //        {
-        //            tmpPlayer.currDir = (tmpPlayer.rb.position - tmpPlayer.lastPos).normalized * 8;
-        //            Debug.Log("CurrDir: " + tmpPlayer.currDir);
-        //            Debug.Log("CurrVel: " + tmpPlayer.rb.velocity);
-        //        }
-        //        tmpPlayer.lastPos = tmpPlayer.rb.position;
-        //        if (tmpPlayer.currDir != Vector3.zero)
-        //        {
-        //            playersData[i].rb.AddForce(tmpPlayer.currDir * puddleFricction, ForceMode.Force);
-        //        }
-        //        playersData[i] = tmpPlayer;
+        //        playersRB[i].AddForce(playersRB[i].velocity * puddleFricction, ForceMode.Force);
         //    }
         //}
 
@@ -67,6 +44,7 @@ public class PuddleObstacleScript : MonoBehaviour
         if (other.CompareTag("PlayerVehicle"))
         {
             PlayerVehicleScript playerScript = other.transform.parent.GetComponent<PlayerVehicleScript>();
+            playerScript.speedIncrementEnabled = true;
             initMaxSpeed = playerScript.vehicleMaxSpeed;
             initMaxAngularSpeed = playerScript.vehicleMaxTorque;
             playerScript.vehicleMaxSpeed = initMaxSpeed * maxSpeedIncrease;
@@ -74,7 +52,7 @@ public class PuddleObstacleScript : MonoBehaviour
 
             Rigidbody playerRB = playerScript.GetComponent<Rigidbody>();
             playerRB.angularDrag *= angularDragIncrease;
-            playersRB.Add(playerRB);
+            //playersRB.Add(playerRB);
             //playersData.Add(new PlayerData(playerRB));
         }
     }
@@ -85,10 +63,11 @@ public class PuddleObstacleScript : MonoBehaviour
             PlayerVehicleScript playerScript = other.transform.parent.GetComponent<PlayerVehicleScript>();
             playerScript.vehicleMaxSpeed = initMaxSpeed;
             playerScript.vehicleMaxTorque = initMaxAngularSpeed;
+            playerScript.speedIncrementEnabled = false;
 
             Rigidbody playerRB = playerScript.GetComponent<Rigidbody>();
             playerRB.angularDrag = INIT_ANGULAR_DRAG;
-            playersRB.Remove(playerRB);
+            //playersRB.Remove(playerRB);
             //int playerIdx = playersData.FindIndex(_players => _players.rb == playerRB);
             //playersData.RemoveAt(playerIdx);
         }
