@@ -96,6 +96,8 @@ public class Umbrella : MonoBehaviour
             umbrellaGameObject.transform.localScale = Vector3.Lerp(originalScale, Vector3.zero, timer / maxTime);
         }
         //umbrellaActivated = false;
+        umbrellaGameObject.transform.localPosition = originalPos;
+        umbrellaGameObject.transform.localScale = originalScale;
         umbrellaGameObject.SetActive(false);
     }
 
