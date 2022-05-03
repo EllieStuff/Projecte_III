@@ -23,7 +23,7 @@ public class BarrelExplosion : MonoBehaviour
             other.transform.parent.GetComponent<VehicleTriggerAndCollisionEvents>().ApplyForce(currentForce, collisionTimedown);
 
             //----------
-            GetComponent<SphereCollider>().enabled = false;
+            Physics.IgnoreCollision(other, GetComponent<SphereCollider>());
 
             Debug.Log("Player inside exlosion");
         }
