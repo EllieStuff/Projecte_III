@@ -9245,6 +9245,7 @@ GameObject:
   - component: {fileID: 1524375310}
   - component: {fileID: 1524375309}
   - component: {fileID: 1524375308}
+  - component: {fileID: 1524375313}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -9292,8 +9293,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
-  m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -9368,6 +9368,23 @@ Transform:
   m_Father: {fileID: 3545888809441658329}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 21.41, y: 0, z: 0}
+--- !u!114 &1524375313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1524375307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: 473388689c3edbb478961a105cfb6a11, type: 2}
 --- !u!1 &1549945175
 GameObject:
   m_ObjectHideFlags: 0
@@ -10470,7 +10487,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
-  m_XRTrackingOrigin: {fileID: 0}
   m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
   m_PointAction: {fileID: 1054132383583890850, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
   m_MoveAction: {fileID: 3710738434707379630, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
@@ -10585,7 +10601,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4650015739293945062, guid: 00994fccf2554644ba12a4970e5a29ab, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4650015739293945062, guid: 00994fccf2554644ba12a4970e5a29ab, type: 3}
       propertyPath: m_LocalPosition.x
