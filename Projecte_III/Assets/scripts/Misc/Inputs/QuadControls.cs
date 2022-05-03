@@ -531,6 +531,17 @@ public class @QuadControls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""fca1ade0-23bf-44cf-a43f-790e603ef829"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShootForward"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""e3687b39-e506-414a-9949-200ea855a7b8"",
                     ""path"": ""<Keyboard>/downArrow"",
                     ""interactions"": """",
@@ -547,6 +558,17 @@ public class @QuadControls : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Player1"",
+                    ""action"": ""ShootBackwards"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0194434d-25e5-45b4-bd7d-d8d5c45021e4"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
                     ""action"": ""ShootBackwards"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -575,6 +597,17 @@ public class @QuadControls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""37ad6bdf-e817-494a-907d-ea4ef6e88f92"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShootLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""dd215e1b-2760-4009-a88c-1d05b55030e2"",
                     ""path"": ""<Keyboard>/rightArrow"",
                     ""interactions"": """",
@@ -591,6 +624,17 @@ public class @QuadControls : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Player1"",
+                    ""action"": ""ShootRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""90d5e1f9-228e-4336-9190-5af548f2d07f"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
                     ""action"": ""ShootRight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
