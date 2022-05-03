@@ -28,13 +28,11 @@ public class PlayerOilGun : MonoBehaviour
         // Nope
     }
 
-
     public void Activate()
     {
         if (hasOilGun)
             oilGun.Activate();
     }
-
 
     [ContextMenu("SetOilGunModifier")]
     public void SetOilGunModifier()
