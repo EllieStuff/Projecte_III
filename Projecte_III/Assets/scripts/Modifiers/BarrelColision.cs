@@ -35,6 +35,7 @@ public class BarrelColision : MonoBehaviour
             if (barrel.GetType() == BarrelScript.BarrelType.EXPLOSIVE)
             {
                 barrel.Explode();
+                AudioManager.Instance.Play_SFX("ExplodingBarrel_SFX");
                 Physics.IgnoreCollision(other, transform.GetComponentInChildren<SphereCollider>());
             }
 

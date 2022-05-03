@@ -49,7 +49,9 @@ public class Umbrella : MonoBehaviour
     public void ActivateUmbrella(Quaternion direction, bool moveUmbrellaPivot)
     {
         umbrellaGameObject.transform.localRotation = direction;
-        
+
+        AudioManager.Instance.Play_SFX("Umbrella_SFX");
+
         if (moveUmbrellaPivot)
             umbrellaGameObject.transform.localPosition -= new Vector3(0, 0, 1);
         

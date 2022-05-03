@@ -64,18 +64,21 @@ public class MainMenuInputs : MonoBehaviour
         {
             mainIdx--;
             if (mainIdx < 0) mainIdx = mainButtons.Length - 1;
+            AudioManager.Instance.Play_SFX("Hover_SFX");
             mainButtons[mainIdx].Select();
         }
         if (inputs.DownPressed)
         {
             mainIdx++;
             if (mainIdx >= mainButtons.Length) mainIdx = 0;
+            AudioManager.Instance.Play_SFX("Hover_SFX");
             mainButtons[mainIdx].Select();
         }
         if (inputs.AcceptPressed)
         {
             if (mainIdx == SETTINGS_IDX)
                 menuState = MenuState.SETTINGS;
+            AudioManager.Instance.Play_SFX("Hover_SFX");
             mainButtons[mainIdx].onClick.Invoke();
         }
     }

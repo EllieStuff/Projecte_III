@@ -31,16 +31,22 @@ public class MenuFunctions : MonoBehaviour
         }
     }
 
+    public void HoverSound()
+    {
+        AudioManager.Instance.Play_SFX("Hover_SFX");
+    }
+
     public void OpenSettings()
     {
         if (!enableButtons) return;
 
-        //localVoiceValue.value = AudioListener.volume;
+        AudioManager.Instance.Play_SFX("Click_SFX");
         settingsMenu.SetActive(true);
     }
 
     public void CloseSettings()
     {
+        AudioManager.Instance.Play_SFX("Click_SFX");
         settingsMenu.SetActive(false);
     }
 
@@ -48,6 +54,7 @@ public class MenuFunctions : MonoBehaviour
     {
         if (!enableButtons) return;
 
+        AudioManager.Instance.Play_SFX("Click_SFX");
         creditsMenu.SetActive(active);
     }
 
@@ -55,6 +62,7 @@ public class MenuFunctions : MonoBehaviour
     {
         if (!enableButtons) return;
 
+        AudioManager.Instance.Play_SFX("Click_SFX");
         transform.parent.GetComponent<Animator>().enabled = true;
         StartCoroutine(ExitMenuAnimationCoroutine());
     }
@@ -75,6 +83,7 @@ public class MenuFunctions : MonoBehaviour
     {
         if (!enableButtons) return;
 
+        AudioManager.Instance.Play_SFX("Click_SFX");
         Application.Quit();
     }
 

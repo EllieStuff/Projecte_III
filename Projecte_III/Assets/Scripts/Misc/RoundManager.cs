@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static RandomModifierGet;
 
 public class RoundManager : MonoBehaviour
 {
@@ -23,29 +24,24 @@ public class RoundManager : MonoBehaviour
     void Update()
     {
         _carsAlive = CheckPlayersAlive();
-        if(_carsAlive == 1 && !roundFinished)
+        if(playersManager.numOfPlayers > 1 && _carsAlive == 1 && !roundFinished)
         {
             playerWinner = GetPlayerWinner();
             WinnerUI.SetActive(true);
             WinnerText.text = "Player: "+ (playerWinner + 1) + " Wins!";
             roundFinished = true;
         }
+        else if(_carsAlive == 2 && playersManager.numOfPlayers > 2)
+        {
+            AudioManager.Instance.OST_AudioSource.pitch = 1.3f;
+        }
     }
 
     public void ResetScene()
     {
-        for (int i = 0; i < playersManager.numOfPlayers; i++)
-        {
-            PlayerVehicleScript player = playersManager.GetPlayer(i).GetComponent<PlayerVehicleScript>();
-            player.lifes = 3;
-            player.timerStartRace = 7;
-            Transform _initPos = initPos.GetInitPos(i);
-            player.transform.position = _initPos.position;
-            player.transform.rotation = _initPos.rotation * Quaternion.Euler(0, 180, 0);
-            player.transform.parent.gameObject.SetActive(true);
-        }
+        Destroy(playersManager.gameObject);
 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene("Current Building Scene");
     }
 
     int CheckPlayersAlive()

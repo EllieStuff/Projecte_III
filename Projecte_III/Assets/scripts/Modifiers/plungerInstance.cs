@@ -24,13 +24,13 @@ public class plungerInstance : MonoBehaviour
     private void Start()
     {
         line = GetComponent<LineRenderer>();
-        //AudioManager.Instance.Play_SFX("Plunger_Hit_SFX");
+        AudioManager.Instance.Play_SFX("Plunger_Hit_SFX");
         startRot = new Quaternion(0, transform.rotation.y, 0, transform.rotation.w);
         
         if(normalDir != Vector3.zero)
-            body.velocity = new Vector3(plungerVelocity * normalDir.x, normalDir.y + 0.75f, plungerVelocity * normalDir.z);
+            body.velocity = new Vector3(plungerVelocity * normalDir.x, normalDir.y + 3.75f, plungerVelocity * normalDir.z);
         else
-            body.velocity = transform.TransformDirection(new Vector3(0, 0.5f, plungerVelocity));
+            body.velocity = transform.TransformDirection(new Vector3(0, 3.5f, plungerVelocity));
         
         //if (transform.InverseTransformDirection(body.velocity).z < 0)
             //Destroy(gameObject);
@@ -121,14 +121,14 @@ public class plungerInstance : MonoBehaviour
     {
         if (!plungerHit)
         {
-            //AudioManager.Instance.Play_SFX("Plunger_Arrived_SFX");
+            AudioManager.Instance.Play_SFX("Plunger_Arrived_SFX");
             collisionTag = collision.gameObject.tag;
 
             if(collision.gameObject.tag.Contains("Player") && collision.gameObject != playerShotPlunger)
             {
                 quadTarget = null;
                 otherQuad = collision.gameObject;
-                //AudioManager.Instance.Play_SFX("Plunger_Arrived_SFX");
+                AudioManager.Instance.Play_SFX("Plunger_Arrived_SFX");
             }
 
             //transform.parent = collision.transform;
@@ -151,14 +151,14 @@ public class plungerInstance : MonoBehaviour
     {
         if (!plungerHit)
         {
-            //AudioManager.Instance.Play_SFX("Plunger_Arrived_SFX");
+            AudioManager.Instance.Play_SFX("Plunger_Arrived_SFX");
             collisionTag = collision.gameObject.tag;
 
             if (collision.gameObject.tag.Contains("Player") && collision.gameObject != playerShotPlunger)
             {
                 quadTarget = null;
                 otherQuad = collision.gameObject;
-                //AudioManager.Instance.Play_SFX("Plunger_Arrived_SFX");
+                AudioManager.Instance.Play_SFX("Plunger_Arrived_SFX");
             }
 
             //transform.parent = collision.transform;
