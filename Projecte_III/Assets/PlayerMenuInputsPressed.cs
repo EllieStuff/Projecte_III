@@ -166,5 +166,9 @@ public class PlayerMenuInputsPressed : MonoBehaviour
     {
         return playerInputs.Inited();
     }
+    public bool UsesKeyboard()
+    {
+        return playerInputs.UsesKeyboard();
+    }
 
 }
