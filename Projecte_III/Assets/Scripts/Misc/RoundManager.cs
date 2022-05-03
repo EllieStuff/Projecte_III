@@ -28,7 +28,7 @@ public class RoundManager : MonoBehaviour
         {
             playerWinner = GetPlayerWinner();
             WinnerUI.SetActive(true);
-            WinnerText.text = "Player: "+ (playerWinner + 1) + " Wins!";
+            WinnerText.text = "Player "+ (playerWinner + 1) + " Wins!";
             roundFinished = true;
         }
         else if(_carsAlive == 2 && playersManager.numOfPlayers > 2)
