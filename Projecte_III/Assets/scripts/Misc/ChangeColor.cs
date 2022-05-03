@@ -54,12 +54,12 @@ public class ChangeColor : MonoBehaviour
         if (playerInputs.MenuRightPressed)
         {
             PressButton(buttonRight);
-            //buttonRight.onClick.Invoke();
+            SetNewColor(1);
         }
         else if (playerInputs.MenuLeftPressed)
         {
             PressButton(buttonLeft);
-            //buttonLeft.onClick.Invoke();
+            SetNewColor(-1);
         }
     }
 
@@ -86,6 +86,10 @@ public class ChangeColor : MonoBehaviour
     public void IncreaseColorId()
     {
         Material _currentColor = null;
+        PressButton(buttonRight);
+
+        if (!playerInputs.UsesKeyboard())
+            return;
 
         _currentColor = colorList[colorList.Count - 1];
         colorList.RemoveAt(colorList.Count - 1);
@@ -97,6 +101,10 @@ public class ChangeColor : MonoBehaviour
     public void DecreaseColorId()
     {
         Material _currentColor = null;
+        PressButton(buttonLeft);
+
+        if (!playerInputs.UsesKeyboard()) 
+            return;
 
         _currentColor = colorList[0];
         colorList.RemoveAt(0);
@@ -111,7 +119,6 @@ public class ChangeColor : MonoBehaviour
         if(lastButton != null)
             lastButton.GetComponent<Image>().color = Color.yellow;
 
-        _button.onClick.Invoke();
         _button.GetComponent<Image>().color = Color.white;
         StartCoroutine(LerpColor(_button.GetComponent<Image>(), Color.yellow));
         lastButton = _button;
