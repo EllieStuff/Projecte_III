@@ -97,13 +97,12 @@ public class ChangeColor : MonoBehaviour
     }
     public void IncreaseColorId()
     {
-        Material _currentColor = null;
         PressButton(buttonRight);
 
         if (!playerInputs.UsesKeyboard())
             return;
 
-        _currentColor = colorList[colorList.Count - 1];
+        Material _currentColor = colorList[colorList.Count - 1];
         colorList.RemoveAt(colorList.Count - 1);
         colorList.Insert(0, currentColor);
         
@@ -118,13 +117,12 @@ public class ChangeColor : MonoBehaviour
     }
     public void DecreaseColorId()
     {
-        Material _currentColor = null;
         PressButton(buttonLeft);
 
         if (!playerInputs.UsesKeyboard()) 
             return;
 
-        _currentColor = colorList[0];
+        Material _currentColor = colorList[0];
         colorList.RemoveAt(0);
         colorList.Add(currentColor);
        
