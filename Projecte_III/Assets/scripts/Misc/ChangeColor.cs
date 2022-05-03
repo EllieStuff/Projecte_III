@@ -94,6 +94,10 @@ public class ChangeColor : MonoBehaviour
         currentColor = _currentColor;
 
         player.DefaultMaterial = currentColor;
+        Color _curr = parent.GetColor(currentColor.name);
+
+        backgroundColor.color = new Color(_curr.r, _curr.g, _curr.b, 0.45f);
+        textBackgroundColor.color = _curr;
     }
     public void IncreaseColorId()
     {
