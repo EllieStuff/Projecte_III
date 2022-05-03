@@ -57,7 +57,7 @@ public class ChangeColor : MonoBehaviour
         player.DefaultMaterial = currentColor;
         Color _curr = parent.GetColor(currentColor.name);
 
-        backgroundColor.color = new Color(_curr.r, _curr.g, _curr.b, 0.4f);
+        backgroundColor.color = new Color(_curr.r, _curr.g, _curr.b, 0.45f);
         textBackgroundColor.color = _curr;
     }
 
@@ -112,7 +112,7 @@ public class ChangeColor : MonoBehaviour
 
         Color _curr = parent.GetColor(currentColor.name);
 
-        backgroundColor.color = new Color(_curr.r, _curr.g, _curr.b, 0.4f);
+        backgroundColor.color = new Color(_curr.r, _curr.g, _curr.b, 0.45f);
         textBackgroundColor.color = _curr;
     }
     public void DecreaseColorId()
@@ -132,7 +132,7 @@ public class ChangeColor : MonoBehaviour
 
         Color _curr = parent.GetColor(currentColor.name);
 
-        backgroundColor.color = new Color(_curr.r, _curr.g, _curr.b, 0.4f);
+        backgroundColor.color = new Color(_curr.r, _curr.g, _curr.b, 0.45f);
         textBackgroundColor.color = _curr;
     }
 
