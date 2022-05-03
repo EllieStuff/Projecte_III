@@ -57,7 +57,7 @@ public class DoneButtonScript : MonoBehaviour
             }
         }
     }
-    void SetReady()
+    public void SetReady()
     {
         isReady = !isReady;
         if (isReady)

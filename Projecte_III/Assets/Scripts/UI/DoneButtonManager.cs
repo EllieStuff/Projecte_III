@@ -62,9 +62,18 @@ public class DoneButtonManager : MonoBehaviour
             StartCoroutine(button.LerpBttnImgColor(readyBttnImgColor));
         }
         yield return new WaitForSeconds(0.2f);
+        if(buttonsActive == 1)
+        {
+            doneButtonScripts[0].SetReady();
+            loadingLevel = false;
+            foreach (DoneButtonScript button in doneButtonScripts)
+            {
+                StartCoroutine(button.LerpBttnImgColor(Color.white));
+            }
+            yield break;
+        }
         Debug.Log("Changing Scene");
         playersManager.numOfPlayers = buttonsActive;
-        //GameObject.FindGameObjectWithTag("RadialMenuManager").GetComponent<RadialMenuSetManager>().SetModifiersToChosenRMSet(playersManager.numOfPlayers - 1);
         LoadSceneManager sceneManager = GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>();
         sceneManager.ChangeScene(goToScene);
     }
