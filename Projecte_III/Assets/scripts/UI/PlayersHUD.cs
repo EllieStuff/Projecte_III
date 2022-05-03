@@ -34,6 +34,7 @@ public class PlayersHUD : MonoBehaviour
         for (int i = 0; i < lifes.Length; i++)
         {
             lifes[i] = transform.GetChild(0).GetChild(i);
+            lifes[i].GetComponent<Image>().color = new Color(_color.r, _color.g, _color.b, 0.8f);
         }
     }
 
