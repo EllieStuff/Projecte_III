@@ -103,7 +103,7 @@ public class MenuFunctions : MonoBehaviour
         int titleIdx = mainMenuUIItems.Length - arrayDiff;
         mainMenuUIItems[titleIdx] = menuTitle;
         initImagesColors[titleIdx] = menuTitle.GetComponent<Image>().color;
-        initTextsColors[titleIdx] = menuTitle.GetComponentInChildren<TextMeshProUGUI>().color;
+        //initTextsColors[titleIdx] = menuTitle.GetComponentInChildren<TextMeshProUGUI>().color;
 
 
         // Run animations
@@ -128,7 +128,8 @@ public class MenuFunctions : MonoBehaviour
                 for (int i = 0; i < mainMenuUIItems.Length; i++)
                 {
                     mainMenuUIItems[i].GetComponent<Image>().color = Color.Lerp(initImagesColors[i], Color.clear, timer / (moveCarsTime - ANIMS_MARGIN));
-                    mainMenuUIItems[i].GetComponentInChildren<TextMeshProUGUI>().color = Color.Lerp(initTextsColors[i], Color.clear, timer / (moveCarsTime - ANIMS_MARGIN));
+                    if(mainMenuUIItems[i].childCount > 0)
+                        mainMenuUIItems[i].GetComponentInChildren<TextMeshProUGUI>().color = Color.Lerp(initTextsColors[i], Color.clear, timer / (moveCarsTime - ANIMS_MARGIN));
                 }
             }
 
