@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <WwiseDocument Type="WorkUnit" ID="{FC6A5A5E-99B6-4330-9ECB-D10AC13A8BAA}" SchemaVersion="103">
 	<Events>
-		<WorkUnit Name="Default Work Unit" ID="{FC6A5A5E-99B6-4330-9ECB-D10AC13A8BAA}" PersistMode="Standalone"/>
+		<WorkUnit Name="Default Work Unit" ID="{FC6A5A5E-99B6-4330-9ECB-D10AC13A8BAA}" PersistMode="Standalone">
+			<ChildrenList>
+				<Event Name="Play_Click_Sound" ID="{1276E082-476E-4788-84E8-236E560809E2}">
+					<ChildrenList>
+						<Action Name="" ID="{DB6E50F0-F39C-4B17-82B7-B2EFB0F48516}" ShortID="409142672">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="210954-Lip_Sound_04" ID="{908B7191-91F5-44B9-8DB1-52B4C6BCF19C}" WorkUnitID="{7DD2C2DE-FD56-4EA8-AF3B-F9917205607F}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+			</ChildrenList>
+		</WorkUnit>
 	</Events>
 </WwiseDocument>
