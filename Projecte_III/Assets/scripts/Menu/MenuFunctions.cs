@@ -18,9 +18,16 @@ public class MenuFunctions : MonoBehaviour
     [SerializeField] Transform menuTitle;
     [SerializeField] Transform mainMenuButtonsFather;
     [SerializeField] Transform tunelTransform;
+    public AK.Wwise.Event HoverSFX;
+    public AK.Wwise.Event ClickSFX;
+    //public AK.Wwise.Bank SoundBank1;
 
     bool enableButtons = false;
 
+    public void Start()
+    {
+        //SoundBank1.Load();
+    }
 
     private void Update()
     {
@@ -33,20 +40,23 @@ public class MenuFunctions : MonoBehaviour
 
     public void HoverSound()
     {
-        AudioManager.Instance.Play_SFX("Hover_SFX");
+        //AudioManager.Instance.Play_SFX("Hover_SFX");
+        HoverSFX.Post(gameObject);
     }
 
     public void OpenSettings()
     {
         if (!enableButtons) return;
 
-        AudioManager.Instance.Play_SFX("Click_SFX");
+        //AudioManager.Instance.Play_SFX("Click_SFX");
+        ClickSFX.Post(gameObject);
         settingsMenu.SetActive(true);
     }
 
     public void CloseSettings()
     {
-        AudioManager.Instance.Play_SFX("Click_SFX");
+        //AudioManager.Instance.Play_SFX("Click_SFX");
+        ClickSFX.Post(gameObject);
         settingsMenu.SetActive(false);
     }
 
@@ -54,7 +64,8 @@ public class MenuFunctions : MonoBehaviour
     {
         if (!enableButtons) return;
 
-        AudioManager.Instance.Play_SFX("Click_SFX");
+        //AudioManager.Instance.Play_SFX("Click_SFX");
+        ClickSFX.Post(gameObject);
         creditsMenu.SetActive(active);
     }
 
@@ -62,7 +73,8 @@ public class MenuFunctions : MonoBehaviour
     {
         if (!enableButtons) return;
 
-        AudioManager.Instance.Play_SFX("Click_SFX");
+        //AudioManager.Instance.Play_SFX("Click_SFX");
+        ClickSFX.Post(gameObject);
         transform.parent.GetComponent<Animator>().enabled = true;
         StartCoroutine(ExitMenuAnimationCoroutine());
     }
@@ -83,7 +95,8 @@ public class MenuFunctions : MonoBehaviour
     {
         if (!enableButtons) return;
 
-        AudioManager.Instance.Play_SFX("Click_SFX");
+        //AudioManager.Instance.Play_SFX("Click_SFX");
+        ClickSFX.Post(gameObject);
         Application.Quit();
     }
 

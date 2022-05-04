@@ -12,6 +12,8 @@ public class MainMenuInputs : MonoBehaviour
     [SerializeField] Transform mainFather;
     [SerializeField] Transform settingsFathers;
 
+    public AK.Wwise.Event HoverSFX;
+
     Button[] mainButtons;
     Transform[] settingOptions;
     int mainIdx = 0;
@@ -64,21 +66,24 @@ public class MainMenuInputs : MonoBehaviour
         {
             mainIdx--;
             if (mainIdx < 0) mainIdx = mainButtons.Length - 1;
-            AudioManager.Instance.Play_SFX("Hover_SFX");
+            //AudioManager.Instance.Play_SFX("Hover_SFX");
+            HoverSFX.Post(gameObject);
             mainButtons[mainIdx].Select();
         }
         if (inputs.DownPressed)
         {
             mainIdx++;
             if (mainIdx >= mainButtons.Length) mainIdx = 0;
-            AudioManager.Instance.Play_SFX("Hover_SFX");
+            //AudioManager.Instance.Play_SFX("Hover_SFX");
+            HoverSFX.Post(gameObject);
             mainButtons[mainIdx].Select();
         }
         if (inputs.AcceptPressed)
         {
             if (mainIdx == SETTINGS_IDX)
                 menuState = MenuState.SETTINGS;
-            AudioManager.Instance.Play_SFX("Hover_SFX");
+            //AudioManager.Instance.Play_SFX("Hover_SFX");
+            HoverSFX.Post(gameObject);
             mainButtons[mainIdx].onClick.Invoke();
         }
     }

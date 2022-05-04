@@ -16,10 +16,140 @@
 			<ShortName>Init</ShortName>
 			<Path>Init.bnk</Path>
 		</SoundBank>
-		<SoundBank Id="2878262188" Language="SFX" Hash="1370050131">
+		<SoundBank Id="2878262188" Language="English(US)" Hash="67038139">
 			<ObjectPath>\SoundBanks\Default Work Unit\Soundbank_1</ObjectPath>
 			<ShortName>Soundbank_1</ShortName>
-			<Path>Soundbank_1.bnk</Path>
+			<Path>English(US)\Soundbank_1.bnk</Path>
+			<IncludedEvents>
+				<Event Id="3691766587" Name="Play_BarrelExplosion_Sound" ObjectPath="\Events\Default Work Unit\Play_BarrelExplosion_Sound" DurationType="OneShot" DurationMin="3.5" DurationMax="3.5">
+					<IncludedMemoryFiles>
+						<File Id="960415641" Language="English(US)">
+							<ShortName>535166-Bluezone-BC0277-explosion-urban-004-03.wav</ShortName>
+							<Path>Voices\English(US)\535166-Bluezone-BC0277-explosion-urban-004-03_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="2224248995" Name="Play_Bird_Sound" ObjectPath="\Events\Default Work Unit\Play_Bird_Sound" DurationType="OneShot" DurationMin="8.522676" DurationMax="8.522676">
+					<IncludedMemoryFiles>
+						<File Id="221742731" Language="English(US)">
+							<ShortName>50182-Yukon_Bird_Medium_Distant_Squawk_Fly_Away_Faint_wings.wav</ShortName>
+							<Path>Voices\English(US)\50182-Yukon_Bird_Medium_Distant_Squawk_Fly_Away_Faint_wings_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="4064171534" Name="Play_Click_Sound" ObjectPath="\Events\Default Work Unit\Play_Click_Sound" DurationType="OneShot" DurationMin="0.176563" DurationMax="0.176563">
+					<IncludedMemoryFiles>
+						<File Id="536321622" Language="SFX">
+							<ShortName>210954-Lip_Sound_04.wav</ShortName>
+							<Path>SFX\210954-Lip_Sound_04_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="3894340873" Name="Play_EngineIgnition_Sound" ObjectPath="\Events\Default Work Unit\Play_EngineIgnition_Sound" DurationType="OneShot" DurationMin="3.575873" DurationMax="3.575873">
+					<IncludedMemoryFiles>
+						<File Id="869489237" Language="English(US)">
+							<ShortName>8492-engine-start-2.wav</ShortName>
+							<Path>Voices\English(US)\8492-engine-start-2_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="262507273" Name="Play_Fall_Sound" ObjectPath="\Events\Default Work Unit\Play_Fall_Sound" DurationType="OneShot" DurationMin="2.652417" DurationMax="2.652417">
+					<IncludedMemoryFiles>
+						<File Id="826722355" Language="English(US)">
+							<ShortName>540425-zapsplat-warfare-bomb-whizz-in-hit-close-by-explosion-med-002-48059.wav</ShortName>
+							<Path>Voices\English(US)\540425-zapsplat-warfare-bomb-whizz-in-hit-close-by-explosion-med-002-48059_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="2773766300" Name="Play_Hover_Sound" ObjectPath="\Events\Default Work Unit\Play_Hover_Sound" DurationType="OneShot" DurationMin="2.25" DurationMax="2.25">
+					<IncludedMemoryFiles>
+						<File Id="542384396" Language="English(US)">
+							<ShortName>191400-Modular_UI_-Solo_Beeps-038.wav</ShortName>
+							<Path>Voices\English(US)\191400-Modular_UI_-Solo_Beeps-038_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="347845317" Name="Play_InGame_Music" ObjectPath="\Events\Default Work Unit\Play_InGame_Music" DurationType="Infinite">
+					<IncludedMemoryFiles>
+						<File Id="245960552" Language="English(US)">
+							<ShortName>bgSong.wav</ShortName>
+							<Path>Voices\English(US)\bgSong_D79FB2B7.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="2589712766" Name="Play_Market_Sound" ObjectPath="\Events\Default Work Unit\Play_Market_Sound" DurationType="OneShot" DurationMin="55.443493" DurationMax="55.443493">
+					<IncludedMemoryFiles>
+						<File Id="770073799" Language="English(US)">
+							<ShortName>Market Ambience Sound Effect HD.wav</ShortName>
+							<Path>Voices\English(US)\Market Ambience Sound Effect HD_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="2228153899" Name="Play_Menu_Music" ObjectPath="\Events\Default Work Unit\Play_Menu_Music" DurationType="Infinite">
+					<IncludedMemoryFiles>
+						<File Id="175710078" Language="English(US)">
+							<ShortName>MenuSong.wav</ShortName>
+							<Path>Voices\English(US)\MenuSong_D79FB2B7.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="3591393942" Name="Play_Oil_Sound" ObjectPath="\Events\Default Work Unit\Play_Oil_Sound" DurationType="OneShot" DurationMin="1.453552" DurationMax="1.453552">
+					<IncludedMemoryFiles>
+						<File Id="477924929" Language="English(US)">
+							<ShortName>463491-LIQUID_BUBBLE_Spurt-Low_Tone-Strong_01.wav</ShortName>
+							<Path>Voices\English(US)\463491-LIQUID_BUBBLE_Spurt-Low_Tone-Strong_01_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="3041626092" Name="Play_PaintGun_Sound" ObjectPath="\Events\Default Work Unit\Play_PaintGun_Sound" DurationType="OneShot" DurationMin="1.034667" DurationMax="1.034667">
+					<IncludedMemoryFiles>
+						<File Id="528870494" Language="English(US)">
+							<ShortName>161675-PB_Gun-A-Shots-Hyped_3.wav</ShortName>
+							<Path>Voices\English(US)\161675-PB_Gun-A-Shots-Hyped_3_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="2086632931" Name="Play_PersonalizationMenu_Music" ObjectPath="\Events\Default Work Unit\Play_PersonalizationMenu_Music" DurationType="Infinite">
+					<IncludedMemoryFiles>
+						<File Id="227917235" Language="English(US)">
+							<ShortName>128551-Funk-in-your-face-Introloop.wav</ShortName>
+							<Path>Voices\English(US)\128551-Funk-in-your-face-Introloop_D79FB2B7.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="1478479126" Name="Play_Respawn_Sound" ObjectPath="\Events\Default Work Unit\Play_Respawn_Sound" DurationType="OneShot" DurationMin="1.792" DurationMax="1.792">
+					<IncludedMemoryFiles>
+						<File Id="707244734" Language="English(US)">
+							<ShortName>530699-Cartoon_Fat_Ping_Boing.wav</ShortName>
+							<Path>Voices\English(US)\530699-Cartoon_Fat_Ping_Boing_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="4044348565" Name="Play_SpringJump_Sound" ObjectPath="\Events\Default Work Unit\Play_SpringJump_Sound" DurationType="OneShot" DurationMin="5.249002" DurationMax="5.249002">
+					<IncludedMemoryFiles>
+						<File Id="934394098" Language="English(US)">
+							<ShortName>37405-11118701.wav</ShortName>
+							<Path>Voices\English(US)\37405-11118701_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="2656107611" Name="Play_Squirrel_Sound" ObjectPath="\Events\Default Work Unit\Play_Squirrel_Sound" DurationType="OneShot" DurationMin="6.408708" DurationMax="6.408708">
+					<IncludedMemoryFiles>
+						<File Id="37637028" Language="English(US)">
+							<ShortName>Squirrel Cartoon Sound fx.wav</ShortName>
+							<Path>Voices\English(US)\Squirrel Cartoon Sound fx_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="3008850906" Name="Play_Umbrella_Sound" ObjectPath="\Events\Default Work Unit\Play_Umbrella_Sound" DurationType="OneShot" DurationMin="0.522667" DurationMax="0.522667">
+					<IncludedMemoryFiles>
+						<File Id="670714409" Language="English(US)">
+							<ShortName>166611-Bullet-Hit-Paintball-Body_05.wav</ShortName>
+							<Path>Voices\English(US)\166611-Bullet-Hit-Paintball-Body_05_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+			</IncludedEvents>
 		</SoundBank>
 	</SoundBanks>
 </SoundBanksInfo>

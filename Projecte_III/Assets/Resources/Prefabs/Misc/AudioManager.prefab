@@ -264,7 +264,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6853815750020878624}
   - component: {fileID: 1107298739962028953}
-  - component: {fileID: 6012151567570984067}
+  - component: {fileID: 1879495093317346081}
+  - component: {fileID: 7014555783270621228}
+  - component: {fileID: 4387038462480994212}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -304,7 +306,7 @@ MonoBehaviour:
   OST_Volume: 1
   SFX_AudioSource: {fileID: 6853815749881438995}
   OST_AudioSource: {fileID: 6853815749913559939}
---- !u!114 &6012151567570984067
+--- !u!114 &1879495093317346081
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -313,8 +315,74 @@ MonoBehaviour:
   m_GameObject: {fileID: 6853815750020878625}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da329209c437201408bb48aa5a4db169, type: 3}
+  m_Script: {fileID: 11500000, guid: 78dfc99245938a548885aaedafd05aed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundType: 0
-  audioName: 
+  triggerList: f7e1664c
+  useOtherObject: 0
+  data:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: d9be3735478bef64ab7d495547a448bb, type: 2}
+  decodeBank: 0
+  loadAsynchronous: 0
+  saveDecodedBank: 0
+  unloadTriggerList: 958ca0ea
+  bankNameInternal: 
+  valueGuidInternal: 
+--- !u!114 &7014555783270621228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6853815750020878625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e465710f3ecf74e4e81e0d6f04b52d01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_listeners:
+    initialListenerList: []
+    useDefaultListeners: 1
+  isEnvironmentAware: 1
+  isStaticObject: 0
+  m_positionOffsetData:
+    KeepMe: 0
+    positionOffset: {x: 0, y: 0, z: 0}
+  m_posOffsetData: {fileID: 0}
+  listenerMask: 1
+--- !u!114 &4387038462480994212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6853815750020878625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86035cfa33849ee4bae2b4daf08dd9b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerList: f7e1664c
+  useOtherObject: 0
+  actionOnEventType: 0
+  curveInterpolation: 4
+  enableActionOnEvent: 0
+  data:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: e782c2cc89e049b408b6eae56fce6d31, type: 2}
+  useCallbacks: 0
+  Callbacks: []
+  playingId: 0
+  soundEmitterObject: {fileID: 0}
+  transitionDuration: 0
+  eventIdInternal: 0
+  valueGuidInternal: 
+  m_callbackDataInternal: {fileID: 0}
+  MultiPositionType: 1
+  multiPositionTypeLabel: 0
+  attenuationSphereColor: {r: 1, g: 0, b: 0, a: 0.1}
+  LargeModePositions: []
+  multiPositionArray: []

@@ -8,6 +8,8 @@ public class DoneButtonScript : MonoBehaviour
     [SerializeField] internal bool isActive = false;
     [SerializeField] int playerId;
 
+    public AK.Wwise.Event StartButtonSFX;
+
     internal bool isReady = false;
     PlayersManager playersManager;
     PlayerInputs playerInputs;
@@ -62,8 +64,9 @@ public class DoneButtonScript : MonoBehaviour
         isReady = !isReady;
         if (isReady)
         {
-            AudioManager.Instance.Play_SFX("Engine_Ignition_SFX 1");
-            AudioManager.Instance.SFX_AudioSource.pitch = Random.Range(0.8f, 1.2f);
+            //AudioManager.Instance.Play_SFX("Engine_Ignition_SFX 1");
+            //AudioManager.Instance.SFX_AudioSource.pitch = Random.Range(0.8f, 1.2f);
+            StartButtonSFX.Post(gameObject);
             StartCoroutine(LerpBttnImgColor(bttnManager.selectedBttnImgColor));
         }
         else

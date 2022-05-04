@@ -4,6 +4,13 @@
 		<WorkUnit Name="Default Work Unit" ID="{7DD2C2DE-FD56-4EA8-AF3B-F9917205607F}" PersistMode="Standalone">
 			<ChildrenList>
 				<Sound Name="210954-Lip_Sound_04" ID="{908B7191-91F5-44B9-8DB1-52B4C6BCF19C}" ShortID="992001409">
+					<PropertyList>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-10</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
 					<ReferenceList>
 						<Reference Name="Conversion">
 							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{A33D6D56-C0C8-4851-BC4C-9F9B9D42CFE5}"/>
@@ -24,6 +31,424 @@
 					<ObjectLists/>
 					<ActiveSourceList>
 						<ActiveSource Name="210954-Lip_Sound_04" ID="{6F1820C4-41C2-4F94-BC44-B09AA42159EC}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="540425-zapsplat-warfare-bomb-whizz-in-hit-close-by-explosion-med-002-48059" ID="{D26E056A-AB4C-4C7D-BF3F-CFF9337A16CB}" ShortID="955538429">
+					<PropertyList>
+						<Property Name="IsVoice" Type="bool" Value="True"/>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{A33D6D56-C0C8-4851-BC4C-9F9B9D42CFE5}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{18B094AD-8B6E-4E55-8ECD-BEF549061AAA}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="540425-zapsplat-warfare-bomb-whizz-in-hit-close-by-explosion-med-002-48059" ID="{B87BC355-CF28-4DD3-9E9B-C851335A4398}">
+							<Language>English(US)</Language>
+							<AudioFile>540425-zapsplat-warfare-bomb-whizz-in-hit-close-by-explosion-med-002-48059.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="826722355"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="540425-zapsplat-warfare-bomb-whizz-in-hit-close-by-explosion-med-002-48059" ID="{B87BC355-CF28-4DD3-9E9B-C851335A4398}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="535166-Bluezone-BC0277-explosion-urban-004-03" ID="{D7CF4C28-F3D2-49C5-A2E7-3C424C60CE32}" ShortID="936657006">
+					<PropertyList>
+						<Property Name="IsVoice" Type="bool" Value="True"/>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{A33D6D56-C0C8-4851-BC4C-9F9B9D42CFE5}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{18B094AD-8B6E-4E55-8ECD-BEF549061AAA}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="535166-Bluezone-BC0277-explosion-urban-004-03" ID="{A7BD6DD3-3410-4D77-9E19-B457457C29F6}">
+							<Language>English(US)</Language>
+							<AudioFile>535166-Bluezone-BC0277-explosion-urban-004-03.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="960415641"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="535166-Bluezone-BC0277-explosion-urban-004-03" ID="{A7BD6DD3-3410-4D77-9E19-B457457C29F6}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="530699-Cartoon_Fat_Ping_Boing" ID="{F207A87D-DE35-40EA-A768-F2DAC8EB3F20}" ShortID="372233555">
+					<PropertyList>
+						<Property Name="IsVoice" Type="bool" Value="True"/>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{A33D6D56-C0C8-4851-BC4C-9F9B9D42CFE5}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{18B094AD-8B6E-4E55-8ECD-BEF549061AAA}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="530699-Cartoon_Fat_Ping_Boing" ID="{013E29B4-0195-470F-809A-FE5FCBD67FC7}">
+							<Language>English(US)</Language>
+							<AudioFile>530699-Cartoon_Fat_Ping_Boing.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="707244734"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="530699-Cartoon_Fat_Ping_Boing" ID="{013E29B4-0195-470F-809A-FE5FCBD67FC7}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="463491-LIQUID_BUBBLE_Spurt-Low_Tone-Strong_01" ID="{518EBEF8-59EC-4470-A565-A43B30715548}" ShortID="463386430">
+					<PropertyList>
+						<Property Name="IsVoice" Type="bool" Value="True"/>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{A33D6D56-C0C8-4851-BC4C-9F9B9D42CFE5}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{18B094AD-8B6E-4E55-8ECD-BEF549061AAA}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="463491-LIQUID_BUBBLE_Spurt-Low_Tone-Strong_01" ID="{FDDB819B-9C70-4A7D-B70D-79BD628ACBE1}">
+							<Language>English(US)</Language>
+							<AudioFile>463491-LIQUID_BUBBLE_Spurt-Low_Tone-Strong_01.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="477924929"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="463491-LIQUID_BUBBLE_Spurt-Low_Tone-Strong_01" ID="{FDDB819B-9C70-4A7D-B70D-79BD628ACBE1}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="191400-Modular_UI_-Solo_Beeps-038" ID="{D34679C7-906B-4E2D-B3A4-87F59CA5AF93}" ShortID="396979889">
+					<PropertyList>
+						<Property Name="IsVoice" Type="bool" Value="True"/>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-26</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{A33D6D56-C0C8-4851-BC4C-9F9B9D42CFE5}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{18B094AD-8B6E-4E55-8ECD-BEF549061AAA}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="191400-Modular_UI_-Solo_Beeps-038" ID="{CC807C70-D098-4D68-AB5A-8A03A4920F9C}">
+							<Language>English(US)</Language>
+							<AudioFile>191400-Modular_UI_-Solo_Beeps-038.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="542384396"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="191400-Modular_UI_-Solo_Beeps-038" ID="{CC807C70-D098-4D68-AB5A-8A03A4920F9C}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="166611-Bullet-Hit-Paintball-Body_05" ID="{B74B7368-732D-4B91-B715-1D4683B741C9}" ShortID="658407255">
+					<PropertyList>
+						<Property Name="IsVoice" Type="bool" Value="True"/>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{A33D6D56-C0C8-4851-BC4C-9F9B9D42CFE5}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{18B094AD-8B6E-4E55-8ECD-BEF549061AAA}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="166611-Bullet-Hit-Paintball-Body_05" ID="{5CF7ED21-D758-44CF-9AA2-9045A73568C5}">
+							<Language>English(US)</Language>
+							<AudioFile>166611-Bullet-Hit-Paintball-Body_05.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="670714409"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="166611-Bullet-Hit-Paintball-Body_05" ID="{5CF7ED21-D758-44CF-9AA2-9045A73568C5}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="161675-PB_Gun-A-Shots-Hyped_3" ID="{7829300F-407C-43ED-B1CD-CB6A4DD3588B}" ShortID="1035922013">
+					<PropertyList>
+						<Property Name="IsVoice" Type="bool" Value="True"/>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{A33D6D56-C0C8-4851-BC4C-9F9B9D42CFE5}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{18B094AD-8B6E-4E55-8ECD-BEF549061AAA}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="161675-PB_Gun-A-Shots-Hyped_3" ID="{F9BB1A02-E701-4473-863F-16078331D182}">
+							<Language>English(US)</Language>
+							<AudioFile>161675-PB_Gun-A-Shots-Hyped_3.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="528870494"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="161675-PB_Gun-A-Shots-Hyped_3" ID="{F9BB1A02-E701-4473-863F-16078331D182}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="50182-Yukon_Bird_Medium_Distant_Squawk_Fly_Away_Faint_wings" ID="{34CC74EF-8FC4-47A2-9F17-6B5CD64A2AE8}" ShortID="471958327">
+					<PropertyList>
+						<Property Name="IsVoice" Type="bool" Value="True"/>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{A33D6D56-C0C8-4851-BC4C-9F9B9D42CFE5}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{18B094AD-8B6E-4E55-8ECD-BEF549061AAA}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="50182-Yukon_Bird_Medium_Distant_Squawk_Fly_Away_Faint_wings" ID="{BADB7418-7C9C-47FC-BE21-1C10141BBA2F}">
+							<Language>English(US)</Language>
+							<AudioFile>50182-Yukon_Bird_Medium_Distant_Squawk_Fly_Away_Faint_wings.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="221742731"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="50182-Yukon_Bird_Medium_Distant_Squawk_Fly_Away_Faint_wings" ID="{BADB7418-7C9C-47FC-BE21-1C10141BBA2F}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="37405-11118701" ID="{8999B580-52CF-45F4-8346-1A17118D6F88}" ShortID="1012227293">
+					<PropertyList>
+						<Property Name="IsVoice" Type="bool" Value="True"/>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{A33D6D56-C0C8-4851-BC4C-9F9B9D42CFE5}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{18B094AD-8B6E-4E55-8ECD-BEF549061AAA}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="37405-11118701" ID="{D428F501-A255-4711-A501-508501A100EC}">
+							<Language>English(US)</Language>
+							<AudioFile>37405-11118701.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="934394098"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="37405-11118701" ID="{D428F501-A255-4711-A501-508501A100EC}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="8492-engine-start-2" ID="{8A27C982-CEFF-485D-934C-5ECDC1E98188}" ShortID="215447643">
+					<PropertyList>
+						<Property Name="IsVoice" Type="bool" Value="True"/>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-12</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{A33D6D56-C0C8-4851-BC4C-9F9B9D42CFE5}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{18B094AD-8B6E-4E55-8ECD-BEF549061AAA}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="8492-engine-start-2" ID="{C80A3000-AE26-4573-82CD-6FA8E455DAE4}">
+							<Language>English(US)</Language>
+							<AudioFile>8492-engine-start-2.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="869489237"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="8492-engine-start-2" ID="{C80A3000-AE26-4573-82CD-6FA8E455DAE4}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="Squirrel Cartoon Sound fx" ID="{65F37888-D611-4683-A686-39510F3E58F8}" ShortID="647526342">
+					<PropertyList>
+						<Property Name="IsVoice" Type="bool" Value="True"/>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{A33D6D56-C0C8-4851-BC4C-9F9B9D42CFE5}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{18B094AD-8B6E-4E55-8ECD-BEF549061AAA}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="Squirrel Cartoon Sound fx" ID="{ADFE29A0-EDC0-4FB5-9D30-BBE8E8DA04F3}">
+							<Language>English(US)</Language>
+							<AudioFile>Squirrel Cartoon Sound fx.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="37637028"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="Squirrel Cartoon Sound fx" ID="{ADFE29A0-EDC0-4FB5-9D30-BBE8E8DA04F3}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="Market Ambience Sound Effect HD" ID="{43521516-D596-4F64-8B6F-65A373610C19}" ShortID="965200397">
+					<PropertyList>
+						<Property Name="IsVoice" Type="bool" Value="True"/>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{A33D6D56-C0C8-4851-BC4C-9F9B9D42CFE5}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{18B094AD-8B6E-4E55-8ECD-BEF549061AAA}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="Market Ambience Sound Effect HD" ID="{E341D689-A79F-4979-9566-244A890904DD}">
+							<Language>English(US)</Language>
+							<AudioFile>Market Ambience Sound Effect HD.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="770073799"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="Market Ambience Sound Effect HD" ID="{E341D689-A79F-4979-9566-244A890904DD}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="128551-Funk-in-your-face-Introloop" ID="{5DF88EE9-6C37-4722-9DB0-8AF54C4AB733}" ShortID="736577559">
+					<PropertyList>
+						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+						<Property Name="IsVoice" Type="bool" Value="True"/>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-20</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{A33D6D56-C0C8-4851-BC4C-9F9B9D42CFE5}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{18B094AD-8B6E-4E55-8ECD-BEF549061AAA}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="128551-Funk-in-your-face-Introloop" ID="{12F276C6-2D9E-4C12-B84A-B9BC516C1F65}">
+							<Language>English(US)</Language>
+							<AudioFile>128551-Funk-in-your-face-Introloop.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="227917235"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="128551-Funk-in-your-face-Introloop" ID="{12F276C6-2D9E-4C12-B84A-B9BC516C1F65}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="bgSong" ID="{0DB150AE-102B-4C0D-81A9-D1134F1C2155}" ShortID="775615815">
+					<PropertyList>
+						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+						<Property Name="IsVoice" Type="bool" Value="True"/>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-16</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{A33D6D56-C0C8-4851-BC4C-9F9B9D42CFE5}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{18B094AD-8B6E-4E55-8ECD-BEF549061AAA}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="bgSong" ID="{FC256118-58AC-40ED-9A0E-25E716191D0A}">
+							<Language>English(US)</Language>
+							<AudioFile>bgSong.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="245960552"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="bgSong" ID="{FC256118-58AC-40ED-9A0E-25E716191D0A}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="MenuSong" ID="{A64A08B1-00A6-4151-ACD1-0DC588E026F5}" ShortID="144006828">
+					<PropertyList>
+						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+						<Property Name="IsVoice" Type="bool" Value="True"/>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-16</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{A33D6D56-C0C8-4851-BC4C-9F9B9D42CFE5}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{18B094AD-8B6E-4E55-8ECD-BEF549061AAA}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="MenuSong" ID="{859BE7D3-D695-46D3-A13C-B394A3C71EF8}">
+							<Language>English(US)</Language>
+							<AudioFile>MenuSong.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="175710078"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="MenuSong" ID="{859BE7D3-D695-46D3-A13C-B394A3C71EF8}" Platform="Linked"/>
 					</ActiveSourceList>
 				</Sound>
 			</ChildrenList>

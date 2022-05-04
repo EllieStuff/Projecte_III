@@ -4,7 +4,24 @@
 		<WorkUnit Name="Default Work Unit" ID="{BE24EF3F-2468-4D1E-B488-28E4E5E013E4}" PersistMode="Standalone">
 			<ChildrenList>
 				<SoundBank Name="Soundbank_1" ID="{563BD8F6-DCF3-400F-ACD0-ED31EA907268}">
-					<ObjectInclusionList/>
+					<ObjectInclusionList>
+						<ObjectRef Name="Play_Umbrella_Sound" ID="{7C50BC14-90B6-412C-88C9-609877515AEE}" WorkUnitID="{FC6A5A5E-99B6-4330-9ECB-D10AC13A8BAA}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Play_EngineIgnition_Sound" ID="{AEA3A853-4CD0-41BB-986A-EFC07F2AFDEA}" WorkUnitID="{FC6A5A5E-99B6-4330-9ECB-D10AC13A8BAA}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Play_Menu_Music" ID="{E040237A-FDF0-41CF-A12B-D0A9193B67ED}" WorkUnitID="{FC6A5A5E-99B6-4330-9ECB-D10AC13A8BAA}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Play_Bird_Sound" ID="{C4D0E945-A0A5-458D-AFCF-C6DD5D6B8BEE}" WorkUnitID="{FC6A5A5E-99B6-4330-9ECB-D10AC13A8BAA}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Play_Respawn_Sound" ID="{7A829AE2-4DFB-4688-9E0A-6691876B1F93}" WorkUnitID="{FC6A5A5E-99B6-4330-9ECB-D10AC13A8BAA}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Play_Click_Sound" ID="{1276E082-476E-4788-84E8-236E560809E2}" WorkUnitID="{FC6A5A5E-99B6-4330-9ECB-D10AC13A8BAA}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Play_Squirrel_Sound" ID="{EC5B394D-C2F4-484D-B239-5E5A372F03F1}" WorkUnitID="{FC6A5A5E-99B6-4330-9ECB-D10AC13A8BAA}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Play_SpringJump_Sound" ID="{47EB4DD3-2409-48A5-97B4-F90DF0608958}" WorkUnitID="{FC6A5A5E-99B6-4330-9ECB-D10AC13A8BAA}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Play_PaintGun_Sound" ID="{0301B06F-450D-49A3-8ECD-C014B6A29BA9}" WorkUnitID="{FC6A5A5E-99B6-4330-9ECB-D10AC13A8BAA}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Play_Fall_Sound" ID="{7ABD4B22-4D3B-4A14-80AF-2868B6C4C948}" WorkUnitID="{FC6A5A5E-99B6-4330-9ECB-D10AC13A8BAA}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Play_Hover_Sound" ID="{4E68E8D0-6D9E-4A44-A041-216DA8A8C3F5}" WorkUnitID="{FC6A5A5E-99B6-4330-9ECB-D10AC13A8BAA}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Play_InGame_Music" ID="{A544F761-C403-4BE9-83CD-D726D84964C7}" WorkUnitID="{FC6A5A5E-99B6-4330-9ECB-D10AC13A8BAA}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Play_Market_Sound" ID="{D09C356C-3430-4D13-AF7A-EE5BB68C4586}" WorkUnitID="{FC6A5A5E-99B6-4330-9ECB-D10AC13A8BAA}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Play_Oil_Sound" ID="{4CEC4CAF-E472-4F46-975C-F2491BA072E2}" WorkUnitID="{FC6A5A5E-99B6-4330-9ECB-D10AC13A8BAA}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Play_PersonalizationMenu_Music" ID="{7C0826DA-A0B3-4F95-9552-C8BF55BF2DF3}" WorkUnitID="{FC6A5A5E-99B6-4330-9ECB-D10AC13A8BAA}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Play_BarrelExplosion_Sound" ID="{2E110964-09D5-4FEE-96C7-169E8C6726CE}" WorkUnitID="{FC6A5A5E-99B6-4330-9ECB-D10AC13A8BAA}" Origin="Manual" Filter="7"/>
+					</ObjectInclusionList>
 					<ObjectExclusionList/>
 					<GameSyncExclusionList/>
 				</SoundBank>

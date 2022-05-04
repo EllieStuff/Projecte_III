@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <WwiseDocument Type="WorkUnit" ID="{A373744F-BAD5-49FA-982B-3DCD469C0B1D}" SchemaVersion="103">
 	<Presets>
-		<WorkUnit Name="Default Work Unit" ID="{A373744F-BAD5-49FA-982B-3DCD469C0B1D}" PersistMode="Standalone"/>
+		<WorkUnit Name="Default Work Unit" ID="{A373744F-BAD5-49FA-982B-3DCD469C0B1D}" PersistMode="Standalone">
+			<ChildrenList>
+				<Sound Name="191400-Modular_UI_-Solo_Beeps-038" ID="{BBDBE3D4-6891-47EB-AC53-AFA411842B53}">
+					<PropertyList>
+						<Property Name="IsVoice" Type="bool" Value="True"/>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-26</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{A33D6D56-C0C8-4851-BC4C-9F9B9D42CFE5}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{18B094AD-8B6E-4E55-8ECD-BEF549061AAA}"/>
+						</Reference>
+					</ReferenceList>
+					<ObjectLists/>
+				</Sound>
+			</ChildrenList>
+		</WorkUnit>
 	</Presets>
 </WwiseDocument>
