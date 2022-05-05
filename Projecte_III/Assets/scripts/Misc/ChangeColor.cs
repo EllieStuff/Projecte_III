@@ -34,21 +34,6 @@ public class ChangeColor : MonoBehaviour
         buttonRight.GetComponent<Image>().color = Color.yellow;
         buttonLeft.GetComponent<Image>().color = Color.yellow;
 
-        //Debug.Log("List size: " + colorList.Count);
-        //if(colorList.Count <= 0)
-        //{
-        //    Material[] mats;
-        //    if (!gradient)
-        //        mats = Resources.LoadAll<Material>("Materials/CarMaterials/Flat");
-        //    else
-        //        mats = Resources.LoadAll<Material>("Materials/CarMaterials/Gradient");
-
-        //    for (int i = 0; i < mats.Length; i++)
-        //    {
-        //        colorList.Add(mats[i]);
-        //    }
-        //}
-
         int _rand = Random.Range(0, colorList.Count);
 
         currentColor = colorList[_rand];
@@ -111,7 +96,13 @@ public class ChangeColor : MonoBehaviour
         currentColor = _currentColor;
 
         player.DefaultMaterial = currentColor;
+
+        Color _curr = parent.GetColor(currentColor.name);
+
+        backgroundColor.color = new Color(_curr.r, _curr.g, _curr.b, 0.45f);
+        textBackgroundColor.color = _curr;
     }
+
     public void IncreaseColorId()
     {
         PressButton(buttonRight);
@@ -132,6 +123,7 @@ public class ChangeColor : MonoBehaviour
         backgroundColor.color = new Color(_curr.r, _curr.g, _curr.b, 0.45f);
         textBackgroundColor.color = _curr;
     }
+
     public void DecreaseColorId()
     {
         PressButton(buttonLeft);
