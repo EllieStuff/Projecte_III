@@ -181,6 +181,8 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
     {
         yield return new WaitForSeconds(5);
         player.vehicleTorque = player.savedVehicleTorque;
+        oilChecked = false;
+        paintingChecked = false;
     }
 
 
@@ -223,7 +225,7 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
             if (player.vehicleRB.velocity.magnitude > 1.0f)
             {
                 Debug.Log("enter Oil");
-                AddFriction(player.savedVehicleTorque*2);
+                AddFriction(player.savedVehicleTorque*100000);
             }
         }
 
