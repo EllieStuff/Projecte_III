@@ -9,10 +9,15 @@ public class BoxModifierScript : MonoBehaviour
 
     public PlayersHUDManager hudManager;
 
+    private Light cubeLight;
+    private bool alphaUpOrDown;
+
 
     private void Start()
     {
+        alphaUpOrDown = true;
         hudManager = GameObject.Find("HUD").transform.GetComponentInChildren<PlayersHUDManager>();
+        cubeLight = GetComponent<Light>();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -29,7 +34,15 @@ public class BoxModifierScript : MonoBehaviour
 
     private void Update()
     {
-        if(destroy)
+        if (cubeLight.range >= 1 || cubeLight.range <= 0.7)
+            alphaUpOrDown = !alphaUpOrDown;
+
+        if (cubeLight.range > 0.7 && !alphaUpOrDown)
+            cubeLight.range -= Time.deltaTime * 0.2f;
+        else if(cubeLight.range < 1 && alphaUpOrDown)
+            cubeLight.range += Time.deltaTime * 0.2f;
+
+        if (destroy)
         {
             timer -= Time.deltaTime;
             if (timer <= 0 || transform.localScale.magnitude <= 0.2f)
