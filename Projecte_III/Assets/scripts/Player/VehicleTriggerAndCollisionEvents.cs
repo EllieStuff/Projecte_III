@@ -250,16 +250,24 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
     {
         if(collision.transform.tag.Contains("Player") && player.dash)
         {
-            collision.transform.GetComponent<PlayerVehicleScript>().dash = true;
-            collision.transform.GetComponent<Rigidbody>().velocity = player.vehicleRB.velocity;
+            PlayerVehicleScript otherPlayer = collision.transform.GetComponent<PlayerVehicleScript>();
+            otherPlayer.dash = true;
+            otherPlayer.vehicleRB.velocity = player.vehicleRB.velocity;
+            otherPlayer.GetComponent<VehicleTriggerAndCollisionEvents>().ResetDash(otherPlayer);
 
-            StartCoroutine(ResetCollision());
         }
     }
 
-    IEnumerator ResetCollision()
+    public void ResetDash(PlayerVehicleScript _other)
+    {
+        StartCoroutine(ResetCollision(_other));
+    }
+
+    IEnumerator ResetCollision(PlayerVehicleScript _other)
     {
         yield return new WaitForSeconds(1.0f);
+        _other.dash = false;
+
     }
 
     void OnCollisionExit(Collision other)

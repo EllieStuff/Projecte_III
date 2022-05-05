@@ -38,7 +38,14 @@ public class BoostModifierScript : MonoBehaviour
     {
         player.dash = true;
         float _speed = boostSpeed * _speedMultiplier;
-        playerRB.velocity = _direction * _speed;
+
+        Vector3 dirLocal = transform.InverseTransformDirection(_direction);
+
+        if (dirLocal == Vector3.left || dirLocal == Vector3.right)
+            playerRB.velocity = transform.TransformDirection(dirLocal.x * _speed, dirLocal.y * _speed, transform.InverseTransformDirection(playerRB.velocity).z);
+        else
+            playerRB.velocity = _direction * _speed;
+
         initialDrag = playerRB.drag;
         playerRB.drag = 0;
         StartCoroutine(StopBoost(boostTime * _multiplier));
