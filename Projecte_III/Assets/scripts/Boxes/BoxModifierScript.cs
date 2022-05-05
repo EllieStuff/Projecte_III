@@ -15,10 +15,14 @@ public class BoxModifierScript : MonoBehaviour
 
     MeshRenderer mesh;
     float lerpTime = 1, currentTime = 0.0f;
+    private Light cubeLight;
+    private bool alphaUpOrDown;
+
 
     private void Start()
     {
         mesh = GetComponent<MeshRenderer>();
+        alphaUpOrDown = true;
         hudManager = GameObject.Find("HUD").transform.GetComponentInChildren<PlayersHUDManager>();
 
         currentColor = UseGradientMaterials.GetColor(ref currentColorID);
@@ -32,6 +36,7 @@ public class BoxModifierScript : MonoBehaviour
 
         mat.color = currentColor;
         mesh.material = mat;
+        cubeLight = GetComponent<Light>();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -49,7 +54,15 @@ public class BoxModifierScript : MonoBehaviour
     private void Update()
     {
         ChangeColor();
-        if(destroy)
+        if (cubeLight.range >= 1 || cubeLight.range <= 0.7)
+            alphaUpOrDown = !alphaUpOrDown;
+
+        if (cubeLight.range > 0.7 && !alphaUpOrDown)
+            cubeLight.range -= Time.deltaTime * 0.2f;
+        else if(cubeLight.range < 1 && alphaUpOrDown)
+            cubeLight.range += Time.deltaTime * 0.2f;
+
+        if (destroy)
         {
             timer -= Time.deltaTime;
             if (timer <= 0 || transform.localScale.magnitude <= 0.2f)
