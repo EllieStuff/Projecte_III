@@ -151,7 +151,7 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
         }
     }
 
-    public void ApplyForce(float forceValue, float _seconds)
+    public void ApplyForce(float forceValue, float _seconds)
     {
         player.speedIncrementEnabled = false;
         player.vehicleMaxSpeed = forceValue;
@@ -163,7 +163,7 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
 
     }
 
-    IEnumerator ResetVelocity(float _seconds)
+    public IEnumerator ResetVelocity(float _seconds)
     {
         yield return new WaitForSeconds(_seconds);
         player.vehicleMaxSpeed = player.savedMaxSpeed;
@@ -177,13 +177,6 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
         player.vehicleReversed = (other.gameObject.tag.Equals("ground"));
         //------------------------
     }
-
-    IEnumerator WaitEndBoost()
-    {
-        yield return new WaitForSeconds(boostPadDuration);
-        reduceSpeed = true;
-    }
-
     IEnumerator WaitTorque()
     {
         yield return new WaitForSeconds(5);
@@ -251,6 +244,30 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
             player.vehicleAcceleration = player.savedAcceleration;
             //}
         }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.transform.tag.Contains("Player") && player.dash)
+        {
+            PlayerVehicleScript otherPlayer = collision.transform.GetComponent<PlayerVehicleScript>();
+            otherPlayer.dash = true;
+            otherPlayer.vehicleRB.velocity = player.vehicleRB.velocity;
+            otherPlayer.GetComponent<VehicleTriggerAndCollisionEvents>().ResetDash(otherPlayer);
+
+        }
+    }
+
+    public void ResetDash(PlayerVehicleScript _other)
+    {
+        StartCoroutine(ResetCollision(_other));
+    }
+
+    IEnumerator ResetCollision(PlayerVehicleScript _other)
+    {
+        yield return new WaitForSeconds(1.0f);
+        _other.dash = false;
+
     }
 
     void OnCollisionExit(Collision other)
