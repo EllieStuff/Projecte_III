@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class VehicleTriggerAndCollisionEvents : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
     private Transform outTransform;
     private Rigidbody outVehicleRB;
     private PlayersManager playersManager;
+    private PlayersHUDManager playersHUDManager;
 
     PlayersHUD playerHud = null;
     [SerializeField] private float timerRespawn = 3;
@@ -118,7 +120,16 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
                 AudioManager.Instance.Play_SFX("Respawn_SFX");
 
             if (player.lifes <= 0)
+            {
+                AudioManager.Instance.Play_SFX("PlayerEliminated_SFX");
+
+                if (playersHUDManager == null)
+                    playersHUDManager = GameObject.Find("HUD").transform.Find("Players").GetComponent<PlayersHUDManager>();
+
+                playersHUDManager.GetPlayerHUD(player.playerNum).transform.Find("CurrentModifier").GetComponent<Image>().color -= new Color(0, 0, 0, 0.3f);
+
                 parent.SetActive(false);
+            }
             else
             {
                 GetComponent<ParticleSystem>().Play();
