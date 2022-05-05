@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class MainMenuInputs : MonoBehaviour
 {
-    const int SETTINGS_IDX = 2;
     enum MenuState { MAIN, SETTINGS };
     enum UIElementType { DEFAULT, BUTTON, SLIDER };
 
@@ -76,9 +75,9 @@ public class MainMenuInputs : MonoBehaviour
         }
         if (inputs.AcceptPressed)
         {
-            if (mainIdx == SETTINGS_IDX)
+            if (mainIdx == (int)MenuState.SETTINGS)
                 menuState = MenuState.SETTINGS;
-            AudioManager.Instance.Play_SFX("Hover_SFX");
+            //AudioManager.Instance.Play_SFX("Hover_SFX");
             mainButtons[mainIdx].onClick.Invoke();
         }
     }
@@ -106,6 +105,7 @@ public class MainMenuInputs : MonoBehaviour
         if (inputs.DeclinePressed || Input.GetKeyDown(KeyCode.Escape))
         {
             settingsFathers.gameObject.SetActive(false);
+            AudioManager.Instance.Play_SFX("Click_SFX", 0.6f);
             menuState = MenuState.MAIN;
         }
     }

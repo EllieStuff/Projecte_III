@@ -5,52 +5,83 @@ using UnityEngine.UI;
 
 public class InGameMenu : MonoBehaviour
 {
-    enum InGameButton { PLAY, SETTINGS, EXIT, COUNT };
+    enum InGameButton { CONTINUE, REPLAY, SETTINGS, EXIT, COUNT };
 
-    [SerializeField] GameObject menuSet;
+    [SerializeField] GameObject menuSet, menuSettings;
     [SerializeField] Color baseColor, hoverColor;
-    
+
+    GlobalMenuInputs inputs;
     Button[] buttons;
     int idx = 0;
-    bool verticalGot = false;
+    bool gameStarted = false;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        inputs = GetComponent<GlobalMenuInputs>();
+
         buttons = new Button[(int)InGameButton.COUNT];
-        buttons[(int)InGameButton.PLAY] = menuSet.transform.Find("Play Button").GetComponent<Button>();
+        buttons[(int)InGameButton.CONTINUE] = menuSet.transform.Find("Continue Button").GetComponent<Button>();
+        buttons[(int)InGameButton.REPLAY] = menuSet.transform.Find("Replay Button").GetComponent<Button>();
         buttons[(int)InGameButton.SETTINGS] = menuSet.transform.Find("Settings Button").GetComponent<Button>();
         buttons[(int)InGameButton.EXIT] = menuSet.transform.Find("Exit Button").GetComponent<Button>();
-        for(int i = 0; i < buttons.Length; i++)
-        {
-            buttons[i].GetComponent<Image>().color = baseColor;
-        }
-        SetButtonColor(0, 0);
+        //ResetButtonColors();
+        //SetButtonColor(0, 0);
 
         menuSet.SetActive(false);
+        //menuSettings.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!CheckStarted()) 
+            return;
+
+
         int lastIdx = idx;
-        if (OpenMenuInput())
+        if (inputs.OpenMenuPressed)
         {
-            menuSet.SetActive(!menuSet.activeSelf);
-            idx = 0;
+            if (idx == (int)InGameButton.SETTINGS && menuSettings.activeSelf)
+            {
+                CloseSettings();
+            }
+            else
+            {
+                menuSet.SetActive(!menuSet.activeSelf);
+                if (menuSet.activeSelf)
+                {
+                    idx = 0;
+                    ResetButtonColors();
+                    SetButtonColor(0, idx);
+                    Time.timeScale = 0.0f;
+                }
+                else Time.timeScale = 1.0f;
+            }
         }
-        else if (UpMenuInput())
+        else if (inputs.UpPressed)
         {
             idx--;
             if (idx < 0) idx = buttons.Length - 1;
             SetButtonColor(lastIdx, idx);
+            AudioManager.Instance.Play_SFX("Hover_SFX");
         }
-        else if (DownMenuInput())
+        else if (inputs.DownPressed)
         {
             idx++;
             if (idx >= buttons.Length) idx = 0;
             SetButtonColor(lastIdx, idx);
+            AudioManager.Instance.Play_SFX("Hover_SFX");
+        }
+        else if (inputs.AcceptPressed)
+        {
+            buttons[idx].onClick.Invoke();
+        }
+        else if (inputs.DeclinePressed)
+        {
+            if (idx == (int)InGameButton.SETTINGS && menuSettings.activeSelf)
+                CloseSettings();
         }
     }
 
@@ -59,20 +90,81 @@ public class InGameMenu : MonoBehaviour
         buttons[lastIdx].GetComponent<Image>().color = baseColor;
         buttons[currIdx].GetComponent<Image>().color = hoverColor;
     }
+    void ResetButtonColors()
+    {
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            buttons[i].GetComponent<Image>().color = baseColor;
+        }
+    }
 
-    bool OpenMenuInput()
+
+    bool CheckStarted()
     {
-        return Input.GetKeyDown(KeyCode.Escape) 
-            || Input.GetKeyDown(KeyCode.Joystick1Button7) || Input.GetKeyDown(KeyCode.Joystick2Button7) 
-            || Input.GetKeyDown(KeyCode.Joystick3Button7) || Input.GetKeyDown(KeyCode.Joystick4Button7);
+        if (!gameStarted)
+        {
+            if (inputs.OpenMenuPressed) gameStarted = true;
+            return false;
+        }
+        else
+            return true;
     }
-    bool DownMenuInput()
+
+
+    public void HoverSound()
     {
-        //if(co)
-        return Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow) || Input.GetAxis("Vertical") < -0.4f;
+        AudioManager.Instance.Play_SFX("Hover_SFX");
     }
-    bool UpMenuInput()
+
+    public void PlayButton()
     {
-        return Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetAxis("Vertical") > 0.4f;
+        menuSet.SetActive(false);
+        idx = 0;
+        Time.timeScale = 1.0f;
+        AudioManager.Instance.Play_SFX("Click_SFX");
     }
+    public void ReplayButton()
+    {
+        AudioManager.Instance.Play_SFX("Click_SFX");
+        Time.timeScale = 1.0f;
+        Destroy(GameObject.FindGameObjectWithTag("PlayersManager"));
+        GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().ChangeScene("Current Building Scene");
+    }
+    public void SettingsButton()
+    {
+        menuSettings.SetActive(true);
+        idx = (int)InGameButton.SETTINGS;
+        AudioManager.Instance.Play_SFX("Click_SFX");
+    }
+    public void ExitButton()
+    {
+        AudioManager.Instance.Play_SFX("Click_SFX");
+        Time.timeScale = 1.0f;
+        GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().ChangeScene("Menu");
+    }
+
+    public void CloseSettings()
+    {
+        AudioManager.Instance.Play_SFX("Click_SFX", 0.6f);
+        ResetButtonColors();
+        SetButtonColor(0, idx);
+        menuSettings.SetActive(false);
+    }
+
+
+    //bool OpenMenuInput()
+    //{
+    //    return Input.GetKeyDown(KeyCode.Escape) 
+    //        || Input.GetKeyDown(KeyCode.Joystick1Button7) || Input.GetKeyDown(KeyCode.Joystick2Button7) 
+    //        || Input.GetKeyDown(KeyCode.Joystick3Button7) || Input.GetKeyDown(KeyCode.Joystick4Button7);
+    //}
+    //bool DownMenuInput()
+    //{
+    //    //if(co)
+    //    return Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow) || Input.GetAxis("Vertical") < -0.4f;
+    //}
+    //bool UpMenuInput()
+    //{
+    //    return Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetAxis("Vertical") > 0.4f;
+    //}
 }
