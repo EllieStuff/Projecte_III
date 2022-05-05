@@ -109,9 +109,9 @@ public class RandomModifierGet : MonoBehaviour
                     else if (inputs.ShootBackwards)
                         boost.Active(-transform.forward, 0.25f, 0.3f);
                     else if (inputs.ShootLeft)
-                        boost.Active(-transform.right + transform.forward, 0.5f, 1.0f);
+                        boost.Active(-transform.right, 0.5f, 1.0f);
                     else if (inputs.ShootRight)
-                        boost.Active(transform.right + transform.forward, 0.5f, 1.0f);
+                        boost.Active(transform.right, 0.5f, 1.0f);
 
                     timerModifier = INIT_TIMER_MODIFIER;
                     break;

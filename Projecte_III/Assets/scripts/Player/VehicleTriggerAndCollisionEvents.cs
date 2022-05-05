@@ -177,13 +177,6 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
         player.vehicleReversed = (other.gameObject.tag.Equals("ground"));
         //------------------------
     }
-
-    IEnumerator WaitEndBoost()
-    {
-        yield return new WaitForSeconds(boostPadDuration);
-        reduceSpeed = true;
-    }
-
     IEnumerator WaitTorque()
     {
         yield return new WaitForSeconds(5);
@@ -251,6 +244,22 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
             player.vehicleAcceleration = player.savedAcceleration;
             //}
         }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.transform.tag.Contains("Player") && player.dash)
+        {
+            collision.transform.GetComponent<PlayerVehicleScript>().dash = true;
+            collision.transform.GetComponent<Rigidbody>().velocity = player.vehicleRB.velocity;
+
+            StartCoroutine(ResetCollision());
+        }
+    }
+
+    IEnumerator ResetCollision()
+    {
+        yield return new WaitForSeconds(1.0f);
     }
 
     void OnCollisionExit(Collision other)
