@@ -49,6 +49,7 @@ public class PlayerVehicleScript : MonoBehaviour
 
     public Vector3 savedVelocity;
     internal float timerStartRace;
+    private bool startAcceleration;
 
     [SerializeField] private AudioClip normalClip;
 
@@ -71,7 +72,7 @@ public class PlayerVehicleScript : MonoBehaviour
         savedVehicleTorque = vehicleTorque;
 
         lifes = 3;
-        timerStartRace = 7;
+        timerStartRace = 5;
 
         alaDelta = GetComponent<PlayerAlaDelta>();
 
@@ -176,11 +177,19 @@ public class PlayerVehicleScript : MonoBehaviour
 
         //------Movement------
         if (timerStartRace <= 0)
+        {
             vehicleMovement();
+            if (!startAcceleration)
+            {
+                vehicleRB.velocity = Vector3.zero;
+                if(inputs.Forward || inputs.Backward)
+                    startAcceleration = true;
+            }
+        }
         else if (touchingGround)
         {
             timerStartRace -= Time.deltaTime;
-            vehicleRB.velocity = transform.TransformDirection(Vector3.forward * 5);
+            vehicleRB.velocity = Vector3.zero;
         }
     }
 
