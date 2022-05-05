@@ -4,16 +4,52 @@ using UnityEngine;
 
 public class BoostModifierScript : MonoBehaviour
 {
-    [SerializeField] VehicleTriggerAndCollisionEvents player;
+    Rigidbody playerRB;
+    PlayerVehicleScript player;
+
+    float boostSpeed = 20.0f;
+    float boostTime = 1.0f;
+    float initialDrag;
 
     // Start is called before the first frame update
     void Start()
     {
-        player = GetComponent<VehicleTriggerAndCollisionEvents>();
+        playerRB = GetComponent<Rigidbody>();
+        player = GetComponent<PlayerVehicleScript>();
     }
 
-    public void Active()
+    [ContextMenu("SetBoostModifier")]
+    public void SetBoostModifier()
     {
+        RandomModifierGet.ModifierTypes modType = RandomModifierGet.ModifierTypes.BOOST;
+        RandomModifierGet modGetter = GetComponent<RandomModifierGet>();
+        modGetter.ResetModifiers();
+        modGetter.SetModifier(modType);
 
+        try
+        {
+            int playerId = GetComponentInParent<PlayerData>().id;
+            GameObject.Find("HUD").GetComponentInChildren<PlayersHUDManager>().GetPlayerHUD(playerId).SetModifierImage((int)modType);
+        }
+        catch { Debug.LogError("PlayersHUD not found"); }
+    }
+
+    public void Active(Vector3 _direction, float _multiplier, float _speedMultiplier)
+    {
+        player.dash = true;
+        float _speed = boostSpeed * _speedMultiplier;
+        playerRB.velocity = _direction * _speed;
+        initialDrag = playerRB.drag;
+        playerRB.drag = 0;
+        StartCoroutine(StopBoost(boostTime * _multiplier));
+    }
+
+    IEnumerator StopBoost(float _time)
+    {
+        yield return new WaitForSeconds(_time);
+        
+        playerRB.drag = initialDrag;
+
+        player.dash = false;
     }
 }

@@ -327,6 +327,7 @@ GameObject:
   - component: {fileID: 544694470}
   - component: {fileID: 544694471}
   - component: {fileID: 8279287196155743844}
+  - component: {fileID: 7080769574554987515}
   m_Layer: 3
   m_Name: VehicleLogic1
   m_TagString: Player
@@ -5543,6 +5544,20 @@ MonoBehaviour:
   saltoDuration: 1.5
   explosionRange: 8
   saltoTimer: 0
+--- !u!114 &7080769574554987515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 38654283868662901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e44f3dc64e49934faae345aade10592, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boostSpeed: 20
+  boostTime: 1
 --- !u!1 &38654284546717500
 GameObject:
   m_ObjectHideFlags: 0
@@ -59855,14 +59870,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f1bcdbc7dbbbec0438fdf304cc5c3b7f, type: 3}
---- !u!1 &1583549956586008342 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1583549956225238578, guid: f1bcdbc7dbbbec0438fdf304cc5c3b7f, type: 3}
-  m_PrefabInstance: {fileID: 914417956}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1583549956585911094 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1583549956225210898, guid: f1bcdbc7dbbbec0438fdf304cc5c3b7f, type: 3}
+  m_PrefabInstance: {fileID: 914417956}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1583549956586008342 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1583549956225238578, guid: f1bcdbc7dbbbec0438fdf304cc5c3b7f, type: 3}
   m_PrefabInstance: {fileID: 914417956}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5700957747536066177

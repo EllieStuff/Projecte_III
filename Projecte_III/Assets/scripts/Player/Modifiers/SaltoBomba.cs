@@ -35,6 +35,22 @@ public class SaltoBomba : MonoBehaviour
         }
     }
 
+    [ContextMenu("SetSaltoBombaModifier")]
+    public void SetSaltoBombaModifier()
+    {
+        RandomModifierGet.ModifierTypes modType = RandomModifierGet.ModifierTypes.SALTO_BOMBA;
+        RandomModifierGet modGetter = GetComponent<RandomModifierGet>();
+        modGetter.ResetModifiers();
+        modGetter.SetModifier(modType);
+
+        try
+        {
+            int playerId = GetComponentInParent<PlayerData>().id;
+            GameObject.Find("HUD").GetComponentInChildren<PlayersHUDManager>().GetPlayerHUD(playerId).SetModifierImage((int)modType);
+        }
+        catch { Debug.LogError("PlayersHUD not found"); }
+    }
+
     private void Start()
     {
         collider = transform.GetChild(0).GetComponent<BoxCollider>();

@@ -59,6 +59,8 @@ public class PlayerVehicleScript : MonoBehaviour
     private float baseMaxSpeed;
     internal bool speedIncrementEnabled;
 
+    internal bool dash = false;
+
     private void Awake()
     {
         playerNum = GetComponentInParent<PlayerData>().id;
@@ -186,6 +188,7 @@ public class PlayerVehicleScript : MonoBehaviour
 
     void vehicleMovement()
     {
+        if (dash) return;
         var locVel = transform.InverseTransformDirection(vehicleRB.velocity);
 
         bool disableReverse = (vehicleMaxSpeed > savedMaxSpeed);
