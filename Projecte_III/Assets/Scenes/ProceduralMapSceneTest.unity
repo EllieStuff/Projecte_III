@@ -665,7 +665,7 @@ RectTransform:
   m_Children:
   - {fileID: 118696299}
   m_Father: {fileID: 1650019849}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -7820,7 +7820,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.3137255}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.78431374}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -9023,6 +9023,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8675250126377046717}
     m_Modifications:
+    - target: {fileID: 5903273978215516346, guid: 0c73f74167818bd408c84331b3fefe32, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5903273978215516348, guid: 0c73f74167818bd408c84331b3fefe32, type: 3}
       propertyPath: m_Name
       value: BGSettings
@@ -10113,7 +10117,7 @@ RectTransform:
   - {fileID: 1399150355}
   - {fileID: 505354398}
   m_Father: {fileID: 1650019849}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -11053,9 +11057,9 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 8675250126377046717}
   - {fileID: 1479149263}
   - {fileID: 173763414}
+  - {fileID: 8675250126377046717}
   - {fileID: 1595659191}
   m_Father: {fileID: 0}
   m_RootOrder: 7
@@ -13441,7 +13445,7 @@ RectTransform:
   - {fileID: 2077902668}
   - {fileID: 31762883}
   m_Father: {fileID: 1650019849}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
