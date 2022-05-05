@@ -28,6 +28,7 @@ public class ShitterBirdScript : MonoBehaviour
         //InitRndValues();
         InitValues(moveDir, moveSpeed);
 
+
         Destroy(gameObject, 10.0f);
     }
 
@@ -79,6 +80,7 @@ public class ShitterBirdScript : MonoBehaviour
     }
     public void InitValues(Vector3 _moveDir, float _moveSpeed, float _size = 0.8f)
     {
+        //moveDir = _moveDir;
         moveDir = _moveDir;
         moveSpeed = _moveSpeed;
         size = _size;
