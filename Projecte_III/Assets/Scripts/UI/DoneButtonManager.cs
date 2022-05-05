@@ -15,6 +15,9 @@ public class DoneButtonManager : MonoBehaviour
     PlayersManager playersManager;
     DoneButtonScript[] doneButtonScripts;
 
+    public GameObject AudioObject;
+    public AK.Wwise.Event ActualMusic;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -65,6 +68,9 @@ public class DoneButtonManager : MonoBehaviour
         Debug.Log("Changing Scene");
         playersManager.numOfPlayers = buttonsActive;
         //GameObject.FindGameObjectWithTag("RadialMenuManager").GetComponent<RadialMenuSetManager>().SetModifiersToChosenRMSet(playersManager.numOfPlayers - 1);
+
+        ActualMusic.Stop(AudioObject);
+
         LoadSceneManager sceneManager = GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>();
         sceneManager.ChangeScene(goToScene);
     }

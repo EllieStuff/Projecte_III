@@ -10,6 +10,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] internal AudioSource SFX_AudioSource;
     [SerializeField] internal AudioSource OST_AudioSource;
 
+    public AK.Wwise.Event ActualMusic;
+
     private static AudioManager instance = null;
     public static AudioManager Instance { get { return instance; } }
 
@@ -31,6 +33,7 @@ public class AudioManager : MonoBehaviour
     {
         //Play_OST("InGameMusic");
         //Play_OST("MenuMusic");
+        ActualMusic.Post(gameObject);
     }
 
 

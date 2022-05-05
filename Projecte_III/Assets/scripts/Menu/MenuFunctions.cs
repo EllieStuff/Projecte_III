@@ -21,6 +21,8 @@ public class MenuFunctions : MonoBehaviour
     public AK.Wwise.Event HoverSFX;
     public AK.Wwise.Event ClickSFX;
     //public AK.Wwise.Bank SoundBank1;
+    public GameObject AudioObject;
+    public AK.Wwise.Event ActualMusic;
 
     bool enableButtons = false;
 
@@ -148,6 +150,7 @@ public class MenuFunctions : MonoBehaviour
         }
 
         Destroy(menuCutScene);
+        ActualMusic.Stop(AudioObject);
         SceneManager.LoadScene("Current Building Scene");
 
     }

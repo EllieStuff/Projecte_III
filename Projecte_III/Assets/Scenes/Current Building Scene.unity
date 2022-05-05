@@ -1193,6 +1193,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1107298739962028953, guid: 9ee9cf6ebba03344ebeda6c048aa0231, type: 3}
+      propertyPath: ActualMusic.WwiseObjectReference
+      value: 
+      objectReference: {fileID: 11400000, guid: 3338cbdb057d80e41a21f6f99ec1eb97, type: 2}
+    - target: {fileID: 1107298739962028953, guid: 9ee9cf6ebba03344ebeda6c048aa0231, type: 3}
+      propertyPath: PreviousMusic.WwiseObjectReference
+      value: 
+      objectReference: {fileID: 11400000, guid: e782c2cc89e049b408b6eae56fce6d31, type: 2}
     - target: {fileID: 4387038462480994212, guid: 9ee9cf6ebba03344ebeda6c048aa0231, type: 3}
       propertyPath: data.WwiseObjectReference
       value: 
@@ -1247,6 +1255,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ee9cf6ebba03344ebeda6c048aa0231, type: 3}
+--- !u!1 &578256453 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6853815750020878625, guid: 9ee9cf6ebba03344ebeda6c048aa0231, type: 3}
+  m_PrefabInstance: {fileID: 578256452}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &591473751 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 38654283868662909, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
@@ -23994,6 +24007,11 @@ MonoBehaviour:
   readyBttnImgColor: {r: 0.0906682, g: 1, b: 0, a: 1}
   buttonsActive: 0
   goToScene: ProceduralMapSceneTest
+  AudioObject: {fileID: 578256453}
+  ActualMusic:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 3338cbdb057d80e41a21f6f99ec1eb97, type: 2}
 --- !u!222 &6920070519331838724
 CanvasRenderer:
   m_ObjectHideFlags: 0

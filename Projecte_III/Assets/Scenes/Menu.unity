@@ -260,6 +260,11 @@ MonoBehaviour:
     idInternal: 0
     valueGuidInternal: 
     WwiseObjectReference: {fileID: 11400000, guid: 17a04e0e5cfda934ebc35e9628cb85f8, type: 2}
+  AudioObject: {fileID: 1105295301}
+  ActualMusic:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: e782c2cc89e049b408b6eae56fce6d31, type: 2}
 --- !u!114 &23575398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3478,6 +3483,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1089967965}
   m_CullTransparentMesh: 1
+--- !u!1 &1105295301 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6853815750020878625, guid: 9ee9cf6ebba03344ebeda6c048aa0231, type: 3}
+  m_PrefabInstance: {fileID: 1118705898}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1118705898
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3485,6 +3495,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1107298739962028953, guid: 9ee9cf6ebba03344ebeda6c048aa0231, type: 3}
+      propertyPath: ActualMusic.WwiseObjectReference
+      value: 
+      objectReference: {fileID: 11400000, guid: e782c2cc89e049b408b6eae56fce6d31, type: 2}
+    - target: {fileID: 4387038462480994212, guid: 9ee9cf6ebba03344ebeda6c048aa0231, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6012151567570984067, guid: 9ee9cf6ebba03344ebeda6c048aa0231, type: 3}
       propertyPath: audioName
       value: MainMenuMusic_OST
@@ -3536,6 +3554,10 @@ PrefabInstance:
     - target: {fileID: 6853815750020878625, guid: 9ee9cf6ebba03344ebeda6c048aa0231, type: 3}
       propertyPath: m_Name
       value: AudioManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 7014555783270621228, guid: 9ee9cf6ebba03344ebeda6c048aa0231, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ee9cf6ebba03344ebeda6c048aa0231, type: 3}
@@ -4959,6 +4981,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: SceneManager
       objectReference: {fileID: 0}
+    - target: {fileID: 5960365248295193563, guid: e92dede18a28cb64a9eaee11fdb3aca4, type: 3}
+      propertyPath: AudioObject
+      value: 
+      objectReference: {fileID: 1105295301}
+    - target: {fileID: 5960365248295193563, guid: e92dede18a28cb64a9eaee11fdb3aca4, type: 3}
+      propertyPath: ActualMusic.WwiseObjectReference
+      value: 
+      objectReference: {fileID: 11400000, guid: e782c2cc89e049b408b6eae56fce6d31, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e92dede18a28cb64a9eaee11fdb3aca4, type: 3}
 --- !u!1 &1590573410

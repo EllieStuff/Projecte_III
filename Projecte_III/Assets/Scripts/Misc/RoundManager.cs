@@ -14,6 +14,8 @@ public class RoundManager : MonoBehaviour
     internal bool roundFinished;
     internal int playerWinner;
     private InitPosManager initPos;
+    public GameObject AudioObject;
+    public AK.Wwise.Event ActualMusic;
 
     void Start()
     {
@@ -40,6 +42,8 @@ public class RoundManager : MonoBehaviour
     public void ResetScene()
     {
         Destroy(playersManager.gameObject);
+
+        ActualMusic.Stop(AudioObject);
 
         SceneManager.LoadScene("Current Building Scene");
     }

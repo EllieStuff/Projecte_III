@@ -9423,6 +9423,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WinnerUI: {fileID: 1595659190}
   WinnerText: {fileID: 901620551}
+  AudioObject: {fileID: 1676142483}
+  ActualMusic:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 9d301c9d9e9a8904ca1f9667c3091b89, type: 2}
 --- !u!4 &1574843576
 Transform:
   m_ObjectHideFlags: 0
@@ -9743,6 +9748,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1107298739962028953, guid: 9ee9cf6ebba03344ebeda6c048aa0231, type: 3}
+      propertyPath: ActualMusic.WwiseObjectReference
+      value: 
+      objectReference: {fileID: 11400000, guid: 9d301c9d9e9a8904ca1f9667c3091b89, type: 2}
+    - target: {fileID: 1107298739962028953, guid: 9ee9cf6ebba03344ebeda6c048aa0231, type: 3}
+      propertyPath: PreviousMusic.WwiseObjectReference
+      value: 
+      objectReference: {fileID: 11400000, guid: 3338cbdb057d80e41a21f6f99ec1eb97, type: 2}
     - target: {fileID: 4387038462480994212, guid: 9ee9cf6ebba03344ebeda6c048aa0231, type: 3}
       propertyPath: data.WwiseObjectReference
       value: 
@@ -9797,6 +9810,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ee9cf6ebba03344ebeda6c048aa0231, type: 3}
+--- !u!1 &1676142483 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6853815750020878625, guid: 9ee9cf6ebba03344ebeda6c048aa0231, type: 3}
+  m_PrefabInstance: {fileID: 1676142482}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1769288019
 GameObject:
   m_ObjectHideFlags: 0
