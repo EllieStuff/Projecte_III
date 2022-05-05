@@ -13,6 +13,9 @@ public class BoxModifierScript : MonoBehaviour
 
     public PlayersHUDManager hudManager;
 
+    Vector3 _rotAddition = Vector3.zero;
+    [SerializeField] float rotSpeed = 20.0f;
+
     MeshRenderer mesh;
     float lerpTime = 1, currentTime = 0.0f;
     private Light cubeLight;
@@ -37,6 +40,8 @@ public class BoxModifierScript : MonoBehaviour
         mat.color = currentColor;
         mesh.material = mat;
         cubeLight = GetComponent<Light>();
+
+        _rotAddition.y = (transform.eulerAngles * rotSpeed).y;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -53,6 +58,11 @@ public class BoxModifierScript : MonoBehaviour
 
     private void Update()
     {
+        Vector3 currRot = transform.rotation.eulerAngles;
+        currRot.y += rotSpeed * Time.deltaTime;
+
+        transform.rotation = Quaternion.Euler(currRot);
+
         ChangeColor();
         if (cubeLight.range >= 1 || cubeLight.range <= 0.7)
             alphaUpOrDown = !alphaUpOrDown;
