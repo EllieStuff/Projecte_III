@@ -32,7 +32,7 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
     private bool ghostTextureEnabled;
 
     public bool applyingForce = false;
-    public float previousMaxSpeed;
+    public float previousMaxSpeed;    public ParticleSystem RespawnParticles;    public ParticleSystem ExplosionParticles;
 
     private void Start()
     {
@@ -107,6 +107,7 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
                 playerHud = GameObject.Find("HUD").transform.GetComponentInChildren<PlayersHUDManager>().GetPlayerHUD(transform.parent.GetComponent<PlayerData>().id);
             }
 
+
             transform.position = outTransform.position;
             transform.rotation = outTransform.rotation;
             player.vehicleRB.velocity = outVehicleRB.velocity;
@@ -132,7 +133,8 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
             }
             else
             {
-                GetComponent<ParticleSystem>().Play();
+                RespawnParticles.Play();
+                //GetComponent<ParticleSystem>().Play();
                 //parent.GetComponent<AudioSource>().Play();
 
                 for (int i = 0; i < 4; i++)
@@ -211,7 +213,9 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
         }
 
         if (other.CompareTag("CamLimit") && other.name.Equals("Backward"))
+        {
             exitCamera = true;
+        }
         else if (other.CompareTag("CamLimit"))
             player.vehicleRB.velocity += transform.TransformDirection(Vector3.back * Time.deltaTime * 5);
 
