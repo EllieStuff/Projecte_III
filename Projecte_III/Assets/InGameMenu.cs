@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class InGameMenu : MonoBehaviour
 {
@@ -127,8 +128,9 @@ public class InGameMenu : MonoBehaviour
     {
         AudioManager.Instance.Play_SFX("Click_SFX");
         Time.timeScale = 1.0f;
-        Destroy(GameObject.FindGameObjectWithTag("PlayersManager"));
-        GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().ChangeScene("Current Building Scene");
+        //Destroy(GameObject.FindGameObjectWithTag("PlayersManager"));
+        //GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().ChangeScene("Current Building Scene");
+        SceneManager.LoadScene("ProceduralMapSceneTest");
     }
     public void SettingsButton()
     {

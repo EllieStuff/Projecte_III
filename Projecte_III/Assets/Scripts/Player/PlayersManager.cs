@@ -82,4 +82,15 @@ public class PlayersManager : MonoBehaviour
     //    return modifiers[_idx];
     //}
 
+
+    public void InitPlayers()
+    {
+        for(int i = 0; i < numOfPlayers; i++)
+        {
+            players[i].GetComponent<VehicleTriggerAndCollisionEvents>().Init();
+            players[i].GetComponent<PlayerVehicleScript>().Init();
+            players[i].GetComponent<RandomModifierGet>().ResetModifiers();
+        }
+    }
+
 }

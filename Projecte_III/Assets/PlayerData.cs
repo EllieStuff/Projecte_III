@@ -78,10 +78,10 @@ public class PlayerData : MonoBehaviour
         }
         else if (scene.name != "Menu" && scene.name != "SceneSelector")
         {
-            Transform initial = GameObject.FindGameObjectWithTag("InitPos").GetComponent<InitPosManager>().GetInitPos(id);
-            gameObject.transform.position = initial.position;
-            gameObject.transform.localRotation = initial.localRotation;
-            gameObject.transform.localScale = initial.localScale;
+            //Transform initial = GameObject.FindGameObjectWithTag("InitPos").GetComponent<InitPosManager>().GetInitPos(id);
+            //gameObject.transform.position = initial.position;
+            //gameObject.transform.localRotation = initial.localRotation;
+            //gameObject.transform.localScale = initial.localScale;
 
             Rigidbody rb = playerScript.GetComponent<Rigidbody>();
             rb.constraints = RigidbodyConstraints.None;
