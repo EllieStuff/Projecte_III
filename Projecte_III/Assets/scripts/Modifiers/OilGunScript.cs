@@ -10,6 +10,7 @@ public class OilGunScript : MonoBehaviour
     [SerializeField] Utils.MinMaxFloat force = new Utils.MinMaxFloat(4, 6);
     [SerializeField] Utils.MinMaxFloat size = new Utils.MinMaxFloat(0.01f, 0.1f);
     [SerializeField] Utils.MinMaxVec3 dirDiff = new Utils.MinMaxVec3(-Vector3.one, Vector3.one);
+    public AK.Wwise.Event SFX;
 
     internal Transform originTransform;
 
@@ -31,7 +32,7 @@ public class OilGunScript : MonoBehaviour
 
     public void Activate()
     {
-        AudioManager.Instance.Play_SFX("OilPuddle_SFX");
+        SFX.Post(gameObject);
 
         for (int i = 0; i < dropsAmount; i++)
         {
