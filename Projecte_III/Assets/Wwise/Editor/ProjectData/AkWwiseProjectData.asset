@@ -24,7 +24,7 @@ MonoBehaviour:
     ParentPath: Virtual Acoustics\Default Work Unit
     guid: ed01ff33969c6443acac2a98911dc8ae
     GuidInternal: 
-    m_lastTime: -8585500128400416276
+    m_lastTime: -8585497727826823144
     List: []
   AuxBusWwu:
   - PhysicalPath: Master-Mixer Hierarchy\Default Work Unit.wwu
@@ -38,7 +38,7 @@ MonoBehaviour:
     ParentPath: Master-Mixer Hierarchy\Default Work Unit
     guid: ad94b0186e8b554e8ecdbef549061aaa
     GuidInternal: 
-    m_lastTime: -8585500128399528653
+    m_lastTime: -8585497727840876691
     List:
     - name: Master Audio Bus
       guid: d8a41415a61d2a41a17e75ca0c2149f3
@@ -66,7 +66,7 @@ MonoBehaviour:
     ParentPath: SoundBanks\Default Work Unit
     guid: 3fef24be68241e4db48828e4e5e013e4
     GuidInternal: 
-    m_lastTime: -8585499222918628797
+    m_lastTime: -8585497727826862955
     List:
     - name: Soundbank_1
       guid: f6d83b56f3dc0f40acd0ed31ea907268
@@ -94,7 +94,7 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit
     guid: 5e5a6afcb69930439ecbd10ac13a8baa
     GuidInternal: 
-    m_lastTime: -8585499222918838230
+    m_lastTime: -8585497602370911486
     List:
     - name: Play_BarrelExplosion_Sound
       guid: 6409112ed509ee4f96c7169e8c6726ce
@@ -213,8 +213,8 @@ MonoBehaviour:
         guid: 61f744a503c4e94b83cdd726d84964c7
       Path: Events\Default Work Unit\Play_InGame_Music
       maxAttenuation: 0
-      maxDuration: 108
-      minDuration: 108
+      maxDuration: -1
+      minDuration: -1
     - name: Play_Market_Sound
       guid: 6c359cd03034134daf7aee5bb68c4586
       id: 2589712766
@@ -247,8 +247,8 @@ MonoBehaviour:
         guid: 7a2340e0f0fdcf41a12bd0a9193b67ed
       Path: Events\Default Work Unit\Play_Menu_Music
       maxAttenuation: 0
-      maxDuration: 81.45456
-      minDuration: 81.45456
+      maxDuration: -1
+      minDuration: -1
     - name: Play_Oil_Sound
       guid: af4cec4c72e4464f975cf2491ba072e2
       id: 3591393942
@@ -298,8 +298,8 @@ MonoBehaviour:
         guid: da26087cb3a0954f9552c8bf55bf2df3
       Path: Events\Default Work Unit\Play_PersonalizationMenu_Music
       maxAttenuation: 0
-      maxDuration: 18.823538
-      minDuration: 18.823538
+      maxDuration: -1
+      minDuration: -1
     - name: Play_Respawn_Sound
       guid: e29a827afb4d88469e0a6691876b1f93
       id: 1478479126
@@ -351,6 +351,23 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 6.408708
       minDuration: 6.408708
+    - name: Play_Start_Sound
+      guid: ee38a693255f124080f52dcf39886759
+      id: 463701278
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 5e5a6afcb69930439ecbd10ac13a8baa
+      - ElementName: Play_Start_Sound
+        ObjectType: 3
+        guid: ee38a693255f124080f52dcf39886759
+      Path: Events\Default Work Unit\Play_Start_Sound
+      maxAttenuation: 0
+      maxDuration: 0.25
+      minDuration: 0.25
     - name: Play_Umbrella_Sound
       guid: 14bc507cb6902c4188c9609877515aee
       id: 3008850906
@@ -380,7 +397,7 @@ MonoBehaviour:
     ParentPath: Game Parameters\Default Work Unit
     guid: 52a1ad7d0587ad4f8d48fdfd2945a4c2
     GuidInternal: 
-    m_lastTime: -8585500128398940227
+    m_lastTime: -8585497727853622632
     List: []
   StateWwu:
   - PhysicalPath: States\Default Work Unit.wwu
@@ -394,7 +411,7 @@ MonoBehaviour:
     ParentPath: States\Default Work Unit
     guid: d834cbf4cd48724aac9ae827990aacc6
     GuidInternal: 
-    m_lastTime: -8585500128398840492
+    m_lastTime: -8585497727826843096
     List: []
   SwitchWwu:
   - PhysicalPath: Switches\Default Work Unit.wwu
@@ -408,7 +425,7 @@ MonoBehaviour:
     ParentPath: Switches\Default Work Unit
     guid: 17d62377f9ef0a449b3df5b22ffed5a8
     GuidInternal: 
-    m_lastTime: -8585500128399458836
+    m_lastTime: -8585497727826843096
     List: []
   TriggerWwu:
   - PhysicalPath: Triggers\Default Work Unit.wwu
@@ -422,10 +439,10 @@ MonoBehaviour:
     ParentPath: Triggers\Default Work Unit
     guid: 0f019d9f60aa124bbbc35aca4b08f0c9
     GuidInternal: 
-    m_lastTime: -8585500128398690887
+    m_lastTime: -8585497727826833123
     List: []
   ExpandedFileSystemItemIds: 
-  ExpandedWaapiItemIds: 01000000050000000600000007000000080000000a0000000b0000000c000000170000001b000000
+  ExpandedWaapiItemIds: 010000000500000006000000
   AutoSyncSelection: 0
   autoPopulateEnabled: 1
   currentDataSource: 0

@@ -29,10 +29,8 @@ public class AudioManager : MonoBehaviour
         }
 
     }
-    private void Start()
+    public void Start()
     {
-        //Play_OST("InGameMusic");
-        //Play_OST("MenuMusic");
         ActualMusic.Post(gameObject);
     }
 
