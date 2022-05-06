@@ -9,7 +9,7 @@ public class ShitterBirdScript : MonoBehaviour
 
     public ShitType shitType = ShitType.AIM;
     [SerializeField] Vector3 moveDir = new Vector3(-1.0f, 0.0f, 0.3f);
-    [SerializeField] float moveSpeed = 8.0f;
+    [SerializeField] float moveSpeed = 5.0f;
     [SerializeField] float size = 1.0f;
     [SerializeField] GameObject shitPrefab;
     [SerializeField] Transform shadow;
