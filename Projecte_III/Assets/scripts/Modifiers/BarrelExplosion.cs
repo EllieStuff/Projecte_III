@@ -8,6 +8,8 @@ public class BarrelExplosion : MonoBehaviour
     [SerializeField] float minPushForce = 0.0f;
     [SerializeField] float collisionTimedown = 1.0f;
 
+    float explosionTime = 2.0f;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag.Contains("Player"))
@@ -27,5 +29,14 @@ public class BarrelExplosion : MonoBehaviour
 
             Debug.Log("Player inside exlosion");
         }
+    }
+
+    private void Update()
+    {
+        if(explosionTime < 0)
+        {
+            Destroy(gameObject);
+        }
+        explosionTime -= Time.deltaTime;
     }
 }
