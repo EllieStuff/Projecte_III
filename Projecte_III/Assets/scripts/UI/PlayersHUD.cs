@@ -78,7 +78,7 @@ public class PlayersHUD : MonoBehaviour
         
         if (initial >= possibleModifiers.Length) initial -= possibleModifiers.Length;
         int currentSprite = initial + 1;
-        while(timesShown < 10)
+        while(timesShown < 5)
         {
             if (currentSprite >= possibleModifiers.Length) currentSprite = 0;
             if (currentSprite == initial)

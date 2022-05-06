@@ -24,6 +24,8 @@ public class RadiusBlink : MonoBehaviour
 
         initialColor.a = currentColor.a = 0.2f;
         finalColor.a = 0.5f;
+
+
     }
 
     // Update is called once per frame

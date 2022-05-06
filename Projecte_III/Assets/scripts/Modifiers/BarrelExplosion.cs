@@ -8,7 +8,14 @@ public class BarrelExplosion : MonoBehaviour
     [SerializeField] float minPushForce = 0.0f;
     [SerializeField] float collisionTimedown = 1.0f;
 
+    SpriteRenderer[] radius;
+
     float explosionTime = 2.0f;
+
+    private void Start()
+    {
+        radius = GetComponentsInChildren<SpriteRenderer>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -40,6 +47,17 @@ public class BarrelExplosion : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        else if(explosionTime > 1.5f)
+        {
+            for (int i = 0; i < radius.Length; i++)
+            {
+                Color _curr = radius[i].color;
+                _curr.a = Mathf.Lerp(1, 0, (2 - explosionTime) / 0.5f);
+                radius[i].color = _curr;
+            }
+        }
+
+
         explosionTime -= Time.deltaTime;
     }
 }

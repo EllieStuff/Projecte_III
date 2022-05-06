@@ -56,6 +56,8 @@ public class BarrelScript : MonoBehaviour
         }
         else if(type == BarrelType.EXPLOSIVE)
         {
+            if (explosion == null) return;
+
             if(hasExploded && !explosion.gameObject.activeSelf)
             {
                 explosion.gameObject.SetActive(true);

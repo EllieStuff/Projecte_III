@@ -15,7 +15,7 @@ public class ShitterBirdScript : MonoBehaviour
     [SerializeField] Transform shadow;
     [SerializeField] float scaleFactor = 0.1f;
 
-    Rigidbody rb;
+     Rigidbody rb;
     float initY;
     Vector3 initShadowScale;
     bool inSameCollision = false;
@@ -89,15 +89,15 @@ public class ShitterBirdScript : MonoBehaviour
     }
     void GenericInit()
     {
-        rb.transform.rotation *= Quaternion.FromToRotation(rb.transform.forward, moveDir);
+        transform.rotation *= Quaternion.FromToRotation(transform.forward, moveDir);
         //shadow.rotation *= Quaternion.FromToRotation(shadow.forward, moveDir);
         //transform.rotation *= Quaternion.FromToRotation(-transform.up, Vector3.down);
 
-        Vector3 newScale = rb.transform.localScale * size;
-        rb.transform.localScale = shadow.localScale /*= transform.localScale*/ = newScale;
+        Vector3 newScale = transform.localScale * size;
+        transform.localScale = shadow.localScale /*= transform.localScale*/ = newScale;
 
-        initY = rb.position.y;
-        initShadowScale = rb.transform.localScale;
+        initY = transform.position.y;
+        initShadowScale = transform.localScale;
 
         StopAllCoroutines();
         if (shitType == ShitType.DIARRHEA)
