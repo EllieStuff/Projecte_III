@@ -50,6 +50,9 @@ public class BoxModifierScript : MonoBehaviour
         {
             //collision.transform.GetComponent<RandomModifierGet>().GetModifier();
 
+            //Box Picked Particles
+            other.transform.parent.GetChild(3).GetChild(6).GetComponent<ParticleSystem>().Play();
+
             destroy = true;
             Physics.IgnoreCollision(other, GetComponent<Collider>());
             PlayersHUD currHud = hudManager.GetPlayerHUD(other.GetComponentInParent<PlayerData>().id);
