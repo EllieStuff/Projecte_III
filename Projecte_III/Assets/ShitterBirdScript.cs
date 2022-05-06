@@ -9,13 +9,13 @@ public class ShitterBirdScript : MonoBehaviour
 
     public ShitType shitType = ShitType.AIM;
     [SerializeField] Vector3 moveDir = new Vector3(-1.0f, 0.0f, 0.3f);
-    [SerializeField] float moveSpeed = 8.0f;
+    [SerializeField] float moveSpeed = 5.0f;
     [SerializeField] float size = 1.0f;
     [SerializeField] GameObject shitPrefab;
     [SerializeField] Transform shadow;
     [SerializeField] float scaleFactor = 0.1f;
 
-    Rigidbody rb;
+     Rigidbody rb;
     float initY;
     Vector3 initShadowScale;
     bool inSameCollision = false;
@@ -27,6 +27,7 @@ public class ShitterBirdScript : MonoBehaviour
         AudioManager.Instance.Play_SFX("Bird_SFX");
         //InitRndValues();
         InitValues(moveDir, moveSpeed);
+
 
         Destroy(gameObject, 10.0f);
     }
@@ -79,6 +80,7 @@ public class ShitterBirdScript : MonoBehaviour
     }
     public void InitValues(Vector3 _moveDir, float _moveSpeed, float _size = 0.8f)
     {
+        //moveDir = _moveDir;
         moveDir = _moveDir;
         moveSpeed = _moveSpeed;
         size = _size;
@@ -87,15 +89,15 @@ public class ShitterBirdScript : MonoBehaviour
     }
     void GenericInit()
     {
-        rb.transform.rotation *= Quaternion.FromToRotation(rb.transform.forward, moveDir);
+        transform.rotation *= Quaternion.FromToRotation(transform.forward, moveDir);
         //shadow.rotation *= Quaternion.FromToRotation(shadow.forward, moveDir);
         //transform.rotation *= Quaternion.FromToRotation(-transform.up, Vector3.down);
 
-        Vector3 newScale = rb.transform.localScale * size;
-        rb.transform.localScale = shadow.localScale /*= transform.localScale*/ = newScale;
+        Vector3 newScale = transform.localScale * size;
+        transform.localScale = shadow.localScale /*= transform.localScale*/ = newScale;
 
-        initY = rb.position.y;
-        initShadowScale = rb.transform.localScale;
+        initY = transform.position.y;
+        initShadowScale = transform.localScale;
 
         StopAllCoroutines();
         if (shitType == ShitType.DIARRHEA)

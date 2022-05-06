@@ -18,18 +18,22 @@ public class CameraNavFollowScript : MonoBehaviour
     [SerializeField] private List<Vector3> cameraCheckpoints = new List<Vector3>();
     private NavMeshAgent navMeshAgent;
     private int currCheckpoint = 0;
+    private PlayerVehicleScript firstPlayer;
 
     private float savedSpeed;
+
+    bool gameStarted = false;
 
     // Start is called before the first frame update
     void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
 
-        navMeshAgent.speed = 7;
+        navMeshAgent.speed = 0;
         savedSpeed = 7;
 
         players = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
+        firstPlayer = players.GetPlayer(0).GetComponent<PlayerVehicleScript>();
 
         StartCoroutine(StartDelayCoroutine());
     }
@@ -37,6 +41,15 @@ public class CameraNavFollowScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(firstPlayer.timerStartRace < 0 && !gameStarted)
+        {
+            navMeshAgent.speed = 7;
+            gameStarted = true;
+        }
+
+        if (!gameStarted)
+            return;
+
         int nearestPlayer = GetNearestPlayerFromLimit();
         
         if (savedSpeed < 10)

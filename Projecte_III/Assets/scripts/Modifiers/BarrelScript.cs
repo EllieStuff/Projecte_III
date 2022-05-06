@@ -16,7 +16,7 @@ public class BarrelScript : MonoBehaviour
     BarrelCollision barrel;
 
     [SerializeField] bool hasExploded = false;
-    Transform explosion = null;
+    BarrelExplosion explosion = null;
 
     // Start is called before the first frame update
     void Start()
@@ -29,8 +29,8 @@ public class BarrelScript : MonoBehaviour
         switch (type)
         {
             case BarrelType.EXPLOSIVE:
-                explosion = barrel.transform.GetChild(0);
-                explosion.GetComponent<SphereCollider>().enabled = false;
+                explosion = barrel.GetComponentInChildren<BarrelExplosion>();
+                explosion.gameObject.SetActive(false);
 
                 break;
             case BarrelType.MOBIL:
@@ -56,9 +56,11 @@ public class BarrelScript : MonoBehaviour
         }
         else if(type == BarrelType.EXPLOSIVE)
         {
-            if(hasExploded)
+            if (explosion == null) return;
+
+            if(hasExploded && !explosion.gameObject.activeSelf)
             {
-                explosion.GetComponent<SphereCollider>().enabled = true;
+                explosion.gameObject.SetActive(true);
             }
         }
     }

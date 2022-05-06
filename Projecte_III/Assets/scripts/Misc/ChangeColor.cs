@@ -40,7 +40,7 @@ public class ChangeColor : MonoBehaviour
         colorList.RemoveAt(_rand);
 
         player.DefaultMaterial = currentColor;
-        Color _curr = parent.GetColor(currentColor.name);
+        Color _curr = UseGradientMaterials.GetColor(currentColor.name);
 
         backgroundColor.color = new Color(_curr.r, _curr.g, _curr.b, 0.45f);
         textBackgroundColor.color = _curr;
@@ -97,7 +97,7 @@ public class ChangeColor : MonoBehaviour
 
         player.DefaultMaterial = currentColor;
 
-        Color _curr = parent.GetColor(currentColor.name);
+        Color _curr = UseGradientMaterials.GetColor(currentColor.name);
 
         backgroundColor.color = new Color(_curr.r, _curr.g, _curr.b, 0.45f);
         textBackgroundColor.color = _curr;
@@ -118,7 +118,7 @@ public class ChangeColor : MonoBehaviour
 
         player.DefaultMaterial = currentColor;
 
-        Color _curr = parent.GetColor(currentColor.name);
+        Color _curr = UseGradientMaterials.GetColor(currentColor.name);
 
         backgroundColor.color = new Color(_curr.r, _curr.g, _curr.b, 0.45f);
         textBackgroundColor.color = _curr;
@@ -139,7 +139,7 @@ public class ChangeColor : MonoBehaviour
 
         player.DefaultMaterial = currentColor;
 
-        Color _curr = parent.GetColor(currentColor.name);
+        Color _curr = UseGradientMaterials.GetColor(currentColor.name);
 
         backgroundColor.color = new Color(_curr.r, _curr.g, _curr.b, 0.45f);
         textBackgroundColor.color = _curr;

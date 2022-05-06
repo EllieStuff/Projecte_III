@@ -25,10 +25,10 @@ public class PlayersHUD : MonoBehaviour
         player = GameObject.Find("PlayersManager").GetComponent<PlayersManager>().GetPlayer(id).GetComponentInChildren<RandomModifierGet>();
         currentLifes = player.transform.GetComponent<PlayerVehicleScript>().lifes;
 
-        Color _color = GetComponent<UseGradientMaterials>().GetColor(player.transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material.name);
+        Color _color = UseGradientMaterials.GetColor(player.transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material.name);
 
         modifier.transform.parent.GetComponent<Image>().color = new Color(_color.r, _color.g, _color.b, 0.5f);
-        Destroy(GetComponent<UseGradientMaterials>());
+        //Destroy(GetComponent<UseGradientMaterials>());
 
         lifes = new Transform[transform.GetChild(0).childCount];
         for (int i = 0; i < lifes.Length; i++)
@@ -78,7 +78,7 @@ public class PlayersHUD : MonoBehaviour
         
         if (initial >= possibleModifiers.Length) initial -= possibleModifiers.Length;
         int currentSprite = initial + 1;
-        while(timesShown < 10)
+        while(timesShown < 5)
         {
             if (currentSprite >= possibleModifiers.Length) currentSprite = 0;
             if (currentSprite == initial)

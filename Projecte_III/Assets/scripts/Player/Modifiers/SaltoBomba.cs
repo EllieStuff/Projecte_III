@@ -15,6 +15,12 @@ public class SaltoBomba : MonoBehaviour
     [SerializeField] private float saltoDuration = 5;
     [SerializeField] private float explosionRange = 5;
     [SerializeField] private float saltoTimer;
+
+    [SerializeField] GameObject explosionRadiusPrefab;
+    RadiusBlink radius;
+
+    [SerializeField] ParticleSystem SaltoBombaPS;
+
     Quaternion savedRot;
     public void Init(bool _active)
     {
@@ -32,7 +38,27 @@ public class SaltoBomba : MonoBehaviour
             saltoEnabled = true;
             fallSoundPlayed = false;
             player.vehicleRB.velocity = new Vector3(player.vehicleRB.velocity.x, 20, player.vehicleRB.velocity.z);
+
+            radius = Instantiate(explosionRadiusPrefab).GetComponent<RadiusBlink>();
+            radius.transform.localScale = new Vector3(2.0f, 2.0f, 2.0f);
+            radius.SetBlink(true, saltoDuration);
         }
+    }
+
+    [ContextMenu("SetSaltoBombaModifier")]
+    public void SetSaltoBombaModifier()
+    {
+        RandomModifierGet.ModifierTypes modType = RandomModifierGet.ModifierTypes.SALTO_BOMBA;
+        RandomModifierGet modGetter = GetComponent<RandomModifierGet>();
+        modGetter.ResetModifiers();
+        modGetter.SetModifier(modType);
+
+        try
+        {
+            int playerId = GetComponentInParent<PlayerData>().id;
+            GameObject.Find("HUD").GetComponentInChildren<PlayersHUDManager>().GetPlayerHUD(playerId).SetModifierImage((int)modType);
+        }
+        catch { Debug.LogError("PlayersHUD not found"); }
     }
 
     private void Start()
@@ -49,6 +75,8 @@ public class SaltoBomba : MonoBehaviour
         if (hasJumped)
         {
             SaltoUpdate();
+
+            if(radius != null) radius.transform.position = new Vector3(transform.position.x, 0.16f, transform.position.z);
         }
     }
 
@@ -62,9 +90,12 @@ public class SaltoBomba : MonoBehaviour
             {
                 saltoTimer = saltoDuration;
                 saltoEnabled = false;
+
+                
             }
-            else if(!explosionDone && saltoTimer <= saltoDuration - 0.5f && player.touchingGround)
+            else if(!explosionDone && saltoTimer <= saltoDuration - 1 && player.touchingGround)
             {
+                SaltoBombaPS.Play();
                 for (int i = 0; i < playersManager.players.Length; i++)
                 {
                     Transform otherPlayer = playersManager.GetPlayer(i);
@@ -76,6 +107,7 @@ public class SaltoBomba : MonoBehaviour
                     }
                 }
 
+                Destroy(radius.gameObject);
                 saltoTimer = saltoDuration;
                 explosionDone = true;
             }

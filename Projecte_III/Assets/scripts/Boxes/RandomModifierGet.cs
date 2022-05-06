@@ -6,7 +6,7 @@ public class RandomModifierGet : MonoBehaviour
 {
     const float INIT_TIMER_MODIFIER = 5.0f;
 
-    public enum ModifierTypes { PLUNGER, UMBRELLA, OIL, PAINT_GUN, SALTO_BOMBA, COUNT, NONE };
+    public enum ModifierTypes { PLUNGER, UMBRELLA, OIL, PAINT_GUN, SALTO_BOMBA, BOOST, COUNT, NONE };
 
     public GameObject[] modifiers;
     GameObject showModifierInstance;
@@ -24,19 +24,6 @@ public class RandomModifierGet : MonoBehaviour
         GetComponent<PlayerThrowPlunger>().SetPlungerModifier();
         ResetModifiers();
     }
-
-    //public void GetModifier()
-    //{
-    //    if(timerRoll <= 0)
-    //    {
-    //        timerRoll = 5;
-    //        getModifier = true;
-    //        IEnumerator coroutine = ModifiersRoll();
-    //        StartCoroutine(coroutine);
-
-    //        int randomInt = Random.Range(0, modifiers.Length);
-    //    }
-    //}
 
     private void FixedUpdate()
     {
@@ -114,6 +101,20 @@ public class RandomModifierGet : MonoBehaviour
                     timerModifier = INIT_TIMER_MODIFIER;
                     break;
 
+                case ModifierTypes.BOOST:
+                    BoostModifierScript boost = GetComponent<BoostModifierScript>();
+
+                    if (inputs.ShootForward)
+                        boost.Active(transform.forward, 1.0f, 1.0f);
+                    else if (inputs.ShootBackwards)
+                        boost.Active(-transform.forward, 0.25f, 0.3f);
+                    else if (inputs.ShootLeft)
+                        boost.Active(-transform.right, 0.5f, 1.0f);
+                    else if (inputs.ShootRight)
+                        boost.Active(transform.right, 0.5f, 1.0f);
+
+                    timerModifier = INIT_TIMER_MODIFIER;
+                    break;
                 default:
                     break;
             }
@@ -165,62 +166,4 @@ public class RandomModifierGet : MonoBehaviour
         currentModifier = ModifierTypes.NONE;
     }
 
-    //IEnumerator ModifiersRoll()
-    //{
-    //    int randomInt = Random.Range(0, modifiers.Length);
-    //    while (getModifier)
-    //    {
-    //        if (timerRoll > 0)
-    //        {
-    //            timerRoll -= 0.5f;
-
-    //            if (randomInt < modifiers.Length - 1)
-    //                randomInt++;
-    //            else
-    //                randomInt = 0;
-
-    //            showModifierInstance = Instantiate(modifiers[randomInt], new Vector3(transform.position.x , transform.position.y + 1, transform.position.z), transform.rotation);
-    //            showModifierInstance.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
-    //            yield return new WaitForSeconds(0.2f);
-    //            Destroy(showModifierInstance);
-    //        }
-    //        else
-    //        {
-    //            if(showModifierInstance != null)
-    //                Destroy(showModifierInstance);
-    //            showModifierInstance = Instantiate(modifiers[randomInt], new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), transform.rotation);
-    //            showModifierInstance.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
-    //            for (int i = 0; i < 3; i++)
-    //            {
-    //                yield return new WaitForSeconds(0.5f);
-    //            }
-    //            Debug.Log(randomInt);
-    //            GetComponent<PlayerAlaDelta>().hasAlaDelta = false;
-    //            GetComponent<PlayerThrowPlunger>().hasPlunger = false;
-    //            //put modifier
-    //            switch (randomInt)
-    //            {
-    //                case 0:
-    //                    GetComponent<PlayerThrowPlunger>().hasPlunger = true;
-    //                    break;
-    //                case 1:
-    //                    GetComponent<PlayerAlaDelta>().hasAlaDelta = true;
-    //                    break;
-    //                case 2:
-    //                    //Umbrella
-    //                    break;
-    //                case 3:
-    //                    //??
-    //                    break;
-    //            }
-    //            modifierIndex = randomInt;
-    //            Destroy(showModifierInstance);
-    //            hasModifier = true;
-    //            //____________
-    //            getModifier = false;
-    //        }
-    //    }
-
-    //    yield return 0;
-    //}
 }
