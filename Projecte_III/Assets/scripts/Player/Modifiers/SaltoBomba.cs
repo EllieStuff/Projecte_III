@@ -91,7 +91,7 @@ public class SaltoBomba : MonoBehaviour
 
                 
             }
-            else if(!explosionDone && saltoTimer <= saltoDuration - 0.5f && player.touchingGround)
+            else if(!explosionDone && saltoTimer <= saltoDuration - 1 && player.touchingGround)
             {
                 for (int i = 0; i < playersManager.players.Length; i++)
                 {
