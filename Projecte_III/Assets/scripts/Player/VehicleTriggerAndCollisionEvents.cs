@@ -32,7 +32,7 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
     private bool ghostTextureEnabled;
 
     public bool applyingForce = false;
-    public float previousMaxSpeed;    public ParticleSystem RespawnParticles;    public ParticleSystem ExplosionParticles;
+    public float previousMaxSpeed;    public ParticleSystem RespawnParticles;
 
     private void Start()
     {

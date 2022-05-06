@@ -19,6 +19,8 @@ public class SaltoBomba : MonoBehaviour
     [SerializeField] GameObject explosionRadiusPrefab;
     RadiusBlink radius;
 
+    [SerializeField] ParticleSystem SaltoBombaPS;
+
     Quaternion savedRot;
     public void Init(bool _active)
     {
@@ -93,6 +95,7 @@ public class SaltoBomba : MonoBehaviour
             }
             else if(!explosionDone && saltoTimer <= saltoDuration - 0.5f && player.touchingGround)
             {
+                SaltoBombaPS.Play();
                 for (int i = 0; i < playersManager.players.Length; i++)
                 {
                     Transform otherPlayer = playersManager.GetPlayer(i);

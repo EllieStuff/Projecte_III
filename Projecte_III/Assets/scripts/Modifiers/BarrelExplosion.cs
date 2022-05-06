@@ -24,6 +24,9 @@ public class BarrelExplosion : MonoBehaviour
             //Apply pushVector to the player velocity
             other.transform.parent.GetComponent<VehicleTriggerAndCollisionEvents>().ApplyForce(currentForce, collisionTimedown);
 
+            //Broken Motor Particles
+            other.transform.parent.GetChild(3).GetChild(5).GetComponent<ParticleSystem>().Play();
+
             //----------
             Physics.IgnoreCollision(other, GetComponent<SphereCollider>());
 

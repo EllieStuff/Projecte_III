@@ -20,16 +20,16 @@ public class BarrelCollision : MonoBehaviour
         {
             Debug.Log("Collision with player");
 
+            GetComponent<ParticleSystem>().Play();
+
             //----------
             //Apply pushVector to the player velocity
             other.transform.parent.GetComponent<VehicleTriggerAndCollisionEvents>().ApplyForce(pushForce, collisionTimedown);
+            //Broken Motor Particles
+            other.transform.parent.GetChild(3).GetChild(5).GetComponent<ParticleSystem>().Play();
             //----------
 
             Physics.IgnoreCollision(other, GetComponent<MeshCollider>());
-
-            //Particules d'explosio del barril (si es el barril explosiu fum i tal)
-
-            //
 
             GetComponent<MeshRenderer>().enabled = false;
             if (barrel.GetType() == BarrelScript.BarrelType.EXPLOSIVE)
