@@ -451,6 +451,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundType: 1
   audioName: CountdownNumbers_SFX
+  SFX:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 2946a375ebc951544987723b310db4dd, type: 2}
+  OST:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
 --- !u!1 &71750659
 GameObject:
   m_ObjectHideFlags: 0
@@ -1299,6 +1307,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 534027661}
+  - component: {fileID: 534027662}
   m_Layer: 5
   m_Name: Beat Them Up
   m_TagString: Untagged
@@ -1327,6 +1336,28 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &534027662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 534027660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da329209c437201408bb48aa5a4db169, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundType: 1
+  audioName: 
+  SFX:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 2946a375ebc951544987723b310db4dd, type: 2}
+  OST:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
 --- !u!1 &536592181
 GameObject:
   m_ObjectHideFlags: 0
@@ -6281,7 +6312,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundType: 0
-  audioName: InGameMusic_OST
+  audioName: 
+  SFX:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
+  OST:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 9d301c9d9e9a8904ca1f9667c3091b89, type: 2}
 --- !u!4 &582344910
 Transform:
   m_ObjectHideFlags: 0
@@ -6615,6 +6654,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundType: 1
   audioName: CountdownEnd_SFX
+  SFX:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
+  OST:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
 --- !u!1 &709369497
 GameObject:
   m_ObjectHideFlags: 0
@@ -6888,6 +6935,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundType: 1
   audioName: CountdownNumbers_SFX
+  SFX:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 2946a375ebc951544987723b310db4dd, type: 2}
+  OST:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
 --- !u!1 &728244825
 GameObject:
   m_ObjectHideFlags: 0
@@ -8070,6 +8125,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundType: 1
   audioName: CountdownNumbers_SFX
+  SFX:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 2946a375ebc951544987723b310db4dd, type: 2}
+  OST:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
 --- !u!1 &1077345455
 GameObject:
   m_ObjectHideFlags: 0

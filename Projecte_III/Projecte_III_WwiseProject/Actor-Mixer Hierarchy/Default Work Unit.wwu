@@ -59,32 +59,6 @@
 						<ActiveSource Name="540425-zapsplat-warfare-bomb-whizz-in-hit-close-by-explosion-med-002-48059" ID="{B87BC355-CF28-4DD3-9E9B-C851335A4398}" Platform="Linked"/>
 					</ActiveSourceList>
 				</Sound>
-				<Sound Name="535166-Bluezone-BC0277-explosion-urban-004-03" ID="{D7CF4C28-F3D2-49C5-A2E7-3C424C60CE32}" ShortID="936657006">
-					<PropertyList>
-						<Property Name="IsVoice" Type="bool" Value="True"/>
-					</PropertyList>
-					<ReferenceList>
-						<Reference Name="Conversion">
-							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{A33D6D56-C0C8-4851-BC4C-9F9B9D42CFE5}"/>
-						</Reference>
-						<Reference Name="OutputBus">
-							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{18B094AD-8B6E-4E55-8ECD-BEF549061AAA}"/>
-						</Reference>
-					</ReferenceList>
-					<ChildrenList>
-						<AudioFileSource Name="535166-Bluezone-BC0277-explosion-urban-004-03" ID="{A7BD6DD3-3410-4D77-9E19-B457457C29F6}">
-							<Language>English(US)</Language>
-							<AudioFile>535166-Bluezone-BC0277-explosion-urban-004-03.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="960415641"/>
-							</MediaIDList>
-						</AudioFileSource>
-					</ChildrenList>
-					<ObjectLists/>
-					<ActiveSourceList>
-						<ActiveSource Name="535166-Bluezone-BC0277-explosion-urban-004-03" ID="{A7BD6DD3-3410-4D77-9E19-B457457C29F6}" Platform="Linked"/>
-					</ActiveSourceList>
-				</Sound>
 				<Sound Name="530699-Cartoon_Fat_Ping_Boing" ID="{F207A87D-DE35-40EA-A768-F2DAC8EB3F20}" ShortID="372233555">
 					<PropertyList>
 						<Property Name="IsVoice" Type="bool" Value="True"/>
@@ -449,6 +423,68 @@
 					<ObjectLists/>
 					<ActiveSourceList>
 						<ActiveSource Name="MenuSong" ID="{859BE7D3-D695-46D3-A13C-B394A3C71EF8}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="535166-Bluezone-BC0277-explosion-urban-004-03" ID="{248066D0-9DEF-435A-B10B-023EBB55FBE9}" ShortID="1004650659">
+					<PropertyList>
+						<Property Name="IsVoice" Type="bool" Value="True"/>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-5</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{A33D6D56-C0C8-4851-BC4C-9F9B9D42CFE5}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{18B094AD-8B6E-4E55-8ECD-BEF549061AAA}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="535166-Bluezone-BC0277-explosion-urban-004-03" ID="{86DEA461-068B-4425-818F-DA5747D2954B}">
+							<Language>English(US)</Language>
+							<AudioFile>535166-Bluezone-BC0277-explosion-urban-004-03.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="960415641"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="535166-Bluezone-BC0277-explosion-urban-004-03" ID="{86DEA461-068B-4425-818F-DA5747D2954B}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="535304-Bluezone-BC0266-radio-beep-morse-code-001-02" ID="{6C97B302-1BD4-4FB3-8442-7B94E5B44539}" ShortID="258233826">
+					<PropertyList>
+						<Property Name="IsVoice" Type="bool" Value="True"/>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-9</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{A33D6D56-C0C8-4851-BC4C-9F9B9D42CFE5}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{18B094AD-8B6E-4E55-8ECD-BEF549061AAA}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="535304-Bluezone-BC0266-radio-beep-morse-code-001-02" ID="{C6D51389-1429-4035-B30C-068B0158E4DD}">
+							<Language>English(US)</Language>
+							<AudioFile>535304-Bluezone-BC0266-radio-beep-morse-code-001-02.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="163000586"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="535304-Bluezone-BC0266-radio-beep-morse-code-001-02" ID="{C6D51389-1429-4035-B30C-068B0158E4DD}" Platform="Linked"/>
 					</ActiveSourceList>
 				</Sound>
 			</ChildrenList>

@@ -137,10 +137,10 @@
 				</Event>
 				<Event Name="Play_BarrelExplosion_Sound" ID="{2E110964-09D5-4FEE-96C7-169E8C6726CE}">
 					<ChildrenList>
-						<Action Name="" ID="{7EBC7904-CDD7-4039-A0FC-F9D1F7488FA7}" ShortID="702242823">
+						<Action Name="" ID="{F374A35C-001B-4BB0-BDA1-040BAE8267A9}" ShortID="487101452">
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="535166-Bluezone-BC0277-explosion-urban-004-03" ID="{D7CF4C28-F3D2-49C5-A2E7-3C424C60CE32}" WorkUnitID="{7DD2C2DE-FD56-4EA8-AF3B-F9917205607F}"/>
+									<ObjectRef Name="535166-Bluezone-BC0277-explosion-urban-004-03" ID="{248066D0-9DEF-435A-B10B-023EBB55FBE9}" WorkUnitID="{7DD2C2DE-FD56-4EA8-AF3B-F9917205607F}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>
@@ -174,6 +174,17 @@
 							<ReferenceList>
 								<Reference Name="Target">
 									<ObjectRef Name="bgSong" ID="{0DB150AE-102B-4C0D-81A9-D1134F1C2155}" WorkUnitID="{7DD2C2DE-FD56-4EA8-AF3B-F9917205607F}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_Start_Sound" ID="{93A638EE-5F25-4012-80F5-2DCF39886759}">
+					<ChildrenList>
+						<Action Name="" ID="{B19AEAF0-BD8E-4ECB-9C6D-B4F77B4432C5}" ShortID="145226071">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="535304-Bluezone-BC0266-radio-beep-morse-code-001-02" ID="{6C97B302-1BD4-4FB3-8442-7B94E5B44539}" WorkUnitID="{7DD2C2DE-FD56-4EA8-AF3B-F9917205607F}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>
