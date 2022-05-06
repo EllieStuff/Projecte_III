@@ -15,6 +15,10 @@ public class SaltoBomba : MonoBehaviour
     [SerializeField] private float saltoDuration = 5;
     [SerializeField] private float explosionRange = 5;
     [SerializeField] private float saltoTimer;
+
+    [SerializeField] GameObject explosionRadiusPrefab;
+    RadiusBlink radius;
+
     Quaternion savedRot;
     public void Init(bool _active)
     {
@@ -32,6 +36,10 @@ public class SaltoBomba : MonoBehaviour
             saltoEnabled = true;
             fallSoundPlayed = false;
             player.vehicleRB.velocity = new Vector3(player.vehicleRB.velocity.x, 20, player.vehicleRB.velocity.z);
+
+            radius = Instantiate(explosionRadiusPrefab).GetComponent<RadiusBlink>();
+            radius.transform.localScale = new Vector3(2.0f, 2.0f, 2.0f);
+            radius.SetBlink(true, saltoDuration);
         }
     }
 
@@ -65,6 +73,8 @@ public class SaltoBomba : MonoBehaviour
         if (hasJumped)
         {
             SaltoUpdate();
+
+            if(radius != null) radius.transform.position = new Vector3(transform.position.x, 0.16f, transform.position.z);
         }
     }
 
@@ -78,6 +88,8 @@ public class SaltoBomba : MonoBehaviour
             {
                 saltoTimer = saltoDuration;
                 saltoEnabled = false;
+
+                
             }
             else if(!explosionDone && saltoTimer <= saltoDuration - 0.5f && player.touchingGround)
             {
@@ -92,6 +104,7 @@ public class SaltoBomba : MonoBehaviour
                     }
                 }
 
+                Destroy(radius.gameObject);
                 saltoTimer = saltoDuration;
                 explosionDone = true;
             }

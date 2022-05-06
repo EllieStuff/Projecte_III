@@ -44,14 +44,15 @@ public class BoxModifierScript : MonoBehaviour
         _rotAddition.y = (transform.eulerAngles * rotSpeed).y;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if(collision.gameObject.tag.Contains("Player") && !destroy) 
+        if (other.gameObject.tag.Contains("Player") && !destroy)
         {
             //collision.transform.GetComponent<RandomModifierGet>().GetModifier();
+
             destroy = true;
-            Physics.IgnoreCollision(collision.collider, GetComponent<Collider>());
-            PlayersHUD currHud = hudManager.GetPlayerHUD(collision.transform.parent.GetComponent<PlayerData>().id);
+            Physics.IgnoreCollision(other, GetComponent<Collider>());
+            PlayersHUD currHud = hudManager.GetPlayerHUD(other.GetComponentInParent<PlayerData>().id);
             currHud.RollModifiers();
         }
     }
