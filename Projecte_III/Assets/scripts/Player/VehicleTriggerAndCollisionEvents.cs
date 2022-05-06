@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class VehicleTriggerAndCollisionEvents : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
     private Transform outTransform;
     private Rigidbody outVehicleRB;
     private PlayersManager playersManager;
+    private PlayersHUDManager playersHUDManager;
 
     PlayersHUD playerHud = null;
     [SerializeField] private float timerRespawn = 3;
@@ -118,7 +120,16 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
                 AudioManager.Instance.Play_SFX("Respawn_SFX");
 
             if (player.lifes <= 0)
+            {
+                AudioManager.Instance.Play_SFX("PlayerEliminated_SFX");
+
+                if (playersHUDManager == null)
+                    playersHUDManager = GameObject.Find("HUD").transform.Find("Players").GetComponent<PlayersHUDManager>();
+
+                playersHUDManager.GetPlayerHUD(player.playerNum).transform.Find("CurrentModifier").GetComponent<Image>().color -= new Color(0, 0, 0, 0.3f);
+
                 parent.SetActive(false);
+            }
             else
             {
                 GetComponent<ParticleSystem>().Play();
@@ -151,7 +162,7 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
         }
     }
 
-    public void ApplyForce(float forceValue, float _seconds)
+    public void ApplyForce(float forceValue, float _seconds)
     {
         player.speedIncrementEnabled = false;
         player.vehicleMaxSpeed = forceValue;
@@ -163,7 +174,7 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
 
     }
 
-    IEnumerator ResetVelocity(float _seconds)
+    public IEnumerator ResetVelocity(float _seconds)
     {
         yield return new WaitForSeconds(_seconds);
         player.vehicleMaxSpeed = player.savedMaxSpeed;
@@ -177,17 +188,12 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
         player.vehicleReversed = (other.gameObject.tag.Equals("ground"));
         //------------------------
     }
-
-    IEnumerator WaitEndBoost()
-    {
-        yield return new WaitForSeconds(boostPadDuration);
-        reduceSpeed = true;
-    }
-
     IEnumerator WaitTorque()
     {
         yield return new WaitForSeconds(5);
         player.vehicleTorque = player.savedVehicleTorque;
+        oilChecked = false;
+        paintingChecked = false;
     }
 
 
@@ -230,7 +236,7 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
             if (player.vehicleRB.velocity.magnitude > 1.0f)
             {
                 Debug.Log("enter Oil");
-                AddFriction(player.savedVehicleTorque*2);
+                AddFriction(player.savedVehicleTorque*100000);
             }
         }
 
@@ -251,6 +257,30 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
             player.vehicleAcceleration = player.savedAcceleration;
             //}
         }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.transform.tag.Contains("Player") && player.dash)
+        {
+            PlayerVehicleScript otherPlayer = collision.transform.GetComponent<PlayerVehicleScript>();
+            otherPlayer.dashCollided = true;
+            otherPlayer.vehicleRB.velocity = player.vehicleRB.velocity * 2.0f;
+            otherPlayer.GetComponent<VehicleTriggerAndCollisionEvents>().ResetDash(otherPlayer);
+
+        }
+    }
+
+    public void ResetDash(PlayerVehicleScript _other)
+    {
+        StartCoroutine(ResetCollision(_other));
+    }
+
+    IEnumerator ResetCollision(PlayerVehicleScript _other)
+    {
+        yield return new WaitForSeconds(1.0f);
+        _other.dashCollided = false;
+
     }
 
     void OnCollisionExit(Collision other)
