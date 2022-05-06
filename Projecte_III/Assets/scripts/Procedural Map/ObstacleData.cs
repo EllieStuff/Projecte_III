@@ -70,10 +70,6 @@ public class ObstacleData : MonoBehaviour
         for (int i = 0; i < possiblePositions.Length; i++)
         {
             possiblePositions[i] = transform.GetChild(roadType).GetChild(i);
-            //Es millor que les meshes estiguin deshabilitades sempre
-            //MeshRenderer _mesh = possiblePositions[i].GetComponent<MeshRenderer>();
-            //if (_mesh != null)
-              //_mesh.enabled = false;
         }
 
         SpawnObstacle();
@@ -96,8 +92,11 @@ public class ObstacleData : MonoBehaviour
             {
                 Transform _spawnedPosition = possiblePositions[_random];
 
-                obstacleToSpawn[i].transform.localPosition = _spawnedPosition.localPosition;
-                obstacleToSpawn[i].transform.rotation = _spawnedPosition.rotation;
+                obstacleToSpawn[i].transform.position = _spawnedPosition.position;
+                if(this.name.Contains("Bird"))
+                    obstacleToSpawn[i].GetComponent<ShitterBirdScript>().InitValues(_spawnedPosition.forward, 5.0f);
+                else
+                    obstacleToSpawn[i].transform.rotation = _spawnedPosition.rotation;
                 obstacleToSpawn[i].transform.localScale = _spawnedPosition.localScale;
 
                 if (this.name.Contains("Car"))
@@ -111,9 +110,5 @@ public class ObstacleData : MonoBehaviour
                 i--;
 
         }
-
-        //if (mesh != null) mesh.enabled = true;
-
-        //if (col != null) col.enabled = true;
     }
 }

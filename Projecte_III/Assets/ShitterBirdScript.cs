@@ -9,7 +9,7 @@ public class ShitterBirdScript : MonoBehaviour
 
     public ShitType shitType = ShitType.AIM;
     [SerializeField] Vector3 moveDir = new Vector3(-1.0f, 0.0f, 0.3f);
-    [SerializeField] float moveSpeed = 8.0f;
+    [SerializeField] float moveSpeed = 5.0f;
     [SerializeField] float size = 1.0f;
     [SerializeField] GameObject shitPrefab;
     [SerializeField] Transform shadow;
@@ -27,6 +27,7 @@ public class ShitterBirdScript : MonoBehaviour
         AudioManager.Instance.Play_SFX("Bird_SFX");
         //InitRndValues();
         InitValues(moveDir, moveSpeed);
+
 
         Destroy(gameObject, 10.0f);
     }
@@ -79,6 +80,7 @@ public class ShitterBirdScript : MonoBehaviour
     }
     public void InitValues(Vector3 _moveDir, float _moveSpeed, float _size = 0.8f)
     {
+        //moveDir = _moveDir;
         moveDir = _moveDir;
         moveSpeed = _moveSpeed;
         size = _size;
