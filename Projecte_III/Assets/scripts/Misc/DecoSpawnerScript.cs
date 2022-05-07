@@ -8,6 +8,8 @@ public class DecoSpawnerScript : MonoBehaviour
     int randomNumber;
     float timePassedSinceSpawn;
     public float timeLimit;
+    public float randomTimeLimitOffset;
+    float randomTimeAdded;
     GameObject ObjectInstantiated;
     public float ObjectScale;
 
@@ -22,7 +24,8 @@ public class DecoSpawnerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (timePassedSinceSpawn >= timeLimit)
+        randomTimeAdded = Random.Range(-randomTimeLimitOffset, randomTimeLimitOffset);
+        if (timePassedSinceSpawn >= timeLimit + randomTimeAdded)
         {
             randomNumber = Random.Range(0, objectsArray.Length);
             if(gameObject.name.Contains("Butterflies"))
