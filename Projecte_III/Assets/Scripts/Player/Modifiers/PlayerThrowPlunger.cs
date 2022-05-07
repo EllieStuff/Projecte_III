@@ -166,7 +166,7 @@ public class PlayerThrowPlunger : MonoBehaviour
             int playerId = GetComponentInParent<PlayerData>().id;
             GameObject.Find("HUD").GetComponentInChildren<PlayersHUDManager>().GetPlayerHUD(playerId).SetModifierImage((int)modType);
         }
-        catch { Debug.LogError("PlayersHUD not found"); }
+        catch { Debug.LogWarning("PlayersHUD not found"); }
     }
 
 }

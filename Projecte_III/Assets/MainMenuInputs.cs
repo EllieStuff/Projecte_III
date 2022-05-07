@@ -5,11 +5,12 @@ using UnityEngine.UI;
 
 public class MainMenuInputs : MonoBehaviour
 {
-    enum MenuState { MAIN, SETTINGS };
+    enum MenuState { MAIN, SETTINGS, CREDITS, COUNT };
     enum UIElementType { DEFAULT, BUTTON, SLIDER };
 
     [SerializeField] Transform mainFather;
     [SerializeField] Transform settingsFathers;
+    [SerializeField] Transform creditsFather;
 
     Button[] mainButtons;
     Transform[] settingOptions;
@@ -51,6 +52,11 @@ public class MainMenuInputs : MonoBehaviour
 
                 break;
 
+            case MenuState.CREDITS:
+                UpdateCreditsMenu();
+
+                break;
+
             default:
                 break;
         }
@@ -77,6 +83,8 @@ public class MainMenuInputs : MonoBehaviour
         {
             if (mainIdx == (int)MenuState.SETTINGS)
                 menuState = MenuState.SETTINGS;
+            else if (mainIdx == (int)MenuState.CREDITS)
+                menuState = MenuState.CREDITS;
             //AudioManager.Instance.Play_SFX("Hover_SFX");
             mainButtons[mainIdx].onClick.Invoke();
         }
@@ -107,6 +115,18 @@ public class MainMenuInputs : MonoBehaviour
             settingsFathers.gameObject.SetActive(false);
             AudioManager.Instance.Play_SFX("Click_SFX", 0.6f);
             menuState = MenuState.MAIN;
+            mainButtons[mainIdx].Select();
+        }
+    }
+    
+    void UpdateCreditsMenu()
+    {
+        if (inputs.DeclinePressed || Input.GetKeyDown(KeyCode.Escape))
+        {
+            creditsFather.gameObject.SetActive(false);
+            AudioManager.Instance.Play_SFX("Click_SFX", 0.6f);
+            menuState = MenuState.MAIN;
+            mainButtons[mainIdx].Select();
         }
     }
 
