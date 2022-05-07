@@ -21,19 +21,32 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
     PlayersHUD playerHud = null;
     [SerializeField] private float timerRespawn = 3;
     private BoxCollider collisionBox;
-    [SerializeField] private Material ghostMat;
-    [SerializeField] private Material defaultMat;    public Material DefaultMaterial
+    [SerializeField] private Material ghostMat;
+
+    [SerializeField] private Material defaultMat;
+
+    public Material DefaultMaterial
     {
         get { return defaultMat; }
         set { defaultMat = value; }
-    }
-    private MeshRenderer carRender;
-    private bool inmunity;
-    private bool ghostTextureEnabled;
-
-    public bool applyingForce = false;
-    public float previousMaxSpeed;    public ParticleSystem RespawnParticles;
-
+    }
+
+    private MeshRenderer carRender;
+
+    private bool inmunity;
+
+    private bool ghostTextureEnabled;
+
+
+
+    public bool applyingForce = false;
+
+    public float previousMaxSpeed;
+
+    public ParticleSystem RespawnParticles;
+
+
+
     private void Start()
     {
         Init();
@@ -165,23 +178,36 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
     }
 
     public void ApplyForce(float forceValue, float _seconds)
-    {
-        player.speedIncrementEnabled = false;
-        player.vehicleMaxSpeed = forceValue;
-        StartCoroutine(ResetVelocity(_seconds));
+    {
+
+        player.speedIncrementEnabled = false;
+
+        player.vehicleMaxSpeed = forceValue;
+
+        StartCoroutine(ResetVelocity(_seconds));
+
     }
 
-    private void FixedUpdate()
-    {
-
+    private void FixedUpdate()
+
+    {
+
+
+
     }
 
-    public IEnumerator ResetVelocity(float _seconds)
-    {
-        yield return new WaitForSeconds(_seconds);
-        player.vehicleMaxSpeed = player.savedMaxSpeed;
-        player.speedIncrementEnabled = true;
-        Debug.Log("Velocity reseted");
+    public IEnumerator ResetVelocity(float _seconds)
+
+    {
+
+        yield return new WaitForSeconds(_seconds);
+
+        player.vehicleMaxSpeed = player.savedMaxSpeed;
+
+        player.speedIncrementEnabled = true;
+
+        Debug.Log("Velocity reseted");
+
     }
 
     void OnCollisionStay(Collision other)

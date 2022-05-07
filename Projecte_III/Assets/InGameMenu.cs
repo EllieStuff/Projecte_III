@@ -131,7 +131,7 @@ public class InGameMenu : MonoBehaviour
     {
         if (!gameStarted)
         {
-            if (playersManager.GetPlayer(0).GetComponent<PlayerVehicleScript>().timerStartRace <= 0.0f) gameStarted = true;
+            if (playersManager.GetPlayer(0).GetComponent<PlayerVehicleScript>().raceStarted) gameStarted = true;
             return false;
         }
         else

@@ -9,15 +9,16 @@ public class RoundManager : MonoBehaviour
 {
     [SerializeField] GameObject WinnerUI;
     [SerializeField] TextMeshProUGUI WinnerText;
+    [SerializeField] GameObject inGameMenu;
     private PlayersManager playersManager;
     private int _carsAlive;
     internal bool roundFinished;
     internal int playerWinner;
-    private InitPosManager initPos;
+    private InitPlayerManager initPos;
 
     void Start()
     {
-        initPos = GameObject.FindGameObjectWithTag("InitPos").GetComponent<InitPosManager>();
+        initPos = GameObject.FindGameObjectWithTag("InitPos").GetComponent<InitPlayerManager>();
         playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
     }
 
@@ -29,19 +30,22 @@ public class RoundManager : MonoBehaviour
             playerWinner = GetPlayerWinner();
             WinnerUI.SetActive(true);
             WinnerText.text = "Player "+ (playerWinner + 1) + " Wins!";
+            inGameMenu.SetActive(false);
+            StartCoroutine(StopTime());
             roundFinished = true;
         }
         else if(_carsAlive == 2 && playersManager.numOfPlayers > 2)
         {
-            AudioManager.Instance.OST_AudioSource.pitch = 1.3f;
+            AudioManager.Instance.OST_AudioSource.pitch = 1.2f;
         }
     }
 
     public void ResetScene()
     {
         Destroy(playersManager.gameObject);
-
-        SceneManager.LoadScene("Current Building Scene");
+        StopAllCoroutines();
+        GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().ChangeScene("Current Building Scene");
+        //SceneManager.LoadScene("Current Building Scene");
     }
 
     int CheckPlayersAlive()
@@ -64,4 +68,18 @@ public class RoundManager : MonoBehaviour
         }
         return 0;
     }
+
+
+    IEnumerator StopTime()
+    {
+        float timer = 0.0f, maxTime = 1.0f;
+        while(timer < maxTime)
+        {
+            yield return new WaitForEndOfFrame();
+            timer += Time.deltaTime;
+            Time.timeScale = Mathf.Lerp(1, 0, timer / maxTime);
+        }
+        Time.timeScale = 0.0f;
+    }
+
 }

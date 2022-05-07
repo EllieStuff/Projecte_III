@@ -43,6 +43,7 @@ public class LoadSceneManager : MonoBehaviour
 
     public void ChangeScene(string _newScene)
     {
+        Time.timeScale = 1.0f;
         StartCoroutine(ChangeSceneCoroutine(_newScene));
 
         //PlayersManager playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();

@@ -85,8 +85,10 @@ public class PlayersManager : MonoBehaviour
 
     public void InitPlayers()
     {
+        Time.timeScale = 1.0f;
         for(int i = 0; i < numOfPlayers; i++)
         {
+            players[i].gameObject.SetActive(true);
             players[i].GetComponent<VehicleTriggerAndCollisionEvents>().Init();
             players[i].GetComponent<PlayerVehicleScript>().Init();
             players[i].GetComponent<RandomModifierGet>().ResetModifiers();

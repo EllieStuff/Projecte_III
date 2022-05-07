@@ -48,7 +48,8 @@ public class PlayerVehicleScript : MonoBehaviour
     //public bool onWater;
 
     public Vector3 savedVelocity;
-    [HideInInspector] public float timerStartRace;
+    internal float timerStartRace;
+    [HideInInspector] public bool raceStarted = false;
     private bool startAcceleration;
 
     [SerializeField] private AudioClip normalClip;
@@ -80,6 +81,7 @@ public class PlayerVehicleScript : MonoBehaviour
 
         lifes = 3;
         timerStartRace = 7;
+        raceStarted = false;
 
         alaDelta = GetComponent<PlayerAlaDelta>();
 
@@ -182,20 +184,26 @@ public class PlayerVehicleScript : MonoBehaviour
         //controls.getAllInput(playerNum);
 
         //------Movement------
-        if (timerStartRace <= 0)
+        if (raceStarted)
         {
             vehicleMovement();
             if (!startAcceleration)
             {
                 vehicleRB.velocity = Vector3.zero;
-                if(inputs.Forward || inputs.Backward)
+                if (inputs.Forward || inputs.Backward)
                     startAcceleration = true;
             }
+        }
+        else if (timerStartRace <= 0)
+        {
+            raceStarted = true;
+            //vehicleRB.isKinematic = false;
         }
         else if (touchingGround)
         {
             timerStartRace -= Time.deltaTime;
             vehicleRB.velocity = Vector3.zero;
+            //vehicleRB.isKinematic = true;
         }
     }
 

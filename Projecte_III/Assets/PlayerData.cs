@@ -49,7 +49,7 @@ public class PlayerData : MonoBehaviour
             //        child.SetActive(true);
             //}
 
-            Transform initial = GameObject.FindGameObjectWithTag("InitPos").GetComponent<InitPosManager>().GetInitPos(id);
+            Transform initial = GameObject.FindGameObjectWithTag("InitPos").GetComponent<InitPlayerManager>().GetInitPos(id);
             gameObject.transform.localPosition = initial.localPosition;
             gameObject.transform.localRotation = initial.localRotation;
             gameObject.transform.localScale = initial.localScale;
