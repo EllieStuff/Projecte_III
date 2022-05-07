@@ -3460,11 +3460,11 @@ MonoBehaviour:
   - colorName: Pink
     color: {r: 1, g: 0.34509805, b: 0.80392164, a: 1}
   - colorName: Red
-    color: {r: 1, g: 0.054901965, b: 0.058823533, a: 1}
+    color: {r: 1, g: 0.24905658, b: 0.25217256, a: 1}
   - colorName: Turquoise
     color: {r: 0, g: 0.7058824, b: 0.5882353, a: 1}
   - colorName: Violet
-    color: {r: 0.07450981, g: 0.027450982, b: 0.6313726, a: 1}
+    color: {r: 0.4627451, g: 0.21176471, b: 0.59607846, a: 1}
   - colorName: White
     color: {r: 0.8313726, g: 0.80392164, b: 0.7607844, a: 1}
   - colorName: Yellow
@@ -30258,6 +30258,7 @@ GameObject:
   - component: {fileID: 6920070520597971667}
   - component: {fileID: 6920070520597971666}
   - component: {fileID: 6920070520597971665}
+  - component: {fileID: 6920070520597971672}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -30279,6 +30280,23 @@ Transform:
   m_Father: {fileID: 6920070520027094353}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6920070520597971672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6920070520597971670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: 473388689c3edbb478961a105cfb6a11, type: 2}
 --- !u!1 &6920070520634994048
 GameObject:
   m_ObjectHideFlags: 0
