@@ -49,7 +49,7 @@ public class PlayerData : MonoBehaviour
             //        child.SetActive(true);
             //}
 
-            Transform initial = GameObject.FindGameObjectWithTag("InitPos").GetComponent<InitPosManager>().GetInitPos(id);
+            Transform initial = GameObject.FindGameObjectWithTag("InitPos").GetComponent<InitPlayerManager>().GetInitPos(id);
             gameObject.transform.localPosition = initial.localPosition;
             gameObject.transform.localRotation = initial.localRotation;
             gameObject.transform.localScale = initial.localScale;
@@ -78,10 +78,10 @@ public class PlayerData : MonoBehaviour
         }
         else if (scene.name != "Menu" && scene.name != "SceneSelector")
         {
-            Transform initial = GameObject.FindGameObjectWithTag("InitPos").GetComponent<InitPosManager>().GetInitPos(id);
-            gameObject.transform.position = initial.position;
-            gameObject.transform.localRotation = initial.localRotation;
-            gameObject.transform.localScale = initial.localScale;
+            //Transform initial = GameObject.FindGameObjectWithTag("InitPos").GetComponent<InitPosManager>().GetInitPos(id);
+            //gameObject.transform.position = initial.position;
+            //gameObject.transform.localRotation = initial.localRotation;
+            //gameObject.transform.localScale = initial.localScale;
 
             Rigidbody rb = playerScript.GetComponent<Rigidbody>();
             rb.constraints = RigidbodyConstraints.None;

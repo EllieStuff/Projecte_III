@@ -136,7 +136,8 @@ public class MenuFunctions : MonoBehaviour
         }
 
         Destroy(menuCutScene);
-        SceneManager.LoadScene("Current Building Scene");
+        GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().ChangeScene("Current Building Scene");
+        //SceneManager.LoadScene("Current Building Scene");
 
     }
 

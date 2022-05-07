@@ -25,6 +25,16 @@ public class Utils
 
     public class Misc
     {
+        public class TransformCopy
+        {
+            public Vector3 position, scale;
+            public Quaternion rotation;
+            public TransformCopy() { }
+            public TransformCopy(Transform _t) { position = _t.position; rotation = _t.rotation; scale = _t.localScale; }
+            public TransformCopy(TransformCopy _t) { position = _t.position; rotation = _t.rotation; scale = _t.scale; }
+            public TransformCopy(Vector3 _pos, Quaternion _rot, Vector3 _scale) { position = _pos; rotation = _rot; scale = _scale; }
+        }
+
         public static int RndPositivity()
         {
             float value = Random.Range(-1.0f, 1.0f);

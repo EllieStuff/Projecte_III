@@ -19,7 +19,7 @@ public static class DeathScript
         {
             //AudioManager.Instance.Play_SFX("Fall_SFX");
             outPlayerTransform.position = respawnPosition;
-            outPlayerTransform.localEulerAngles = respawnRotation;
+            outPlayerTransform.localEulerAngles = respawnRotation + new Vector3(0, 180, 0);
             outPlayerTransform.localEulerAngles += new Vector3(0, 90, 0);
             outPlayerRB.velocity = new Vector3(respawnVelocity.x, respawnVelocity.y, respawnVelocity.z);
             timeInFlippedState = 0;
@@ -36,7 +36,7 @@ public static class DeathScript
         {
             //AudioManager.Instance.Play_SFX("Fall_SFX");
             outPlayerTransform.position = respawnPosition;
-            outPlayerTransform.localEulerAngles = respawnRotation;
+            outPlayerTransform.localEulerAngles = respawnRotation + new Vector3(0, 180, 0);
             outPlayerTransform.localEulerAngles += new Vector3(0, 180, 0);
             outPlayerTransform.localEulerAngles = new Vector3(0, outPlayerTransform.localEulerAngles.y, outPlayerTransform.localEulerAngles.z);
             outPlayerRB.velocity = new Vector3(respawnVelocity.x, respawnVelocity.y, respawnVelocity.z);
@@ -53,7 +53,7 @@ public static class DeathScript
         {
             //AudioManager.Instance.Play_SFX("Fall_SFX");
             outPlayerTransform.position = respawnPosition;
-            outPlayerTransform.localEulerAngles = respawnRotation;
+            outPlayerTransform.localEulerAngles = respawnRotation + new Vector3(0, 180, 0);
             outPlayerTransform.localEulerAngles += new Vector3(0, 180, 0);
             outPlayerTransform.localEulerAngles = new Vector3(0, outPlayerTransform.localEulerAngles.y, outPlayerTransform.localEulerAngles.z);
             outPlayerRB.velocity = new Vector3(respawnVelocity.x, respawnVelocity.y, respawnVelocity.z);

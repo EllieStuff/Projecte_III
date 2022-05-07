@@ -28,8 +28,8 @@ public class SceneSelector : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name.Contains("Building Scene"))
         {
-            GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().newScene = mapNames[mapPos];
-            Destroy(gameObject);
+            //GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().newScene = mapNames[mapPos];
+            //Destroy(gameObject);
         }
 
         if (inputs.Right && mapPos < mapQuantity - 1 && timerPress <= 0)

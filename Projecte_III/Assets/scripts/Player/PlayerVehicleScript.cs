@@ -49,6 +49,7 @@ public class PlayerVehicleScript : MonoBehaviour
 
     public Vector3 savedVelocity;
     internal float timerStartRace;
+    [HideInInspector] public bool raceStarted = false;
     private bool startAcceleration;
 
     [SerializeField] private AudioClip normalClip;
@@ -69,19 +70,25 @@ public class PlayerVehicleScript : MonoBehaviour
 
     void Start()
     {
+        Init();
+
+    }
+    public void Init()
+    {
         speedIncrementEnabled = true;
 
         savedVehicleTorque = vehicleTorque;
 
         lifes = 3;
-        timerStartRace = 5;
+        timerStartRace = 7;
+        raceStarted = false;
 
         alaDelta = GetComponent<PlayerAlaDelta>();
 
         //controls = new QuadControlSystem();
 
         inputs = GetComponent<PlayerInputs>();
-        
+
         //inputs.SetGameMode(gameMode);
 
         defaultColorMat = Color.white;
@@ -112,7 +119,6 @@ public class PlayerVehicleScript : MonoBehaviour
         savedAngularDrag = vehicleRB.angularDrag;
 
         wheelsModels = transform.parent.GetChild(1).gameObject;
-
     }
 
     void Update()
@@ -178,20 +184,26 @@ public class PlayerVehicleScript : MonoBehaviour
         //controls.getAllInput(playerNum);
 
         //------Movement------
-        if (timerStartRace <= 0)
+        if (raceStarted)
         {
             vehicleMovement();
             if (!startAcceleration)
             {
                 vehicleRB.velocity = Vector3.zero;
-                if(inputs.Forward || inputs.Backward)
+                if (inputs.Forward || inputs.Backward)
                     startAcceleration = true;
             }
+        }
+        else if (timerStartRace <= 0)
+        {
+            raceStarted = true;
+            //vehicleRB.isKinematic = false;
         }
         else if (touchingGround)
         {
             timerStartRace -= Time.deltaTime;
             vehicleRB.velocity = Vector3.zero;
+            //vehicleRB.isKinematic = true;
         }
     }
 

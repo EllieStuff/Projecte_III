@@ -92,10 +92,10 @@ public class HacksScript : MonoBehaviour
             VechicleTP(tpTransforms.Length - 1);
         }
         
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
-            sceneLoader.ChangeScene("Menu_without_splash");
-        }
+        //if(Input.GetKeyDown(KeyCode.Escape))
+        //{
+        //    sceneLoader.ChangeScene("Menu_without_splash");
+        //}
 
     }
 

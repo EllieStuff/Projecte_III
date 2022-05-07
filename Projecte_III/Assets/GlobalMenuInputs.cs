@@ -13,7 +13,7 @@ public class GlobalMenuInputs : MonoBehaviour
     [HideInInspector]
     public bool
         Up, Down, Right, Left,
-        Accept, Decline;
+        Accept, Decline, OpenMenu;
 
     Dictionary<InputSystem.KeyCodes, bool> keysPressed = new Dictionary<InputSystem.KeyCodes, bool>();
 
@@ -26,12 +26,14 @@ public class GlobalMenuInputs : MonoBehaviour
     public bool LeftPressed { get { return Left && !keysPressed[InputSystem.KeyCodes.MENU_LEFT]; } }
     public bool AcceptPressed { get { return Accept && !keysPressed[InputSystem.KeyCodes.MENU_ACCEPT]; } }
     public bool DeclinePressed { get { return Decline && !keysPressed[InputSystem.KeyCodes.MENU_DECLINE]; } }
+    public bool OpenMenuPressed { get { return OpenMenu && !keysPressed[InputSystem.KeyCodes.START]; } }
     public bool UpReleased { get { return !Up && keysPressed[InputSystem.KeyCodes.MENU_UP]; } }
     public bool DownReleased { get { return !Down && keysPressed[InputSystem.KeyCodes.MENU_DOWN]; } }
     public bool RightReleased { get { return !Right && keysPressed[InputSystem.KeyCodes.MENU_RIGHT]; } }
     public bool LeftReleased { get { return !Left && keysPressed[InputSystem.KeyCodes.MENU_LEFT]; } }
     public bool AcceptReleased { get { return !Accept && keysPressed[InputSystem.KeyCodes.MENU_ACCEPT]; } }
     public bool DeclineReleased { get { return !Decline && keysPressed[InputSystem.KeyCodes.MENU_DECLINE]; } }
+    public bool OpenMenuReleased { get { return !OpenMenu && keysPressed[InputSystem.KeyCodes.START]; } }
 
 
     // Start is called before the first frame update
@@ -46,6 +48,7 @@ public class GlobalMenuInputs : MonoBehaviour
         keysPressed.Add(InputSystem.KeyCodes.MENU_LEFT, false);
         keysPressed.Add(InputSystem.KeyCodes.MENU_ACCEPT, false);
         keysPressed.Add(InputSystem.KeyCodes.MENU_DECLINE, false);
+        keysPressed.Add(InputSystem.KeyCodes.START, false);
     }
 
     private void Update()
@@ -70,6 +73,7 @@ public class GlobalMenuInputs : MonoBehaviour
         Left = inputSystem.GetKey(InputSystem.KeyCodes.MENU_LEFT, controlData);
         Accept = inputSystem.GetKey(InputSystem.KeyCodes.MENU_ACCEPT, controlData);
         Decline = inputSystem.GetKey(InputSystem.KeyCodes.MENU_DECLINE, controlData);
+        OpenMenu = inputSystem.GetKey(InputSystem.KeyCodes.START, controlData);
     }
 
     void UpdateMap()
@@ -97,6 +101,10 @@ public class GlobalMenuInputs : MonoBehaviour
         if (Decline && !keysPressed[InputSystem.KeyCodes.MENU_DECLINE])
         {
             keysPressed[InputSystem.KeyCodes.MENU_DECLINE] = true;
+        }
+        if (OpenMenu && !keysPressed[InputSystem.KeyCodes.START])
+        {
+            keysPressed[InputSystem.KeyCodes.START] = true;
         }
 
         ResetMap();
@@ -128,6 +136,10 @@ public class GlobalMenuInputs : MonoBehaviour
         if (!Decline && keysPressed[InputSystem.KeyCodes.MENU_DECLINE])
         {
             keysPressed[InputSystem.KeyCodes.MENU_DECLINE] = false;
+        }
+        if (!OpenMenu && keysPressed[InputSystem.KeyCodes.START])
+        {
+            keysPressed[InputSystem.KeyCodes.START] = false;
         }
 
     }
