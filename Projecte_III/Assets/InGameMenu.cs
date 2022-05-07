@@ -12,6 +12,7 @@ public class InGameMenu : MonoBehaviour
     [SerializeField] Color baseColor, hoverColor;
 
     GlobalMenuInputs inputs;
+    PlayersManager playersManager;
     Button[] buttons;
     int idx = 0;
     bool gameStarted = false;
@@ -21,6 +22,7 @@ public class InGameMenu : MonoBehaviour
     void Start()
     {
         inputs = GetComponent<GlobalMenuInputs>();
+        playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
 
         buttons = new Button[(int)InGameButton.COUNT];
         buttons[(int)InGameButton.CONTINUE] = menuSet.transform.Find("Continue Button").GetComponent<Button>();
@@ -57,11 +59,15 @@ public class InGameMenu : MonoBehaviour
                     ResetButtonColors();
                     SetButtonColor(0, idx);
                     Time.timeScale = 0.0f;
+                    EnableModifiers(false);
                 }
                 else Time.timeScale = 1.0f;
             }
         }
-        else if (inputs.UpPressed)
+        if (!menuSet.activeSelf)
+            return;
+
+        if (inputs.UpPressed)
         {
             idx--;
             if (idx < 0) idx = buttons.Length - 1;
@@ -82,9 +88,30 @@ public class InGameMenu : MonoBehaviour
         else if (inputs.DeclinePressed)
         {
             if (idx == (int)InGameButton.SETTINGS && menuSettings.activeSelf)
+            {
                 CloseSettings();
+                EnableModifiers(true);
+            }
         }
     }
+
+    void EnableModifiers(bool _enabled)
+    {
+        if (!_enabled)
+        {
+            for (int i = 0; i < playersManager.numOfPlayers; i++)
+                playersManager.GetPlayer(i).GetComponent<RandomModifierGet>().enabled = false;
+        }
+        else
+            StartCoroutine(EnableModifiersCoroutine());
+    }
+    IEnumerator EnableModifiersCoroutine()
+    {
+        yield return new WaitForSeconds(0.3f);
+        for (int i = 0; i < playersManager.numOfPlayers; i++)
+            playersManager.GetPlayer(i).GetComponent<RandomModifierGet>().enabled = true;
+    }
+
 
     void SetButtonColor(int lastIdx, int currIdx)
     {
@@ -104,7 +131,7 @@ public class InGameMenu : MonoBehaviour
     {
         if (!gameStarted)
         {
-            if (inputs.OpenMenuPressed) gameStarted = true;
+            if (playersManager.GetPlayer(0).GetComponent<PlayerVehicleScript>().timerStartRace <= 0.0f) gameStarted = true;
             return false;
         }
         else
@@ -120,6 +147,7 @@ public class InGameMenu : MonoBehaviour
     public void PlayButton()
     {
         menuSet.SetActive(false);
+        EnableModifiers(true);
         idx = 0;
         Time.timeScale = 1.0f;
         AudioManager.Instance.Play_SFX("Click_SFX");
@@ -127,10 +155,12 @@ public class InGameMenu : MonoBehaviour
     public void ReplayButton()
     {
         AudioManager.Instance.Play_SFX("Click_SFX");
+        EnableModifiers(true);
         Time.timeScale = 1.0f;
         //Destroy(GameObject.FindGameObjectWithTag("PlayersManager"));
         //GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().ChangeScene("Current Building Scene");
-        SceneManager.LoadScene("ProceduralMapSceneTest");
+        //SceneManager.LoadScene("ProceduralMapSceneTest");
+        GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().ChangeScene("ProceduralMapSceneTest");
     }
     public void SettingsButton()
     {

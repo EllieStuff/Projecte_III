@@ -35,7 +35,8 @@ public class InitPosManager : MonoBehaviour
         {
             Transform currPlayer = playersManager.GetPlayer(i);
             currPlayer.parent.position = initPoses[i].position;
-            currPlayer.parent.localScale = initPoses[i].localScale;
+            //currPlayer.parent.localScale = initPoses[i].localScale;
+            currPlayer.parent.rotation = transform.localRotation;
             currPlayer.rotation = transform.localRotation;
             currPlayer.position = initPoses[i].position;
         }

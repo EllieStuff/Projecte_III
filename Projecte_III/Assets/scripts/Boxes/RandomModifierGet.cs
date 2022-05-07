@@ -15,6 +15,7 @@ public class RandomModifierGet : MonoBehaviour
     PlayerInputs inputs;
 
     public ModifierTypes currentModifier = ModifierTypes.NONE;
+    [HideInInspector] public bool canUseModifier = true;
 
     PlayersHUD playerHud = null;
 
@@ -32,7 +33,7 @@ public class RandomModifierGet : MonoBehaviour
             showModifierInstance.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
         }
 
-        if (/*currentModifier != ModifierTypes.NONE && */(inputs.ShootForward || inputs.ShootBackwards || inputs.ShootLeft || inputs.ShootRight) && timerModifier <= 0) 
+        if (/*currentModifier != ModifierTypes.NONE && */(inputs.ShootForward || inputs.ShootBackwards || inputs.ShootLeft || inputs.ShootRight) && timerModifier <= 0 && canUseModifier) 
         {
             if(playerHud == null)
             {

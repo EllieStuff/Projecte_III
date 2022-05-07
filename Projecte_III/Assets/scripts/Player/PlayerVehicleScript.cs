@@ -48,7 +48,7 @@ public class PlayerVehicleScript : MonoBehaviour
     //public bool onWater;
 
     public Vector3 savedVelocity;
-    internal float timerStartRace;
+    [HideInInspector] public float timerStartRace;
     private bool startAcceleration;
 
     [SerializeField] private AudioClip normalClip;
@@ -69,49 +69,7 @@ public class PlayerVehicleScript : MonoBehaviour
 
     void Start()
     {
-        speedIncrementEnabled = true;
-
-        savedVehicleTorque = vehicleTorque;
-
-        lifes = 3;
-        timerStartRace = 5;
-
-        alaDelta = GetComponent<PlayerAlaDelta>();
-
-        //controls = new QuadControlSystem();
-
-        inputs = GetComponent<PlayerInputs>();
-        
-        //inputs.SetGameMode(gameMode);
-
-        defaultColorMat = Color.white;
-        particleMat.color = defaultColorMat;
-        Material mat = new Material(particleMat);
-        smokeBoostParticles.material = mat;
-        particleMat = mat;
-
-        vehicleAcceleration = 0.5f;
-
-        savedAcceleration = vehicleAcceleration;
-
-        wheelCollider = new WheelCollider[4];
-        Transform _wheels = transform.Find("Wheels Colliders");
-        for (int i = 0; i < wheelCollider.Length; i++)
-        {
-            wheelCollider[i] = _wheels.GetChild(i).GetComponent<WheelCollider>();
-        }
-        wheelsPivot = _wheels.gameObject;
-
-        GetComponent<AudioSource>().enabled = false;
-        Physics.gravity = new Vector3(0, -9.8f * 2, 0);
-        vehicleRB = GetComponent<Rigidbody>();
-        vehicleRB.centerOfMass = centerOfMass;
-        savedMaxSpeed = vehicleMaxSpeed;
-        baseMaxSpeed = vehicleMaxSpeed;
-        savedMaxSpeed -= 3;
-        savedAngularDrag = vehicleRB.angularDrag;
-
-        wheelsModels = transform.parent.GetChild(1).gameObject;
+        Init();
 
     }
     public void Init()
