@@ -40,14 +40,6 @@ public class RoundManager : MonoBehaviour
         }
     }
 
-    public void ResetScene()
-    {
-        Destroy(playersManager.gameObject);
-        StopAllCoroutines();
-        GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().ChangeScene("Current Building Scene");
-        //SceneManager.LoadScene("Current Building Scene");
-    }
-
     int CheckPlayersAlive()
     {
         int carsAlive = 0;
