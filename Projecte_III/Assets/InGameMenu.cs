@@ -158,9 +158,9 @@ public class InGameMenu : MonoBehaviour
         EnableModifiers(true);
         Time.timeScale = 1.0f;
         //Destroy(GameObject.FindGameObjectWithTag("PlayersManager"));
-        //GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().ChangeScene("Current Building Scene");
+        GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().ChangeScene("Current Building Scene");
         //SceneManager.LoadScene("ProceduralMapSceneTest");
-        GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().ChangeScene("ProceduralMapSceneTest");
+        //GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().ChangeScene("ProceduralMapSceneTest");
     }
     public void SettingsButton()
     {
