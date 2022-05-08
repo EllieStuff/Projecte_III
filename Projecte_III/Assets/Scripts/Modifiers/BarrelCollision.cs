@@ -8,6 +8,7 @@ public class BarrelCollision : MonoBehaviour
 
     [SerializeField] float pushForce = 2.0f;
     [SerializeField] float collisionTimedown = 1.0f;
+    public AK.Wwise.Event SFXExplosion;
     private void Start()
     {
         barrel = transform.parent.GetComponent<BarrelScript>();
@@ -19,6 +20,8 @@ public class BarrelCollision : MonoBehaviour
         if (other.gameObject.tag.Contains("Player"))
         {
             Debug.Log("Collision with player");
+
+            SFXExplosion.Post(gameObject);
 
             //----------
             //Apply pushVector to the player velocity

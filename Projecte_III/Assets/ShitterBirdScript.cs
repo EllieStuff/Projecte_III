@@ -14,6 +14,8 @@ public class ShitterBirdScript : MonoBehaviour
     [SerializeField] GameObject shitPrefab;
     [SerializeField] Transform shadow;
     [SerializeField] float scaleFactor = 0.1f;
+    public AK.Wwise.Event SFXBird;
+
 
     Rigidbody rb;
     float initY;
@@ -24,7 +26,7 @@ public class ShitterBirdScript : MonoBehaviour
     void Start()
     {
         rb = transform.GetComponent<Rigidbody>();
-        AudioManager.Instance.Play_SFX("Bird_SFX");
+        SFXBird.Post(gameObject);
         //InitRndValues();
         InitValues(moveDir, moveSpeed);
 

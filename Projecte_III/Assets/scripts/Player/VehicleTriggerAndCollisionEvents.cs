@@ -20,7 +20,7 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
     [SerializeField] private float timerRespawn = 3;
     private BoxCollider collisionBox;
     [SerializeField] private Material ghostMat;
-    [SerializeField] private Material defaultMat;    public Material DefaultMaterial
+    [SerializeField] private Material defaultMat;    public AK.Wwise.Event SFXRespawn;    public Material DefaultMaterial
     {
         get { return defaultMat; }
         set { defaultMat = value; }
@@ -115,14 +115,13 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
             GameObject parent = transform.parent.gameObject;
 
             if(player.lifes > 0)
-                AudioManager.Instance.Play_SFX("Respawn_SFX");
+                SFXRespawn.Post(gameObject);
 
             if (player.lifes <= 0)
                 parent.SetActive(false);
             else
             {
                 GetComponent<ParticleSystem>().Play();
-                //parent.GetComponent<AudioSource>().Play();
 
                 for (int i = 0; i < 4; i++)
                     Physics.IgnoreCollision(collisionBox, playersManager.GetPlayer(i).GetChild(0).GetComponent<BoxCollider>(), true);

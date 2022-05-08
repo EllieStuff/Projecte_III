@@ -16,6 +16,9 @@ public class SaltoBomba : MonoBehaviour
     [SerializeField] private float explosionRange = 5;
     [SerializeField] private float saltoTimer;
     Quaternion savedRot;
+    public AK.Wwise.Event SFXJump;
+    public AK.Wwise.Event SFXFall;
+
     public void Init(bool _active)
     {
         hasJumped = _active;
@@ -25,7 +28,7 @@ public class SaltoBomba : MonoBehaviour
     {
         if (hasJumped && player.touchingGround)
         {
-            AudioManager.Instance.Play_SFX("JumpSpring_SFX");
+            SFXJump.Post(gameObject);
 
             savedRot = transform.rotation;
             explosionDone = false;
@@ -86,7 +89,7 @@ public class SaltoBomba : MonoBehaviour
 
             if (player.vehicleRB.velocity.y <= 1.2f && !fallSoundPlayed)
             {
-                AudioManager.Instance.Play_SFX("JumpFall_SFX");
+                SFXFall.Post(gameObject);
                 fallSoundPlayed = true;
             }
         }

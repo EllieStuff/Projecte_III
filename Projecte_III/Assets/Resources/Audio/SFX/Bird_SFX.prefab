@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9123676350246802255}
-  - component: {fileID: -1596646764221441612}
+  - component: {fileID: 6751320167678420077}
   m_Layer: 0
   m_Name: Bird_SFX
   m_TagString: Untagged
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-1596646764221441612
+--- !u!114 &6751320167678420077
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,9 +40,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 3331207552294039081}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc2a9e309a994844da743997e318e562, type: 3}
+  m_Script: {fileID: 11500000, guid: da329209c437201408bb48aa5a4db169, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: 8f19ab579de916c46bf5624a9e7c26a4, type: 3}
-  volume: 0.05
-  pitch: 1
+  soundType: 1
+  audioName: 
+  SFX:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 41f9c66cd3d104944a5314ef6cefa595, type: 2}
+  OST:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}

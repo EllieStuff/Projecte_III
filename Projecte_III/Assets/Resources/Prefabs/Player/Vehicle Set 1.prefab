@@ -486,6 +486,10 @@ MonoBehaviour:
   timerRespawn: 3
   ghostMat: {fileID: 0}
   defaultMat: {fileID: 0}
+  SFXRespawn:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: d6db4a65d2a6c664d93c4f98b762e5f9, type: 2}
   applyingForce: 0
   previousMaxSpeed: 0
 --- !u!82 &38654283868662906
@@ -5543,6 +5547,14 @@ MonoBehaviour:
   saltoDuration: 1.5
   explosionRange: 8
   saltoTimer: 0
+  SFXJump:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: eb8fc4e37e49f474fb0eaa5d7024256c, type: 2}
+  SFXFall:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 5203e8a4f84ef024fa76010f0f0192c5, type: 2}
 --- !u!1 &38654284546717500
 GameObject:
   m_ObjectHideFlags: 0

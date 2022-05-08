@@ -14,6 +14,7 @@ public class PaintGunScript : MonoBehaviour
     [SerializeField] Utils.MinMaxFloat timeDiff = new Utils.MinMaxFloat(0.01f, 0.2f);
     [SerializeField] Utils.MinMaxFloat size = new Utils.MinMaxFloat(0.01f, 0.1f);
     [SerializeField] Utils.MinMaxVec3 dirDiff = new Utils.MinMaxVec3(-Vector3.one, Vector3.one);
+    public AK.Wwise.Event SFX;
 
     //bool gunUsable = true;
     float gunSizeIncSpeed = 30.0f;
@@ -60,7 +61,7 @@ public class PaintGunScript : MonoBehaviour
         }
         model.transform.localScale = originalModelSize;
 
-        AudioManager.Instance.Play_SFX("PaintGun_SFX");
+        SFX.Post(gameObject);
 
         float currTime = 0.0f;
         while(currTime < timeActive)
