@@ -34,6 +34,7 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
     private MeshRenderer carRender;
 
     internal bool inmunity;
+    internal bool infiniteLifes = false;
 
     private bool ghostTextureEnabled;
 
@@ -146,7 +147,7 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
             player.vehicleMaxSpeed = player.savedMaxSpeed;
             player.speedIncrementEnabled = true;
             //_______________________________________________
-            if (inmunity) 
+            if (!inmunity && !infiniteLifes) 
             player.lifes--;
 
             playerHud.UpdateLifes(player.lifes);

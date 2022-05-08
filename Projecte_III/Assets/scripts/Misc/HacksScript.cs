@@ -4,108 +4,81 @@ using UnityEngine;
 
 public class HacksScript : MonoBehaviour
 {
-    [SerializeField] Transform[] tpTransforms;
-    LoadSceneManager sceneLoader;
-
-    PlayerVehicleScript playerScript;
-    Quaternion rotMargin;
+    [SerializeField] VehicleTriggerAndCollisionEvents[] players;
 
     // Start is called before the first frame update
     void Start()
     {
-        sceneLoader = GetComponent<LoadSceneManager>();
+        PlayersManager _players = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
 
-        PlayersManager playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
-        if (playersManager.gameMode == PlayersManager.GameModes.MONO)
-        {
-            playerScript = playersManager.GetPlayer(0).GetComponent<PlayerVehicleScript>();
-        }
-        else if (playersManager.gameMode == PlayersManager.GameModes.MULTI_LOCAL)
-        {
-            for (int i = 0; i < playersManager.numOfPlayers; i++)
-            {
-                Transform currPlayer = playersManager.GetPlayer(i);
-                if(currPlayer.GetComponent<PlayerInputs>().ControlData[0].deviceType == InputSystem.DeviceTypes.KEYBOARD)
-                    playerScript = currPlayer.GetComponent<PlayerVehicleScript>();
-            }
-        }
+        players = new VehicleTriggerAndCollisionEvents[_players.numOfPlayers];
 
-        rotMargin = Quaternion.Euler(0, 90, 0);
+        for (int i = 0; i < _players.numOfPlayers; i++)
+            players[i] = _players.GetPlayer(i).GetComponent<VehicleTriggerAndCollisionEvents>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        TPHack();
-
+        Hacks();
     }
 
+    private void InfiniteLifes()
+    {
+        for (int i = 0; i < players.Length; i++)
+        {
+            Debug.Log(!players[i].infiniteLifes);
+            players[i].infiniteLifes = !players[i].infiniteLifes;
+        }
+    }
 
-    private void TPHack()
+    private void Hacks()
     {
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            VechicleTP(0);
+            InfiniteLifes();
         }
         else if (Input.GetKeyDown(KeyCode.F2))
         {
-            VechicleTP(1);
+            for (int i = 0; i < players.Length; i++)
+            {
+                players[i].GetComponent<PlayerThrowPlunger>().SetPlungerModifier();
+            }
         }
         else if (Input.GetKeyDown(KeyCode.F3))
         {
-            VechicleTP(2);
+            for (int i = 0; i < players.Length; i++)
+            {
+                players[i].GetComponent<Umbrella>().SetUmbrellaModifier();
+            }
         }
         else if (Input.GetKeyDown(KeyCode.F4))
         {
-            VechicleTP(3);
+            for (int i = 0; i < players.Length; i++)
+            {
+                players[i].GetComponent<PlayerOilGun>().SetOilGunModifier();
+            }
         }
         else if (Input.GetKeyDown(KeyCode.F5))
         {
-            VechicleTP(4);
+            for (int i = 0; i < players.Length; i++)
+            {
+                players[i].GetComponent<PlayerPaintGun>().SetPaintGunModifier();
+            }
         }
         else if (Input.GetKeyDown(KeyCode.F6))
         {
-            VechicleTP(5);
+            for (int i = 0; i < players.Length; i++)
+            {
+                players[i].GetComponent<SaltoBomba>().SetSaltoBombaModifier();
+            }
         }
         else if (Input.GetKeyDown(KeyCode.F7))
         {
-            VechicleTP(6);
-        }
-        else if (Input.GetKeyDown(KeyCode.F8))
-        {
-            VechicleTP(7);
-        }
-        else if (Input.GetKeyDown(KeyCode.F9))
-        {
-            VechicleTP(8);
-        }
-        else if (Input.GetKeyDown(KeyCode.F10))
-        {
-            VechicleTP(9);
-        }
-        else if (Input.GetKeyDown(KeyCode.F11))
-        {
-            VechicleTP(10);
-        }
-        else if (Input.GetKeyDown(KeyCode.F12))
-        {
-            VechicleTP(tpTransforms.Length - 1);
-        }
-        
-        //if(Input.GetKeyDown(KeyCode.Escape))
-        //{
-        //    sceneLoader.ChangeScene("Menu_without_splash");
-        //}
-
-    }
-
-    private void VechicleTP(int _idx)
-    {
-        if (_idx >= 0 && _idx < tpTransforms.Length)
-        {
-            playerScript.transform.position = tpTransforms[_idx].position;
-            playerScript.transform.rotation = tpTransforms[_idx].rotation * rotMargin;
-            playerScript.vehicleRB.velocity = Vector3.zero;
+            for (int i = 0; i < players.Length; i++)
+            {
+                players[i].GetComponent<BoostModifierScript>().SetBoostModifier();
+            }
         }
     }
 
