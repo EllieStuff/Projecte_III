@@ -171,6 +171,11 @@
 				<Sound Name="161675-PB_Gun-A-Shots-Hyped_3" ID="{7829300F-407C-43ED-B1CD-CB6A4DD3588B}" ShortID="1035922013">
 					<PropertyList>
 						<Property Name="IsVoice" Type="bool" Value="True"/>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-20</Value>
+							</ValueList>
+						</Property>
 					</PropertyList>
 					<ReferenceList>
 						<Reference Name="Conversion">
