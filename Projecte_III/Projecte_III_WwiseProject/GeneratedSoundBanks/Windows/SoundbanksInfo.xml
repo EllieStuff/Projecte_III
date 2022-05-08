@@ -16,7 +16,7 @@
 			<ShortName>Init</ShortName>
 			<Path>Init.bnk</Path>
 		</SoundBank>
-		<SoundBank Id="2878262188" Language="English(US)" Hash="4004975369">
+		<SoundBank Id="2878262188" Language="English(US)" Hash="2368550476">
 			<ObjectPath>\SoundBanks\Default Work Unit\Soundbank_1</ObjectPath>
 			<ShortName>Soundbank_1</ShortName>
 			<Path>English(US)\Soundbank_1.bnk</Path>
@@ -77,7 +77,7 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="2589712766" Name="Play_Market_Sound" ObjectPath="\Events\Default Work Unit\Play_Market_Sound" DurationType="OneShot" DurationMin="55.443493" DurationMax="55.443493">
+				<Event Id="2589712766" Name="Play_Market_Sound" ObjectPath="\Events\Default Work Unit\Play_Market_Sound" MaxAttenuation="50." DurationType="OneShot" DurationMin="55.443493" DurationMax="55.443493">
 					<IncludedMemoryFiles>
 						<File Id="770073799" Language="English(US)">
 							<ShortName>Market Ambience Sound Effect HD.wav</ShortName>
@@ -133,19 +133,11 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="2656107611" Name="Play_Squirrel_Sound" ObjectPath="\Events\Default Work Unit\Play_Squirrel_Sound" DurationType="OneShot" DurationMin="6.408708" DurationMax="6.408708">
+				<Event Id="2656107611" Name="Play_Squirrel_Sound" ObjectPath="\Events\Default Work Unit\Play_Squirrel_Sound" MaxAttenuation="50." DurationType="OneShot" DurationMin="6.408708" DurationMax="6.408708">
 					<IncludedMemoryFiles>
 						<File Id="37637028" Language="English(US)">
 							<ShortName>Squirrel Cartoon Sound fx.wav</ShortName>
 							<Path>Voices\English(US)\Squirrel Cartoon Sound fx_10C4C929.wem</Path>
-						</File>
-					</IncludedMemoryFiles>
-				</Event>
-				<Event Id="463701278" Name="Play_Start_Sound" ObjectPath="\Events\Default Work Unit\Play_Start_Sound" DurationType="OneShot" DurationMin="0.25" DurationMax="0.25">
-					<IncludedMemoryFiles>
-						<File Id="163000586" Language="English(US)">
-							<ShortName>535304-Bluezone-BC0266-radio-beep-morse-code-001-02.wav</ShortName>
-							<Path>Voices\English(US)\535304-Bluezone-BC0266-radio-beep-morse-code-001-02_10C4C929.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>

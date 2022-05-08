@@ -28,7 +28,6 @@ namespace AK
         static const AkUniqueID PLAY_RESPAWN_SOUND = 1478479126U;
         static const AkUniqueID PLAY_SPRINGJUMP_SOUND = 4044348565U;
         static const AkUniqueID PLAY_SQUIRREL_SOUND = 2656107611U;
-        static const AkUniqueID PLAY_START_SOUND = 463701278U;
         static const AkUniqueID PLAY_UMBRELLA_SOUND = 3008850906U;
     } // namespace EVENTS
 
