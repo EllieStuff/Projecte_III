@@ -19,7 +19,7 @@ public class PuddleObstacleScript : MonoBehaviour
     //}
     //List<PlayerData> playersData = new List<PlayerData>();
     List<Rigidbody> playersRB = new List<Rigidbody>();
-    float initMaxSpeed, initMaxAngularSpeed;
+    //float initMaxSpeed, initMaxAngularSpeed;
 
     void Start()
     {
@@ -45,10 +45,10 @@ public class PuddleObstacleScript : MonoBehaviour
         {
             PlayerVehicleScript playerScript = other.transform.parent.GetComponent<PlayerVehicleScript>();
             playerScript.speedIncrementEnabled = true;
-            initMaxSpeed = playerScript.vehicleMaxSpeed;
-            initMaxAngularSpeed = playerScript.vehicleMaxTorque;
-            playerScript.vehicleMaxSpeed = initMaxSpeed * maxSpeedIncrease;
-            playerScript.vehicleMaxTorque = initMaxAngularSpeed * maxSpeedIncrease;
+            //initMaxSpeed = playerScript.vehicleMaxSpeed;
+            //initMaxAngularSpeed = playerScript.vehicleMaxTorque;
+            playerScript.vehicleMaxSpeed = playerScript.savedMaxSpeed * maxSpeedIncrease;
+            playerScript.vehicleMaxTorque = playerScript.savedVehicleTorque * maxSpeedIncrease;
 
             Rigidbody playerRB = playerScript.GetComponent<Rigidbody>();
             playerRB.angularDrag *= angularDragIncrease;
@@ -61,12 +61,12 @@ public class PuddleObstacleScript : MonoBehaviour
         if (other.CompareTag("PlayerVehicle"))
         {
             PlayerVehicleScript playerScript = other.transform.parent.GetComponent<PlayerVehicleScript>();
-            playerScript.vehicleMaxSpeed = initMaxSpeed;
-            playerScript.vehicleMaxTorque = initMaxAngularSpeed;
+            playerScript.vehicleMaxSpeed = playerScript.savedMaxSpeed;
+            playerScript.vehicleMaxTorque = playerScript.savedVehicleTorque;
             playerScript.speedIncrementEnabled = false;
 
             Rigidbody playerRB = playerScript.GetComponent<Rigidbody>();
-            playerRB.angularDrag = INIT_ANGULAR_DRAG;
+            playerRB.angularDrag = playerScript.savedAngularDrag;
             //playersRB.Remove(playerRB);
             //int playerIdx = playersData.FindIndex(_players => _players.rb == playerRB);
             //playersData.RemoveAt(playerIdx);
