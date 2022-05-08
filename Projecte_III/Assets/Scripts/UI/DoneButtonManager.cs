@@ -9,6 +9,7 @@ public class DoneButtonManager : MonoBehaviour
 
     public int buttonsActive = 0;
     [SerializeField] string goToScene;
+    [SerializeField] bool activateWith1Player = false;
 
     bool loadingLevel = false;
 
@@ -62,7 +63,7 @@ public class DoneButtonManager : MonoBehaviour
             StartCoroutine(button.LerpBttnImgColor(readyBttnImgColor));
         }
         yield return new WaitForSeconds(0.2f);
-        if(buttonsActive == 1)
+        if(!activateWith1Player && buttonsActive == 1)
         {
             doneButtonScripts[0].SetReady();
             loadingLevel = false;
