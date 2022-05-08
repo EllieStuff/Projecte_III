@@ -509,8 +509,8 @@ public class @QuadControls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""70617807-be42-4c32-8dbf-7dfcee76441c"",
-                    ""path"": ""<Keyboard>/enter"",
+                    ""id"": ""b03fcfd9-14ad-45ee-9491-8377af9a87d0"",
+                    ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
