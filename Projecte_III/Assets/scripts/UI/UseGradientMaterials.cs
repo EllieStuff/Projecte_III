@@ -27,7 +27,6 @@ public class UseGradientMaterials : MonoBehaviour
                 sharedUsedColors[i] = UsedColors[i];
             }
         }
-        
     }
 
     static public Color GetColor(string _colorName)
