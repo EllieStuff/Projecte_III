@@ -11,6 +11,7 @@ public class Umbrella : MonoBehaviour
     float umbrellaTimer = INIT_UMBRELLA_TIME;
     [SerializeField] GameObject umbrellaGameObject;
     Vector3 originalPos, originalScale;
+    public AK.Wwise.Event SFXUmbrella;
 
     // Start is called before the first frame update
 
@@ -50,7 +51,7 @@ public class Umbrella : MonoBehaviour
     {
         umbrellaGameObject.transform.localRotation = direction;
 
-        AudioManager.Instance.Play_SFX("Umbrella_SFX");
+        SFXUmbrella.Post(gameObject);
 
         if (moveUmbrellaPivot)
             umbrellaGameObject.transform.localPosition -= new Vector3(0, 0, 1);
