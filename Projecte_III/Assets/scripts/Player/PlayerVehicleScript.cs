@@ -27,7 +27,7 @@ public class PlayerVehicleScript : MonoBehaviour
     internal float savedVehicleTorque;
     public float vehicleMaxSpeed;
     public float vehicleMaxTorque;
-    private WheelCollider[] wheelCollider;
+    internal WheelCollider[] wheelCollider;
     private GameObject wheelsModels;
     public bool touchingGround;
     public bool vehicleReversed;
@@ -61,6 +61,8 @@ public class PlayerVehicleScript : MonoBehaviour
     private float baseMaxSpeed;
     internal bool speedIncrementEnabled;
 
+    private VehicleTriggerAndCollisionEvents events;
+
     internal bool dash = false, dashCollided = false;
 
     private void Awake()
@@ -75,6 +77,8 @@ public class PlayerVehicleScript : MonoBehaviour
     }
     public void Init()
     {
+        events = GetComponent<VehicleTriggerAndCollisionEvents>();
+
         speedIncrementEnabled = true;
 
         savedVehicleTorque = vehicleTorque;
@@ -121,11 +125,16 @@ public class PlayerVehicleScript : MonoBehaviour
         wheelsModels = transform.parent.GetChild(1).gameObject;
     }
 
+    bool InmunityCheck()
+    {
+        return events.inmunity;
+    }
+
     void Update()
     {
         if (inputs.ControlData != null)
         {
-            touchingGround = false;
+            touchingGround = InmunityCheck();
 
             if (timerShake < 10000)
                 timerShake += Time.deltaTime;
