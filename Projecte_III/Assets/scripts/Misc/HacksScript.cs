@@ -5,11 +5,13 @@ using UnityEngine;
 public class HacksScript : MonoBehaviour
 {
     [SerializeField] VehicleTriggerAndCollisionEvents[] players;
+    private RoundManager roundManager;
 
     // Start is called before the first frame update
     void Start()
     {
         PlayersManager _players = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
+        roundManager = GameObject.Find("RoundManager").GetComponent<RoundManager>();
 
         players = new VehicleTriggerAndCollisionEvents[_players.numOfPlayers];
 
@@ -79,6 +81,16 @@ public class HacksScript : MonoBehaviour
             {
                 players[i].GetComponent<BoostModifierScript>().SetBoostModifier();
             }
+        }
+        else if (Input.GetKeyDown(KeyCode.F8))
+        {
+            if(roundManager.roundFinished)
+            {
+                roundManager.WinnerUI.SetActive(false);
+                roundManager.StopTimescale();
+            }
+
+            roundManager.enabled = !roundManager.enabled;
         }
     }
 

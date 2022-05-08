@@ -7,7 +7,7 @@ using static RandomModifierGet;
 
 public class RoundManager : MonoBehaviour
 {
-    [SerializeField] GameObject WinnerUI;
+    [SerializeField] internal GameObject WinnerUI;
     [SerializeField] TextMeshProUGUI WinnerText;
     [SerializeField] GameObject inGameMenu;
     private PlayersManager playersManager;
@@ -15,9 +15,11 @@ public class RoundManager : MonoBehaviour
     internal bool roundFinished;
     internal int playerWinner;
     private InitPlayerManager initPos;
+    IEnumerator coroutine;
 
     void Start()
     {
+        coroutine = StopTime();
         initPos = GameObject.FindGameObjectWithTag("InitPos").GetComponent<InitPlayerManager>();
         playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
     }
@@ -31,13 +33,19 @@ public class RoundManager : MonoBehaviour
             WinnerUI.SetActive(true);
             WinnerText.text = "Player "+ (playerWinner + 1) + " Wins!";
             inGameMenu.SetActive(false);
-            StartCoroutine(StopTime());
+            StartCoroutine(coroutine);
             roundFinished = true;
         }
         else if(_carsAlive == 2 && playersManager.numOfPlayers > 2)
         {
             AudioManager.Instance.OST_AudioSource.pitch = 1.2f;
         }
+    }
+
+    public void StopTimescale()
+    {
+        StopCoroutine(coroutine);
+        Time.timeScale = 1;
     }
 
     int CheckPlayersAlive()
