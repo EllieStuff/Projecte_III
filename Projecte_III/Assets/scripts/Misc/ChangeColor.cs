@@ -50,6 +50,7 @@ public class ChangeColor : MonoBehaviour
     {
         if (player.GetComponentInParent<PlayerData>().id == 0)
         {
+            colorList.Clear();
             Material[] mats;
             if (!gradient)
                 mats = Resources.LoadAll<Material>("Materials/CarMaterials/Flat");
