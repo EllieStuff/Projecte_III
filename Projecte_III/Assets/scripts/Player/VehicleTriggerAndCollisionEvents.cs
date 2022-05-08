@@ -89,15 +89,12 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
             carRender.material = defaultMat;
             for (int i = 0; i < 4; i++)
             {
-                Physics.IgnoreCollision(collisionBox[0], playersManager.GetPlayer(i).GetChild(0).GetComponents<BoxCollider>()[0], false);
-                Physics.IgnoreCollision(collisionBox[0], playersManager.GetPlayer(i).GetChild(0).GetComponents<BoxCollider>()[1], false);
-                Physics.IgnoreCollision(collisionBox[1], playersManager.GetPlayer(i).GetChild(0).GetComponents<BoxCollider>()[0], false);
-                Physics.IgnoreCollision(collisionBox[1], playersManager.GetPlayer(i).GetChild(0).GetComponents<BoxCollider>()[1], false);
+                BoxCollider[] cols = playersManager.GetPlayer(i).GetChild(0).GetComponents<BoxCollider>();
 
-                Physics.IgnoreCollision(playersManager.GetPlayer(i).GetChild(0).GetComponents<BoxCollider>()[0], collisionBox[0], false);
-                Physics.IgnoreCollision(playersManager.GetPlayer(i).GetChild(0).GetComponents<BoxCollider>()[1], collisionBox[0], false);
-                Physics.IgnoreCollision(playersManager.GetPlayer(i).GetChild(0).GetComponents<BoxCollider>()[0], collisionBox[1], false);
-                Physics.IgnoreCollision(playersManager.GetPlayer(i).GetChild(0).GetComponents<BoxCollider>()[1], collisionBox[1], false);
+                Physics.IgnoreCollision(collisionBox[0], cols[0], false);
+                Physics.IgnoreCollision(collisionBox[0], cols[1], false);
+                Physics.IgnoreCollision(collisionBox[1], cols[0], false);
+                Physics.IgnoreCollision(collisionBox[1], cols[1], false);
 
                 for (int o = 0; o < player.wheelCollider.Length; o++)
                     player.wheelCollider[o].isTrigger = false;
@@ -140,7 +137,6 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
             transform.position = outTransform.position;
             transform.rotation = outTransform.rotation;
             player.vehicleRB.velocity = outVehicleRB.velocity;
-            player.lifes--;
 
             //Resetting variables
             player.vehicleTorque = player.savedVehicleTorque;
@@ -150,6 +146,8 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
             player.vehicleMaxSpeed = player.savedMaxSpeed;
             player.speedIncrementEnabled = true;
             //_______________________________________________
+            if (inmunity) 
+            player.lifes--;
 
             playerHud.UpdateLifes(player.lifes);
 
@@ -174,29 +172,28 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
                 RespawnParticles.Play();
                 //GetComponent<ParticleSystem>().Play();
                 //parent.GetComponent<AudioSource>().Play();
-
-                for (int i = 0; i < 4; i++)
+                if(!inmunity)
                 {
-                    Physics.IgnoreCollision(collisionBox[0], playersManager.GetPlayer(i).GetChild(0).GetComponents<BoxCollider>()[0], true);
-                    Physics.IgnoreCollision(collisionBox[0], playersManager.GetPlayer(i).GetChild(0).GetComponents<BoxCollider>()[1], true);
-                    Physics.IgnoreCollision(collisionBox[1], playersManager.GetPlayer(i).GetChild(0).GetComponents<BoxCollider>()[0], true);
-                    Physics.IgnoreCollision(collisionBox[1], playersManager.GetPlayer(i).GetChild(0).GetComponents<BoxCollider>()[1], true);
+                    for (int i = 0; i < 4; i++)
+                    {
+                        BoxCollider[] cols = playersManager.GetPlayer(i).GetChild(0).GetComponents<BoxCollider>();
 
-                    Physics.IgnoreCollision(playersManager.GetPlayer(i).GetChild(0).GetComponents<BoxCollider>()[0], collisionBox[0], true);
-                    Physics.IgnoreCollision(playersManager.GetPlayer(i).GetChild(0).GetComponents<BoxCollider>()[1], collisionBox[0], true);
-                    Physics.IgnoreCollision(playersManager.GetPlayer(i).GetChild(0).GetComponents<BoxCollider>()[0], collisionBox[1], true);
-                    Physics.IgnoreCollision(playersManager.GetPlayer(i).GetChild(0).GetComponents<BoxCollider>()[1], collisionBox[1], true);
+                        Physics.IgnoreCollision(collisionBox[0], cols[0], true);
+                        Physics.IgnoreCollision(collisionBox[0], cols[1], true);
+                        Physics.IgnoreCollision(collisionBox[1], cols[0], true);
+                        Physics.IgnoreCollision(collisionBox[1], cols[1], true);
 
-                    for (int o = 0; o < player.wheelCollider.Length; o++)
-                        player.wheelCollider[o].isTrigger = true;
+                        for (int o = 0; o < player.wheelCollider.Length; o++)
+                            player.wheelCollider[o].isTrigger = true;
+                    }
+
+                    carRender.material = ghostMat;
+                    ghostTextureEnabled = true;
+
+                    timerRespawn = 3;
+
+                    inmunity = true;
                 }
-
-                carRender.material = ghostMat;
-                ghostTextureEnabled = true;
-
-                timerRespawn = 3;
-
-                inmunity = true;
             }
 
             if (exitCamera)
