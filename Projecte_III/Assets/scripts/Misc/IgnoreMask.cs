@@ -11,10 +11,10 @@ public class IgnoreMask : MonoBehaviour
     void Start()
     {
         mesh = GetComponent<MeshRenderer>();
-        if (mesh != null) mesh.material.renderQueue = 3003;
+        if (mesh != null) mesh.material.renderQueue = 4000;
 
         sprite = GetComponent<SpriteRenderer>();
-        if (sprite != null) sprite.material.renderQueue = 3003;
+        if (sprite != null) sprite.material.renderQueue = 4000;
 
         Destroy(this);
     }
