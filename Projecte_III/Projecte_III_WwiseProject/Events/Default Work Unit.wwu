@@ -190,6 +190,17 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Play_CarRunning_Sound" ID="{E9316CA8-0BF7-4BF0-9002-5BF5E8098452}">
+					<ChildrenList>
+						<Action Name="" ID="{5F15253F-0E46-4A78-8B7C-D79C878F416A}" ShortID="52556751">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="speed_effect_sound_v2" ID="{2E9046A2-BC9A-400A-9927-017BC3919261}" WorkUnitID="{7DD2C2DE-FD56-4EA8-AF3B-F9917205607F}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

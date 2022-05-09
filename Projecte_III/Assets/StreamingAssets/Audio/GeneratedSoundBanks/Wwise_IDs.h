@@ -15,6 +15,7 @@ namespace AK
     {
         static const AkUniqueID PLAY_BARRELEXPLOSION_SOUND = 3691766587U;
         static const AkUniqueID PLAY_BIRD_SOUND = 2224248995U;
+        static const AkUniqueID PLAY_CARRUNNING_SOUND = 3955459949U;
         static const AkUniqueID PLAY_CLICK_SOUND = 4064171534U;
         static const AkUniqueID PLAY_ENGINEIGNITION_SOUND = 3894340873U;
         static const AkUniqueID PLAY_FALL_SOUND = 262507273U;

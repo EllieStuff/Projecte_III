@@ -118,7 +118,10 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
                 SFXRespawn.Post(gameObject);
 
             if (player.lifes <= 0)
+            {
+                player.CarRunningSound.Stop(gameObject);
                 parent.SetActive(false);
+            }
             else
             {
                 GetComponent<ParticleSystem>().Play();

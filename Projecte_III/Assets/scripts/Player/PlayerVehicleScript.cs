@@ -50,14 +50,15 @@ public class PlayerVehicleScript : MonoBehaviour
     public Vector3 savedVelocity;
     internal float timerStartRace;
 
-    [SerializeField] private AudioClip normalClip;
-
     private PlayerAlaDelta alaDelta;
 
     private Transform outTransform;
     private Rigidbody outVehicleRB;
     private float baseMaxSpeed;
     internal bool speedIncrementEnabled;
+
+    public AK.Wwise.Event CarRunningSound;
+    bool SoundActive = false;
 
     private void Awake()
     {
@@ -99,7 +100,7 @@ public class PlayerVehicleScript : MonoBehaviour
         }
         wheelsPivot = _wheels.gameObject;
 
-        GetComponent<AudioSource>().enabled = false;
+        //GetComponent<AudioSource>().enabled = false;
         Physics.gravity = new Vector3(0, -9.8f * 2, 0);
         vehicleRB = GetComponent<Rigidbody>();
         vehicleRB.centerOfMass = centerOfMass;
@@ -196,6 +197,12 @@ public class PlayerVehicleScript : MonoBehaviour
             vehicleMaxSpeed = savedMaxSpeed;
         }
 
+        if(!SoundActive)
+        {
+            CarRunningSound.Post(gameObject);
+            SoundActive = true;
+        }
+
         if (touchingGround)
         {
             //Main Movement Keys______________________________________________________________________________________________________________________
@@ -247,7 +254,7 @@ public class PlayerVehicleScript : MonoBehaviour
             FallFunction();
         }
         //Vehicle sound pitch function
-        VehicleSoundPitchFunction();
+        //VehicleSoundPitchFunction();
     }
 
     void VehicleSoundPitchFunction()

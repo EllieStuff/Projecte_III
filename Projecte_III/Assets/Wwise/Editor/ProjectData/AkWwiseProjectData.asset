@@ -24,7 +24,7 @@ MonoBehaviour:
     ParentPath: Virtual Acoustics\Default Work Unit
     guid: ed01ff33969c6443acac2a98911dc8ae
     GuidInternal: 
-    m_lastTime: -8585497727826823144
+    m_lastTime: -8585494977819619892
     List: []
   AuxBusWwu:
   - PhysicalPath: Master-Mixer Hierarchy\Default Work Unit.wwu
@@ -38,7 +38,7 @@ MonoBehaviour:
     ParentPath: Master-Mixer Hierarchy\Default Work Unit
     guid: ad94b0186e8b554e8ecdbef549061aaa
     GuidInternal: 
-    m_lastTime: -8585497727840876691
+    m_lastTime: -8585494977822716849
     List:
     - name: Master Audio Bus
       guid: d8a41415a61d2a41a17e75ca0c2149f3
@@ -66,7 +66,7 @@ MonoBehaviour:
     ParentPath: SoundBanks\Default Work Unit
     guid: 3fef24be68241e4db48828e4e5e013e4
     GuidInternal: 
-    m_lastTime: -8585497727826862955
+    m_lastTime: -8585494965899473597
     List:
     - name: Soundbank_1
       guid: f6d83b56f3dc0f40acd0ed31ea907268
@@ -94,7 +94,7 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit
     guid: 5e5a6afcb69930439ecbd10ac13a8baa
     GuidInternal: 
-    m_lastTime: -8585497602370911486
+    m_lastTime: -8585494965899403788
     List:
     - name: Play_BarrelExplosion_Sound
       guid: 6409112ed509ee4f96c7169e8c6726ce
@@ -130,6 +130,23 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 8.522676
       minDuration: 8.522676
+    - name: Play_CarRunning_Sound
+      guid: a86c31e9f70bf04b90025bf5e8098452
+      id: 3955459949
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 5e5a6afcb69930439ecbd10ac13a8baa
+      - ElementName: Play_CarRunning_Sound
+        ObjectType: 3
+        guid: a86c31e9f70bf04b90025bf5e8098452
+      Path: Events\Default Work Unit\Play_CarRunning_Sound
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
     - name: Play_Click_Sound
       guid: 82e076126e47884784e8236e560809e2
       id: 4064171534
@@ -229,7 +246,7 @@ MonoBehaviour:
         ObjectType: 3
         guid: 6c359cd03034134daf7aee5bb68c4586
       Path: Events\Default Work Unit\Play_Market_Sound
-      maxAttenuation: 0
+      maxAttenuation: 50
       maxDuration: 55.443493
       minDuration: 55.443493
     - name: Play_Menu_Music
@@ -348,7 +365,7 @@ MonoBehaviour:
         ObjectType: 3
         guid: 4d395becf4c24d48b2395e5a372f03f1
       Path: Events\Default Work Unit\Play_Squirrel_Sound
-      maxAttenuation: 0
+      maxAttenuation: 50
       maxDuration: 6.408708
       minDuration: 6.408708
     - name: Play_Start_Sound
@@ -366,8 +383,8 @@ MonoBehaviour:
         guid: ee38a693255f124080f52dcf39886759
       Path: Events\Default Work Unit\Play_Start_Sound
       maxAttenuation: 0
-      maxDuration: 0.25
-      minDuration: 0.25
+      maxDuration: -1
+      minDuration: -1
     - name: Play_Umbrella_Sound
       guid: 14bc507cb6902c4188c9609877515aee
       id: 3008850906
@@ -397,7 +414,7 @@ MonoBehaviour:
     ParentPath: Game Parameters\Default Work Unit
     guid: 52a1ad7d0587ad4f8d48fdfd2945a4c2
     GuidInternal: 
-    m_lastTime: -8585497727853622632
+    m_lastTime: -8585494977824901014
     List: []
   StateWwu:
   - PhysicalPath: States\Default Work Unit.wwu
@@ -411,7 +428,7 @@ MonoBehaviour:
     ParentPath: States\Default Work Unit
     guid: d834cbf4cd48724aac9ae827990aacc6
     GuidInternal: 
-    m_lastTime: -8585497727826843096
+    m_lastTime: -8585494977819639837
     List: []
   SwitchWwu:
   - PhysicalPath: Switches\Default Work Unit.wwu
@@ -425,7 +442,7 @@ MonoBehaviour:
     ParentPath: Switches\Default Work Unit
     guid: 17d62377f9ef0a449b3df5b22ffed5a8
     GuidInternal: 
-    m_lastTime: -8585497727826843096
+    m_lastTime: -8585494977819619892
     List: []
   TriggerWwu:
   - PhysicalPath: Triggers\Default Work Unit.wwu
@@ -439,10 +456,10 @@ MonoBehaviour:
     ParentPath: Triggers\Default Work Unit
     guid: 0f019d9f60aa124bbbc35aca4b08f0c9
     GuidInternal: 
-    m_lastTime: -8585497727826833123
+    m_lastTime: -8585494977819619892
     List: []
   ExpandedFileSystemItemIds: 
-  ExpandedWaapiItemIds: 010000000500000006000000
+  ExpandedWaapiItemIds: 05000000
   AutoSyncSelection: 0
   autoPopulateEnabled: 1
   currentDataSource: 0

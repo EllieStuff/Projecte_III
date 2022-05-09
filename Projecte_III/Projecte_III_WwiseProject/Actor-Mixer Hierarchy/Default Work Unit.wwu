@@ -67,6 +67,11 @@
 				<Sound Name="530699-Cartoon_Fat_Ping_Boing" ID="{F207A87D-DE35-40EA-A768-F2DAC8EB3F20}" ShortID="372233555">
 					<PropertyList>
 						<Property Name="IsVoice" Type="bool" Value="True"/>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-14</Value>
+							</ValueList>
+						</Property>
 					</PropertyList>
 					<ReferenceList>
 						<Reference Name="Conversion">
@@ -410,7 +415,7 @@
 						<Property Name="IsVoice" Type="bool" Value="True"/>
 						<Property Name="Volume" Type="Real64">
 							<ValueList>
-								<Value>-16</Value>
+								<Value>-20</Value>
 							</ValueList>
 						</Property>
 					</PropertyList>
@@ -528,6 +533,43 @@
 					<ObjectLists/>
 					<ActiveSourceList>
 						<ActiveSource Name="535304-Bluezone-BC0266-radio-beep-morse-code-001-02" ID="{C6D51389-1429-4035-B30C-068B0158E4DD}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="speed_effect_sound_v2" ID="{2E9046A2-BC9A-400A-9927-017BC3919261}" ShortID="196137402">
+					<PropertyList>
+						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+						<Property Name="IsVoice" Type="bool" Value="True"/>
+						<Property Name="Pitch" Type="int32">
+							<ValueList>
+								<Value>-100</Value>
+							</ValueList>
+						</Property>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-10</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{A33D6D56-C0C8-4851-BC4C-9F9B9D42CFE5}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{18B094AD-8B6E-4E55-8ECD-BEF549061AAA}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="speed_effect_sound_v2" ID="{BA6F0D0E-7F51-42DD-87CC-8B0E4C6AA1D0}">
+							<Language>English(US)</Language>
+							<AudioFile>speed_effect_sound_v2.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="519895437"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="speed_effect_sound_v2" ID="{BA6F0D0E-7F51-42DD-87CC-8B0E4C6AA1D0}" Platform="Linked"/>
 					</ActiveSourceList>
 				</Sound>
 			</ChildrenList>
