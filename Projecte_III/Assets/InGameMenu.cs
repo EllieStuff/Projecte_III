@@ -61,7 +61,11 @@ public class InGameMenu : MonoBehaviour
                     Time.timeScale = 0.0f;
                     EnableModifiers(false);
                 }
-                else Time.timeScale = 1.0f;
+                else
+                {
+                    Time.timeScale = 1.0f;
+                    EnableModifiers(true);
+                }
             }
         }
         if (!menuSet.activeSelf)
