@@ -157,7 +157,7 @@ public class InGameMenu : MonoBehaviour
         AudioManager.Instance.Play_SFX("Click_SFX");
         EnableModifiers(true);
         Time.timeScale = 1.0f;
-        //Destroy(GameObject.FindGameObjectWithTag("PlayersManager"));
+        Destroy(GameObject.FindGameObjectWithTag("PlayersManager"));
         GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().ChangeScene("Current Building Scene");
         //SceneManager.LoadScene("ProceduralMapSceneTest");
         //GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().ChangeScene("ProceduralMapSceneTest");
