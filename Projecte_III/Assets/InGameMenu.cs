@@ -61,7 +61,11 @@ public class InGameMenu : MonoBehaviour
                     Time.timeScale = 0.0f;
                     EnableModifiers(false);
                 }
-                else Time.timeScale = 1.0f;
+                else
+                {
+                    Time.timeScale = 1.0f;
+                    EnableModifiers(true);
+                }
             }
         }
         if (!menuSet.activeSelf)
@@ -157,7 +161,7 @@ public class InGameMenu : MonoBehaviour
         AudioManager.Instance.Play_SFX("Click_SFX");
         EnableModifiers(true);
         Time.timeScale = 1.0f;
-        //Destroy(GameObject.FindGameObjectWithTag("PlayersManager"));
+        Destroy(GameObject.FindGameObjectWithTag("PlayersManager"));
         GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().ChangeScene("Current Building Scene");
         //SceneManager.LoadScene("ProceduralMapSceneTest");
         //GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().ChangeScene("ProceduralMapSceneTest");
