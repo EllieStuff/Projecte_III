@@ -79,7 +79,7 @@ public class BoxModifierScript : MonoBehaviour
         if (destroy)
         {
             timer -= Time.deltaTime;
-            if (timer <= 0 || transform.localScale.magnitude <= 0.2f)
+            if (timer <= 0 || transform.localScale.x <= 0.0f)
                 Destroy(gameObject);
             else
                 transform.localScale -= new Vector3(5.0f, 5.0f, 5.0f) * Time.deltaTime;
