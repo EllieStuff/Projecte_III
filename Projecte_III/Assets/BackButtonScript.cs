@@ -22,7 +22,10 @@ public class BackButtonScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!bttn.Pressed && !PressedByInputs())
+        int inputsAmount = 0;
+        inputsAmount += PressedByInputs();
+        if (bttn.Pressed) inputsAmount++;
+        if (inputsAmount <= 0)
         {
             bg.fillAmount = timer = 0;
             bttnImage.color = Color.white;
@@ -30,7 +33,7 @@ public class BackButtonScript : MonoBehaviour
         }
 
         bttnImage.color = new Color(0.8f, 0.8f, 0.8f, 1);
-        timer += Time.deltaTime;
+        timer += Time.deltaTime * inputsAmount;
         Debug.Log("Timer: " + timer);
         bg.fillAmount = timer / waitTime;
         if (timer > waitTime)
@@ -48,14 +51,15 @@ public class BackButtonScript : MonoBehaviour
         GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().ChangeScene("Menu");
     }
 
-    bool PressedByInputs()
+    int PressedByInputs()
     {
+        int inputsAmount = 0;
         for (int i = 0; i < InputSystem.controls.Quad.Exit.controls.Count; i++)
         {
             if (InputSystem.controls.Quad.Exit.controls[i].EvaluateMagnitude() > 0.3f)
-                return true;
+                inputsAmount++;
         }
-        return false;
+        return inputsAmount;
     }
 
 }
