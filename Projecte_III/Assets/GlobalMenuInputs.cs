@@ -13,7 +13,7 @@ public class GlobalMenuInputs : MonoBehaviour
     [HideInInspector]
     public bool
         Up, Down, Right, Left,
-        Accept, Decline, OpenMenu;
+        Accept, Decline, StartBttn, EscapeBttn;
 
     Dictionary<InputSystem.KeyCodes, bool> keysPressed = new Dictionary<InputSystem.KeyCodes, bool>();
 
@@ -26,14 +26,16 @@ public class GlobalMenuInputs : MonoBehaviour
     public bool LeftPressed { get { return Left && !keysPressed[InputSystem.KeyCodes.MENU_LEFT]; } }
     public bool AcceptPressed { get { return Accept && !keysPressed[InputSystem.KeyCodes.MENU_ACCEPT]; } }
     public bool DeclinePressed { get { return Decline && !keysPressed[InputSystem.KeyCodes.MENU_DECLINE]; } }
-    public bool OpenMenuPressed { get { return OpenMenu && !keysPressed[InputSystem.KeyCodes.START]; } }
+    public bool StartBttnPressed { get { return StartBttn && !keysPressed[InputSystem.KeyCodes.START]; } }
+    public bool EscapeBttnPressed { get { return EscapeBttn && !keysPressed[InputSystem.KeyCodes.ESCAPE]; } }
     public bool UpReleased { get { return !Up && keysPressed[InputSystem.KeyCodes.MENU_UP]; } }
     public bool DownReleased { get { return !Down && keysPressed[InputSystem.KeyCodes.MENU_DOWN]; } }
     public bool RightReleased { get { return !Right && keysPressed[InputSystem.KeyCodes.MENU_RIGHT]; } }
     public bool LeftReleased { get { return !Left && keysPressed[InputSystem.KeyCodes.MENU_LEFT]; } }
     public bool AcceptReleased { get { return !Accept && keysPressed[InputSystem.KeyCodes.MENU_ACCEPT]; } }
     public bool DeclineReleased { get { return !Decline && keysPressed[InputSystem.KeyCodes.MENU_DECLINE]; } }
-    public bool OpenMenuReleased { get { return !OpenMenu && keysPressed[InputSystem.KeyCodes.START]; } }
+    public bool StartBttnReleased { get { return !StartBttn && keysPressed[InputSystem.KeyCodes.START]; } }
+    public bool EscapeBttnReleased { get { return !EscapeBttn && keysPressed[InputSystem.KeyCodes.ESCAPE]; } }
 
 
     // Start is called before the first frame update
@@ -49,6 +51,7 @@ public class GlobalMenuInputs : MonoBehaviour
         keysPressed.Add(InputSystem.KeyCodes.MENU_ACCEPT, false);
         keysPressed.Add(InputSystem.KeyCodes.MENU_DECLINE, false);
         keysPressed.Add(InputSystem.KeyCodes.START, false);
+        keysPressed.Add(InputSystem.KeyCodes.ESCAPE, false);
     }
 
     private void Update()
@@ -73,7 +76,8 @@ public class GlobalMenuInputs : MonoBehaviour
         Left = inputSystem.GetKey(InputSystem.KeyCodes.MENU_LEFT, controlData);
         Accept = inputSystem.GetKey(InputSystem.KeyCodes.MENU_ACCEPT, controlData);
         Decline = inputSystem.GetKey(InputSystem.KeyCodes.MENU_DECLINE, controlData);
-        OpenMenu = inputSystem.GetKey(InputSystem.KeyCodes.START, controlData);
+        StartBttn = inputSystem.GetKey(InputSystem.KeyCodes.START, controlData);
+        EscapeBttn = inputSystem.GetKey(InputSystem.KeyCodes.ESCAPE, controlData);
     }
 
     void UpdateMap()
@@ -102,9 +106,13 @@ public class GlobalMenuInputs : MonoBehaviour
         {
             keysPressed[InputSystem.KeyCodes.MENU_DECLINE] = true;
         }
-        if (OpenMenu && !keysPressed[InputSystem.KeyCodes.START])
+        if (StartBttn && !keysPressed[InputSystem.KeyCodes.START])
         {
             keysPressed[InputSystem.KeyCodes.START] = true;
+        }
+        if (EscapeBttn && !keysPressed[InputSystem.KeyCodes.ESCAPE])
+        {
+            keysPressed[InputSystem.KeyCodes.ESCAPE] = true;
         }
 
         ResetMap();
@@ -137,9 +145,13 @@ public class GlobalMenuInputs : MonoBehaviour
         {
             keysPressed[InputSystem.KeyCodes.MENU_DECLINE] = false;
         }
-        if (!OpenMenu && keysPressed[InputSystem.KeyCodes.START])
+        if (!StartBttn && keysPressed[InputSystem.KeyCodes.START])
         {
             keysPressed[InputSystem.KeyCodes.START] = false;
+        }
+        if (!EscapeBttn && keysPressed[InputSystem.KeyCodes.ESCAPE])
+        {
+            keysPressed[InputSystem.KeyCodes.ESCAPE] = false;
         }
 
     }

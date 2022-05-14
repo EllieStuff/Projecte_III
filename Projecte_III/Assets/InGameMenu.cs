@@ -44,7 +44,7 @@ public class InGameMenu : MonoBehaviour
 
 
         int lastIdx = idx;
-        if (inputs.OpenMenuPressed)
+        if (inputs.StartBttnPressed || inputs.EscapeBttnPressed)
         {
             if (idx == (int)InGameButton.SETTINGS && menuSettings.activeSelf)
             {

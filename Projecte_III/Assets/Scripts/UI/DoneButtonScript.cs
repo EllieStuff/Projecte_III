@@ -31,12 +31,12 @@ public class DoneButtonScript : MonoBehaviour
     {
         if (isActive && playersManager.gameMode == PlayersManager.GameModes.MULTI_LOCAL)
         {
-            if (playerInputs.Start && !startPressed)
+            if ((playerInputs.Start || playerInputs.MenuAccept) && !startPressed)
             {
                 startPressed = true;
                 SetReady();
             }
-            else if (!playerInputs.Start && startPressed)
+            else if (!playerInputs.Start && !playerInputs.MenuAccept && startPressed)
             {
                 startPressed = false;
             }

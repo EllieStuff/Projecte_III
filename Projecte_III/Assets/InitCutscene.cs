@@ -17,7 +17,7 @@ public class InitCutscene : MonoBehaviour
 
     private void Update()
     {
-        if(inputSystem.OpenMenuReleased)
+        if(inputSystem.StartBttnReleased)
         {
             gameObject.SetActive(false);
         }

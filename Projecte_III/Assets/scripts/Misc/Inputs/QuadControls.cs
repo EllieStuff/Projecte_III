@@ -139,6 +139,14 @@ public class @QuadControls : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
+                    ""name"": ""Escape"",
+                    ""type"": ""Button"",
+                    ""id"": ""91967d67-3696-4f71-b8c8-7279f9dc8227"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
                     ""name"": ""Exit"",
                     ""type"": ""Button"",
                     ""id"": ""d4f6ebf5-38b1-401e-a9e4-0fc74aaf4fa0"",
@@ -517,17 +525,6 @@ public class @QuadControls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""b03fcfd9-14ad-45ee-9491-8377af9a87d0"",
-                    ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Start"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""855c763d-2112-4307-ae89-4cfe68da83c0"",
                     ""path"": ""<Keyboard>/upArrow"",
                     ""interactions"": """",
@@ -677,6 +674,17 @@ public class @QuadControls : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Exit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""efc6f769-3f00-4906-9664-c391ba342ed9"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Escape"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1053,6 +1061,17 @@ public class @QuadControls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""67e242f7-de9a-4fb1-b475-bece8c8d92f3"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Up"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""23362a7b-0a61-4f61-83ce-6197f08c7db6"",
                     ""path"": ""<Gamepad>/leftStick/down"",
                     ""interactions"": """",
@@ -1066,6 +1085,17 @@ public class @QuadControls : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""558efbbc-3f7b-492e-803c-d20c45a98a36"",
                     ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Down"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b4825827-e3f7-4c76-9bf3-c6e1806aff3a"",
+                    ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -1097,6 +1127,17 @@ public class @QuadControls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""24666659-d470-4586-b0fb-9a3e6cfa4b07"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Right"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""95fa6fd2-75f5-4850-93f0-b18a012ba5ea"",
                     ""path"": ""<Gamepad>/leftStick/left"",
                     ""interactions"": """",
@@ -1119,6 +1160,17 @@ public class @QuadControls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""47d86e41-6668-43e8-8959-4d9e0597e46a"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Left"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""7f53fd89-039f-4c50-a10c-571923e78355"",
                     ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
@@ -1130,8 +1182,30 @@ public class @QuadControls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""64082ec0-6508-4748-ac5c-fa57e3b1fc56"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Accept"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""846adecc-cab8-43a2-87ae-7464fa9829e0"",
                     ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Decline"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""72e59ece-a63d-4b5d-8f3e-c9034bc511ad"",
+                    ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -1172,6 +1246,7 @@ public class @QuadControls : IInputActionCollection, IDisposable
         m_Quad_ConfirmChosenGadget = m_Quad.FindAction("ConfirmChosenGadget", throwIfNotFound: true);
         m_Quad_UseChosenGadget = m_Quad.FindAction("UseChosenGadget", throwIfNotFound: true);
         m_Quad_Start = m_Quad.FindAction("Start", throwIfNotFound: true);
+        m_Quad_Escape = m_Quad.FindAction("Escape", throwIfNotFound: true);
         m_Quad_Exit = m_Quad.FindAction("Exit", throwIfNotFound: true);
         m_Quad_ChasisElevation = m_Quad.FindAction("ChasisElevation", throwIfNotFound: true);
         m_Quad_AlaDelta = m_Quad.FindAction("AlaDelta", throwIfNotFound: true);
@@ -1268,6 +1343,7 @@ public class @QuadControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Quad_ConfirmChosenGadget;
     private readonly InputAction m_Quad_UseChosenGadget;
     private readonly InputAction m_Quad_Start;
+    private readonly InputAction m_Quad_Escape;
     private readonly InputAction m_Quad_Exit;
     private readonly InputAction m_Quad_ChasisElevation;
     private readonly InputAction m_Quad_AlaDelta;
@@ -1294,6 +1370,7 @@ public class @QuadControls : IInputActionCollection, IDisposable
         public InputAction @ConfirmChosenGadget => m_Wrapper.m_Quad_ConfirmChosenGadget;
         public InputAction @UseChosenGadget => m_Wrapper.m_Quad_UseChosenGadget;
         public InputAction @Start => m_Wrapper.m_Quad_Start;
+        public InputAction @Escape => m_Wrapper.m_Quad_Escape;
         public InputAction @Exit => m_Wrapper.m_Quad_Exit;
         public InputAction @ChasisElevation => m_Wrapper.m_Quad_ChasisElevation;
         public InputAction @AlaDelta => m_Wrapper.m_Quad_AlaDelta;
@@ -1355,6 +1432,9 @@ public class @QuadControls : IInputActionCollection, IDisposable
                 @Start.started -= m_Wrapper.m_QuadActionsCallbackInterface.OnStart;
                 @Start.performed -= m_Wrapper.m_QuadActionsCallbackInterface.OnStart;
                 @Start.canceled -= m_Wrapper.m_QuadActionsCallbackInterface.OnStart;
+                @Escape.started -= m_Wrapper.m_QuadActionsCallbackInterface.OnEscape;
+                @Escape.performed -= m_Wrapper.m_QuadActionsCallbackInterface.OnEscape;
+                @Escape.canceled -= m_Wrapper.m_QuadActionsCallbackInterface.OnEscape;
                 @Exit.started -= m_Wrapper.m_QuadActionsCallbackInterface.OnExit;
                 @Exit.performed -= m_Wrapper.m_QuadActionsCallbackInterface.OnExit;
                 @Exit.canceled -= m_Wrapper.m_QuadActionsCallbackInterface.OnExit;
@@ -1425,6 +1505,9 @@ public class @QuadControls : IInputActionCollection, IDisposable
                 @Start.started += instance.OnStart;
                 @Start.performed += instance.OnStart;
                 @Start.canceled += instance.OnStart;
+                @Escape.started += instance.OnEscape;
+                @Escape.performed += instance.OnEscape;
+                @Escape.canceled += instance.OnEscape;
                 @Exit.started += instance.OnExit;
                 @Exit.performed += instance.OnExit;
                 @Exit.canceled += instance.OnExit;
@@ -1703,6 +1786,7 @@ public class @QuadControls : IInputActionCollection, IDisposable
         void OnConfirmChosenGadget(InputAction.CallbackContext context);
         void OnUseChosenGadget(InputAction.CallbackContext context);
         void OnStart(InputAction.CallbackContext context);
+        void OnEscape(InputAction.CallbackContext context);
         void OnExit(InputAction.CallbackContext context);
         void OnChasisElevation(InputAction.CallbackContext context);
         void OnAlaDelta(InputAction.CallbackContext context);

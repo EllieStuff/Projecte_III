@@ -19,7 +19,7 @@ public class PlayerInputs : MonoBehaviour
     float
         forward, backward, right, left, drift;
     bool
-        start, shootForward, shootBackward, shootLeft, shootRight;
+        start, escape, shootForward, shootBackward, shootLeft, shootRight;
     bool
         mUp, mDown, mRight, mLeft, mAccept, mDecline;
 
@@ -41,6 +41,7 @@ public class PlayerInputs : MonoBehaviour
     public bool Right { get { return right > InputSystem.INPUT_THRESHOLD; } }
     public bool Left { get { return left > InputSystem.INPUT_THRESHOLD; } }
     public bool Start { get { return start; } }
+    public bool Escape { get { return escape; } }
     public bool Drift { get { return drift > InputSystem.INPUT_THRESHOLD; } }
     public bool MenuUp { get { return mUp; } }
     public bool MenuDown { get { return mDown; } }
@@ -141,6 +142,7 @@ public class PlayerInputs : MonoBehaviour
             right = inputSystem.GetKeyFloat(InputSystem.KeyCodes.RIGHT, controlData);
             left = inputSystem.GetKeyFloat(InputSystem.KeyCodes.LEFT, controlData);
             start = inputSystem.GetKey(InputSystem.KeyCodes.START, controlData);
+            escape = inputSystem.GetKey(InputSystem.KeyCodes.ESCAPE, controlData);
             drift = inputSystem.GetKeyFloat(InputSystem.KeyCodes.DRIFT, controlData);
 
             shootForward = inputSystem.GetKey(InputSystem.KeyCodes.SHOOT_FORWARD, controlData);
