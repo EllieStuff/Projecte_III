@@ -35,7 +35,9 @@ public class IA : MonoBehaviour
                 target = GameObject.Find("Target").transform;
 
             IABrain();
-            IAMovement();
+
+            if(vehicleScript.timerStartRace <= 0)
+                IAMovement();
         }
     }
 
@@ -68,7 +70,10 @@ public class IA : MonoBehaviour
             }
         }
 
-        Vector3 targetDir = target.position - transform.position;
+        Vector3 targetDir = Vector3.zero;
+
+        if (target != null)
+            targetDir = target.position - transform.position;
 
         localDir = transform.InverseTransformDirection(targetDir);
 
