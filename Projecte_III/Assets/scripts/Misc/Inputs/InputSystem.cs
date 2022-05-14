@@ -37,7 +37,7 @@ public class InputSystem : MonoBehaviour
     }
 
 
-    static QuadControls controls;
+    public static QuadControls controls;
 
     Dictionary<int, Vector2> j2Dirs = new Dictionary<int, Vector2>();
     Dictionary<int, Vector2> lateJ2Dirs = new Dictionary<int, Vector2>();

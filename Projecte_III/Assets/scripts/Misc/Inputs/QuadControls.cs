@@ -139,6 +139,14 @@ public class @QuadControls : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
+                    ""name"": ""Exit"",
+                    ""type"": ""Button"",
+                    ""id"": ""d4f6ebf5-38b1-401e-a9e4-0fc74aaf4fa0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
                     ""name"": ""ChasisElevation"",
                     ""type"": ""Button"",
                     ""id"": ""6e1b1bb5-77ff-493c-9f3c-692aa3e32ec0"",
@@ -649,6 +657,28 @@ public class @QuadControls : IInputActionCollection, IDisposable
                     ""action"": ""ShootRight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""36086cd8-ece8-44b5-8957-506187cdb9eb"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Exit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""05b3846e-e4e9-4247-836e-c19bd9867dc8"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Exit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1142,6 +1172,7 @@ public class @QuadControls : IInputActionCollection, IDisposable
         m_Quad_ConfirmChosenGadget = m_Quad.FindAction("ConfirmChosenGadget", throwIfNotFound: true);
         m_Quad_UseChosenGadget = m_Quad.FindAction("UseChosenGadget", throwIfNotFound: true);
         m_Quad_Start = m_Quad.FindAction("Start", throwIfNotFound: true);
+        m_Quad_Exit = m_Quad.FindAction("Exit", throwIfNotFound: true);
         m_Quad_ChasisElevation = m_Quad.FindAction("ChasisElevation", throwIfNotFound: true);
         m_Quad_AlaDelta = m_Quad.FindAction("AlaDelta", throwIfNotFound: true);
         m_Quad_ShootForward = m_Quad.FindAction("ShootForward", throwIfNotFound: true);
@@ -1237,6 +1268,7 @@ public class @QuadControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Quad_ConfirmChosenGadget;
     private readonly InputAction m_Quad_UseChosenGadget;
     private readonly InputAction m_Quad_Start;
+    private readonly InputAction m_Quad_Exit;
     private readonly InputAction m_Quad_ChasisElevation;
     private readonly InputAction m_Quad_AlaDelta;
     private readonly InputAction m_Quad_ShootForward;
@@ -1262,6 +1294,7 @@ public class @QuadControls : IInputActionCollection, IDisposable
         public InputAction @ConfirmChosenGadget => m_Wrapper.m_Quad_ConfirmChosenGadget;
         public InputAction @UseChosenGadget => m_Wrapper.m_Quad_UseChosenGadget;
         public InputAction @Start => m_Wrapper.m_Quad_Start;
+        public InputAction @Exit => m_Wrapper.m_Quad_Exit;
         public InputAction @ChasisElevation => m_Wrapper.m_Quad_ChasisElevation;
         public InputAction @AlaDelta => m_Wrapper.m_Quad_AlaDelta;
         public InputAction @ShootForward => m_Wrapper.m_Quad_ShootForward;
@@ -1322,6 +1355,9 @@ public class @QuadControls : IInputActionCollection, IDisposable
                 @Start.started -= m_Wrapper.m_QuadActionsCallbackInterface.OnStart;
                 @Start.performed -= m_Wrapper.m_QuadActionsCallbackInterface.OnStart;
                 @Start.canceled -= m_Wrapper.m_QuadActionsCallbackInterface.OnStart;
+                @Exit.started -= m_Wrapper.m_QuadActionsCallbackInterface.OnExit;
+                @Exit.performed -= m_Wrapper.m_QuadActionsCallbackInterface.OnExit;
+                @Exit.canceled -= m_Wrapper.m_QuadActionsCallbackInterface.OnExit;
                 @ChasisElevation.started -= m_Wrapper.m_QuadActionsCallbackInterface.OnChasisElevation;
                 @ChasisElevation.performed -= m_Wrapper.m_QuadActionsCallbackInterface.OnChasisElevation;
                 @ChasisElevation.canceled -= m_Wrapper.m_QuadActionsCallbackInterface.OnChasisElevation;
@@ -1389,6 +1425,9 @@ public class @QuadControls : IInputActionCollection, IDisposable
                 @Start.started += instance.OnStart;
                 @Start.performed += instance.OnStart;
                 @Start.canceled += instance.OnStart;
+                @Exit.started += instance.OnExit;
+                @Exit.performed += instance.OnExit;
+                @Exit.canceled += instance.OnExit;
                 @ChasisElevation.started += instance.OnChasisElevation;
                 @ChasisElevation.performed += instance.OnChasisElevation;
                 @ChasisElevation.canceled += instance.OnChasisElevation;
@@ -1664,6 +1703,7 @@ public class @QuadControls : IInputActionCollection, IDisposable
         void OnConfirmChosenGadget(InputAction.CallbackContext context);
         void OnUseChosenGadget(InputAction.CallbackContext context);
         void OnStart(InputAction.CallbackContext context);
+        void OnExit(InputAction.CallbackContext context);
         void OnChasisElevation(InputAction.CallbackContext context);
         void OnAlaDelta(InputAction.CallbackContext context);
         void OnShootForward(InputAction.CallbackContext context);
