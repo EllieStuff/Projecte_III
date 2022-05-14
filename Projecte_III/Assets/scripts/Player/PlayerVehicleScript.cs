@@ -58,12 +58,14 @@ public class PlayerVehicleScript : MonoBehaviour
 
     private Transform outTransform;
     private Rigidbody outVehicleRB;
-    private float baseMaxSpeed;
+    internal float baseMaxSpeed;
     internal bool speedIncrementEnabled;
 
     private VehicleTriggerAndCollisionEvents events;
 
     internal bool dash = false, dashCollided = false;
+
+    public bool iaEnabled = false;
 
     private void Awake()
     {
@@ -193,7 +195,7 @@ public class PlayerVehicleScript : MonoBehaviour
         //controls.getAllInput(playerNum);
 
         //------Movement------
-        if (raceStarted)
+        if (raceStarted && !iaEnabled)
         {
             vehicleMovement();
             if (!startAcceleration)
@@ -283,7 +285,7 @@ public class PlayerVehicleScript : MonoBehaviour
         VehicleSoundPitchFunction();
     }
 
-    void VehicleSoundPitchFunction()
+    internal void VehicleSoundPitchFunction()
     {
         AudioSource audio = GetComponent<AudioSource>();
 
@@ -297,7 +299,7 @@ public class PlayerVehicleScript : MonoBehaviour
     }
 
 
-    void FallFunction()
+    internal void FallFunction()
     {
         if (savedVelocity.x > 0)
             savedVelocity -= new Vector3(0.1f + Mathf.Clamp(vehicleRB.velocity.y, 0, 0.2f), 0, 0);
