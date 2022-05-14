@@ -16,6 +16,7 @@ public class InGameMenu : MonoBehaviour
     Button[] buttons;
     int idx = 0;
     bool gameStarted = false;
+    int playerManaging = -1;
 
 
     // Start is called before the first frame update
@@ -44,8 +45,14 @@ public class InGameMenu : MonoBehaviour
 
 
         int lastIdx = idx;
-        if (inputs.StartBttnPressed || inputs.EscapeBttnPressed)
+        if ((inputs.StartBttnPressed || inputs.EscapeBttnPressed) 
+            && (playerManaging == -1 || IsManagingDeviceInput(inputs.StartBttnData.deviceId) || IsManagingDeviceInput(inputs.EscapeBttnData.deviceId)))
         {
+            if (inputs.StartBttnPressed)
+                playerManaging = inputs.StartBttnData.deviceId;
+            else if (inputs.EscapeBttnPressed)
+                playerManaging = inputs.EscapeBttnData.deviceId;
+
             if (idx == (int)InGameButton.SETTINGS && menuSettings.activeSelf)
             {
                 CloseSettings();
@@ -64,6 +71,7 @@ public class InGameMenu : MonoBehaviour
                 else
                 {
                     Time.timeScale = 1.0f;
+                    playerManaging = -1;
                     EnableModifiers(true);
                 }
             }
@@ -71,30 +79,31 @@ public class InGameMenu : MonoBehaviour
         if (!menuSet.activeSelf)
             return;
 
-        if (inputs.UpPressed)
+
+        if (inputs.UpPressed && IsManagingDeviceInput(inputs.UpData.deviceId))
         {
             idx--;
             if (idx < 0) idx = buttons.Length - 1;
             SetButtonColor(lastIdx, idx);
             AudioManager.Instance.Play_SFX("Hover_SFX");
         }
-        else if (inputs.DownPressed)
+        else if (inputs.DownPressed && IsManagingDeviceInput(inputs.DownData.deviceId))
         {
             idx++;
             if (idx >= buttons.Length) idx = 0;
             SetButtonColor(lastIdx, idx);
             AudioManager.Instance.Play_SFX("Hover_SFX");
         }
-        else if (inputs.AcceptPressed)
+        else if (inputs.AcceptPressed && IsManagingDeviceInput(inputs.AcceptData.deviceId))
         {
             buttons[idx].onClick.Invoke();
         }
-        else if (inputs.DeclinePressed)
+        else if (inputs.DeclinePressed && IsManagingDeviceInput(inputs.DeclineData.deviceId))
         {
             if (idx == (int)InGameButton.SETTINGS && menuSettings.activeSelf)
             {
                 CloseSettings();
-                EnableModifiers(true);
+                //EnableModifiers(true);
             }
         }
     }
@@ -142,6 +151,11 @@ public class InGameMenu : MonoBehaviour
             return true;
     }
 
+    bool IsManagingDeviceInput(int _inputDeviceOrigin)
+    {
+        return _inputDeviceOrigin == playerManaging;
+    }
+
 
     public void HoverSound()
     {
@@ -154,6 +168,7 @@ public class InGameMenu : MonoBehaviour
         EnableModifiers(true);
         idx = 0;
         Time.timeScale = 1.0f;
+        playerManaging = -1;
         AudioManager.Instance.Play_SFX("Click_SFX");
     }
     public void ReplayButton()
