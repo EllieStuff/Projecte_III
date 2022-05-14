@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class IA : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class IA : MonoBehaviour
     public int ItemThrowProbability;
     private float throwTimer;
 
+    private int playerNum;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +23,7 @@ public class IA : MonoBehaviour
         vehicleScript = GetComponent<PlayerVehicleScript>();
         playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
         randomModifierScript = GetComponent<RandomModifierGet>();
+        playerNum = transform.parent.GetComponent<PlayerData>().id;
     }
 
     // Update is called once per frame
@@ -27,7 +31,7 @@ public class IA : MonoBehaviour
     {
         if(vehicleScript.iaEnabled)
         {
-            if(target == null)
+            if(target == null && !SceneManager.GetActiveScene().name.Equals("Current Building Scene"))
                 target = GameObject.Find("Target").transform;
 
             IABrain();
@@ -48,21 +52,47 @@ public class IA : MonoBehaviour
         randomModifierScript.IARight = false;
         randomModifierScript.IAItemTrigger = false;
 
+        Vector3 localDir = Vector3.zero;
+
+        for (int i = 0; i < playersManager.numOfPlayers; i++)
+        {
+            localDir = transform.InverseTransformDirection(playersManager.GetPlayer(i).position - transform.position);
+
+            if(localDir.x > 0 && localDir.x < 7 && localDir.z > -3 && localDir.z < 3)
+            {
+                left = true;
+            }
+            else if (localDir.x > -7 && localDir.x < 0 && localDir.z > -3 && localDir.z < 3)
+            {
+                right = true;
+            }
+        }
+
         Vector3 targetDir = target.position - transform.position;
 
-        Vector3 localDir = transform.InverseTransformDirection(targetDir);
-
-        Debug.Log(localDir);
+        localDir = transform.InverseTransformDirection(targetDir);
 
         if (localDir.x > 2)
+        {
             right = true;
+            left = false;
+        }
         else if (localDir.x < -2)
+        {
             left = true;
+            right = false;
+        }
 
         if (localDir.z <= 15)
+        {
             forward = true;
+            backward = false;
+        }
         else
+        {
             backward = true;
+            forward = false;
+        }
 
         throwTimer -= Time.deltaTime;
 

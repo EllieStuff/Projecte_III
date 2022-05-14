@@ -2411,6 +2411,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 38654283868662907, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+      propertyPath: iaEnabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1452520638745877745, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.29444426
@@ -4275,7 +4279,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 38654283868662907, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: iaEnabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 638144713611533918, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: ItemThrowProbability
@@ -24332,7 +24336,8 @@ MonoBehaviour:
   readyBttnImgColor: {r: 0.0906682, g: 1, b: 0, a: 1}
   buttonsActive: 0
   goToScene: ProceduralMapSceneTest
-  activateWith1Player: 0
+  activateWith1Player: 1
+  changeColorManager: {fileID: 1584530454}
 --- !u!222 &6920070519331838724
 CanvasRenderer:
   m_ObjectHideFlags: 0

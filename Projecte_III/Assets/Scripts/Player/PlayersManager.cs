@@ -54,7 +54,7 @@ public class PlayersManager : MonoBehaviour
                     }
                     else
                     {
-                        player.SetActive(false);
+                        //player.SetActive(false);
                     }
                 }
             }
