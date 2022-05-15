@@ -2411,6 +2411,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 38654283868662907, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+      propertyPath: iaEnabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1452520638745877745, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.29444426
@@ -4288,6 +4292,14 @@ PrefabInstance:
     - target: {fileID: 544694467, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 38654283868662907, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+      propertyPath: iaEnabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 638144713611533918, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
+      propertyPath: ItemThrowProbability
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 1452520638745877745, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: m_LocalScale.x
@@ -24324,7 +24336,8 @@ MonoBehaviour:
   readyBttnImgColor: {r: 0.0906682, g: 1, b: 0, a: 1}
   buttonsActive: 0
   goToScene: ProceduralMapSceneTest
-  activateWith1Player: 0
+  activateWith1Player: 1
+  changeColorManager: {fileID: 1584530454}
 --- !u!222 &6920070519331838724
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -27037,6 +27050,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
+  m_XRTrackingOrigin: {fileID: 0}
   m_ActionsAsset: {fileID: -944628639613478452, guid: b1754614d46d13d45a7f0d43fc1f2798, type: 3}
   m_PointAction: {fileID: -1654692200621890270, guid: b1754614d46d13d45a7f0d43fc1f2798, type: 3}
   m_MoveAction: {fileID: 0}
@@ -30511,6 +30525,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2

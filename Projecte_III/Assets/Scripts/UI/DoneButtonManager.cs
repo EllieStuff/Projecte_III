@@ -10,6 +10,7 @@ public class DoneButtonManager : MonoBehaviour
     public int buttonsActive = 0;
     [SerializeField] string goToScene;
     [SerializeField] bool activateWith1Player = false;
+    [SerializeField] Transform changeColorManager;
 
     bool loadingLevel = false;
 
@@ -74,7 +75,19 @@ public class DoneButtonManager : MonoBehaviour
             yield break;
         }
         Debug.Log("Changing Scene");
+
         playersManager.numOfPlayers = buttonsActive;
+
+        for (int i = 0; i < playersManager.players.Length ; i++) 
+        {
+            if (i >= playersManager.numOfPlayers)
+            {
+                changeColorManager.GetChild(i).GetComponent<ChangeColor>().enabled = true;
+                playersManager.GetPlayer(i).GetComponent<PlayerVehicleScript>().iaEnabled = true;
+            }
+        }
+        
+        playersManager.numOfPlayers = 4;
         LoadSceneManager sceneManager = GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>();
         sceneManager.ChangeScene(goToScene);
     }

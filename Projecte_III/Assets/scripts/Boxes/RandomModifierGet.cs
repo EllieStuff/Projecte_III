@@ -19,6 +19,9 @@ public class RandomModifierGet : MonoBehaviour
 
     PlayersHUD playerHud = null;
 
+    internal bool IAItemTrigger = false;
+    internal bool IALeft, IARight, IAUp, IADown;
+
     private void Start()
     {
         inputs = GetComponent<PlayerInputs>();
@@ -33,7 +36,7 @@ public class RandomModifierGet : MonoBehaviour
             showModifierInstance.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
         }
 
-        if (/*currentModifier != ModifierTypes.NONE && */(inputs.ShootForward || inputs.ShootBackwards || inputs.ShootLeft || inputs.ShootRight) && canUseModifier) 
+        if (/*currentModifier != ModifierTypes.NONE && */(inputs.ShootForward || inputs.ShootBackwards || inputs.ShootLeft || inputs.ShootRight || IAItemTrigger) && canUseModifier) 
         {
             if(playerHud == null)
             {
@@ -46,13 +49,13 @@ public class RandomModifierGet : MonoBehaviour
             {
                 case ModifierTypes.PLUNGER:
                     PlayerThrowPlunger plunger = GetComponent<PlayerThrowPlunger>();
-                    if (inputs.ShootForward)
+                    if (inputs.ShootForward || IAUp)
                         plunger.Activate(transform.TransformDirection(0, 0, 1));
-                    else if (inputs.ShootBackwards)
+                    else if (inputs.ShootBackwards || IADown)
                         plunger.Activate(transform.TransformDirection(0, 0, -1));
-                    else if (inputs.ShootLeft)
+                    else if (inputs.ShootLeft || IALeft)
                         plunger.Activate(transform.TransformDirection(-1, 0, 0));
-                    else if (inputs.ShootRight)
+                    else if (inputs.ShootRight || IARight)
                         plunger.Activate(transform.TransformDirection(1, 0, 0));
 
                     //plunger.hasPlunger = false;
@@ -61,13 +64,13 @@ public class RandomModifierGet : MonoBehaviour
 
                 case ModifierTypes.UMBRELLA:
                     Umbrella umbrella = GetComponent<Umbrella>();
-                    if (inputs.ShootForward)
+                    if (inputs.ShootForward || IAUp)
                         umbrella.ActivateUmbrella(Quaternion.Euler(90, 180, 0), true);
-                    else if (inputs.ShootBackwards)
+                    else if (inputs.ShootBackwards || IADown)
                         umbrella.ActivateUmbrella(Quaternion.Euler(-90, 180, 0), false);
-                    else if (inputs.ShootLeft)
+                    else if (inputs.ShootLeft || IALeft)
                         umbrella.ActivateUmbrella(Quaternion.Euler(90, 180, 90), true);
-                    else if (inputs.ShootRight)
+                    else if (inputs.ShootRight || IARight)
                         umbrella.ActivateUmbrella(Quaternion.Euler(90, 180, -90), true);
 
                     timerModifier = INIT_TIMER_MODIFIER;
@@ -82,13 +85,13 @@ public class RandomModifierGet : MonoBehaviour
 
                 case ModifierTypes.PAINT_GUN:
                     PlayerPaintGun paintGun = GetComponent<PlayerPaintGun>();
-                    if (inputs.ShootForward)
+                    if (inputs.ShootForward || IAUp)
                         paintGun.Activate(Quaternion.Euler(0, 180, 0));
-                    else if (inputs.ShootBackwards)
+                    else if (inputs.ShootBackwards || IADown)
                         paintGun.Activate(Quaternion.Euler(0, 0, 0));
-                    else if (inputs.ShootLeft)
+                    else if (inputs.ShootLeft || IALeft)
                         paintGun.Activate(Quaternion.Euler(0, 90, 0));
-                    else if (inputs.ShootRight)
+                    else if (inputs.ShootRight || IARight)
                         paintGun.Activate(Quaternion.Euler(0, -90, 0));
 
                     timerModifier = INIT_TIMER_MODIFIER;
@@ -105,13 +108,13 @@ public class RandomModifierGet : MonoBehaviour
                 case ModifierTypes.BOOST:
                     BoostModifierScript boost = GetComponent<BoostModifierScript>();
 
-                    if (inputs.ShootForward)
+                    if (inputs.ShootForward || IAUp)
                         boost.Active(transform.forward, 1.0f, 1.0f);
-                    else if (inputs.ShootBackwards)
+                    else if (inputs.ShootBackwards || IADown)
                         boost.Active(-transform.forward, 0.25f, 0.3f);
-                    else if (inputs.ShootLeft)
+                    else if (inputs.ShootLeft || IALeft)
                         boost.Active(-transform.right, 0.5f, 1.0f);
-                    else if (inputs.ShootRight)
+                    else if (inputs.ShootRight || IARight)
                         boost.Active(transform.right, 0.5f, 1.0f);
 
                     timerModifier = INIT_TIMER_MODIFIER;
