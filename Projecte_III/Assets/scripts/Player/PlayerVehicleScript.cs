@@ -54,8 +54,6 @@ public class PlayerVehicleScript : MonoBehaviour
 
     [SerializeField] private AudioClip normalClip;
 
-    private PlayerAlaDelta alaDelta;
-
     private Transform outTransform;
     private Rigidbody outVehicleRB;
     internal float baseMaxSpeed;
@@ -88,8 +86,6 @@ public class PlayerVehicleScript : MonoBehaviour
         lifes = 3;
         timerStartRace = 7;
         raceStarted = false;
-
-        alaDelta = GetComponent<PlayerAlaDelta>();
 
         //controls = new QuadControlSystem();
 

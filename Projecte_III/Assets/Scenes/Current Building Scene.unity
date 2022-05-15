@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 4890085278179872738, guid: e19df0c9425d8444eb5110cfadc53c63, type: 2}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: c8aacf6e51d31b3429ea71f04e45ba2f, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -942,14 +942,6 @@ PrefabInstance:
       propertyPath: id
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 2446448053087385845, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
-      propertyPath: ghostMat
-      value: 
-      objectReference: {fileID: 2100000, guid: ce63f92c50ad35947941f799d9144ff9, type: 2}
-    - target: {fileID: 2446448053087385845, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
-      propertyPath: defaultMat
-      value: 
-      objectReference: {fileID: 2100000, guid: b4c06882897d3204fae2041d33c5727d, type: 2}
     - target: {fileID: 3014420310080180277, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: m_LocalPosition.y
       value: 1
@@ -1141,14 +1133,6 @@ PrefabInstance:
       propertyPath: oilGun
       value: 
       objectReference: {fileID: 828894706}
-    - target: {fileID: 2446448053087385845, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
-      propertyPath: ghostMat
-      value: 
-      objectReference: {fileID: 2100000, guid: 6a02617efa7ac1643a12312d46cbad2d, type: 2}
-    - target: {fileID: 2446448053087385845, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
-      propertyPath: defaultMat
-      value: 
-      objectReference: {fileID: 2100000, guid: b4c06882897d3204fae2041d33c5727d, type: 2}
     - target: {fileID: 2954355837703208032, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
@@ -1221,7 +1205,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4511210294317822570, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 4294046193
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 4511210294317822570, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: m_VerticalAlignment
@@ -2443,14 +2427,6 @@ PrefabInstance:
       propertyPath: id
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 2446448053087385845, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
-      propertyPath: ghostMat
-      value: 
-      objectReference: {fileID: 2100000, guid: ce63f92c50ad35947941f799d9144ff9, type: 2}
-    - target: {fileID: 2446448053087385845, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
-      propertyPath: defaultMat
-      value: 
-      objectReference: {fileID: 2100000, guid: b4c06882897d3204fae2041d33c5727d, type: 2}
     - target: {fileID: 3014420310080180277, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: m_LocalPosition.y
       value: 1
@@ -2503,7 +2479,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4511210294317822570, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 4294046193
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 4511210294317822570, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: m_VerticalAlignment
@@ -4329,14 +4305,6 @@ PrefabInstance:
       propertyPath: id
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 2446448053087385845, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
-      propertyPath: ghostMat
-      value: 
-      objectReference: {fileID: 2100000, guid: ce63f92c50ad35947941f799d9144ff9, type: 2}
-    - target: {fileID: 2446448053087385845, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
-      propertyPath: defaultMat
-      value: 
-      objectReference: {fileID: 2100000, guid: b4c06882897d3204fae2041d33c5727d, type: 2}
     - target: {fileID: 3014420310080180277, guid: da9d1e86fd1758d4a8026b717e9c1594, type: 3}
       propertyPath: m_LocalPosition.y
       value: 1
@@ -5058,8 +5026,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quadModel: {fileID: 8719106313004478114, guid: fbc311ca41a702543a23d01b3c2ef353, type: 3}
   quadSpot: {fileID: 0}
+  stats: {fileID: 0}
+  sliderData:
+    weight: 0
+    torque: 0
+    acceleration: 0
+    maxVelocity: 0
+    friction: 0
+  playerId: 0
   statsManager: {fileID: 0}
+  playersManager: {fileID: 0}
+  playerStats: {fileID: 0}
+  playerInputs: {fileID: 0}
   currentQuad: {fileID: 0}
+  placed: 0
 --- !u!1 &5032502035060983456
 GameObject:
   m_ObjectHideFlags: 0
@@ -5655,6 +5635,18 @@ MonoBehaviour:
   wheelSpot: {fileID: 0}
   currentWheel: {fileID: 0}
   statsManager: {fileID: 0}
+  playersManager: {fileID: 0}
+  playerStats: {fileID: 0}
+  stats: {fileID: 0}
+  playerInputs: {fileID: 0}
+  playerId: 0
+  sliderData:
+    weight: 0
+    torque: 0
+    acceleration: 0
+    maxVelocity: 0
+    friction: 0
+  placed: 0
 --- !u!114 &5032502035111525604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5891,8 +5883,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quadModel: {fileID: 2043901934774427347, guid: 5828e9ef0b1553448b511149cb106688, type: 3}
   quadSpot: {fileID: 0}
+  stats: {fileID: 0}
+  sliderData:
+    weight: 0
+    torque: 0
+    acceleration: 0
+    maxVelocity: 0
+    friction: 0
+  playerId: 0
   statsManager: {fileID: 0}
+  playersManager: {fileID: 0}
+  playerStats: {fileID: 0}
+  playerInputs: {fileID: 0}
   currentQuad: {fileID: 0}
+  placed: 0
 --- !u!114 &5032502035119076878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6267,8 +6271,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quadModel: {fileID: 4684633852648962810, guid: 47e6adaa497632b44aa9fcdce1764fbc, type: 3}
   quadSpot: {fileID: 0}
+  stats: {fileID: 0}
+  sliderData:
+    weight: 0
+    torque: 0
+    acceleration: 0
+    maxVelocity: 0
+    friction: 0
+  playerId: 0
   statsManager: {fileID: 0}
+  playersManager: {fileID: 0}
+  playerStats: {fileID: 0}
+  playerInputs: {fileID: 0}
   currentQuad: {fileID: 0}
+  placed: 0
 --- !u!222 &5032502035160122361
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7255,8 +7271,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quadModel: {fileID: 1717090858726819795, guid: 3f936fea7ec9e664cba7671810ba4e3c, type: 3}
   quadSpot: {fileID: 0}
+  stats: {fileID: 0}
+  sliderData:
+    weight: 0
+    torque: 0
+    acceleration: 0
+    maxVelocity: 0
+    friction: 0
+  playerId: 0
   statsManager: {fileID: 0}
+  playersManager: {fileID: 0}
+  playerStats: {fileID: 0}
+  playerInputs: {fileID: 0}
   currentQuad: {fileID: 0}
+  placed: 0
 --- !u!1 &5032502035321347212
 GameObject:
   m_ObjectHideFlags: 0
@@ -7613,8 +7641,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quadModel: {fileID: 1610054654033917338, guid: 64e74c5a04678344d83c0f85092f2156, type: 3}
   quadSpot: {fileID: 0}
+  stats: {fileID: 0}
+  sliderData:
+    weight: 0
+    torque: 0
+    acceleration: 0
+    maxVelocity: 0
+    friction: 0
+  playerId: 0
   statsManager: {fileID: 0}
+  playersManager: {fileID: 0}
+  playerStats: {fileID: 0}
+  playerInputs: {fileID: 0}
   currentQuad: {fileID: 0}
+  placed: 0
 --- !u!114 &5032502035347730070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9018,6 +9058,18 @@ MonoBehaviour:
   wheelSpot: {fileID: 0}
   currentWheel: {fileID: 0}
   statsManager: {fileID: 0}
+  playersManager: {fileID: 0}
+  playerStats: {fileID: 0}
+  stats: {fileID: 0}
+  playerInputs: {fileID: 0}
+  playerId: 0
+  sliderData:
+    weight: 0
+    torque: 0
+    acceleration: 0
+    maxVelocity: 0
+    friction: 0
+  placed: 0
 --- !u!224 &5032502035514335184
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10045,6 +10097,18 @@ MonoBehaviour:
   wheelSpot: {fileID: 0}
   currentWheel: {fileID: 0}
   statsManager: {fileID: 0}
+  playersManager: {fileID: 0}
+  playerStats: {fileID: 0}
+  stats: {fileID: 0}
+  playerInputs: {fileID: 0}
+  playerId: 0
+  sliderData:
+    weight: 0
+    torque: 0
+    acceleration: 0
+    maxVelocity: 0
+    friction: 0
+  placed: 0
 --- !u!114 &5032502035619155740
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10530,8 +10594,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quadModel: {fileID: 2043901934774427347, guid: 5828e9ef0b1553448b511149cb106688, type: 3}
   quadSpot: {fileID: 0}
+  stats: {fileID: 0}
+  sliderData:
+    weight: 0
+    torque: 0
+    acceleration: 0
+    maxVelocity: 0
+    friction: 0
+  playerId: 0
   statsManager: {fileID: 0}
+  playersManager: {fileID: 0}
+  playerStats: {fileID: 0}
+  playerInputs: {fileID: 0}
   currentQuad: {fileID: 0}
+  placed: 0
 --- !u!114 &5032502035712528086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10690,6 +10766,18 @@ MonoBehaviour:
   wheelSpot: {fileID: 0}
   currentWheel: {fileID: 0}
   statsManager: {fileID: 0}
+  playersManager: {fileID: 0}
+  playerStats: {fileID: 0}
+  stats: {fileID: 0}
+  playerInputs: {fileID: 0}
+  playerId: 0
+  sliderData:
+    weight: 0
+    torque: 0
+    acceleration: 0
+    maxVelocity: 0
+    friction: 0
+  placed: 0
 --- !u!114 &5032502035725943868
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11017,8 +11105,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quadModel: {fileID: 8719106313004478114, guid: fbc311ca41a702543a23d01b3c2ef353, type: 3}
   quadSpot: {fileID: 0}
+  stats: {fileID: 0}
+  sliderData:
+    weight: 0
+    torque: 0
+    acceleration: 0
+    maxVelocity: 0
+    friction: 0
+  playerId: 0
   statsManager: {fileID: 0}
+  playersManager: {fileID: 0}
+  playerStats: {fileID: 0}
+  playerInputs: {fileID: 0}
   currentQuad: {fileID: 0}
+  placed: 0
 --- !u!114 &5032502035750461112
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11303,6 +11403,18 @@ MonoBehaviour:
   wheelSpot: {fileID: 0}
   currentWheel: {fileID: 0}
   statsManager: {fileID: 0}
+  playersManager: {fileID: 0}
+  playerStats: {fileID: 0}
+  stats: {fileID: 0}
+  playerInputs: {fileID: 0}
+  playerId: 0
+  sliderData:
+    weight: 0
+    torque: 0
+    acceleration: 0
+    maxVelocity: 0
+    friction: 0
+  placed: 0
 --- !u!114 &5032502035835953688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12193,8 +12305,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quadModel: {fileID: 1610054654033917338, guid: 64e74c5a04678344d83c0f85092f2156, type: 3}
   quadSpot: {fileID: 0}
+  stats: {fileID: 0}
+  sliderData:
+    weight: 0
+    torque: 0
+    acceleration: 0
+    maxVelocity: 0
+    friction: 0
+  playerId: 0
   statsManager: {fileID: 0}
+  playersManager: {fileID: 0}
+  playerStats: {fileID: 0}
+  playerInputs: {fileID: 0}
   currentQuad: {fileID: 0}
+  placed: 0
 --- !u!114 &5032502035962156622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12688,6 +12812,18 @@ MonoBehaviour:
   wheelSpot: {fileID: 0}
   currentWheel: {fileID: 0}
   statsManager: {fileID: 0}
+  playersManager: {fileID: 0}
+  playerStats: {fileID: 0}
+  stats: {fileID: 0}
+  playerInputs: {fileID: 0}
+  playerId: 0
+  sliderData:
+    weight: 0
+    torque: 0
+    acceleration: 0
+    maxVelocity: 0
+    friction: 0
+  placed: 0
 --- !u!222 &5032502036019061336
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -12984,6 +13120,18 @@ MonoBehaviour:
   wheelSpot: {fileID: 0}
   currentWheel: {fileID: 0}
   statsManager: {fileID: 0}
+  playersManager: {fileID: 0}
+  playerStats: {fileID: 0}
+  stats: {fileID: 0}
+  playerInputs: {fileID: 0}
+  playerId: 0
+  sliderData:
+    weight: 0
+    torque: 0
+    acceleration: 0
+    maxVelocity: 0
+    friction: 0
+  placed: 0
 --- !u!222 &5032502036033394704
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -13506,6 +13654,18 @@ MonoBehaviour:
   wheelSpot: {fileID: 0}
   currentWheel: {fileID: 0}
   statsManager: {fileID: 0}
+  playersManager: {fileID: 0}
+  playerStats: {fileID: 0}
+  stats: {fileID: 0}
+  playerInputs: {fileID: 0}
+  playerId: 0
+  sliderData:
+    weight: 0
+    torque: 0
+    acceleration: 0
+    maxVelocity: 0
+    friction: 0
+  placed: 0
 --- !u!114 &5032502036125825032
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14069,6 +14229,18 @@ MonoBehaviour:
   wheelSpot: {fileID: 0}
   currentWheel: {fileID: 0}
   statsManager: {fileID: 0}
+  playersManager: {fileID: 0}
+  playerStats: {fileID: 0}
+  stats: {fileID: 0}
+  playerInputs: {fileID: 0}
+  playerId: 0
+  sliderData:
+    weight: 0
+    torque: 0
+    acceleration: 0
+    maxVelocity: 0
+    friction: 0
+  placed: 0
 --- !u!114 &5032502036168294590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14330,8 +14502,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quadModel: {fileID: 1717090858726819795, guid: 3f936fea7ec9e664cba7671810ba4e3c, type: 3}
   quadSpot: {fileID: 0}
+  stats: {fileID: 0}
+  sliderData:
+    weight: 0
+    torque: 0
+    acceleration: 0
+    maxVelocity: 0
+    friction: 0
+  playerId: 0
   statsManager: {fileID: 0}
+  playersManager: {fileID: 0}
+  playerStats: {fileID: 0}
+  playerInputs: {fileID: 0}
   currentQuad: {fileID: 0}
+  placed: 0
 --- !u!114 &5032502036201473882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16111,8 +16295,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quadModel: {fileID: 2043901934774427347, guid: 5828e9ef0b1553448b511149cb106688, type: 3}
   quadSpot: {fileID: 0}
+  stats: {fileID: 0}
+  sliderData:
+    weight: 0
+    torque: 0
+    acceleration: 0
+    maxVelocity: 0
+    friction: 0
+  playerId: 0
   statsManager: {fileID: 0}
+  playersManager: {fileID: 0}
+  playerStats: {fileID: 0}
+  playerInputs: {fileID: 0}
   currentQuad: {fileID: 0}
+  placed: 0
 --- !u!114 &5032502036411377456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16129,6 +16325,18 @@ MonoBehaviour:
   wheelSpot: {fileID: 0}
   currentWheel: {fileID: 0}
   statsManager: {fileID: 0}
+  playersManager: {fileID: 0}
+  playerStats: {fileID: 0}
+  stats: {fileID: 0}
+  playerInputs: {fileID: 0}
+  playerId: 0
+  sliderData:
+    weight: 0
+    torque: 0
+    acceleration: 0
+    maxVelocity: 0
+    friction: 0
+  placed: 0
 --- !u!222 &5032502036411377457
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -16411,8 +16619,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quadModel: {fileID: 8719106313004478114, guid: fbc311ca41a702543a23d01b3c2ef353, type: 3}
   quadSpot: {fileID: 0}
+  stats: {fileID: 0}
+  sliderData:
+    weight: 0
+    torque: 0
+    acceleration: 0
+    maxVelocity: 0
+    friction: 0
+  playerId: 0
   statsManager: {fileID: 0}
+  playersManager: {fileID: 0}
+  playerStats: {fileID: 0}
+  playerInputs: {fileID: 0}
   currentQuad: {fileID: 0}
+  placed: 0
 --- !u!114 &5032502036455495076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17372,8 +17592,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quadModel: {fileID: 4684633852648962810, guid: 47e6adaa497632b44aa9fcdce1764fbc, type: 3}
   quadSpot: {fileID: 0}
+  stats: {fileID: 0}
+  sliderData:
+    weight: 0
+    torque: 0
+    acceleration: 0
+    maxVelocity: 0
+    friction: 0
+  playerId: 0
   statsManager: {fileID: 0}
+  playersManager: {fileID: 0}
+  playerStats: {fileID: 0}
+  playerInputs: {fileID: 0}
   currentQuad: {fileID: 0}
+  placed: 0
 --- !u!114 &5032502036564547628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17784,6 +18016,18 @@ MonoBehaviour:
   wheelSpot: {fileID: 0}
   currentWheel: {fileID: 0}
   statsManager: {fileID: 0}
+  playersManager: {fileID: 0}
+  playerStats: {fileID: 0}
+  stats: {fileID: 0}
+  playerInputs: {fileID: 0}
+  playerId: 0
+  sliderData:
+    weight: 0
+    torque: 0
+    acceleration: 0
+    maxVelocity: 0
+    friction: 0
+  placed: 0
 --- !u!114 &5032502036581084180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18571,6 +18815,18 @@ MonoBehaviour:
   wheelSpot: {fileID: 0}
   currentWheel: {fileID: 0}
   statsManager: {fileID: 0}
+  playersManager: {fileID: 0}
+  playerStats: {fileID: 0}
+  stats: {fileID: 0}
+  playerInputs: {fileID: 0}
+  playerId: 0
+  sliderData:
+    weight: 0
+    torque: 0
+    acceleration: 0
+    maxVelocity: 0
+    friction: 0
+  placed: 0
 --- !u!114 &5032502036714888526
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19064,6 +19320,18 @@ MonoBehaviour:
   wheelSpot: {fileID: 0}
   currentWheel: {fileID: 0}
   statsManager: {fileID: 0}
+  playersManager: {fileID: 0}
+  playerStats: {fileID: 0}
+  stats: {fileID: 0}
+  playerInputs: {fileID: 0}
+  playerId: 0
+  sliderData:
+    weight: 0
+    torque: 0
+    acceleration: 0
+    maxVelocity: 0
+    friction: 0
+  placed: 0
 --- !u!114 &5032502036778547302
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19616,8 +19884,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quadModel: {fileID: 1717090858726819795, guid: 3f936fea7ec9e664cba7671810ba4e3c, type: 3}
   quadSpot: {fileID: 0}
+  stats: {fileID: 0}
+  sliderData:
+    weight: 0
+    torque: 0
+    acceleration: 0
+    maxVelocity: 0
+    friction: 0
+  playerId: 0
   statsManager: {fileID: 0}
+  playersManager: {fileID: 0}
+  playerStats: {fileID: 0}
+  playerInputs: {fileID: 0}
   currentQuad: {fileID: 0}
+  placed: 0
 --- !u!114 &5032502036811792258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20034,8 +20314,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quadModel: {fileID: 1610054654033917338, guid: 64e74c5a04678344d83c0f85092f2156, type: 3}
   quadSpot: {fileID: 0}
+  stats: {fileID: 0}
+  sliderData:
+    weight: 0
+    torque: 0
+    acceleration: 0
+    maxVelocity: 0
+    friction: 0
+  playerId: 0
   statsManager: {fileID: 0}
+  playersManager: {fileID: 0}
+  playerStats: {fileID: 0}
+  playerInputs: {fileID: 0}
   currentQuad: {fileID: 0}
+  placed: 0
 --- !u!222 &5032502036848432548
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -20320,6 +20612,18 @@ MonoBehaviour:
   wheelSpot: {fileID: 0}
   currentWheel: {fileID: 0}
   statsManager: {fileID: 0}
+  playersManager: {fileID: 0}
+  playerStats: {fileID: 0}
+  stats: {fileID: 0}
+  playerInputs: {fileID: 0}
+  playerId: 0
+  sliderData:
+    weight: 0
+    torque: 0
+    acceleration: 0
+    maxVelocity: 0
+    friction: 0
+  placed: 0
 --- !u!222 &5032502036893835506
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -20342,8 +20646,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quadModel: {fileID: 4684633852648962810, guid: 47e6adaa497632b44aa9fcdce1764fbc, type: 3}
   quadSpot: {fileID: 0}
+  stats: {fileID: 0}
+  sliderData:
+    weight: 0
+    torque: 0
+    acceleration: 0
+    maxVelocity: 0
+    friction: 0
+  playerId: 0
   statsManager: {fileID: 0}
+  playersManager: {fileID: 0}
+  playerStats: {fileID: 0}
+  playerInputs: {fileID: 0}
   currentQuad: {fileID: 0}
+  placed: 0
 --- !u!114 &5032502036893835508
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20640,6 +20956,18 @@ MonoBehaviour:
   wheelSpot: {fileID: 0}
   currentWheel: {fileID: 0}
   statsManager: {fileID: 0}
+  playersManager: {fileID: 0}
+  playerStats: {fileID: 0}
+  stats: {fileID: 0}
+  playerInputs: {fileID: 0}
+  playerId: 0
+  sliderData:
+    weight: 0
+    torque: 0
+    acceleration: 0
+    maxVelocity: 0
+    friction: 0
+  placed: 0
 --- !u!114 &5032502036910363852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22741,8 +23069,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quadModel: {fileID: 2043901934774427347, guid: 5828e9ef0b1553448b511149cb106688, type: 3}
   quadSpot: {fileID: 0}
+  stats: {fileID: 0}
+  sliderData:
+    weight: 0
+    torque: 0
+    acceleration: 0
+    maxVelocity: 0
+    friction: 0
+  playerId: 0
   statsManager: {fileID: 0}
+  playersManager: {fileID: 0}
+  playerStats: {fileID: 0}
+  playerInputs: {fileID: 0}
   currentQuad: {fileID: 0}
+  placed: 0
 --- !u!1 &6920070518895543097
 GameObject:
   m_ObjectHideFlags: 0
@@ -22863,6 +23203,18 @@ MonoBehaviour:
   wheelSpot: {fileID: 0}
   currentWheel: {fileID: 0}
   statsManager: {fileID: 0}
+  playersManager: {fileID: 0}
+  playerStats: {fileID: 0}
+  stats: {fileID: 0}
+  playerInputs: {fileID: 0}
+  playerId: 0
+  sliderData:
+    weight: 0
+    torque: 0
+    acceleration: 0
+    maxVelocity: 0
+    friction: 0
+  placed: 0
 --- !u!1 &6920070518898903516
 GameObject:
   m_ObjectHideFlags: 0
@@ -23003,8 +23355,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quadModel: {fileID: 8719106313004478114, guid: fbc311ca41a702543a23d01b3c2ef353, type: 3}
   quadSpot: {fileID: 0}
+  stats: {fileID: 0}
+  sliderData:
+    weight: 0
+    torque: 0
+    acceleration: 0
+    maxVelocity: 0
+    friction: 0
+  playerId: 0
   statsManager: {fileID: 0}
+  playersManager: {fileID: 0}
+  playerStats: {fileID: 0}
+  playerInputs: {fileID: 0}
   currentQuad: {fileID: 0}
+  placed: 0
 --- !u!224 &6920070518924727128
 RectTransform:
   m_ObjectHideFlags: 0
@@ -25365,8 +25729,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quadModel: {fileID: 1610054654033917338, guid: 64e74c5a04678344d83c0f85092f2156, type: 3}
   quadSpot: {fileID: 0}
+  stats: {fileID: 0}
+  sliderData:
+    weight: 0
+    torque: 0
+    acceleration: 0
+    maxVelocity: 0
+    friction: 0
+  playerId: 0
   statsManager: {fileID: 0}
+  playersManager: {fileID: 0}
+  playerStats: {fileID: 0}
+  playerInputs: {fileID: 0}
   currentQuad: {fileID: 0}
+  placed: 0
 --- !u!1 &6920070519595967353
 GameObject:
   m_ObjectHideFlags: 0
@@ -26136,6 +26512,18 @@ MonoBehaviour:
   wheelSpot: {fileID: 0}
   currentWheel: {fileID: 0}
   statsManager: {fileID: 0}
+  playersManager: {fileID: 0}
+  playerStats: {fileID: 0}
+  stats: {fileID: 0}
+  playerInputs: {fileID: 0}
+  playerId: 0
+  sliderData:
+    weight: 0
+    torque: 0
+    acceleration: 0
+    maxVelocity: 0
+    friction: 0
+  placed: 0
 --- !u!1 &6920070519729834785
 GameObject:
   m_ObjectHideFlags: 0
@@ -27050,7 +27438,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
-  m_XRTrackingOrigin: {fileID: 0}
   m_ActionsAsset: {fileID: -944628639613478452, guid: b1754614d46d13d45a7f0d43fc1f2798, type: 3}
   m_PointAction: {fileID: -1654692200621890270, guid: b1754614d46d13d45a7f0d43fc1f2798, type: 3}
   m_MoveAction: {fileID: 0}
@@ -27331,8 +27718,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quadModel: {fileID: 1717090858726819795, guid: 3f936fea7ec9e664cba7671810ba4e3c, type: 3}
   quadSpot: {fileID: 0}
+  stats: {fileID: 0}
+  sliderData:
+    weight: 0
+    torque: 0
+    acceleration: 0
+    maxVelocity: 0
+    friction: 0
+  playerId: 0
   statsManager: {fileID: 0}
+  playersManager: {fileID: 0}
+  playerStats: {fileID: 0}
+  playerInputs: {fileID: 0}
   currentQuad: {fileID: 0}
+  placed: 0
 --- !u!1 &6920070519960629861
 GameObject:
   m_ObjectHideFlags: 0
@@ -27888,8 +28287,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quadModel: {fileID: 4684633852648962810, guid: 47e6adaa497632b44aa9fcdce1764fbc, type: 3}
   quadSpot: {fileID: 0}
+  stats: {fileID: 0}
+  sliderData:
+    weight: 0
+    torque: 0
+    acceleration: 0
+    maxVelocity: 0
+    friction: 0
+  playerId: 0
   statsManager: {fileID: 0}
+  playersManager: {fileID: 0}
+  playerStats: {fileID: 0}
+  playerInputs: {fileID: 0}
   currentQuad: {fileID: 0}
+  placed: 0
 --- !u!1 &6920070520063126804
 GameObject:
   m_ObjectHideFlags: 0
@@ -29118,6 +29529,18 @@ MonoBehaviour:
   wheelSpot: {fileID: 0}
   currentWheel: {fileID: 0}
   statsManager: {fileID: 0}
+  playersManager: {fileID: 0}
+  playerStats: {fileID: 0}
+  stats: {fileID: 0}
+  playerInputs: {fileID: 0}
+  playerId: 0
+  sliderData:
+    weight: 0
+    torque: 0
+    acceleration: 0
+    maxVelocity: 0
+    friction: 0
+  placed: 0
 --- !u!224 &6920070520378160616
 RectTransform:
   m_ObjectHideFlags: 0
@@ -29402,6 +29825,18 @@ MonoBehaviour:
   wheelSpot: {fileID: 0}
   currentWheel: {fileID: 0}
   statsManager: {fileID: 0}
+  playersManager: {fileID: 0}
+  playerStats: {fileID: 0}
+  stats: {fileID: 0}
+  playerInputs: {fileID: 0}
+  playerId: 0
+  sliderData:
+    weight: 0
+    torque: 0
+    acceleration: 0
+    maxVelocity: 0
+    friction: 0
+  placed: 0
 --- !u!114 &6920070520389831856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30525,7 +30960,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
-  m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
@@ -31394,6 +31828,18 @@ MonoBehaviour:
   wheelSpot: {fileID: 0}
   currentWheel: {fileID: 0}
   statsManager: {fileID: 0}
+  playersManager: {fileID: 0}
+  playerStats: {fileID: 0}
+  stats: {fileID: 0}
+  playerInputs: {fileID: 0}
+  playerId: 0
+  sliderData:
+    weight: 0
+    torque: 0
+    acceleration: 0
+    maxVelocity: 0
+    friction: 0
+  placed: 0
 --- !u!224 &6920070520795242996
 RectTransform:
   m_ObjectHideFlags: 0

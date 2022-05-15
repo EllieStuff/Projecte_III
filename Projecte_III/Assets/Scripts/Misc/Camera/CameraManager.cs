@@ -8,7 +8,6 @@ public class CameraManager : MonoBehaviour
     [SerializeField] Camera[] renderCameras;
 
     internal PlayersManager playersManager;
-    internal RenderTexturesManager rendTexManager;
     bool inGameScene;
 
     // Start is called before the first frame update
@@ -16,28 +15,12 @@ public class CameraManager : MonoBehaviour
     {
         playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
         GameObject rendTexManagerGO = GameObject.FindGameObjectWithTag("RenderTexturesManager");
-        if(rendTexManagerGO != null)
-            rendTexManager = rendTexManagerGO.GetComponent<RenderTexturesManager>();
         //numOfPlayers = playersManager.numOfPlayers;
     }
 
     private void Start()
     {
-        if (rendTexManager != null)
-        {
-            inGameScene = false;
-            for (int i = 0; i < renderCameras.Length; i++)
-            {
-                if (i < playersManager.numOfPlayers)
-                    renderCameras[i].gameObject.SetActive(true);
-                else
-                    renderCameras[i].gameObject.SetActive(false);
-            }
-        }
-        else
-        {
-            inGameScene = true;
-        }
+        
     }
 
     // Update is called once per frame
