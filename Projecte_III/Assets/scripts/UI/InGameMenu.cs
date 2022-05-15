@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 public class InGameMenu : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class InGameMenu : MonoBehaviour
     bool gameStarted = false;
     //int playerManaging = -1;
     InputSystem.KeyData playerManaging = null;
-    bool invokeCalledByScript = false;
+    internal bool invokeCalledByScript = false;
 
 
     // Start is called before the first frame update
@@ -42,48 +43,13 @@ public class InGameMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!CheckStarted()) 
+        if (CheckIsInSubMenu())
+            return;
+        if (!CheckMenuIsOpen())
             return;
 
 
         int lastIdx = idx;
-        if ((inputs.StartBttnPressed || inputs.EscapeBttnPressed) 
-            && (playerManaging == null || IsManagingDeviceInput(inputs.StartBttnData.deviceId) || IsManagingDeviceInput(inputs.EscapeBttnData.deviceId)))
-        {
-            if (inputs.StartBttnPressed)
-                playerManaging = inputs.StartBttnData;
-            else if (inputs.EscapeBttnPressed)
-                playerManaging = inputs.EscapeBttnData;
-
-            if (idx == (int)InGameButton.SETTINGS && menuSettings.activeSelf)
-            {
-                invokeCalledByScript = true;
-                CloseSettings();
-                invokeCalledByScript = false;
-            }
-            else
-            {
-                menuSet.SetActive(!menuSet.activeSelf);
-                if (menuSet.activeSelf)
-                {
-                    idx = 0;
-                    ResetButtonColors();
-                    SetButtonColor(0, idx);
-                    Time.timeScale = 0.0f;
-                    EnableModifiers(false);
-                }
-                else
-                {
-                    Time.timeScale = 1.0f;
-                    playerManaging = null;
-                    EnableModifiers(true);
-                }
-            }
-        }
-        if (!menuSet.activeSelf)
-            return;
-
-
         if (inputs.UpPressed && IsManagingDeviceInput(inputs.UpData.deviceId))
         {
             idx--;
@@ -106,14 +72,59 @@ public class InGameMenu : MonoBehaviour
         }
         else if (inputs.DeclinePressed && IsManagingDeviceInput(inputs.DeclineData.deviceId))
         {
+            //if (idx == (int)InGameButton.SETTINGS && menuSettings.activeSelf)
+            //{
+            //    invokeCalledByScript = true;
+            //    CloseSettings();
+            //    //EnableModifiers(true);
+            //}
+        }
+    }
+
+    private bool CheckMenuIsOpen()
+    {
+        if (!CheckStarted())
+            return false;
+
+        if ((inputs.StartBttnPressed || inputs.EscapeBttnPressed)
+            && (playerManaging == null || IsManagingDeviceInput(inputs.StartBttnData.deviceId) || IsManagingDeviceInput(inputs.EscapeBttnData.deviceId)))
+        {
+            if (inputs.StartBttnPressed)
+                playerManaging = inputs.StartBttnData;
+            else if (inputs.EscapeBttnPressed)
+                playerManaging = inputs.EscapeBttnData;
+
             if (idx == (int)InGameButton.SETTINGS && menuSettings.activeSelf)
             {
                 invokeCalledByScript = true;
                 CloseSettings();
-                invokeCalledByScript = false;
-                //EnableModifiers(true);
+            }
+            else
+            {
+                menuSet.SetActive(!menuSet.activeSelf);
+                if (menuSet.activeSelf)
+                {
+                    idx = 0;
+                    ResetButtonColors();
+                    SetButtonColor(0, idx);
+                    Time.timeScale = 0.0f;
+                    EnableModifiers(false);
+                }
+                else
+                {
+                    Time.timeScale = 1.0f;
+                    playerManaging = null;
+                    EnableModifiers(true);
+                }
             }
         }
+
+        return menuSet.activeSelf;
+    }
+
+    bool CheckIsInSubMenu()
+    {
+        return menuSettings.activeSelf;
     }
 
     void EnableModifiers(bool _enabled)
@@ -201,6 +212,7 @@ public class InGameMenu : MonoBehaviour
             return;
 
         menuSettings.SetActive(true);
+        menuSettings.GetComponent<SettingsMenuScript>().Init(inputs, playerManaging);
         idx = (int)InGameButton.SETTINGS;
         AudioManager.Instance.Play_SFX("Click_SFX");
     }
@@ -223,6 +235,7 @@ public class InGameMenu : MonoBehaviour
         ResetButtonColors();
         SetButtonColor(0, idx);
         menuSettings.SetActive(false);
+        invokeCalledByScript = false;
     }
 
 
