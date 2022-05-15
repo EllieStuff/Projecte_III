@@ -35,6 +35,13 @@ public class InputSystem : MonoBehaviour
         }
 
     }
+    public class KeyData
+    {
+        public int deviceId = -1;
+        public DeviceTypes deviceType = DeviceTypes.DEFAULT;
+        public bool pressed = false;
+        public KeyData(int _deviceId, DeviceTypes _deviceType, bool _pressed) { deviceId = _deviceId; deviceType = _deviceType; pressed = _pressed; }
+    }
 
 
     public static QuadControls controls;
@@ -185,7 +192,7 @@ public class InputSystem : MonoBehaviour
     }
 
 
-    public float GetKeyFloat(KeyCodes _key, ControlData[] _controlData)   // Si dones problemes, adaptar tots perque vagin amb la "complexCasesReturnAux" en contres de amb returns
+    public float GetKeyFloat(KeyCodes _key, ControlData[] _controlData)
     {
         for (int idx = 0; idx < _controlData.Length; idx++)
         {
@@ -267,11 +274,12 @@ public class InputSystem : MonoBehaviour
 
     }
 
-    public bool GetKey(KeyCodes _key, ControlData[] _controlData)   // Si dones problemes, adaptar tots perque vagin amb la "complexCasesReturnAux" en contres de amb returns
+    public KeyData GetKeyData(KeyCodes _key, ControlData[] _controlData)
     {
         for (int idx = 0; idx < _controlData.Length; idx++)
         {
             int mainDeviceId = _controlData[idx].mainDeviceId;
+            KeyData currKeyData = new KeyData(mainDeviceId, _controlData[idx].deviceType, true);
             switch (_key)
             {
                 case KeyCodes.FORWARD:
@@ -280,7 +288,7 @@ public class InputSystem : MonoBehaviour
                         if (controls.Quad.Forward.controls[i].device.deviceId == mainDeviceId)
                         {
                             //Debug.Log("Forward is " + controls.Quad.Forward.controls[i].EvaluateMagnitude());
-                            if (controls.Quad.Forward.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return true;
+                            if (controls.Quad.Forward.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return currKeyData;
                         }
                     }
 
@@ -292,7 +300,7 @@ public class InputSystem : MonoBehaviour
                         if (controls.Quad.Backward.controls[i].device.deviceId == mainDeviceId)
                         {
                             //Debug.Log("Backward is " + controls.Quad.Backward.controls[i].EvaluateMagnitude());
-                            if (controls.Quad.Backward.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return true;
+                            if (controls.Quad.Backward.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return currKeyData;
                         }
                     }
 
@@ -304,7 +312,7 @@ public class InputSystem : MonoBehaviour
                         if (controls.Quad.Left.controls[i].device.deviceId == mainDeviceId)
                         {
                             //Debug.Log("Left is " + controls.Quad.Left.controls[i].EvaluateMagnitude());
-                            if (controls.Quad.Left.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return true;
+                            if (controls.Quad.Left.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return currKeyData;
                         }
                     }
 
@@ -316,7 +324,7 @@ public class InputSystem : MonoBehaviour
                         if (controls.Quad.Right.controls[i].device.deviceId == mainDeviceId)
                         {
                             //Debug.Log("Right is " + controls.Quad.Right.controls[i].EvaluateMagnitude());
-                            if (controls.Quad.Right.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return true;
+                            if (controls.Quad.Right.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return currKeyData;
                         }
                     }
 
@@ -328,7 +336,7 @@ public class InputSystem : MonoBehaviour
                         if (controls.Quad.Start.controls[i].device.deviceId == mainDeviceId)
                         {
                             //Debug.Log("Start is " + controls.Quad.Start.controls[i].EvaluateMagnitude());
-                            if (controls.Quad.Start.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return true;
+                            if (controls.Quad.Start.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return currKeyData;
                         }
                     }
 
@@ -340,7 +348,7 @@ public class InputSystem : MonoBehaviour
                         if (controls.Quad.Escape.controls[i].device.deviceId == mainDeviceId)
                         {
                             //Debug.Log("Escape is " + controls.Quad.Escape.controls[i].EvaluateMagnitude());
-                            if (controls.Quad.Escape.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return true;
+                            if (controls.Quad.Escape.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return currKeyData;
                         }
                     }
 
@@ -352,7 +360,7 @@ public class InputSystem : MonoBehaviour
                         if (controls.Quad.Drift.controls[i].device.deviceId == mainDeviceId)
                         {
                             //Debug.Log("Drift is " + controls.Quad.Drift.controls[i].EvaluateMagnitude());
-                            if (controls.Quad.Drift.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return true;
+                            if (controls.Quad.Drift.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return currKeyData;
                         }
                     }
 
@@ -364,7 +372,7 @@ public class InputSystem : MonoBehaviour
                         if (controls.Quad.ShootForward.controls[i].device.deviceId == mainDeviceId)
                         {
                             //Debug.Log("BuildingMenu.Up is " + controls.Quad.ShootForward.controls[i].EvaluateMagnitude());
-                            if (controls.Quad.ShootForward.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return true;
+                            if (controls.Quad.ShootForward.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return currKeyData;
                         }
                     }
                     break;
@@ -375,7 +383,7 @@ public class InputSystem : MonoBehaviour
                         if (controls.Quad.ShootBackwards.controls[i].device.deviceId == mainDeviceId)
                         {
                             //Debug.Log("BuildingMenu.Up is " + controls.Quad.ShootBackwards.controls[i].EvaluateMagnitude());
-                            if (controls.Quad.ShootBackwards.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return true;
+                            if (controls.Quad.ShootBackwards.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return currKeyData;
                         }
                     }
                     break;
@@ -386,7 +394,7 @@ public class InputSystem : MonoBehaviour
                         if (controls.Quad.ShootLeft.controls[i].device.deviceId == mainDeviceId)
                         {
                             //Debug.Log("BuildingMenu.Up is " + controls.Quad.ShootLeft.controls[i].EvaluateMagnitude());
-                            if (controls.Quad.ShootLeft.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return true;
+                            if (controls.Quad.ShootLeft.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return currKeyData;
                         }
                     }
                     break;
@@ -397,7 +405,7 @@ public class InputSystem : MonoBehaviour
                         if (controls.Quad.ShootRight.controls[i].device.deviceId == mainDeviceId)
                         {
                             //Debug.Log("BuildingMenu.Up is " + controls.Quad.ShootRight.controls[i].EvaluateMagnitude());
-                            if (controls.Quad.ShootRight.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return true;
+                            if (controls.Quad.ShootRight.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return currKeyData;
                         }
                     }
                     break;
@@ -409,7 +417,7 @@ public class InputSystem : MonoBehaviour
                         if (controls.BuildingMenu.Up.controls[i].device.deviceId == mainDeviceId)
                         {
                             //Debug.Log("BuildingMenu.Up is " + controls.BuildingMenu.Up.controls[i].EvaluateMagnitude());
-                            if (controls.BuildingMenu.Up.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return true;
+                            if (controls.BuildingMenu.Up.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return currKeyData;
                         }
                     }
 
@@ -421,7 +429,7 @@ public class InputSystem : MonoBehaviour
                         if (controls.BuildingMenu.Down.controls[i].device.deviceId == mainDeviceId)
                         {
                             //Debug.Log("BuildingMenu.Down is " + controls.BuildingMenu.Down.controls[i].EvaluateMagnitude());
-                            if (controls.BuildingMenu.Down.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return true;
+                            if (controls.BuildingMenu.Down.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return currKeyData;
                         }
                     }
 
@@ -433,7 +441,7 @@ public class InputSystem : MonoBehaviour
                         if (controls.BuildingMenu.Right.controls[i].device.deviceId == mainDeviceId)
                         {
                             //Debug.Log("BuildingMenu.Right is " + controls.BuildingMenu.Right.controls[i].EvaluateMagnitude());
-                            if (controls.BuildingMenu.Right.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return true;
+                            if (controls.BuildingMenu.Right.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return currKeyData;
                         }
                     }
 
@@ -445,7 +453,7 @@ public class InputSystem : MonoBehaviour
                         if (controls.BuildingMenu.Left.controls[i].device.deviceId == mainDeviceId)
                         {
                             //Debug.Log("BuildingMenu.Left is " + controls.BuildingMenu.Left.controls[i].EvaluateMagnitude());
-                            if (controls.BuildingMenu.Left.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return true;
+                            if (controls.BuildingMenu.Left.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return currKeyData;
                         }
                     }
 
@@ -457,7 +465,7 @@ public class InputSystem : MonoBehaviour
                         if (controls.BuildingMenu.Accept.controls[i].device.deviceId == mainDeviceId)
                         {
                             //Debug.Log("BuildingMenu.Accept is " + controls.BuildingMenu.Accept.controls[i].EvaluateMagnitude());
-                            if (controls.BuildingMenu.Accept.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return true;
+                            if (controls.BuildingMenu.Accept.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return currKeyData;
                         }
                     }
 
@@ -469,7 +477,7 @@ public class InputSystem : MonoBehaviour
                         if (controls.BuildingMenu.Decline.controls[i].device.deviceId == mainDeviceId)
                         {
                             //Debug.Log("BuildingMenu.Decline is " + controls.BuildingMenu.Decline.controls[i].EvaluateMagnitude());
-                            if (controls.BuildingMenu.Decline.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return true;
+                            if (controls.BuildingMenu.Decline.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return currKeyData;
                         }
                     }
 
@@ -482,7 +490,7 @@ public class InputSystem : MonoBehaviour
 
         }
 
-        return false;
+        return new KeyData(-1, DeviceTypes.DEFAULT, false);
 
     }
 

@@ -141,14 +141,14 @@ public class PlayerInputs : MonoBehaviour
             backward = inputSystem.GetKeyFloat(InputSystem.KeyCodes.BACKWARD, controlData);
             right = inputSystem.GetKeyFloat(InputSystem.KeyCodes.RIGHT, controlData);
             left = inputSystem.GetKeyFloat(InputSystem.KeyCodes.LEFT, controlData);
-            start = inputSystem.GetKey(InputSystem.KeyCodes.START, controlData);
-            escape = inputSystem.GetKey(InputSystem.KeyCodes.ESCAPE, controlData);
+            start = inputSystem.GetKeyData(InputSystem.KeyCodes.START, controlData).pressed;
+            escape = inputSystem.GetKeyData(InputSystem.KeyCodes.ESCAPE, controlData).pressed;
             drift = inputSystem.GetKeyFloat(InputSystem.KeyCodes.DRIFT, controlData);
 
-            shootForward = inputSystem.GetKey(InputSystem.KeyCodes.SHOOT_FORWARD, controlData);
-            shootBackward = inputSystem.GetKey(InputSystem.KeyCodes.SHOOT_BACKWARD, controlData);
-            shootLeft = inputSystem.GetKey(InputSystem.KeyCodes.SHOOT_LEFT, controlData);
-            shootRight = inputSystem.GetKey(InputSystem.KeyCodes.SHOOT_RIGHT, controlData);
+            shootForward = inputSystem.GetKeyData(InputSystem.KeyCodes.SHOOT_FORWARD, controlData).pressed;
+            shootBackward = inputSystem.GetKeyData(InputSystem.KeyCodes.SHOOT_BACKWARD, controlData).pressed;
+            shootLeft = inputSystem.GetKeyData(InputSystem.KeyCodes.SHOOT_LEFT, controlData).pressed;
+            shootRight = inputSystem.GetKeyData(InputSystem.KeyCodes.SHOOT_RIGHT, controlData).pressed;
 
             // Axis
             //chooseItem = inputSystem.GetAxis(InputSystem.AxisCodes.CHOOSE_ITEM, controlData);
@@ -157,12 +157,12 @@ public class PlayerInputs : MonoBehaviour
         /// Menu Inputs
         if (menuInputsEnabled)
         {
-            mUp = inputSystem.GetKey(InputSystem.KeyCodes.MENU_UP, controlData);
-            mDown = inputSystem.GetKey(InputSystem.KeyCodes.MENU_DOWN, controlData);
-            mRight = inputSystem.GetKey(InputSystem.KeyCodes.MENU_RIGHT, controlData);
-            mLeft = inputSystem.GetKey(InputSystem.KeyCodes.MENU_LEFT, controlData);
-            mAccept = inputSystem.GetKey(InputSystem.KeyCodes.MENU_ACCEPT, controlData);
-            mDecline = inputSystem.GetKey(InputSystem.KeyCodes.MENU_DECLINE, controlData);
+            mUp = inputSystem.GetKeyData(InputSystem.KeyCodes.MENU_UP, controlData).pressed;
+            mDown = inputSystem.GetKeyData(InputSystem.KeyCodes.MENU_DOWN, controlData).pressed;
+            mRight = inputSystem.GetKeyData(InputSystem.KeyCodes.MENU_RIGHT, controlData).pressed;
+            mLeft = inputSystem.GetKeyData(InputSystem.KeyCodes.MENU_LEFT, controlData).pressed;
+            mAccept = inputSystem.GetKeyData(InputSystem.KeyCodes.MENU_ACCEPT, controlData).pressed;
+            mDecline = inputSystem.GetKeyData(InputSystem.KeyCodes.MENU_DECLINE, controlData).pressed;
         }
     }
 

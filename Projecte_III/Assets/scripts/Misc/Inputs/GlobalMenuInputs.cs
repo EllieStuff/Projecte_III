@@ -11,15 +11,23 @@ public class GlobalMenuInputs : MonoBehaviour
     bool updateInputs = false;
 
     [HideInInspector]
-    public bool
-        Up, Down, Right, Left,
-        Accept, Decline, StartBttn, EscapeBttn;
+    public InputSystem.KeyData
+        UpData, DownData, RightData, LeftData,
+        AcceptData, DeclineData, StartBttnData, EscapeBttnData;
 
     Dictionary<InputSystem.KeyCodes, bool> keysPressed = new Dictionary<InputSystem.KeyCodes, bool>();
 
 
     public InputSystem.ControlData[] ControlData { get { return controlData; } }
 
+    public bool Up { get { return UpData.pressed; } }
+    public bool Down { get { return DownData.pressed; } }
+    public bool Right { get { return RightData.pressed; } }
+    public bool Left { get { return LeftData.pressed; } }
+    public bool Accept { get { return AcceptData.pressed; } }
+    public bool Decline { get { return DeclineData.pressed; } }
+    public bool StartBttn { get { return StartBttnData.pressed; } }
+    public bool EscapeBttn { get { return EscapeBttnData.pressed; } }
     public bool UpPressed { get { return Up && !keysPressed[InputSystem.KeyCodes.MENU_UP]; } }
     public bool DownPressed { get { return Down && !keysPressed[InputSystem.KeyCodes.MENU_DOWN]; } }
     public bool RightPressed { get { return Right && !keysPressed[InputSystem.KeyCodes.MENU_RIGHT]; } }
@@ -70,15 +78,22 @@ public class GlobalMenuInputs : MonoBehaviour
 
     void UpdateInputs()
     {
-        Up = inputSystem.GetKey(InputSystem.KeyCodes.MENU_UP, controlData);
-        Down = inputSystem.GetKey(InputSystem.KeyCodes.MENU_DOWN, controlData);
-        Right = inputSystem.GetKey(InputSystem.KeyCodes.MENU_RIGHT, controlData);
-        Left = inputSystem.GetKey(InputSystem.KeyCodes.MENU_LEFT, controlData);
-        Accept = inputSystem.GetKey(InputSystem.KeyCodes.MENU_ACCEPT, controlData);
-        Decline = inputSystem.GetKey(InputSystem.KeyCodes.MENU_DECLINE, controlData);
-        StartBttn = inputSystem.GetKey(InputSystem.KeyCodes.START, controlData);
-        EscapeBttn = inputSystem.GetKey(InputSystem.KeyCodes.ESCAPE, controlData);
+        UpData = inputSystem.GetKeyData(InputSystem.KeyCodes.MENU_UP, controlData);
+        DownData = inputSystem.GetKeyData(InputSystem.KeyCodes.MENU_DOWN, controlData);
+        RightData = inputSystem.GetKeyData(InputSystem.KeyCodes.MENU_RIGHT, controlData);
+        LeftData = inputSystem.GetKeyData(InputSystem.KeyCodes.MENU_LEFT, controlData);
+        AcceptData = inputSystem.GetKeyData(InputSystem.KeyCodes.MENU_ACCEPT, controlData);
+        DeclineData = inputSystem.GetKeyData(InputSystem.KeyCodes.MENU_DECLINE, controlData);
+        StartBttnData = inputSystem.GetKeyData(InputSystem.KeyCodes.START, controlData);
+        EscapeBttnData = inputSystem.GetKeyData(InputSystem.KeyCodes.ESCAPE, controlData);
     }
+
+    //public int GetDeviceId(InputSystem.KeyCodes _key)
+    //{
+    //    int tmpDeviceId = -1;
+    //    inputSystem.GetKey(_key, controlData, ref tmpDeviceId);
+    //    return tmpDeviceId;
+    //}
 
     void UpdateMap()
     {
