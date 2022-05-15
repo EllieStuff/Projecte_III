@@ -400,6 +400,7 @@ MonoBehaviour:
   savedVelocity: {x: 0, y: 0, z: 0}
   raceStarted: 0
   normalClip: {fileID: 8300000, guid: 1bc63d82a97c9be44aaff29b3f1d1272, type: 3}
+  iaEnabled: 0
 --- !u!114 &7591572402878244577
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -485,8 +486,8 @@ MonoBehaviour:
   boostPadDuration: 0
   boostPadMultiplier: 0
   timerRespawn: 3
-  ghostMat: {fileID: 0}
-  defaultMat: {fileID: 0}
+  ghostMat: {fileID: 2100000, guid: ce63f92c50ad35947941f799d9144ff9, type: 2}
+  defaultMat: {fileID: 2100000, guid: e3fc5c435ceb0b84096ae46c5dfbb339, type: 2}
   applyingForce: 0
   previousMaxSpeed: 0
   RespawnParticles: {fileID: 1120517596382856150}
@@ -800,6 +801,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 757fe4451127abc41b7d247eb9d50006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ItemThrowProbability: 0
 --- !u!1 &38654284546717500
 GameObject:
   m_ObjectHideFlags: 0
@@ -74619,6 +74621,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1621495200553532334, guid: d584bcd656d57064bb982ea01939edbf, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d584bcd656d57064bb982ea01939edbf, type: 3}
 --- !u!114 &6522073796784484100 stripped
@@ -74644,6 +74650,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3014420310080180277}
     m_Modifications:
+    - target: {fileID: 7475119761178636489, guid: 744c3d4e107cc6f40ae6cf58296d8924, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7475119761178636490, guid: 744c3d4e107cc6f40ae6cf58296d8924, type: 3}
       propertyPath: m_RootOrder
       value: 1
