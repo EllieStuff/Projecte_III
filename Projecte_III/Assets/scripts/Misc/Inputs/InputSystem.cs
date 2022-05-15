@@ -38,8 +38,9 @@ public class InputSystem : MonoBehaviour
     public class KeyData
     {
         public int deviceId = -1;
+        public DeviceTypes deviceType = DeviceTypes.DEFAULT;
         public bool pressed = false;
-        public KeyData(int _deviceId, bool _pressed) { deviceId = _deviceId; pressed = _pressed; }
+        public KeyData(int _deviceId, DeviceTypes _deviceType, bool _pressed) { deviceId = _deviceId; deviceType = _deviceType; pressed = _pressed; }
     }
 
 
@@ -278,7 +279,7 @@ public class InputSystem : MonoBehaviour
         for (int idx = 0; idx < _controlData.Length; idx++)
         {
             int mainDeviceId = _controlData[idx].mainDeviceId;
-            KeyData currKeyData = new KeyData(mainDeviceId, true);
+            KeyData currKeyData = new KeyData(mainDeviceId, _controlData[idx].deviceType, true);
             switch (_key)
             {
                 case KeyCodes.FORWARD:
@@ -489,7 +490,7 @@ public class InputSystem : MonoBehaviour
 
         }
 
-        return new KeyData(-1, false);
+        return new KeyData(-1, DeviceTypes.DEFAULT, false);
 
     }
 

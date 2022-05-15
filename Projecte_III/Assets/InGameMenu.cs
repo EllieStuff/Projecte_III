@@ -16,7 +16,9 @@ public class InGameMenu : MonoBehaviour
     Button[] buttons;
     int idx = 0;
     bool gameStarted = false;
-    int playerManaging = -1;
+    //int playerManaging = -1;
+    InputSystem.KeyData playerManaging = null;
+    bool invokeCalledByScript = false;
 
 
     // Start is called before the first frame update
@@ -46,16 +48,18 @@ public class InGameMenu : MonoBehaviour
 
         int lastIdx = idx;
         if ((inputs.StartBttnPressed || inputs.EscapeBttnPressed) 
-            && (playerManaging == -1 || IsManagingDeviceInput(inputs.StartBttnData.deviceId) || IsManagingDeviceInput(inputs.EscapeBttnData.deviceId)))
+            && (playerManaging == null || IsManagingDeviceInput(inputs.StartBttnData.deviceId) || IsManagingDeviceInput(inputs.EscapeBttnData.deviceId)))
         {
             if (inputs.StartBttnPressed)
-                playerManaging = inputs.StartBttnData.deviceId;
+                playerManaging = inputs.StartBttnData;
             else if (inputs.EscapeBttnPressed)
-                playerManaging = inputs.EscapeBttnData.deviceId;
+                playerManaging = inputs.EscapeBttnData;
 
             if (idx == (int)InGameButton.SETTINGS && menuSettings.activeSelf)
             {
+                invokeCalledByScript = true;
                 CloseSettings();
+                invokeCalledByScript = false;
             }
             else
             {
@@ -71,7 +75,7 @@ public class InGameMenu : MonoBehaviour
                 else
                 {
                     Time.timeScale = 1.0f;
-                    playerManaging = -1;
+                    playerManaging = null;
                     EnableModifiers(true);
                 }
             }
@@ -96,13 +100,17 @@ public class InGameMenu : MonoBehaviour
         }
         else if (inputs.AcceptPressed && IsManagingDeviceInput(inputs.AcceptData.deviceId))
         {
+            invokeCalledByScript = true;
             buttons[idx].onClick.Invoke();
+            invokeCalledByScript = false;
         }
         else if (inputs.DeclinePressed && IsManagingDeviceInput(inputs.DeclineData.deviceId))
         {
             if (idx == (int)InGameButton.SETTINGS && menuSettings.activeSelf)
             {
+                invokeCalledByScript = true;
                 CloseSettings();
+                invokeCalledByScript = false;
                 //EnableModifiers(true);
             }
         }
@@ -153,7 +161,7 @@ public class InGameMenu : MonoBehaviour
 
     bool IsManagingDeviceInput(int _inputDeviceOrigin)
     {
-        return _inputDeviceOrigin == playerManaging;
+        return _inputDeviceOrigin == playerManaging.deviceId;
     }
 
 
@@ -164,15 +172,21 @@ public class InGameMenu : MonoBehaviour
 
     public void PlayButton()
     {
+        if (!((!invokeCalledByScript && playerManaging.deviceType == InputSystem.DeviceTypes.KEYBOARD) || invokeCalledByScript))
+            return;
+
         menuSet.SetActive(false);
         EnableModifiers(true);
         idx = 0;
         Time.timeScale = 1.0f;
-        playerManaging = -1;
+        playerManaging = null;
         AudioManager.Instance.Play_SFX("Click_SFX");
     }
     public void ReplayButton()
     {
+        if (!((!invokeCalledByScript && playerManaging.deviceType == InputSystem.DeviceTypes.KEYBOARD) || invokeCalledByScript))
+            return;
+
         AudioManager.Instance.Play_SFX("Click_SFX");
         EnableModifiers(true);
         Time.timeScale = 1.0f;
@@ -183,12 +197,18 @@ public class InGameMenu : MonoBehaviour
     }
     public void SettingsButton()
     {
+        if (!((!invokeCalledByScript && playerManaging.deviceType == InputSystem.DeviceTypes.KEYBOARD) || invokeCalledByScript))
+            return;
+
         menuSettings.SetActive(true);
         idx = (int)InGameButton.SETTINGS;
         AudioManager.Instance.Play_SFX("Click_SFX");
     }
     public void ExitButton()
     {
+        if (!((!invokeCalledByScript && playerManaging.deviceType == InputSystem.DeviceTypes.KEYBOARD) || invokeCalledByScript))
+            return;
+
         AudioManager.Instance.Play_SFX("Click_SFX");
         Time.timeScale = 1.0f;
         GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().ChangeScene("Menu");
@@ -196,6 +216,9 @@ public class InGameMenu : MonoBehaviour
 
     public void CloseSettings()
     {
+        if (!((!invokeCalledByScript && playerManaging.deviceType == InputSystem.DeviceTypes.KEYBOARD) || invokeCalledByScript))
+            return;
+
         AudioManager.Instance.Play_SFX("Click_SFX", 0.6f);
         ResetButtonColors();
         SetButtonColor(0, idx);
