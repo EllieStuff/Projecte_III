@@ -100,7 +100,7 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
                 for (int o = 0; o < player.wheelCollider.Length; o++)
                     player.wheelCollider[o].isTrigger = false;
             }
-            Debug.Log("Stopped inmunity");
+            //Debug.Log("Stopped inmunity");
             inmunity = false;
         }
 
@@ -292,7 +292,7 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
             paintingChecked = true;
             if (player.vehicleRB.velocity.magnitude > 1.0f)
             {
-                Debug.Log("enter Paint");
+                //Debug.Log("enter Paint");
                 AddFriction(player.savedVehicleTorque / 2);
             }
         }
@@ -301,7 +301,7 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
             oilChecked = true;
             if (player.vehicleRB.velocity.magnitude > 1.0f)
             {
-                Debug.Log("enter Oil");
+                //Debug.Log("enter Oil");
                 AddFriction(player.savedVehicleTorque*100000);
             }
         }
