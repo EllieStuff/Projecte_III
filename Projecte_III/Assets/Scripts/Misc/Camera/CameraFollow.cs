@@ -29,7 +29,7 @@ public class CameraFollow : MonoBehaviour
         HandlePosition();
         HandleRotation();
         //RaycastCamera();
-
+        Debug.Log("Timer: " + timer * rotSpeed);
     }
 
     private void fovSystem()
@@ -61,7 +61,7 @@ public class CameraFollow : MonoBehaviour
 
         targetRot = Quaternion.Euler(euler.x, euler.y, 0);
 
-        transform.rotation = Quaternion.Lerp(transform.rotation, targetRot, timer / 5);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, Time.deltaTime * rotSpeed);
 
     }
 
