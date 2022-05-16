@@ -34,7 +34,7 @@ public class PlayerPaintGun : MonoBehaviour
 
     public void Activate(Quaternion _gunRot)
     {
-        Debug.Log("in paint gun, " + hasPaintGun.ToString());
+        //Debug.Log("in paint gun, " + hasPaintGun.ToString());
         if (hasPaintGun)
         {
             paintGun.transform.localRotation = _gunRot;

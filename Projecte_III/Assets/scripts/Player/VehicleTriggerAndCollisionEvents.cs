@@ -100,7 +100,7 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
                 for (int o = 0; o < player.wheelCollider.Length; o++)
                     player.wheelCollider[o].isTrigger = false;
             }
-            Debug.Log("Stopped inmunity");
+            //Debug.Log("Stopped inmunity");
             inmunity = false;
         }
 
@@ -279,20 +279,27 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
             exitCamera = true;
         }
         else if (other.CompareTag("CamLimit"))
+        {
+            if (player.vehicleRB.velocity.x > 10)
+                player.vehicleRB.velocity = new Vector3(10.0f, 0, 0);
+            else if (player.vehicleRB.velocity.z > 10)
+                player.vehicleRB.velocity = new Vector3(0, 0, 10.0f);
+        }
+        if (other.CompareTag("TopCollider"))
             player.vehicleRB.velocity += transform.TransformDirection(Vector3.back * Time.deltaTime * 5);
 
-        /*if (other.CompareTag("Water"))
-        {
-            vehicleRB.AddForce(other.GetComponent<WaterStreamColliderScript>().Stream, ForceMode.Force);
-            onWater = true;
-        }*/
+            /*if (other.CompareTag("Water"))
+            {
+                vehicleRB.AddForce(other.GetComponent<WaterStreamColliderScript>().Stream, ForceMode.Force);
+                onWater = true;
+            }*/
 
-        if (!paintingChecked && other.CompareTag("Painting"))
+            if (!paintingChecked && other.CompareTag("Painting"))
         {
             paintingChecked = true;
             if (player.vehicleRB.velocity.magnitude > 1.0f)
             {
-                Debug.Log("enter Paint");
+                //Debug.Log("enter Paint");
                 AddFriction(player.savedVehicleTorque / 2);
             }
         }
@@ -301,7 +308,7 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
             oilChecked = true;
             if (player.vehicleRB.velocity.magnitude > 1.0f)
             {
-                Debug.Log("enter Oil");
+                //Debug.Log("enter Oil");
                 AddFriction(player.savedVehicleTorque*100000);
             }
         }

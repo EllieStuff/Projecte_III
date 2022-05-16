@@ -23,7 +23,7 @@ public class MoveInitText : MonoBehaviour
     void Update()
     {
         rb.MovePosition(transform.position + transform.up * usedSpeed * Time.deltaTime);
-        Debug.Log("InitTextSpeed: " + usedSpeed);
+        //Debug.Log("InitTextSpeed: " + usedSpeed);
     }
 
     private void OnTriggerEnter(Collider other)
