@@ -14,7 +14,7 @@ public class CameraNavFollowScript : MonoBehaviour
     [SerializeField] private float startDelay = 6.0f;
     [SerializeField] private float stopSpeed = 1.0f;
     [SerializeField] private Transform limit;
-
+    [SerializeField] private float rotationSmoothness = 1.0f;
     [SerializeField] private List<Vector3> cameraCheckpoints = new List<Vector3>();
     private NavMeshAgent navMeshAgent;
     private int currCheckpoint = 0;
@@ -28,7 +28,8 @@ public class CameraNavFollowScript : MonoBehaviour
     void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
-
+        navMeshAgent.angularSpeed = 0;
+        navMeshAgent.enabled = false;
         navMeshAgent.speed = 0;
         savedSpeed = 7;
 
@@ -75,6 +76,22 @@ public class CameraNavFollowScript : MonoBehaviour
                 cameraCheckpoints.RemoveAt(0);
             UpdateDestination();
         }
+
+        if (cameraCheckpoints.Count > 0)
+        {
+            var destination = navMeshAgent.destination;
+            var lookAtTargetDirection = (destination - transform.position).normalized;
+            var lookAt = Vector3.ProjectOnPlane(lookAtTargetDirection, Vector3.up).normalized;
+
+            Quaternion lookOnLook = Quaternion.LookRotation(lookAt);
+
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookOnLook, Time.deltaTime * rotationSmoothness);
+        }
+
+
+
+
+
     }
 
     private int GetNearestPlayerFromLimit()
