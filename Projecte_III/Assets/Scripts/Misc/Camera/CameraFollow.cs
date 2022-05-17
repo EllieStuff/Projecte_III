@@ -48,7 +48,7 @@ public class CameraFollow : MonoBehaviour
     private void HandlePosition()
     {
         Vector3 targetPos = target.TransformPoint(posOffset);
-        transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref posVelocity, Time.deltaTime, maxDampSpeed);
+        transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref posVelocity, Time.unscaledDeltaTime, maxDampSpeed);
 
     }
 
@@ -61,7 +61,7 @@ public class CameraFollow : MonoBehaviour
 
         targetRot = Quaternion.Euler(euler.x, euler.y, 0);
 
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, Time.deltaTime * rotSpeed);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, Time.unscaledDeltaTime * rotSpeed);
 
     }
 

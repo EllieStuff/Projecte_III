@@ -72,7 +72,7 @@ public class PlayersManager : MonoBehaviour
     public Transform GetPlayer(int _idx = 0)
     {
         if (gameMode == GameModes.MONO) return players[0];
-
+        //if (players.Length >= _idx) return players[players.Length - 1];
         return players[_idx];
     }
     //public Transform GetPlayerModifier(int _idx = 0)
