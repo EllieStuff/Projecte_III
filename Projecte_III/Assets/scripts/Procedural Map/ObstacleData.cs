@@ -97,7 +97,6 @@ public class ObstacleData : MonoBehaviour
                     obstacleToSpawn[i].GetComponent<ShitterBirdScript>().InitValues(_spawnedPosition.forward, 5.0f);
                 else
                     obstacleToSpawn[i].transform.rotation = _spawnedPosition.rotation;
-                obstacleToSpawn[i].transform.localScale = _spawnedPosition.localScale;
 
                 if (this.name.Contains("Car"))
                 {

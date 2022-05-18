@@ -9,8 +9,8 @@ public class MenuFunctions : MonoBehaviour
 {
     const float ANIMS_MARGIN = 0.8f;
 
-    public GameObject settingsMenu;
     public GameObject creditsMenu;
+    public SettingsMenuScript settingsMenu;
     public Slider localVoiceValue;
     private float changeSceneTime = 5;
     [SerializeField] Transform[] vehicles;
@@ -41,13 +41,17 @@ public class MenuFunctions : MonoBehaviour
         if (!enableButtons) return;
 
         AudioManager.Instance.Play_SFX("Click_SFX");
-        settingsMenu.SetActive(true);
+        settingsMenu.gameObject.SetActive(true);
+        settingsMenu.Init(GetComponent<GlobalMenuInputs>(), null);
     }
 
     public void CloseSettings()
     {
         AudioManager.Instance.Play_SFX("Click_SFX");
-        settingsMenu.SetActive(false);
+        settingsMenu.gameObject.SetActive(false);
+        MainMenuManageInputs mainMenuInputs = GetComponent<MainMenuManageInputs>();
+        mainMenuInputs.menuState = MainMenuManageInputs.MenuState.MAIN;
+        mainMenuInputs.mainButtons[(int)MainMenuManageInputs.MenuState.SETTINGS].Select();
     }
 
     public void ActiveCredits(bool active)
@@ -56,6 +60,12 @@ public class MenuFunctions : MonoBehaviour
 
         AudioManager.Instance.Play_SFX("Click_SFX");
         creditsMenu.SetActive(active);
+        if (!active)
+        {
+            MainMenuManageInputs mainMenuInputs = GetComponent<MainMenuManageInputs>();
+            mainMenuInputs.menuState = MainMenuManageInputs.MenuState.MAIN;
+            mainMenuInputs.mainButtons[(int)MainMenuManageInputs.MenuState.CREDITS].Select();
+        }
     }
 
     public void Play()
