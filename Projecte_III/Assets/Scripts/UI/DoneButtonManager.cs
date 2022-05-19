@@ -38,7 +38,6 @@ public class DoneButtonManager : MonoBehaviour
         }
     }
 
-
     bool AllPlayersReady()
     {
         if (!doneButtonScripts[0].isActive) return false;
