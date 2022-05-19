@@ -11,7 +11,11 @@ public class PlayersHUD : MonoBehaviour
     public int id;
 
     Image modifier;
-    Transform[] lifes;
+    Image[] lifes;
+
+    Transform deadLine;
+
+    Color mainColor;
 
     int currentLifes;
 
@@ -25,35 +29,45 @@ public class PlayersHUD : MonoBehaviour
         player = GameObject.Find("PlayersManager").GetComponent<PlayersManager>().GetPlayer(id).GetComponentInChildren<RandomModifierGet>();
         currentLifes = player.transform.GetComponent<PlayerVehicleScript>().lifes;
 
-        Color _color = UseGradientMaterials.GetColor(player.transform.GetChild(1).GetChild(0).GetComponent<MeshRenderer>().material.name);
+        mainColor = UseGradientMaterials.GetColor(player.transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material.name);
 
-        modifier.transform.parent.GetComponent<Image>().color = new Color(_color.r, _color.g, _color.b, 0.5f);
+        modifier.transform.parent.GetComponent<Image>().color = new Color(mainColor.r, mainColor.g, mainColor.b, 1.0f);
         //Destroy(GetComponent<UseGradientMaterials>());
 
-        lifes = new Transform[transform.GetChild(1).childCount];
+        lifes = new Image[transform.GetChild(1).childCount];
         for (int i = 0; i < lifes.Length; i++)
         {
-            lifes[i] = transform.GetChild(0).GetChild(i);
-            lifes[i].GetComponent<Image>().color = new Color(_color.r, _color.g, _color.b, 0.8f);
+            lifes[i] = transform.GetChild(1).GetChild(i).GetComponent<Image>();
+            lifes[i].color = new Color(mainColor.r, mainColor.g, mainColor.b, 1.0f);
         }
+
+        deadLine = transform.GetChild(3);
+        deadLine.gameObject.SetActive(false);
     }
 
     public void UpdateLifes(int _currentLifes)
     {
         if (_currentLifes == currentLifes) return;
 
-        if(lifes[_currentLifes].gameObject.activeSelf)
+        Color c = lifes[_currentLifes].color;
+        if(lifes[_currentLifes].color.a < 1.0f)
         {
-            lifes[_currentLifes].gameObject.SetActive(false);
+            lifes[_currentLifes].color = mainColor;
         }
         else
         {
-            lifes[_currentLifes].gameObject.SetActive(true);
+            lifes[_currentLifes].color = new Color(0.2f, 0.2f, 0.2f, 0.7f);
+            modifier.gameObject.SetActive(false);
+            player.ResetModifiers();
         }
         currentLifes = _currentLifes;
 
-        player.ResetModifiers();
-        modifier.gameObject.SetActive(false);
+        if(currentLifes <= 0.0f)
+        {
+            modifier.transform.parent.GetComponent<Image>().color = new Color(0.2f, 0.2f, 0.2f, 0.7f);
+            deadLine.gameObject.SetActive(true);
+        }
+
     }
 
     public void RollModifiers()
