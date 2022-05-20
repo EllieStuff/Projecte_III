@@ -9,7 +9,9 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
     private PlayerVehicleScript player;
     private Transform centerRespawn;
     public Vector3 respawnPosition, respawnRotation, respawnVelocity;
-    bool paintingChecked = false, oilChecked = false, exitCamera;
+    bool exitCamera;
+    bool paintInChecked = false, oilInChecked = false;
+    bool affectedByPaint = false, affectedByOil = false;
     [SerializeField] float boostPadDuration;
     private bool reduceSpeed;
     public float boostPadMultiplier;
@@ -64,7 +66,8 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
         respawnPosition = new Vector3(0, 0, 0);
         respawnRotation = new Vector3(0, 0, 0);
         respawnVelocity = new Vector3(0, 0, 0);
-        paintingChecked = oilChecked = false;
+        paintInChecked = oilInChecked = false;
+        affectedByPaint = affectedByOil = false;
     }
 
     private void Update()
@@ -141,8 +144,7 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
 
             //Resetting variables
             player.vehicleTorque = player.savedVehicleTorque;
-            oilChecked = false;
-            paintingChecked = false;
+            oilInChecked = paintInChecked = false;
 
             player.vehicleMaxSpeed = player.savedMaxSpeed;
             player.speedIncrementEnabled = true;
@@ -252,12 +254,29 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
         player.vehicleReversed = (other.gameObject.tag.Equals("ground"));
         //------------------------
     }
-    IEnumerator WaitTorque()
+    IEnumerator WaitTorqueOil()
     {
-        yield return new WaitForSeconds(5);
+        float timer = 5f;
+        while (timer > 0f)
+        {
+            yield return new WaitForEndOfFrame();
+            if (!affectedByOil) break;
+            timer -= Time.deltaTime;
+        }
         player.vehicleTorque = player.savedVehicleTorque;
-        oilChecked = false;
-        paintingChecked = false;
+        oilInChecked = false;
+    }
+    IEnumerator WaitTorquePaint()
+    {
+        float timer = 5f;
+        while (timer > 0f)
+        {
+            yield return new WaitForEndOfFrame();
+            if (!affectedByPaint) break;
+            timer -= Time.deltaTime;
+        }
+        player.vehicleTorque = player.savedVehicleTorque;
+        paintInChecked = false;
     }
 
 
@@ -287,23 +306,25 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
                 onWater = true;
             }*/
 
-            if (!paintingChecked && other.CompareTag("Painting"))
+        if (!paintInChecked && other.CompareTag("Painting"))
         {
-            paintingChecked = true;
-            if (player.vehicleRB.velocity.magnitude > 1.0f)
+            paintInChecked = true;
+            if (player.vehicleRB.velocity.magnitude > 1.0f && !affectedByPaint)
             {
                 //Debug.Log("enter Paint");
-                AddFriction(player.savedVehicleTorque / 2);
+                AddFriction(player.savedVehicleTorque / 2, "Paint");
             }
+            affectedByPaint = true;
         }
-        if (!oilChecked && other.CompareTag("Oil"))
+        if (!oilInChecked && other.CompareTag("Oil"))
         {
-            oilChecked = true;
-            if (player.vehicleRB.velocity.magnitude > 1.0f)
+            oilInChecked = true;
+            if (player.vehicleRB.velocity.magnitude > 1.0f && !affectedByOil)
             {
                 //Debug.Log("enter Oil");
-                AddFriction(player.savedVehicleTorque*100000);
+                AddFriction(player.savedVehicleTorque * 80000, "Oil");
             }
+            affectedByOil = true;
         }
 
         //Terrain
@@ -322,6 +343,16 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
             player.vehicleMaxSpeed = player.savedMaxSpeed;
             player.vehicleAcceleration = player.savedAcceleration;
             //}
+        }
+        if (other.CompareTag("Painting"))
+        {
+            affectedByPaint = false;
+            StopCoroutine(WaitTorquePaint());
+        }
+        if (other.CompareTag("Oil"))
+        {
+            affectedByOil = false;
+            StopCoroutine(WaitTorqueOil());
         }
     }
 
@@ -361,13 +392,16 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
         player.vehicleTorque = player.savedVehicleTorque;
     }
 
-    void AddFriction(float _torque)
+    void AddFriction(float _torque, string _type)
     {
         //Vector3 velFrictionVec = -player.vehicleRB.velocity.normalized * _frictionForce * player.vehicleRB.velocity.magnitude;
         //player.vehicleRB.AddForce(velFrictionVec, ForceMode.Force);
         //player.vehicleRB.angularDrag = player.savedAngularDrag * _dragInc;
         player.vehicleTorque = _torque;
-        StartCoroutine(WaitTorque());
+        if(_type == "Oil")
+            StartCoroutine(WaitTorqueOil());
+        else if(_type == "Paint")
+            StartCoroutine(WaitTorquePaint());
     }
 
     void OnSand(Collider other)
