@@ -5,12 +5,15 @@ using UnityEngine.UI;
 
 public class TutorialWindow : MonoBehaviour
 {
+    [SerializeField] GameObject uiSet;
+
     private float timer = 1;
     private bool closed;
 
     void Start()
     {
         GetComponent<Image>().enabled = true;
+        uiSet.SetActive(false);
     }
 
     // Update is called once per frame
@@ -33,6 +36,7 @@ public class TutorialWindow : MonoBehaviour
             GetComponent<Image>().enabled = false;
             transform.GetChild(0).gameObject.SetActive(true);
             Time.timeScale = 1;
+            uiSet.SetActive(true);
             Destroy(this);
         }
     }

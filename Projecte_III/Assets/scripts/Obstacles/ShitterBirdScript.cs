@@ -15,7 +15,7 @@ public class ShitterBirdScript : MonoBehaviour
     [SerializeField] Transform shadow;
     [SerializeField] float scaleFactor = 0.1f;
 
-     Rigidbody rb;
+    Rigidbody rb;
     float initY;
     Vector3 initShadowScale;
     bool inSameCollision = false;
@@ -37,15 +37,15 @@ public class ShitterBirdScript : MonoBehaviour
     {
         rb.MovePosition(rb.position + moveDir * moveSpeed * Time.deltaTime);
         RaycastHit hit;
-        Debug.DrawRay(rb.position, Vector3.zero, Color.red);
-        if(Physics.Raycast(GetRaycastRay(), out hit))
+        //Debug.DrawRay(rb.position, Vector3.zero, Color.red);
+        if(shitType == ShitType.AIM && Physics.Raycast(GetRaycastRay(), out hit, 100))
         {
-            if (shitType == ShitType.AIM && hit.transform.CompareTag("PlayerVehicle") && !inSameCollision)
+            if (hit.transform.tag.Contains("Player") && !inSameCollision)
             {
                 inSameCollision = true;
                 Instantiate(shitPrefab, transform.position, shitPrefab.transform.rotation);
             }
-            else
+            else if(!hit.transform.tag.Contains("Player"))
             {
                 if(inSameCollision) inSameCollision = false;
                 shadow.position = GetCorrectedPosition(hit.point, -0.3f);
@@ -67,7 +67,7 @@ public class ShitterBirdScript : MonoBehaviour
     }
     Ray GetRaycastRay()
     {
-        return new Ray(GetCorrectedPosition(rb.position, RAY_MARGIN), Vector3.down);
+        return new Ray(GetCorrectedPosition(rb.position, RAY_MARGIN), -transform.up);
     }
 
     public void InitRndValues()
