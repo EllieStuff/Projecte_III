@@ -26,9 +26,20 @@ public class DecalDefaultScript : MonoBehaviour
     }
     void AffectPlayer(PlayerVehicleScript _player, bool _affected)
     {
-        _player.vehicleTorque = GetNewTorque(_player);
-        if (type == DecalType.OIL) _player.affectedByOil = _affected;
-        else if (type == DecalType.PAINT) _player.affectedByPaint = _affected;
+        if (_affected) _player.vehicleTorque = GetNewTorque(_player);
+
+        if (type == DecalType.OIL)
+        {
+            _player.affectedByOil = _affected;
+            if (!_affected && !_player.affectedByPaint)
+                _player.vehicleTorque = _player.savedVehicleTorque;
+        }
+        else if (type == DecalType.PAINT)
+        {
+            _player.affectedByPaint = _affected;
+            if (!_affected && !_player.affectedByOil)
+                _player.vehicleTorque = _player.savedVehicleTorque;
+        }
     }
     float GetNewTorque(PlayerVehicleScript _player)
     {
@@ -54,34 +65,46 @@ public class DecalDefaultScript : MonoBehaviour
         Destroy(gameObject);
     }
 
-    IEnumerator WaitTorque()
+    IEnumerator WaitTorque(PlayerVehicleScript _player)
     {
         float timer = 5f;
         while (timer > 0f)
         {
             yield return new WaitForEndOfFrame();
-            if (!affectedByOil) break;
+            if (!PlayerAlreadyAffected(_player)) break;
             timer -= Time.deltaTime;
         }
-        player.vehicleTorque = player.savedVehicleTorque;
-        oilInChecked = false;
+        AffectPlayer(_player, false);
+        //_player.vehicleTorque = _player.savedVehicleTorque;
+        //oilInChecked = false;
     }
 
 
     private void OnTriggerEnter(Collider other)
     {
-        if(canSpread && other.tag.Contains("Player"))
+        if (canSpread && other.tag.Contains("Player"))
         {
             PlayerVehicleScript player = other.GetComponent<PlayerVehicleScript>();
             if (PlayerAlreadyAffected(player)) return;
-            
+
             AffectPlayer(player, true);
             //player.vehicleTorque = player.savedVehicleTorque;
             if (transform.parent.tag.Contains("Player"))
             {
                 canSpread = false;
-
+                StartCoroutine(WaitTorque(player));
             }
+        }
+
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag.Contains("Player"))
+        {
+            PlayerVehicleScript player = other.GetComponent<PlayerVehicleScript>();
+
+        }
     }
 
 
