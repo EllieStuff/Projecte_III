@@ -19,7 +19,12 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
     private PlayersHUDManager playersHUDManager;
 
     PlayersHUD playerHud = null;
-    [SerializeField] internal float timerRespawn = 3;
+    [SerializeField] private float timerRespawn = 3;
+    public float TimerRespawn
+    {
+        get { return timerRespawn; }
+    }
+
     private BoxCollider[] collisionBox;
     [SerializeField] private Material ghostMat;
 
