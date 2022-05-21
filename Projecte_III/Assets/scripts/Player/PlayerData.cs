@@ -30,53 +30,25 @@ public class PlayerData : MonoBehaviour
     {
         if (sceneLoaded) return;
 
-        if (scene.name.Contains("Menu"))
+        if (scene.name.Contains("Building Scene"))
         {
-
-            //for (int i = 0; i < transform.childCount; i++)
-            //{
-            //    GameObject child = transform.GetChild(i).gameObject;
-            //    if (child.activeSelf)
-            //        child.SetActive(false);
-            //}
-        }
-        else if (scene.name.Contains("Building Scene"))
-        {
-            //for (int i = 0; i < transform.childCount; i++)
-            //{
-            //    GameObject child = transform.GetChild(i).gameObject;
-            //    if (!child.activeSelf)
-            //        child.SetActive(true);
-            //}
 
             Transform initial = GameObject.FindGameObjectWithTag("InitPos").GetComponent<InitPlayerManager>().GetInitPos(id);
             gameObject.transform.localPosition = initial.localPosition;
             gameObject.transform.localRotation = initial.localRotation;
             gameObject.transform.localScale = initial.localScale;
 
-            //for (int i = 0; i < transform.childCount; i++)
-            //{
-            //    Transform child = transform.GetChild(i);
-            //    if (child.tag == "ModifierSpots") continue;
-            //    child.localPosition = Vector3.zero;
-            //    if (child.name == "Player")
-            //        child.localRotation = new Quaternion(0, 180, 0, 0);
-            //    else
-            //        child.localRotation = Quaternion.identity;
-            //}
-
             Rigidbody rb = player.GetComponent<Rigidbody>();
             rb.constraints = RigidbodyConstraints.FreezeAll;
             rb.useGravity = false;
 
-            //playerScript.buildingScene = true;
             GameObject[] objs = GameObject.FindGameObjectsWithTag("VehicleSet");
             if (objs.Length > 1)
             {
                 Destroy(objs[1]);
             }
         }
-        else if (scene.name != "Menu" && scene.name != "SceneSelector")
+        else if (scene.name != "Menu")
         {
             //Transform initial = GameObject.FindGameObjectWithTag("InitPos").GetComponent<InitPosManager>().GetInitPos(id);
             //gameObject.transform.position = initial.position;
@@ -86,7 +58,6 @@ public class PlayerData : MonoBehaviour
             Rigidbody rb = playerScript.GetComponent<Rigidbody>();
             rb.constraints = RigidbodyConstraints.None;
             rb.useGravity = true;
-
 
             GetComponentInChildren<VehicleTriggerAndCollisionEvents>().Init();
 

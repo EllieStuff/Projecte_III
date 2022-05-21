@@ -64,18 +64,12 @@ public class CameraNavFollowScript : MonoBehaviour
             if (_player.InverseTransformDirection(limit.position - _player.transform.position).z > 10)
                 navMeshAgent.speed = velocity.magnitude - 0.2f;
             else
-            {
                 navMeshAgent.speed = velocity.magnitude + 2.5f;
-                Debug.Log("limit!!!!!");
-            }
         }
         else if(navMeshAgent.speed < savedSpeed)
             navMeshAgent.speed += Time.deltaTime * 0.5f;
         else if(navMeshAgent.speed > savedSpeed)
             navMeshAgent.speed -= Time.deltaTime * 0.5f;
-
-        //Debug.Log(Vector3.Distance(transform.position, cameraCheckpoints[0]));
-        //Debug.Log(navMeshAgent.destination);
 
         if (cameraCheckpoints.Count > 0 && Vector3.Distance(transform.position, cameraCheckpoints[0]) < MARGIN)
         {
