@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class SettingsMenuScript : MonoBehaviour
 {
-    enum SettingsOption { GLOBAL_VOLUME, OST_VOLUME, SFX_VOLUME, COUNT };
+    enum SettingsOption { SOUND_SETTINGS, COUNT };
 
     [SerializeField] bool usePlayerManaging = true;
 
@@ -18,15 +18,16 @@ public class SettingsMenuScript : MonoBehaviour
     private void Start()
     {
         options = new SettingsOptionClass[(int)SettingsOption.COUNT];
-        options[(int)SettingsOption.GLOBAL_VOLUME] = transform.Find("Global Volume Slider").GetComponent<SettingsOptionClass>();
-        options[(int)SettingsOption.OST_VOLUME] = transform.Find("OST Volume Slider").GetComponent<SettingsOptionClass>();
-        options[(int)SettingsOption.SFX_VOLUME] = transform.Find("SFX Volume Slider").GetComponent<SettingsOptionClass>();
+        options[(int)SettingsOption.SOUND_SETTINGS] = transform.Find("Sound Settings").GetComponent<SettingsOptionClass>();
 
+        gameObject.SetActive(false);
     }
     public void Init(GlobalMenuInputs _inputs, InputSystem.KeyData _playerManaging)
     {
         inputs = _inputs;
         playerManaging = _playerManaging;
+
+        options[0].GetComponentInChildren<AudioSettings>().Init(_inputs, _playerManaging);
     }
 
     // Update is called once per frame
