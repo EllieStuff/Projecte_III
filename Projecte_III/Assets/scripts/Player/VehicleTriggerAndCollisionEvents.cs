@@ -19,13 +19,16 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
     private PlayersHUDManager playersHUDManager;
 
     PlayersHUD playerHud = null;
-    [SerializeField] private float timerRespawn = 3;
+    [SerializeField] internal float timerRespawn = 3;
     private BoxCollider[] collisionBox;
     [SerializeField] private Material ghostMat;
 
     [SerializeField] private Material defaultMat;
 
-    bool stopGhost = false;
+    bool stopGhost = true;
+    public bool StopGhost{
+        set { stopGhost = value; } 
+    }
 
     public Material DefaultMaterial
     {
@@ -51,6 +54,8 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
     {
         carRender = transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>();
         carRender.material = defaultMat;
+        if (Physics.GetIgnoreLayerCollision(3, 9))
+            Physics.IgnoreLayerCollision(3, 9);
         //Init();
     }
     internal void Init()
@@ -67,6 +72,17 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
         paintingChecked = oilChecked = false;
 
         //playersHUDManager = GameObject.Find("HUD").transform.GetComponentInChildren<PlayersHUDManager>();
+    }
+
+    void SetLayerRecursively(Transform _obj, int layer)
+    {
+        _obj.gameObject.layer = layer;
+        Transform[] _children = _obj.GetComponentsInChildren<Transform>(true);
+        foreach (var item in _children)
+        {
+            if (item.gameObject.layer == 3 || item.gameObject.layer == 9)
+                item.gameObject.layer = layer;
+        }
     }
 
     private void Update()
@@ -94,18 +110,9 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
         else if(inmunity && stopGhost)
         {
             carRender.material = defaultMat;
-            for (int i = 0; i < 4; i++)
-            {
-                BoxCollider[] cols = playersManager.GetPlayer(i).GetChild(0).GetComponents<BoxCollider>();
 
-                Physics.IgnoreCollision(collisionBox[0], cols[0], false);
-                Physics.IgnoreCollision(collisionBox[0], cols[1], false);
-                Physics.IgnoreCollision(collisionBox[1], cols[0], false);
-                Physics.IgnoreCollision(collisionBox[1], cols[1], false);
+            SetLayerRecursively(transform, 3);
 
-                for (int o = 0; o < player.wheelCollider.Length; o++)
-                    player.wheelCollider[o].isTrigger = false;
-            }
             //Debug.Log("Stopped inmunity");
             inmunity = false;
         }
@@ -176,18 +183,7 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
                 //parent.GetComponent<AudioSource>().Play();
                 if(!inmunity)
                 {
-                    for (int i = 0; i < 4; i++)
-                    {
-                        BoxCollider[] cols = playersManager.GetPlayer(i).GetChild(0).GetComponents<BoxCollider>();
-
-                        Physics.IgnoreCollision(collisionBox[0], cols[0], true);
-                        Physics.IgnoreCollision(collisionBox[0], cols[1], true);
-                        Physics.IgnoreCollision(collisionBox[1], cols[0], true);
-                        Physics.IgnoreCollision(collisionBox[1], cols[1], true);
-
-                        for (int o = 0; o < player.wheelCollider.Length; o++)
-                            player.wheelCollider[o].isTrigger = true;
-                    }
+                    SetLayerRecursively(transform, 9);
 
                     carRender.material = ghostMat;
                     ghostTextureEnabled = true;
@@ -212,8 +208,6 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
             player.vehicleMaxSpeed = player.savedMaxSpeed;
             player.vehicleAcceleration = player.savedAcceleration;
         }
-
-        stopGhost = false;
     }
 
     public void ApplyForce(float forceValue, float _seconds)
@@ -276,11 +270,6 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
         if (other.CompareTag("TopCollider"))
             player.vehicleRB.velocity += transform.TransformDirection(Vector3.back * Time.deltaTime * 5);
 
-            /*if (other.CompareTag("Water"))
-            {
-                vehicleRB.AddForce(other.GetComponent<WaterStreamColliderScript>().Stream, ForceMode.Force);
-                onWater = true;
-            }*/
 
             if (!paintingChecked && other.CompareTag("Painting"))
         {
@@ -307,18 +296,7 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (inmunity && other.gameObject.tag.Contains("Player"))
-        {
-            float _speed = 20;
-            Vector3 dirLocal = transform.InverseTransformDirection(transform.right);
-            Vector3 _pushForce = transform.TransformDirection(dirLocal.x * _speed, dirLocal.y * _speed, transform.InverseTransformDirection(player.vehicleRB.velocity).z);
-
-            player.vehicleRB.velocity = _pushForce * _speed;
-            stopGhost = true;
-        }
-    }
+    
 
     private void OnCollisionEnter(Collision collision)
     {
