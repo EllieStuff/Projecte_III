@@ -20,8 +20,6 @@ public class AudioSettings : MonoBehaviour
         options[(int)SettingsOption.GLOBAL_VOLUME] = transform.Find("Global Volume Slider").GetComponent<SettingsOptionClass>();
         options[(int)SettingsOption.OST_VOLUME] = transform.Find("OST Volume Slider").GetComponent<SettingsOptionClass>();
         options[(int)SettingsOption.SFX_VOLUME] = transform.Find("SFX Volume Slider").GetComponent<SettingsOptionClass>();
-
-        gameObject.SetActive(false);
     }
     public void Init(GlobalMenuInputs _inputs, InputSystem.KeyData _playerManaging)
     {

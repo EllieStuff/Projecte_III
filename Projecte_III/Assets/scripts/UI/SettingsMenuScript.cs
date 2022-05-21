@@ -19,15 +19,11 @@ public class SettingsMenuScript : MonoBehaviour
     {
         options = new SettingsOptionClass[(int)SettingsOption.COUNT];
         options[(int)SettingsOption.SOUND_SETTINGS] = transform.Find("Sound Settings").GetComponent<SettingsOptionClass>();
-
-        gameObject.SetActive(false);
     }
     public void Init(GlobalMenuInputs _inputs, InputSystem.KeyData _playerManaging)
     {
         inputs = _inputs;
         playerManaging = _playerManaging;
-
-        options[0].GetComponentInChildren<AudioSettings>().Init(_inputs, _playerManaging);
     }
 
     // Update is called once per frame

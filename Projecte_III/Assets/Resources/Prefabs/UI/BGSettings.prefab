@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2371004419206659604}
-  - component: {fileID: 1769997025207022404}
+  - component: {fileID: 623903889677005343}
   m_Layer: 0
   m_Name: Sound Settings
   m_TagString: Untagged
@@ -38,7 +38,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1769997025207022404
+--- !u!114 &623903889677005343
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -47,9 +47,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 188616051558423064}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 535d1f41bd1d5f04aad7c06dc8499030, type: 3}
+  m_Script: {fileID: 11500000, guid: ff1f9f9c0a0f83746893f1eec5f7b529, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  usePlayerManaging: 1
 --- !u!1 &2249780737946239946
 GameObject:
   m_ObjectHideFlags: 0
@@ -250,6 +251,7 @@ GameObject:
   - component: {fileID: 5903273978215516347}
   - component: {fileID: 5903273978215516346}
   - component: {fileID: 4580620000099641537}
+  - component: {fileID: 1300881878477784127}
   m_Layer: 0
   m_Name: BGSettings
   m_TagString: Untagged
@@ -330,6 +332,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   usePlayerManaging: 0
+--- !u!114 &1300881878477784127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5903273978215516348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b00864f64ba25774eb5febbb7e86ec21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5903273978297990607
 GameObject:
   m_ObjectHideFlags: 0
@@ -2438,6 +2452,7 @@ GameObject:
   - component: {fileID: 4679693649901018881}
   - component: {fileID: 3178361366598517032}
   - component: {fileID: 8302174248165809741}
+  - component: {fileID: 2817381808963307763}
   m_Layer: 0
   m_Name: Sound Bttn
   m_TagString: Untagged
@@ -2546,16 +2561,16 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3178361366598517032}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1769997025207022404}
-        m_TargetAssemblyTypeName: SettingsOptionButton, Assembly-CSharp
-        m_MethodName: Action
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 2249780737946239946}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+--- !u!114 &2817381808963307763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8387075526281301613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 735901f215908da49b3c5eead3bc29b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

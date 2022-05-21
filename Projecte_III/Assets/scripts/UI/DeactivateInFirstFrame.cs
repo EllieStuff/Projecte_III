@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
-public class VolumeSliders : MonoBehaviour
+public class DeactivateInFirstFrame : MonoBehaviour
 {
     bool firstFrame = true;
 
