@@ -192,7 +192,7 @@ public class DecalDefaultScript : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag.Contains("Player"))
+        if (canSpread && other.tag.Contains("Player"))
         {
             PlayerVehicleScript player = other.GetComponentInParent<PlayerVehicleScript>();
             if (player == null)
