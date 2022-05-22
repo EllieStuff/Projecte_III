@@ -34,7 +34,9 @@ public class PlayerVehicleScript : MonoBehaviour
     public float minDriftSpeed;
     [SerializeField] internal float sandVelocityMultiplier;
     [SerializeField] internal float sandAccelerationMultiplier;
-    [HideInInspector] public bool affectedByOil, affectedByPaint;
+    //[HideInInspector] public bool affectedByOil, affectedByPaint;
+    [HideInInspector] public Stack<GameObject> oilObstacles = new Stack<GameObject>();
+    [HideInInspector] public Stack<GameObject> paintObstacles = new Stack<GameObject>();
 
     [SerializeField] private GameObject wheelsPivot;
 
