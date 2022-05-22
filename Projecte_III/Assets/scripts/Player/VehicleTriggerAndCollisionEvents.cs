@@ -141,7 +141,7 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
             {
                 DecalDefaultScript child = chasis.GetChild(i).GetComponent<DecalDefaultScript>();
                 if (child != null)
-                    child.DestroyByPlayerDeath();
+                    child.DestroyDecal();
             }
             Transform wheelsFather = player.transform.Find("Wheels Colliders");
             for(int i = 0; i < wheelsFather.childCount; i++)
@@ -151,7 +151,7 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
                 {
                     DecalDefaultScript child = currWheel.GetChild(j).GetComponent<DecalDefaultScript>();
                     if (child != null)
-                        child.DestroyByPlayerDeath();
+                        child.DestroyDecal();
                 }
             }
             player.vehicleTorque = player.savedVehicleTorque;
