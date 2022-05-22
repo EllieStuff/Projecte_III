@@ -131,8 +131,40 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
             if (playerHud == null)
             {
                 playerHud = GameObject.Find("HUD").transform.GetComponentInChildren<PlayersHUDManager>().GetPlayerHUD(transform.parent.GetComponent<PlayerData>().id);
+                playerHud = GameObject.Find("HUD").transform.GetComponentInChildren<PlayersHUDManager>().GetPlayerHUD(transform.parent.GetComponent<PlayerData>().id);
             }
 
+            //Erase decals
+            Debug.Log(player.playerNum);
+            Transform chasis = player.transform.Find("vehicleChasis");
+            for(int i = 0; i < chasis.childCount; i++)
+            {
+                DecalDefaultScript child = chasis.GetChild(i).GetComponent<DecalDefaultScript>();
+                if (child != null)
+                    child.DestroyByPlayerDeath(player);
+            }
+            Transform wheelsFather = player.transform.Find("Wheels Colliders");
+            for(int i = 0; i < wheelsFather.childCount; i++)
+            {
+                Transform currWheel = wheelsFather.GetChild(i);
+                for(int j = 0; j < currWheel.childCount; j++)
+                {
+                    DecalDefaultScript child = currWheel.GetChild(j).GetComponent<DecalDefaultScript>();
+                    if (child != null)
+                        child.DestroyByPlayerDeath(player);
+                }
+            }
+            player.oilObstacles.Clear();
+            player.paintObstacles.Clear();
+
+            ////Debug.Break();
+            //foreach (DecalDefaultScript oilValue in player.oilObstacles.Values)
+            //    oilValue.DestroyByPlayerDeath(player);
+            //foreach (DecalDefaultScript paintValue in player.paintObstacles.Values)
+            //    paintValue.DestroyByPlayerDeath(player);
+            ////Debug.Break();
+            //player.oilObstacles.Clear();
+            //player.paintObstacles.Clear();
 
             transform.position = outTransform.position;
             transform.rotation = outTransform.rotation;
@@ -326,11 +358,11 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
         player.timerReversed = 0;
     }
 
-    void ResetFriction()
-    {
-        //player.vehicleRB.angularDrag = player.savedAngularDrag;
-        player.vehicleTorque = player.savedVehicleTorque;
-    }
+    //void ResetFriction()
+    //{
+    //    //player.vehicleRB.angularDrag = player.savedAngularDrag;
+    //    player.vehicleTorque = player.savedVehicleTorque;
+    //}
 
     //void AddFriction(float _torque, string _type)
     //{

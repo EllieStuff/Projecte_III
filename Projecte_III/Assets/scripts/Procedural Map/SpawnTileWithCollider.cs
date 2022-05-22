@@ -13,14 +13,10 @@ public class SpawnTileWithCollider : MonoBehaviour
         _coll = GetComponent<BoxCollider>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Collider");
+        //Debug.Log("Collider");
         if(other.gameObject.tag.Contains("Objective"))
         {
             prefab.parent.GetComponent<GenerateNewTile>().CalculateNewTile();

@@ -20,8 +20,6 @@ public class OilBulletScript : MonoBehaviour
     {
         if (Decals.CollidingWithPlayer(other, originTransform))
         {
-            // Ho silencio perque el joc peta molt si no
-
             GameObject instancedGO = GameObject.Instantiate(decalPrefab, transform.position, decalPrefab.transform.rotation, other.transform);
             instancedGO.transform.localScale = instancedGO.transform.localScale * transform.localScale.x;
             //instancedGO.tag = "Untagged";

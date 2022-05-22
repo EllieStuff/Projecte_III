@@ -66,7 +66,7 @@ public class CameraNavFollowScript : MonoBehaviour
             else
             {
                 navMeshAgent.speed = velocity.magnitude + 2.5f;
-                Debug.Log("limit!!!!!");
+                //Debug.Log("limit!!!!!");
             }
         }
         else if(navMeshAgent.speed < savedSpeed)
