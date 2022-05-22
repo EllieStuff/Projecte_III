@@ -141,7 +141,7 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
             {
                 DecalDefaultScript child = chasis.GetChild(i).GetComponent<DecalDefaultScript>();
                 if (child != null)
-                    child.DestroyByPlayerDeath(player);
+                    child.DestroyByPlayerDeath();
             }
             Transform wheelsFather = player.transform.Find("Wheels Colliders");
             for(int i = 0; i < wheelsFather.childCount; i++)
@@ -151,20 +151,13 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
                 {
                     DecalDefaultScript child = currWheel.GetChild(j).GetComponent<DecalDefaultScript>();
                     if (child != null)
-                        child.DestroyByPlayerDeath(player);
+                        child.DestroyByPlayerDeath();
                 }
             }
+            player.vehicleTorque = player.savedVehicleTorque;
             player.oilObstacles.Clear();
             player.paintObstacles.Clear();
 
-            ////Debug.Break();
-            //foreach (DecalDefaultScript oilValue in player.oilObstacles.Values)
-            //    oilValue.DestroyByPlayerDeath(player);
-            //foreach (DecalDefaultScript paintValue in player.paintObstacles.Values)
-            //    paintValue.DestroyByPlayerDeath(player);
-            ////Debug.Break();
-            //player.oilObstacles.Clear();
-            //player.paintObstacles.Clear();
 
             transform.position = outTransform.position;
             transform.rotation = outTransform.rotation;

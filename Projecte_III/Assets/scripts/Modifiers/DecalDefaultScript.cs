@@ -86,11 +86,11 @@ public class DecalDefaultScript : MonoBehaviour
 
         return newTorque;
     }
-    public void DestroyByPlayerDeath(PlayerVehicleScript _player)
+    public void DestroyByPlayerDeath()
     {
         StopAllCoroutines();
         GetComponent<Collider>().enabled = false;
-        _player.vehicleTorque = _player.savedVehicleTorque;
+        //_player.vehicleTorque = _player.savedVehicleTorque;
         Destroy(gameObject, 0.5f);
     }
     bool AffectedByOil(PlayerVehicleScript _player) => _player.oilObstacles.Count > 0;
@@ -148,13 +148,12 @@ public class DecalDefaultScript : MonoBehaviour
         if (other.tag.Contains("Player"))
         {
             PlayerVehicleScript player = other.GetComponentInParent<PlayerVehicleScript>();
-            AddToDictionaries(player);
-            //if (!canSpread || PlayerAffectedByThis(player)) return;
+            if (!canSpread) return;
 
-            //AffectPlayer(player);
-            player.vehicleTorque = GetNewTorque(player);
+            if (!PlayerAffectedByThis(player)) player.vehicleTorque = GetNewTorque(player);
+            AddToDictionaries(player);
             //player.vehicleTorque = player.savedVehicleTorque;
-            if (transform.parent.tag.Contains("Player"))
+            if (transform.parent.tag.Contains("Player") || transform.parent.tag.Equals("vehicleElement"))
             {
                 canSpread = false;
                 //StartCoroutine(WaitTorque(player));
