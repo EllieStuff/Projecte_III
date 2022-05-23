@@ -15,6 +15,11 @@ public class AudioSettingsButton : SettingsOptionClass
         audioObj = transform.parent.GetComponentInChildren<AudioSettings>();
     }
 
+    public override void Init(GlobalMenuInputs _inputs, InputSystem.KeyData _playerManaging)
+    {
+        audioObj.Init(_inputs, _playerManaging);
+    }
+
     // Update is called once per frame
     void Update()
     {

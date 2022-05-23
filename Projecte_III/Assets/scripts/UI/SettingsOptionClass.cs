@@ -10,6 +10,7 @@ public class SettingsOptionClass : MonoBehaviour
         
     }
 
+    virtual public void Init(GlobalMenuInputs _inputs, InputSystem.KeyData _playerManaging) { }
     virtual public void Interact_Accept(bool _calledFromScript = false) { }
     virtual public void Interact_Right(bool _calledFromScript = false) { }
     virtual public void Interact_Left(bool _calledFromScript = false) { }

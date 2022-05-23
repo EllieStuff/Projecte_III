@@ -51,6 +51,7 @@ public class SettingsMenuScript : MonoBehaviour
         {
             //invokeCalledByScript = true;
             options[idx].Interact_Accept(true);
+            if (idx == (int)SettingsOption.SOUND_SETTINGS) options[idx].Init(inputs, playerManaging);
             //invokeCalledByScript = false;
         }
         else if (inputs.RightPressed && IsManagingDeviceInput(inputs.RightData.deviceId))
