@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class VehicleTriggerAndCollisionEvents : MonoBehaviour
 {
     private PlayerVehicleScript player;
-    private Transform centerRespawn;
+    [SerializeField] private Transform centerRespawn;
     public Vector3 respawnPosition, respawnRotation, respawnVelocity;
     bool exitCamera;
     [SerializeField] float boostPadDuration;
@@ -20,10 +20,20 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
 
     PlayersHUD playerHud = null;
     [SerializeField] private float timerRespawn = 3;
+    public float TimerRespawn
+    {
+        get { return timerRespawn; }
+    }
+
     private BoxCollider[] collisionBox;
     [SerializeField] private Material ghostMat;
 
     [SerializeField] private Material defaultMat;
+
+    bool stopGhost = true;
+    public bool StopGhost{
+        set { stopGhost = value; } 
+    }
 
     public Material DefaultMaterial
     {
@@ -38,8 +48,6 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
 
     private bool ghostTextureEnabled;
 
-
-
     public bool applyingForce = false;
 
     public float previousMaxSpeed;
@@ -47,35 +55,52 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
     public ParticleSystem RespawnParticles;
 
 
-
     private void Start()
-    {
-        Init();
-    }
-    internal void Init()
     {
         carRender = transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>();
         carRender.material = defaultMat;
+        if (Physics.GetIgnoreLayerCollision(3, 9))
+            Physics.IgnoreLayerCollision(3, 9);
+        //Init();
+    }
+    internal void Init()
+    {
         timerRespawn = 10;
+        centerRespawn = GameObject.FindGameObjectWithTag("CameraObjective").transform;
+
         playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
         collisionBox = transform.GetChild(0).GetComponents<BoxCollider>();
-        centerRespawn = GameObject.Find("Main Camera").transform;
         player = GetComponent<PlayerVehicleScript>();
         respawnPosition = new Vector3(0, 0, 0);
         respawnRotation = new Vector3(0, 0, 0);
         respawnVelocity = new Vector3(0, 0, 0);
     }
 
+    void SetLayerRecursively(Transform _obj, int layer)
+    {
+        _obj.gameObject.layer = layer;
+        Transform[] _children = _obj.GetComponentsInChildren<Transform>(true);
+        foreach (var item in _children)
+        {
+            if (item.gameObject.layer == 3 || item.gameObject.layer == 9)
+                item.gameObject.layer = layer;
+        }
+    }
+
     private void Update()
     {
-        if (centerRespawn == null) Init();
 
         if (!ghostTextureEnabled && carRender.material != defaultMat)
             carRender.material = defaultMat;
 
+        if (centerRespawn == null) return;
+
+        if (playersHUDManager == null)
+            playersHUDManager = GameObject.Find("HUD").transform.GetComponentInChildren<PlayersHUDManager>();
+
         if (timerRespawn > 0 && inmunity)
         {
-            player.vehicleRB.velocity = new Vector3(player.vehicleRB.velocity.x, 0, player.vehicleRB.velocity.z);
+           // player.vehicleRB.velocity = new Vector3(player.vehicleRB.velocity.x, 0, player.vehicleRB.velocity.z);
 
             timerRespawn -= Time.deltaTime;
 
@@ -84,33 +109,24 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
 
             ghostTextureEnabled = !ghostTextureEnabled;
         }
-        else if(inmunity)
+        else if(inmunity && stopGhost)
         {
             carRender.material = defaultMat;
-            for (int i = 0; i < 4; i++)
-            {
-                BoxCollider[] cols = playersManager.GetPlayer(i).GetChild(0).GetComponents<BoxCollider>();
 
-                Physics.IgnoreCollision(collisionBox[0], cols[0], false);
-                Physics.IgnoreCollision(collisionBox[0], cols[1], false);
-                Physics.IgnoreCollision(collisionBox[1], cols[0], false);
-                Physics.IgnoreCollision(collisionBox[1], cols[1], false);
+            SetLayerRecursively(transform, 3);
 
-                for (int o = 0; o < player.wheelCollider.Length; o++)
-                    player.wheelCollider[o].isTrigger = false;
-            }
             //Debug.Log("Stopped inmunity");
             inmunity = false;
         }
 
-        respawnPosition = new Vector3(centerRespawn.position.x, centerRespawn.position.y - 25, centerRespawn.position.z);
-        respawnPosition += centerRespawn.TransformDirection(new Vector3(0, 0, 30)) + new Vector3(0, 35, 0);
+        respawnPosition = centerRespawn.position;
         respawnRotation = centerRespawn.rotation.eulerAngles;
+
         if (player.vehicleReversed)
         {
             if (playerHud == null)
             {
-                playerHud = GameObject.Find("HUD").transform.GetComponentInChildren<PlayersHUDManager>().GetPlayerHUD(transform.parent.GetComponent<PlayerData>().id);
+                playerHud = playersHUDManager.GetPlayerHUD(transform.parent.GetComponent<PlayerData>().id);
             }
             //Vehicle recover zone
             player.timerReversed += Time.deltaTime;
@@ -130,8 +146,7 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
         {
             if (playerHud == null)
             {
-                playerHud = GameObject.Find("HUD").transform.GetComponentInChildren<PlayersHUDManager>().GetPlayerHUD(transform.parent.GetComponent<PlayerData>().id);
-                playerHud = GameObject.Find("HUD").transform.GetComponentInChildren<PlayersHUDManager>().GetPlayerHUD(transform.parent.GetComponent<PlayerData>().id);
+                playerHud = playersHUDManager.GetPlayerHUD(transform.parent.GetComponent<PlayerData>().id);
             }
 
             //Erase decals
@@ -170,11 +185,9 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
             player.speedIncrementEnabled = true;
             //_______________________________________________
             if (!inmunity && !infiniteLifes) 
-            player.lifes--;
+                player.lifes--;
 
             playerHud.UpdateLifes(player.lifes);
-
-            GameObject parent = transform.parent.gameObject;
 
             if(player.lifes > 0)
                 AudioManager.Instance.Play_SFX("Respawn_SFX");
@@ -183,12 +196,9 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
             {
                 AudioManager.Instance.Play_SFX("PlayerEliminated_SFX");
 
-                if (playersHUDManager == null)
-                    playersHUDManager = GameObject.Find("HUD").transform.Find("Players").GetComponent<PlayersHUDManager>();
-
                 playersHUDManager.GetPlayerHUD(player.playerNum).transform.Find("CurrentModifier").GetComponent<Image>().color -= new Color(0, 0, 0, 0.3f);
 
-                parent.SetActive(false);
+                transform.parent.gameObject.SetActive(false);
             }
             else
             {
@@ -197,18 +207,7 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
                 //parent.GetComponent<AudioSource>().Play();
                 if(!inmunity)
                 {
-                    for (int i = 0; i < 4; i++)
-                    {
-                        BoxCollider[] cols = playersManager.GetPlayer(i).GetChild(0).GetComponents<BoxCollider>();
-
-                        Physics.IgnoreCollision(collisionBox[0], cols[0], true);
-                        Physics.IgnoreCollision(collisionBox[0], cols[1], true);
-                        Physics.IgnoreCollision(collisionBox[1], cols[0], true);
-                        Physics.IgnoreCollision(collisionBox[1], cols[1], true);
-
-                        for (int o = 0; o < player.wheelCollider.Length; o++)
-                            player.wheelCollider[o].isTrigger = true;
-                    }
+                    SetLayerRecursively(transform, 9);
 
                     carRender.material = ghostMat;
                     ghostTextureEnabled = true;
@@ -243,14 +242,6 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
         player.vehicleMaxSpeed = forceValue;
 
         StartCoroutine(ResetVelocity(_seconds));
-
-    }
-
-    private void FixedUpdate()
-
-    {
-
-
 
     }
 
@@ -296,11 +287,6 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
         if (other.CompareTag("TopCollider"))
             player.vehicleRB.velocity += transform.TransformDirection(Vector3.back * Time.deltaTime * 5);
 
-            /*if (other.CompareTag("Water"))
-            {
-                vehicleRB.AddForce(other.GetComponent<WaterStreamColliderScript>().Stream, ForceMode.Force);
-                onWater = true;
-            }*/
 
         //Terrain
         if (other.CompareTag("Sand") && player.touchingGround)
@@ -308,18 +294,7 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
 
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        //Terrain
-        if (other.CompareTag("Sand") || !player.touchingGround)
-        {
-            //if (vehicleMaxSpeed == savedMaxSpeed / sandVelocityMultiplier)
-            //{
-            player.vehicleMaxSpeed = player.savedMaxSpeed;
-            player.vehicleAcceleration = player.savedAcceleration;
-            //}
-        }
-    }
+    
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -329,7 +304,6 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
             otherPlayer.dashCollided = true;
             otherPlayer.vehicleRB.velocity = player.vehicleRB.velocity * 2.0f;
             otherPlayer.GetComponent<VehicleTriggerAndCollisionEvents>().ResetDash(otherPlayer);
-
         }
     }
 

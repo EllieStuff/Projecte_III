@@ -71,7 +71,10 @@ public class ObstacleSelectionScript : MonoBehaviour
 
                 roadType = (int)GetComponentInParent<RoadData>().RoadType;
 
-                ObjectSelected[i-1].GetComponent<ObstacleData>().roadType = roadType;
+                if(transform.parent.name.Contains("2"))
+                    ObjectSelected[i-1].GetComponent<ObstacleData>().roadType = roadType+2;
+                else
+                    ObjectSelected[i-1].GetComponent<ObstacleData>().roadType = roadType;
 
                 pickedObstacles.Add(_random);
             }
