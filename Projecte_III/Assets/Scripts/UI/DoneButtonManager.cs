@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class DoneButtonManager : MonoBehaviour
 {
@@ -77,13 +78,15 @@ public class DoneButtonManager : MonoBehaviour
 
         playersManager.numOfPlayers = buttonsActive;
 
-        for (int i = 0; i < playersManager.players.Length ; i++) 
+        for (int i = playersManager.numOfPlayers; i < playersManager.players.Length; i++)
         {
-            if (i >= playersManager.numOfPlayers)
-            {
-                changeColorManager.GetChild(i).GetComponent<ChangeColor>().enabled = true;
-                playersManager.GetPlayer(i).GetComponent<PlayerVehicleScript>().iaEnabled = true;
-            }
+            changeColorManager.GetChild(i).GetComponent<ChangeColor>().enabled = true;
+            playersManager.GetPlayer(i).GetComponent<PlayerVehicleScript>().iaEnabled = true;
+            TextMeshPro tmPro = playersManager.GetPlayer(i).Find("vehicleChasis").Find("PlayerNumText").GetComponent<TextMeshPro>();
+            tmPro.text = "CPU";
+            tmPro.fontSize = 22;
+            tmPro.transform.localPosition = 
+                new Vector3(tmPro.transform.localPosition.x, tmPro.transform.localPosition.y + 0.1f, tmPro.transform.localPosition.z - 0.1f);
         }
         
         playersManager.numOfPlayers = 4;

@@ -21,6 +21,7 @@ public class CameraFollow : MonoBehaviour
         target = GameObject.FindGameObjectWithTag("CameraObjective").transform;
         //vehicleRB = target.GetComponent<PlayerVehicleScript>().vehicleRB;
         transform.position = target.position + posOffset;
+        transform.rotation = Quaternion.LookRotation(-transform.up);
         //transform.rotation.eulerAngles = rotOffset;
     }
     private void Update()
