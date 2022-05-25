@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DecalDefaultScript : MonoBehaviour
+public class FloorDecalScript : MonoBehaviour
 {
     public enum DecalType { OIL, PAINT };
     [SerializeField] DecalType type;
@@ -10,7 +10,6 @@ public class DecalDefaultScript : MonoBehaviour
     [SerializeField] float despawnSpeed = 0.003f;
     [SerializeField] Utils.MinMaxFloat despawnSpeedDiff = new Utils.MinMaxFloat(-0.002f, 0.002f);
 
-    [SerializeField] bool canSpread = true;
     //[SerializeField] string otherTag, parentTag;
     //Dictionary<Transform, int> lastTouchedPlayers = new Dictionary<Transform, int>();
     //PlayerVehicleScript lastTouchedPlayer = null;
@@ -39,6 +38,17 @@ public class DecalDefaultScript : MonoBehaviour
     //    //}
     //}
 
+    private void OnBecameVisible()
+    {
+        GetComponent<MeshRenderer>().enabled = true;
+        GetComponent<Collider>().enabled = true;
+    }
+    private void OnBecameInvisible()
+    {
+        GetComponent<MeshRenderer>().enabled = false;
+        GetComponent<Collider>().enabled = false;
+    }
+
 
     bool PlayerAffectedByThis(PlayerVehicleScript _player)
     {
@@ -47,42 +57,42 @@ public class DecalDefaultScript : MonoBehaviour
 
         return false;
     }
-    //void AddToDictionaries(PlayerVehicleScript _player)
-    //{
-    //    //lastTouchedPlayer = _player;
+    void AddToDictionaries(PlayerVehicleScript _player)
+    {
+        //lastTouchedPlayer = _player;
 
-    //    if (type == DecalType.OIL)
-    //    {
-    //        if (!_player.oilObstacles.ContainsKey(transform))
-    //            _player.oilObstacles.Add(transform, this);
-    //    }
-    //    else if (type == DecalType.PAINT)
-    //    {
-    //        if (!_player.paintObstacles.ContainsKey(transform))
-    //            _player.paintObstacles.Add(transform, this);
-    //    }
-    //}
-    //void RemoveFromDictionaries(PlayerVehicleScript _player)
-    //{
-    //    //lastTouchedPlayer = null;
+        if (type == DecalType.OIL)
+        {
+            if (!_player.oilObstacles.ContainsKey(transform))
+                _player.oilObstacles.Add(transform, this);
+        }
+        else if (type == DecalType.PAINT)
+        {
+            if (!_player.paintObstacles.ContainsKey(transform))
+                _player.paintObstacles.Add(transform, this);
+        }
+    }
+    void RemoveFromDictionaries(PlayerVehicleScript _player)
+    {
+        //lastTouchedPlayer = null;
 
-    //    if (type == DecalType.OIL)
-    //    {
-    //        if (_player.oilObstacles.ContainsKey(_player.transform))
-    //            _player.oilObstacles.Remove(transform);
-    //    }
-    //    else if (type == DecalType.PAINT)
-    //    {
-    //        if (_player.paintObstacles.ContainsKey(_player.transform))
-    //            _player.paintObstacles.Remove(transform);
-    //    }
+        if (type == DecalType.OIL)
+        {
+            if (_player.oilObstacles.ContainsKey(_player.transform))
+                _player.oilObstacles.Remove(transform);
+        }
+        else if (type == DecalType.PAINT)
+        {
+            if (_player.paintObstacles.ContainsKey(_player.transform))
+                _player.paintObstacles.Remove(transform);
+        }
 
-    //    if (!AffectedByOil(_player) && !AffectedByPaint(_player))
-    //    {
-    //        //Debug.Break();
-    //        _player.vehicleTorque = _player.savedVehicleTorque;
-    //    }
-    //}
+        if (!AffectedByOil(_player) && !AffectedByPaint(_player))
+        {
+            //Debug.Break();
+            _player.vehicleTorque = _player.savedVehicleTorque;
+        }
+    }
     float GetNewTorque(PlayerVehicleScript _player)
     {
         float newTorque = 0;
@@ -117,15 +127,7 @@ public class DecalDefaultScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.name.Contains("Road"))
-        {
-            DestroyDecal();
-        }
-
-
-        if (!canSpread) return;
-
-        if (canSpread && (other.tag.Contains("Player") || other.tag.Equals("vehicleElement")))
+        if (other.tag.Contains("Player") || other.tag.Equals("vehicleElement"))
         {
             PlayerVehicleScript player = other.GetComponentInParent<PlayerVehicleScript>();
             if (player == null)
@@ -142,54 +144,57 @@ public class DecalDefaultScript : MonoBehaviour
             //if (!canSpread) return;
 
             if (!PlayerAffectedByThis(player)) player.vehicleTorque = GetNewTorque(player);
-            //AddToDictionaries(player);
-            player.reinitTorqueTimer = finalDespawnTime;
+            AddToDictionaries(player);
+            //player.reinitTorqueTimer = finalDespawnTime;
             //player.vehicleTorque = player.savedVehicleTorque;
             //string a = transform.parent.tag;
-            if (transform.parent.tag.Contains("Player") || transform.parent.tag.Equals("vehicleElement"))
-            {
-                canSpread = false;
-                //StartCoroutine(WaitTorque(player));
-            }
+            //if (transform.parent.tag.Contains("Player") || transform.parent.tag.Equals("vehicleElement"))
+            //{
+            //    canSpread = false;
+            //    //StartCoroutine(WaitTorque(player));
+            //}
         }
-        else if (other.name.Contains("Decal"))
-        {
-            if (transform.parent.tag.Contains("Player") || transform.parent.tag.Equals("vehicleElement"))
-                canSpread = false;
-            //otherTag = other.tag;
-            //parentTag = transform.parent.tag;
-            //string c = "";
-        }
+        //else if (other.name.Contains("Decal"))
+        //{
+        //    if (transform.parent.tag.Contains("Player") || transform.parent.tag.Equals("vehicleElement"))
+        //        canSpread = false;
+        //    //otherTag = other.tag;
+        //    //parentTag = transform.parent.tag;
+        //    //string c = "";
+        //}
 
     }
 
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    if (canSpread && (other.tag.Contains("Player") || other.tag.Equals("vehicleElement")))
-    //    {
-    //        PlayerVehicleScript player = other.GetComponentInParent<PlayerVehicleScript>();
-    //        if (player == null)
-    //        {
-    //            player = other.GetComponent<PlayerVehicleScript>();
-    //            if (player == null)
-    //            {
-    //                player = other.transform.parent.GetComponentInParent<PlayerVehicleScript>();
-    //                if (player == null) return;
-    //            }
-    //        }
-    //        RemoveFromDictionaries(player);
-    //        //player.vehicleTorque = player.savedVehicleTorque;
-    //        if (type == DecalType.OIL && !AffectedByPaint(player))
-    //        {
-    //            player.vehicleTorque = player.savedVehicleTorque;
-    //        }
-    //        else if (type == DecalType.PAINT && !AffectedByOil(player))
-    //        {
-    //            player.vehicleTorque = player.savedVehicleTorque;
-    //        }
-    //        ////DestroyDecal();
-    //    }
-    //}
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag.Contains("Player") || other.tag.Equals("vehicleElement"))
+        {
+            PlayerVehicleScript player = other.GetComponentInParent<PlayerVehicleScript>();
+            if (player == null)
+            {
+                player = other.GetComponent<PlayerVehicleScript>();
+                if (player == null)
+                {
+                    player = other.transform.parent.GetComponentInParent<PlayerVehicleScript>();
+                    if (player == null) return;
+                }
+            }
+            RemoveFromDictionaries(player);
+            //if(!AffectedByOil(player) && !AffectedByPaint(player))
+            //{
+            //    player.vehicleTorque = player.savedVehicleTorque;
+            //}
 
-
+            //player.vehicleTorque = player.savedVehicleTorque;
+            //if (type == DecalType.OIL && !AffectedByPaint(player))
+            //{
+            //    player.vehicleTorque = player.savedVehicleTorque;
+            //}
+            //else if (type == DecalType.PAINT && !AffectedByOil(player))
+            //{
+            //    player.vehicleTorque = player.savedVehicleTorque;
+            //}
+            ////DestroyDecal();
+        }
+    }
 }

@@ -35,8 +35,8 @@ public class PlayerVehicleScript : MonoBehaviour
     [SerializeField] internal float sandVelocityMultiplier;
     [SerializeField] internal float sandAccelerationMultiplier;
     //[HideInInspector] public bool affectedByOil, affectedByPaint;
-    [HideInInspector] public Dictionary<Transform, DecalDefaultScript> oilObstacles = new Dictionary<Transform, DecalDefaultScript>();
-    [HideInInspector] public Dictionary<Transform, DecalDefaultScript> paintObstacles = new Dictionary<Transform, DecalDefaultScript>();
+    [HideInInspector] public Dictionary<Transform, FloorDecalScript> oilObstacles = new Dictionary<Transform, FloorDecalScript>();
+    [HideInInspector] public Dictionary<Transform, FloorDecalScript> paintObstacles = new Dictionary<Transform, FloorDecalScript>();
 
     [SerializeField] private GameObject wheelsPivot;
 
