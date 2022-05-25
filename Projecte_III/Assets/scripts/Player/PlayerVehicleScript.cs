@@ -61,6 +61,7 @@ public class PlayerVehicleScript : MonoBehaviour
     private Rigidbody outVehicleRB;
     internal float baseMaxSpeed;
     internal bool speedIncrementEnabled;
+    [HideInInspector] public float reinitTorqueTimer = -1;
 
     private VehicleTriggerAndCollisionEvents events;
 
@@ -80,6 +81,8 @@ public class PlayerVehicleScript : MonoBehaviour
     }
     public void Init()
     {
+        StopAllCoroutines();
+
         events = GetComponent<VehicleTriggerAndCollisionEvents>();
 
         speedIncrementEnabled = true;
@@ -124,6 +127,8 @@ public class PlayerVehicleScript : MonoBehaviour
         savedAngularDrag = vehicleRB.angularDrag;
 
         wheelsModels = transform.parent.GetChild(1).gameObject;
+
+        StartCoroutine(ReinitTorqueOverTime());
     }
 
     bool InmunityCheck()
@@ -350,6 +355,20 @@ public class PlayerVehicleScript : MonoBehaviour
                 vehicleRB.velocity = transform.TransformDirection(new Vector3(0, 0, -vehicleMaxSpeed));
                 if (vehicleRB.velocity.z < 0)
                     vehicleRB.velocity = transform.TransformDirection(new Vector3(0, 0, -vehicleMaxSpeed));
+            }
+        }
+    }
+
+
+    IEnumerator ReinitTorqueOverTime()
+    {
+        while (true)
+        {
+            yield return new WaitForEndOfFrame();
+            if(reinitTorqueTimer >= 0)
+            {
+                reinitTorqueTimer -= Time.deltaTime;
+                if (reinitTorqueTimer < 0) vehicleTorque = savedVehicleTorque;
             }
         }
     }

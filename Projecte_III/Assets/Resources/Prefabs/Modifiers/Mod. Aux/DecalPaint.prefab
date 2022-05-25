@@ -100,10 +100,11 @@ MonoBehaviour:
   despawnTime:
     min: 7
     max: 12
-  despawnSpeed: 0.004
+  despawnSpeed: 0.1
   despawnSpeedDiff:
-    min: -0.001
-    max: 0.001
+    min: -0.01
+    max: 0.01
+  canSpread: 1
 --- !u!135 &-748945499118962290
 SphereCollider:
   m_ObjectHideFlags: 0

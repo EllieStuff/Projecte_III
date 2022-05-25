@@ -232,6 +232,11 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
             player.vehicleMaxSpeed = player.savedMaxSpeed;
             player.vehicleAcceleration = player.savedAcceleration;
         }
+
+        //ResetTorqueAfterDecal();
+
+
+        ///End of Update
     }
 
     public void ApplyForce(float forceValue, float _seconds)
@@ -258,6 +263,17 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
         Debug.Log("Velocity reseted");
 
     }
+
+    //void ResetTorqueAfterDecal()
+    //{
+    //    Debug.Log("Player 1 paints; " + player.paintObstacles.Count);
+    //    if(player.vehicleTorque != player.savedVehicleTorque 
+    //        && player.paintObstacles.Count == 0 && player.oilObstacles.Count == 0)
+    //    {
+    //        player.vehicleTorque = player.savedVehicleTorque;
+    //    }
+    //}
+
 
     void OnCollisionStay(Collision other)
     {
@@ -294,7 +310,6 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
 
     }
 
-    
 
     private void OnCollisionEnter(Collision collision)
     {
