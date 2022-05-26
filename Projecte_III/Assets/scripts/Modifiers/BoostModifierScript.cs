@@ -7,6 +7,9 @@ public class BoostModifierScript : MonoBehaviour
     Rigidbody playerRB;
     PlayerVehicleScript player;
 
+    [SerializeField] GameObject BoostPS1;
+    [SerializeField] GameObject BoostPS2;
+
     float boostSpeed = 20.0f;
     float boostTime = 1.0f;
     float initialDrag;
@@ -48,6 +51,14 @@ public class BoostModifierScript : MonoBehaviour
 
         initialDrag = playerRB.drag;
         playerRB.drag = 0;
+
+        BoostPS1.transform.LookAt(transform.localPosition + _direction);
+        BoostPS1.GetComponent<ParticleSystem>().Play();
+        BoostPS2.transform.LookAt(transform.localPosition + _direction);
+        BoostPS2.GetComponent<ParticleSystem>().Play();
+
+        Debug.Log("PS rotation: " + BoostPS1.transform.localRotation);
+
         StartCoroutine(StopBoost(boostTime * _multiplier));
     }
 

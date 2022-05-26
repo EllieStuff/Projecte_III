@@ -731,6 +731,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e44f3dc64e49934faae345aade10592, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BoostPS1: {fileID: 6263173600484705224}
+  BoostPS2: {fileID: 6255021597744251489}
 --- !u!114 &638144713611533918
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64536,7 +64538,7 @@ ParticleSystem:
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 0
   useUnscaledTime: 0
@@ -65155,8 +65157,8 @@ ParticleSystem:
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
     donutRadius: 0.2
-    m_Position: {x: -0.0000003471673, y: 0, z: 0.015937667}
-    m_Rotation: {x: -0, y: 0.005071157, z: 0}
+    m_Position: {x: -0.0000000044946775, y: 0, z: 0.018852023}
+    m_Rotation: {x: -0, y: 0, z: 0}
     m_Scale: {x: 0.99999994, y: 1, z: 1}
     placementMode: 0
     m_MeshMaterialIndex: 0
@@ -66036,8 +66038,8 @@ ParticleSystem:
     x:
       serializedVersion: 2
       minMaxState: 3
-      scalar: -0.03
-      minScalar: 0.03
+      scalar: 0
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -66089,8 +66091,8 @@ ParticleSystem:
     y:
       serializedVersion: 2
       minMaxState: 3
-      scalar: -0.03
-      minScalar: 0.03
+      scalar: 0
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -66513,7 +66515,7 @@ ParticleSystem:
     radial:
       serializedVersion: 2
       minMaxState: 1
-      scalar: 0.15
+      scalar: 0.2
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -69416,7 +69418,7 @@ ParticleSystem:
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 0
   useUnscaledTime: 0
@@ -70035,7 +70037,7 @@ ParticleSystem:
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
     donutRadius: 0.2
-    m_Position: {x: -0.00000029962325, y: 0, z: 0.01422766}
+    m_Position: {x: -0.0000000044946775, y: 0, z: 0.018852023}
     m_Rotation: {x: -0, y: 0, z: 0}
     m_Scale: {x: 0.99999994, y: 1, z: 1}
     placementMode: 0
@@ -70116,7 +70118,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.01
+      value: 0.002
       mode: 0
       spread: 0
       speed:
@@ -71022,8 +71024,8 @@ ParticleSystem:
     z:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.05
-      minScalar: 0.15
+      scalar: 0
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -71392,48 +71394,30 @@ ParticleSystem:
         m_RotationOrder: 4
     radial:
       serializedVersion: 2
-      minMaxState: 1
-      scalar: 1
-      minScalar: 0
+      minMaxState: 3
+      scalar: 0.5
+      minScalar: 0.1
       maxCurve:
         serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 0
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
+          value: 1
+          inSlope: -1
+          outSlope: -1
+          tangentMode: 34
           weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 0.42653358
-          value: -0.016901668
-          inSlope: 0.06187313
-          outSlope: 0.06187313
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.17810918
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 0.7677713
-          value: -0.09795211
-          inSlope: -0.31365862
-          outSlope: -0.31365862
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
+          inWeight: 0
+          outWeight: 0
         - serializedVersion: 3
           time: 1
-          value: -0.10495943
-          inSlope: -0.4430913
-          outSlope: -0.4430913
-          tangentMode: 0
+          value: 0
+          inSlope: -1
+          outSlope: -1
+          tangentMode: 34
           weightedMode: 0
-          inWeight: 0.78797257
-          outWeight: 0.33333334
+          inWeight: 0
+          outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4

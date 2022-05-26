@@ -30,7 +30,7 @@ public class CameraFollow : MonoBehaviour
         HandlePosition();
         HandleRotation();
         //RaycastCamera();
-        Debug.Log("Timer: " + timer * rotSpeed);
+        //Debug.Log("Timer: " + timer * rotSpeed);
     }
 
     private void fovSystem()
