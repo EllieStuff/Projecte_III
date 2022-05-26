@@ -9,15 +9,15 @@ public class ObjectDisplacementScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        movementPosition = 0.5f;
+        movementPosition = 80f;
         if (gameObject.name.Contains("Butterfly"))
-            movementPosition = Random.Range(0.05f, 0.1f);
+            movementPosition += Random.Range(0f, 10f);
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position += new Vector3(0, 0, movementPosition);
+        transform.position += new Vector3(0, 0, movementPosition * Time.deltaTime);
 
         if (transform.position.z >= 500)
             Destroy(gameObject);
