@@ -9,7 +9,9 @@ public class ChangeColor : MonoBehaviour
 
     public int currentValue;
 
-    static List<Material> colorList = new List<Material>();
+    static List<KeyValuePair<int, Material>> colorList = new List<KeyValuePair<int, Material>>();
+    static List<KeyValuePair<int, Material>> defaultColorList = new List<KeyValuePair<int, Material>>();
+
     [SerializeField] VehicleTriggerAndCollisionEvents player;
     [SerializeField] Button buttonRight, buttonLeft;
 
@@ -36,8 +38,14 @@ public class ChangeColor : MonoBehaviour
 
         int _rand = Random.Range(0, colorList.Count);
 
-        currentColor = colorList[_rand];
-        colorList.RemoveAt(_rand);
+        while(colorList[_rand].Value == null)
+        {
+            _rand = Random.Range(0, colorList.Count);
+        }
+        currentValue = _rand;
+        currentColor = colorList[_rand].Value;
+
+        colorList[_rand] = new KeyValuePair<int, Material>(_rand, null);
 
         player.DefaultMaterial = currentColor;
         Color _curr = UseGradientMaterials.GetColor(currentColor.name);
@@ -51,6 +59,8 @@ public class ChangeColor : MonoBehaviour
         if (player.GetComponentInParent<PlayerData>().id == 0)
         {
             colorList.Clear();
+            defaultColorList.Clear();
+
             Material[] mats;
             if (!gradient)
                 mats = Resources.LoadAll<Material>("Materials/CarMaterials/Flat");
@@ -59,7 +69,8 @@ public class ChangeColor : MonoBehaviour
 
             for (int i = 0; i < mats.Length; i++)
             {
-                colorList.Add(mats[i]);
+                colorList.Add(new KeyValuePair<int, Material>( i, mats[i]));
+                defaultColorList.Add(new KeyValuePair<int, Material>(i, mats[i]));
             }
         }
     }
@@ -80,21 +91,18 @@ public class ChangeColor : MonoBehaviour
 
     public void SetNewColor(int _direction)
     {
-        Material _currentColor = null;
+        colorList[currentValue] = defaultColorList[currentValue];
 
-        if(_direction > 0)
+        do
         {
-            _currentColor = colorList[colorList.Count - 1];
-            colorList.RemoveAt(colorList.Count - 1);
-            colorList.Insert(0, currentColor);
-        }
-        else if(_direction < 0)
-        {
-            _currentColor = colorList[0];
-            colorList.RemoveAt(0);
-            colorList.Add(currentColor);
-        }
-        currentColor = _currentColor;
+            currentValue += _direction;
+            if (currentValue >= colorList.Count) currentValue = 0;
+            else if (currentValue < 0) currentValue = colorList.Count - 1;
+
+        } while (colorList[currentValue].Value == null);
+
+        currentColor = colorList[currentValue].Value;
+        colorList[currentValue] = new KeyValuePair<int, Material>(currentValue, null);
 
         player.DefaultMaterial = currentColor;
 
@@ -110,12 +118,17 @@ public class ChangeColor : MonoBehaviour
 
         if (!playerInputs.UsesKeyboard())
             return;
+        colorList[currentValue] = defaultColorList[currentValue];
 
-        Material _currentColor = colorList[colorList.Count - 1];
-        colorList.RemoveAt(colorList.Count - 1);
-        colorList.Insert(0, currentColor);
-        
-        currentColor = _currentColor;
+        do
+        {
+            currentValue += 1;
+            if (currentValue >= colorList.Count) currentValue = 0;
+
+        } while (colorList[currentValue].Value == null);
+
+        currentColor = colorList[currentValue].Value;
+        colorList[currentValue] = new KeyValuePair<int, Material>(currentValue, null);
 
         player.DefaultMaterial = currentColor;
 
@@ -132,11 +145,17 @@ public class ChangeColor : MonoBehaviour
         if (!playerInputs.UsesKeyboard()) 
             return;
 
-        Material _currentColor = colorList[0];
-        colorList.RemoveAt(0);
-        colorList.Add(currentColor);
-       
-        currentColor = _currentColor;
+        colorList[currentValue]= defaultColorList[currentValue];
+        
+        do
+        {
+            currentValue += -1;
+            if (currentValue < 0) currentValue = colorList.Count - 1;
+
+        } while (colorList[currentValue].Value == null);
+
+        currentColor = colorList[currentValue].Value;
+        colorList[currentValue] = new KeyValuePair<int, Material>(currentValue, null);
 
         player.DefaultMaterial = currentColor;
 
