@@ -52,9 +52,9 @@ public class BoostModifierScript : MonoBehaviour
         initialDrag = playerRB.drag;
         playerRB.drag = 0;
 
-        BoostPS1.transform.LookAt(transform.localPosition + _direction);
+        BoostPS1.transform.LookAt(transform.position - _direction);
         BoostPS1.GetComponent<ParticleSystem>().Play();
-        BoostPS2.transform.LookAt(transform.localPosition + _direction);
+        BoostPS2.transform.LookAt(transform.position - _direction);
         BoostPS2.GetComponent<ParticleSystem>().Play();
 
         Debug.Log("PS rotation: " + BoostPS1.transform.localRotation);
