@@ -31,6 +31,8 @@ public class RandomModifierGet : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name.Contains("Building")) return;
+
         if(showModifierInstance != null)
         {
             showModifierInstance.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
