@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 2249468740779258684}
   - component: {fileID: 2249468740779258685}
   - component: {fileID: 2249468740779258686}
-  - component: {fileID: -2677857451967881074}
+  - component: {fileID: -760244728519380103}
   - component: {fileID: -748945499118962290}
-  - component: {fileID: 380371370451833892}
+  - component: {fileID: -7959215239091383778}
   m_Layer: 0
-  m_Name: DecalOil
-  m_TagString: Oil
+  m_Name: DecalPaint_Floor
+  m_TagString: Painting
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 66083e6dc062ae74b9198b53167a60bc, type: 2}
+  - {fileID: 2100000, guid: abe5bcee9dbb68449955bbc1b0b16718, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -84,7 +84,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &-2677857451967881074
+--- !u!114 &-760244728519380103
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -93,18 +93,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 2249468740779258672}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68e20ea23f6cf134a976287f66a924f5, type: 3}
+  m_Script: {fileID: 11500000, guid: e23d26085a2bc734ebcedb0d6c75b67c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  type: 1
   despawnTime:
-    min: 5
-    max: 6
+    min: 9
+    max: 10
   despawnSpeed: 0.1
   despawnSpeedDiff:
     min: -0.01
     max: 0.01
-  canSpread: 1
 --- !u!135 &-748945499118962290
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -118,7 +117,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &380371370451833892
+--- !u!114 &-7959215239091383778
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

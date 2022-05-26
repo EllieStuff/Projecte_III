@@ -170,8 +170,8 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
                 }
             }
             player.vehicleTorque = player.savedVehicleTorque;
-            player.oilObstacles.Clear();
-            player.paintObstacles.Clear();
+            //player.oilObstacles.Clear();
+            //player.paintObstacles.Clear();
 
 
             transform.position = outTransform.position;

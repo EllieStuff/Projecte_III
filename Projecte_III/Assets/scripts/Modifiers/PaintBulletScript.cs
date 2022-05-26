@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PaintBulletScript : MonoBehaviour
 {
-    [SerializeField] GameObject decalPrefab;
+    [SerializeField] GameObject decalCarPrefab, decalFloorPrefab;
     [SerializeField] SphereCollider col;
     [SerializeField] float sizeInc = 5.0f;
 
@@ -24,7 +24,7 @@ public class PaintBulletScript : MonoBehaviour
             //GameObject instancedGO = GameObject.Instantiate(decalPrefab, transform.position, decalPrefab.transform.rotation, other.transform);
             //instancedGO.transform.localScale = instancedGO.transform.localScale * transform.localScale.x;
             //instancedGO.tag = "Untagged";
-            GameObject instancedGO = GameObject.Instantiate(decalPrefab, transform.position, decalPrefab.transform.rotation, other.transform);
+            GameObject instancedGO = GameObject.Instantiate(decalCarPrefab, transform.position, decalCarPrefab.transform.rotation, other.transform);
             instancedGO.transform.localScale = instancedGO.transform.localScale * transform.localScale.x * sizeInc;
             //instancedGO.GetComponent<Collider>().enabled = false;
         }
@@ -34,7 +34,7 @@ public class PaintBulletScript : MonoBehaviour
             {
                 //Vector3 closesPoint = other.ClosestPoint(transform.position);
                 //Vector3 spawnPoint = closesPoint + ((transform.position - closesPoint).normalized * decalPrefab.transform.localScale.x);
-                GameObject instancedGO = GameObject.Instantiate(decalPrefab, transform.position, decalPrefab.transform.rotation, other.transform);
+                GameObject instancedGO = GameObject.Instantiate(decalFloorPrefab, transform.position, decalFloorPrefab.transform.rotation, other.transform);
                 instancedGO.transform.localScale = instancedGO.transform.localScale * transform.localScale.x * sizeInc;
 
                 Destroy(gameObject);
