@@ -49,7 +49,7 @@ public class DecalDefaultScript : MonoBehaviour
     }
     public void DestroyDecal()
     {
-        StopAllCoroutines();
+        //StopAllCoroutines();
         GetComponent<Collider>().enabled = false;
         Destroy(gameObject, 0.5f);
     }

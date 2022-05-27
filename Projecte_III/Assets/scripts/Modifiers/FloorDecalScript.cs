@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class FloorDecalScript : MonoBehaviour
 {
+    //TODO:
+    //  - fer un int "wantsToMantainTorque" aquí que sigui 1 quan si i -1 quan no
+    //  - fer un int "votesForMaintaingTorque" a "PlayerVehicleScript", on es sumarà el valor de cada "wantsToMantainTorque" des d'aquest Update()
+    //  - si "votesForMaintaingTorque < 0", canviem el valor del torque des d'aqui per evitar complicar més la logica (ja sigui al final del frame, amb un LateUpdate() o al principi del seguent)
+
     public enum DecalType { OIL, PAINT };
     [SerializeField] DecalType type;
     [SerializeField] Utils.MinMaxFloat despawnTime;
@@ -59,7 +64,7 @@ public class FloorDecalScript : MonoBehaviour
     }
     public void DestroyDecal()
     {
-        StopAllCoroutines();
+        //StopAllCoroutines();
         GetComponent<Collider>().enabled = false;
         Destroy(gameObject, 0.5f);
     }
