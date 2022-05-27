@@ -22,7 +22,7 @@ public class PlayersHUD : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        modifier = transform.GetChild(2).GetChild(0).GetComponent<Image>();
+        modifier = transform.GetChild(3).GetChild(0).GetComponent<Image>();
 
         modifier.gameObject.SetActive(false);
 
@@ -41,7 +41,7 @@ public class PlayersHUD : MonoBehaviour
             lifes[i].color = new Color(mainColor.r, mainColor.g, mainColor.b, 1.0f);
         }
 
-        deadLine = transform.GetChild(3);
+        deadLine = transform.GetChild(2);
         deadLine.gameObject.SetActive(false);
     }
 
