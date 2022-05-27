@@ -11,11 +11,13 @@ public class FloorDecalScript : MonoBehaviour
     [SerializeField] Utils.MinMaxFloat despawnSpeedDiff = new Utils.MinMaxFloat(-0.002f, 0.002f);
 
     float finalDespawnTime;
+    float timer = 0;
 
     private void OnEnable()
     {
         finalDespawnTime = despawnTime.GetRndValue();
-        StartCoroutine(DespawnCoroutine());
+        despawnSpeed += despawnSpeedDiff.GetRndValue();
+        //StartCoroutine(DespawnCoroutine());
     }
 
     private void OnBecameVisible()
@@ -28,6 +30,24 @@ public class FloorDecalScript : MonoBehaviour
         GetComponent<MeshRenderer>().enabled = false;
         GetComponent<Collider>().enabled = false;
     }
+
+    private void Update()
+    {
+        if (timer > finalDespawnTime)
+        {
+            float actualSpeed = despawnSpeed * Time.deltaTime;
+            transform.localScale =
+                new Vector3(transform.localScale.x - actualSpeed, transform.localScale.y - actualSpeed, transform.localScale.z - actualSpeed);
+
+            if (transform.localScale.x < 0.1f)
+                Destroy(gameObject);
+        }
+        else
+        {
+            timer += Time.deltaTime;
+        }
+    }
+
 
     float GetNewTorque(PlayerVehicleScript _player)
     {
@@ -45,19 +65,19 @@ public class FloorDecalScript : MonoBehaviour
     }
 
 
-    IEnumerator DespawnCoroutine()
-    {
-        yield return new WaitForSeconds(finalDespawnTime);
+    //IEnumerator DespawnCoroutine()
+    //{
+    //    yield return new WaitForSeconds(finalDespawnTime);
 
-        despawnSpeed += despawnSpeedDiff.GetRndValue();
-        while (transform.localScale.x > 0.1f)
-        {
-            yield return new WaitForEndOfFrame();
-            transform.localScale = Vector3.Lerp(transform.localScale, Vector3.zero, Time.timeScale * despawnSpeed);
-        }
+    //    despawnSpeed += despawnSpeedDiff.GetRndValue();
+    //    while (transform.localScale.x > 0.1f)
+    //    {
+    //        yield return new WaitForEndOfFrame();
+    //        transform.localScale = Vector3.Lerp(transform.localScale, Vector3.zero, Time.timeScale * despawnSpeed);
+    //    }
 
-        Destroy(gameObject);
-    }
+    //    Destroy(gameObject);
+    //}
 
     private void OnTriggerEnter(Collider other)
     {

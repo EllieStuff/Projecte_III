@@ -194,11 +194,6 @@ public class PlayerVehicleScript : MonoBehaviour
             //transform.parent.GetChild(2).localPosition = transform.localPosition;
         }
 
-        //ReinitTorqueOverTime();
-    }
-
-    private void LateUpdate()
-    {
         ReinitTorqueOverTime();
     }
 
