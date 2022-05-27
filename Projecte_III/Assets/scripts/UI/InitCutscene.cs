@@ -17,8 +17,9 @@ public class InitCutscene : MonoBehaviour
 
     private void Update()
     {
-        if(inputSystem.StartBttnReleased)
+        if(inputSystem.StartBttnReleased || inputSystem.EscapeBttnPressed || Input.GetKeyUp(KeyCode.Mouse0))
         {
+            StopAllCoroutines();
             gameObject.SetActive(false);
         }
     }

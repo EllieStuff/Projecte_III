@@ -7,6 +7,7 @@ public class GlobalMenuInputs : MonoBehaviour
     InputSystem inputSystem;
     InputSystem.ControlData[] controlData = new InputSystem.ControlData[1];
 
+    [SerializeField] bool refreshControlData = false;
 
     bool updateInputs = false;
 
@@ -65,7 +66,10 @@ public class GlobalMenuInputs : MonoBehaviour
     private void Update()
     {
         if (!Inited())
+        {
             controlData = inputSystem.GetAllControllersData();
+            if (Inited() && refreshControlData) StartCoroutine(RefreshAllControllersData());
+        }
         else
         {
             updateInputs = !updateInputs;
@@ -175,5 +179,23 @@ public class GlobalMenuInputs : MonoBehaviour
     public bool Inited()
     {
         return controlData != null && controlData[0] != null;
+    }
+
+
+
+    IEnumerator RefreshAllControllersData()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1f);
+            InputSystem.ControlData[] tmpControlData = inputSystem.GetAllControllersData();
+            if (controlData.Length != tmpControlData.Length)
+            {
+                controlData = tmpControlData;
+                AudioManager.Instance.Play_SFX("Click_SFX", 0.8f);
+                yield return new WaitForSeconds(0.1f);
+                AudioManager.Instance.Play_SFX("Click_SFX", 0.7f);
+            }
+        }
     }
 }

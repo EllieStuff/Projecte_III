@@ -55,7 +55,9 @@ public class BoxModifierScript : MonoBehaviour
 
             destroy = true;
             Physics.IgnoreCollision(other, GetComponent<Collider>());
+            if(hudManager == null) hudManager = GameObject.Find("HUD").transform.GetComponentInChildren<PlayersHUDManager>();
             PlayersHUD currHud = hudManager.GetPlayerHUD(other.GetComponentInParent<PlayerData>().id);
+            //if (currHud == null) Debug.LogError("currHud not found");
             currHud.RollModifiers();
         }
     }

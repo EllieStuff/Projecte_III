@@ -39,9 +39,12 @@ public class SaltoBomba : MonoBehaviour
             fallSoundPlayed = false;
             player.vehicleRB.velocity = new Vector3(player.vehicleRB.velocity.x, 20, player.vehicleRB.velocity.z);
 
-            radius = Instantiate(explosionRadiusPrefab).GetComponent<RadiusBlink>();
-            radius.transform.localScale = new Vector3(2.0f, 2.0f, 2.0f);
-            radius.SetBlink(true, saltoDuration);
+            if (radius == null)
+            {
+                radius = Instantiate(explosionRadiusPrefab).GetComponent<RadiusBlink>();
+                radius.transform.localScale = new Vector3(2.0f, 2.0f, 2.0f);
+                radius.SetBlink(true, saltoDuration);
+            }
         }
     }
 
@@ -72,7 +75,7 @@ public class SaltoBomba : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (hasJumped)
+        if (saltoEnabled)
         {
             SaltoUpdate();
 
@@ -82,45 +85,45 @@ public class SaltoBomba : MonoBehaviour
 
     private void SaltoUpdate()
     {
-        if(saltoEnabled)
+        transform.rotation = new Quaternion(savedRot.x, transform.rotation.y, savedRot.z, transform.rotation.w);
+        saltoTimer -= Time.deltaTime;
+        if (saltoTimer <= 0)
         {
-            transform.rotation = new Quaternion(savedRot.x, transform.rotation.y, savedRot.z, transform.rotation.w);
-            saltoTimer -= Time.deltaTime;
-            if(saltoTimer <= 0)
-            {
-                saltoTimer = saltoDuration;
-                saltoEnabled = false;
-
-                
-            }
-            else if(!explosionDone && saltoTimer <= saltoDuration - 1.2f && player.touchingGround)
-            {
-                SaltoBombaPS.Play();
-                for (int i = 0; i < playersManager.players.Length; i++)
-                {
-                    Transform otherPlayer = playersManager.GetPlayer(i);
-                    float explosionDistance = Vector3.Distance(transform.position, otherPlayer.transform.position);
-                    //Debug.Log(explosionDistance);
-                    if (transform != otherPlayer && explosionDistance <= explosionRange)
-                    {
-                        otherPlayer.GetComponent<PlayerVehicleScript>().vehicleRB.velocity = new Vector3(0, (explosionRange - explosionDistance) * 8, 0);
-                    }
-                }
-
+            if (radius != null)
                 Destroy(radius.gameObject);
-                saltoTimer = saltoDuration;
-                explosionDone = true;
-            }
-            else if(!player.touchingGround)
+
+            saltoTimer = saltoDuration;
+            saltoEnabled = false;
+        }
+        else if (!explosionDone && saltoTimer <= saltoDuration - 1.2f && player.touchingGround)
+        {
+            SaltoBombaPS.Play();
+            for (int i = 0; i < playersManager.players.Length; i++)
             {
-                transform.position += transform.TransformDirection(Vector3.forward * Time.deltaTime * 10);
+                Transform otherPlayer = playersManager.GetPlayer(i);
+                float explosionDistance = Vector3.Distance(transform.position, otherPlayer.transform.position);
+                //Debug.Log(explosionDistance);
+                if (transform != otherPlayer && explosionDistance <= explosionRange)
+                {
+                    otherPlayer.GetComponent<PlayerVehicleScript>().vehicleRB.velocity = new Vector3(0, (explosionRange - explosionDistance) * 8, 0);
+                }
             }
 
-            if (player.vehicleRB.velocity.y <= 1.2f && !fallSoundPlayed)
-            {
-                AudioManager.Instance.Play_SFX("JumpFall_SFX");
-                fallSoundPlayed = true;
-            }
+            if (radius != null)
+                Destroy(radius.gameObject);
+
+            saltoTimer = saltoDuration;
+            explosionDone = true;
+        }
+        else if (!player.touchingGround)
+        {
+            transform.position += transform.TransformDirection(Vector3.forward * Time.deltaTime * 10);
+        }
+
+        if (player.vehicleRB.velocity.y <= 1.2f && !fallSoundPlayed)
+        {
+            AudioManager.Instance.Play_SFX("JumpFall_SFX");
+            fallSoundPlayed = true;
         }
     }
 }

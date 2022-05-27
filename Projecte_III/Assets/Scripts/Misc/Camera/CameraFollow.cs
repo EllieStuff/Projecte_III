@@ -10,7 +10,7 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] private Vector3 rotOffset;
     [SerializeField] private Vector3 posVelocity;
     [SerializeField] private float rotSpeed;
-    [SerializeField] private float maxDampSpeed;
+    [SerializeField] private float maxLerpSpeed;
     float timer;
     //Rigidbody vehicleRB;
 
@@ -30,7 +30,7 @@ public class CameraFollow : MonoBehaviour
         HandlePosition();
         HandleRotation();
         //RaycastCamera();
-        Debug.Log("Timer: " + timer * rotSpeed);
+        //Debug.Log("Timer: " + timer * rotSpeed);
     }
 
     private void fovSystem()
@@ -49,7 +49,7 @@ public class CameraFollow : MonoBehaviour
     private void HandlePosition()
     {
         Vector3 targetPos = target.TransformPoint(posOffset);
-        transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref posVelocity, Time.deltaTime, maxDampSpeed);
+        transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * maxLerpSpeed);
 
     }
 
@@ -62,7 +62,7 @@ public class CameraFollow : MonoBehaviour
 
         targetRot = Quaternion.Euler(euler.x, euler.y, 0);
 
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, Time.deltaTime * rotSpeed);
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetRot, Time.deltaTime * rotSpeed);
 
     }
 

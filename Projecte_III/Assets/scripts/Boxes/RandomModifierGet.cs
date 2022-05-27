@@ -13,6 +13,7 @@ public class RandomModifierGet : MonoBehaviour
     float timerModifier = 0;
 
     PlayerInputs inputs;
+    PlayerVehicleScript player;
 
     public ModifierTypes currentModifier = ModifierTypes.NONE;
     [HideInInspector] public bool canUseModifier = true;
@@ -24,6 +25,7 @@ public class RandomModifierGet : MonoBehaviour
 
     private void Start()
     {
+        player = GetComponent<PlayerVehicleScript>();
         inputs = GetComponent<PlayerInputs>();
         GetComponent<PlayerThrowPlunger>().SetPlungerModifier();
         ResetModifiers();
@@ -38,7 +40,7 @@ public class RandomModifierGet : MonoBehaviour
             showModifierInstance.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
         }
 
-        if (/*currentModifier != ModifierTypes.NONE && */(inputs.ShootForward || inputs.ShootBackwards || inputs.ShootLeft || inputs.ShootRight || IAItemTrigger) && canUseModifier) 
+        if (/*currentModifier != ModifierTypes.NONE && */(inputs.ShootForward || inputs.ShootBackwards || inputs.ShootLeft || inputs.ShootRight || IAItemTrigger) && canUseModifier && player.touchingGround) 
         {
             if(playerHud == null)
             {
