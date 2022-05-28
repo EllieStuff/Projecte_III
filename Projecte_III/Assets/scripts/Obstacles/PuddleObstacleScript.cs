@@ -55,6 +55,11 @@ public class PuddleObstacleScript : MonoBehaviour
             //playersRB.Add(playerRB);
             //playersData.Add(new PlayerData(playerRB));
         }
+        if (other.CompareTag("VoidObstacle"))
+        {
+            //Debug.Log("Water destroyed");
+            Destroy(transform.parent.gameObject);
+        }
     }
     private void OnTriggerExit(Collider other)
     {
