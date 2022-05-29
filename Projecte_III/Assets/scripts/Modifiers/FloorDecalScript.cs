@@ -24,11 +24,11 @@ public class FloorDecalScript : MonoBehaviour
         GetComponent<MeshRenderer>().enabled = true;
         GetComponent<Collider>().enabled = true;
     }
-    private void OnBecameInvisible()
-    {
-        GetComponent<MeshRenderer>().enabled = false;
-        GetComponent<Collider>().enabled = false;
-    }
+    //private void OnBecameInvisible()
+    //{
+    //    GetComponent<MeshRenderer>().enabled = false;
+    //    GetComponent<Collider>().enabled = false;
+    //}
 
     private void Update()
     {
