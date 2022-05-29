@@ -73,9 +73,11 @@ public class RoundManager : MonoBehaviour
     IEnumerator StopTime()
     {
         float timer = 0.0f, maxTime = 1.0f;
-        while(timer < maxTime)
+        //float stopSpeed = 0.5f;
+        while(Time.timeScale > 0.1f)
         {
             yield return new WaitForEndOfFrame();
+            //Time.timeScale -= stopSpeed * Time.deltaTime;
             timer += Time.deltaTime;
             Time.timeScale = Mathf.Lerp(1, 0, timer / maxTime);
         }

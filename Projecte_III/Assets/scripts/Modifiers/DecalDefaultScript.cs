@@ -4,31 +4,53 @@ using UnityEngine;
 
 public class DecalDefaultScript : MonoBehaviour
 {
+    public enum DecalType { OIL, PAINT };
+    [SerializeField] DecalType type;
     [SerializeField] Utils.MinMaxFloat despawnTime;
     [SerializeField] float despawnSpeed = 0.003f;
     [SerializeField] Utils.MinMaxFloat despawnSpeedDiff = new Utils.MinMaxFloat(-0.002f, 0.002f);
 
 
+    [HideInInspector] public float finalDespawnTime = 8;
+    float timer = 0;
+
     private void OnEnable()
     {
-        StartCoroutine(DespawnCoroutine());
-        //GetComponent<MeshRenderer>().material.renderQueue = 3003;
+        finalDespawnTime = despawnTime.GetRndValue();
+        despawnSpeed += despawnSpeedDiff.GetRndValue();
     }
 
-
-    IEnumerator DespawnCoroutine()
+    private void Update()
     {
-        yield return new WaitForSeconds(despawnTime.GetRndValue());
-
-        despawnSpeed += despawnSpeedDiff.GetRndValue();
-        while(transform.localScale.x > 0.1f)
+        if (timer > finalDespawnTime)
         {
-            yield return new WaitForEndOfFrame();
-            transform.localScale = Vector3.Lerp(transform.localScale, Vector3.zero, Time.timeScale * despawnSpeed);
+            float actualSpeed = despawnSpeed * Time.deltaTime;
+            transform.localScale =
+                new Vector3(transform.localScale.x - actualSpeed, transform.localScale.y - actualSpeed, transform.localScale.z - actualSpeed);
+
+            if (transform.localScale.x < 0.1f)
+                Destroy(gameObject);
+        }
+        else
+        {
+            timer += Time.deltaTime;
         }
 
-        Destroy(gameObject);
     }
 
+
+    public float GetNewTorque(PlayerVehicleScript _player)
+    {
+        float newTorque = 0;
+        if (type == DecalType.OIL) newTorque = _player.savedVehicleTorque * 80000;
+        else if (type == DecalType.PAINT) newTorque = _player.savedVehicleTorque / 2;
+
+        return newTorque;
+    }
+    public void DestroyDecal()
+    {
+        GetComponent<Collider>().enabled = false;
+        Destroy(gameObject, 0.5f);
+    }
 
 }

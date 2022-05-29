@@ -34,6 +34,9 @@ public class PlayerVehicleScript : MonoBehaviour
     public float minDriftSpeed;
     [SerializeField] internal float sandVelocityMultiplier;
     [SerializeField] internal float sandAccelerationMultiplier;
+    //[HideInInspector] public bool affectedByOil, affectedByPaint;
+    //[HideInInspector] public Dictionary<Transform, FloorDecalScript> oilObstacles = new Dictionary<Transform, FloorDecalScript>();
+    //[HideInInspector] public Dictionary<Transform, FloorDecalScript> paintObstacles = new Dictionary<Transform, FloorDecalScript>();
 
     [SerializeField] private GameObject wheelsPivot;
 
@@ -58,6 +61,12 @@ public class PlayerVehicleScript : MonoBehaviour
     private Rigidbody outVehicleRB;
     internal float baseMaxSpeed;
     internal bool speedIncrementEnabled;
+    [HideInInspector]
+    public float
+        reinitTorqueTimer = -1,
+        targetFloorTorque = -1,
+        targetCarTorque = -1,
+        votesForMaintingFloorTorque = 0;
 
     private VehicleTriggerAndCollisionEvents events;
 
@@ -77,6 +86,8 @@ public class PlayerVehicleScript : MonoBehaviour
     }
     public void Init()
     {
+        StopAllCoroutines();
+
         events = GetComponent<VehicleTriggerAndCollisionEvents>();
 
         speedIncrementEnabled = true;
@@ -121,6 +132,8 @@ public class PlayerVehicleScript : MonoBehaviour
         savedAngularDrag = vehicleRB.angularDrag;
 
         wheelsModels = transform.parent.GetChild(1).gameObject;
+
+        //StartCoroutine(ReinitTorqueOverTime());
     }
 
     bool InmunityCheck()
@@ -181,6 +194,8 @@ public class PlayerVehicleScript : MonoBehaviour
 
             //transform.parent.GetChild(2).localPosition = transform.localPosition;
         }
+
+        ReinitTorqueOverTime();
     }
 
     void FixedUpdate()
@@ -212,6 +227,8 @@ public class PlayerVehicleScript : MonoBehaviour
             vehicleRB.velocity = Vector3.zero;
             //vehicleRB.isKinematic = true;
         }
+
+        //ReinitTorqueOverTime();
     }
 
     void vehicleMovement()
@@ -349,6 +366,33 @@ public class PlayerVehicleScript : MonoBehaviour
                     vehicleRB.velocity = transform.TransformDirection(new Vector3(0, 0, -vehicleMaxSpeed));
             }
         }
+    }
+
+
+    void ReinitTorqueOverTime()
+    {
+        if (reinitTorqueTimer > -0.5f)
+        {
+            reinitTorqueTimer -= Time.deltaTime;
+            if (reinitTorqueTimer <= 0f)
+            {
+                targetCarTorque = -1;
+                reinitTorqueTimer = -1;
+                //vehicleTorque = savedVehicleTorque;
+            }
+        }
+
+        if (targetFloorTorque >= 0f) 
+            vehicleTorque = targetFloorTorque;
+        else if (targetCarTorque >= 0f) 
+            vehicleTorque = targetCarTorque;
+        else 
+            vehicleTorque = savedVehicleTorque;
+
+        if (playerNum > 0) return;
+        Debug.Log("Player " + playerNum + " =>  FloorTorque: " + targetFloorTorque + ", CarTorque: " + targetCarTorque + ", FinalTorque: " + vehicleTorque);
+        Debug.Log("Player " + playerNum + " =>  TorqueTimer: " + reinitTorqueTimer);
+        //Debug.Log("Player " + playerNum + " =>  Votes: " + votesForMaintingFloorTorque);
     }
 
 }
