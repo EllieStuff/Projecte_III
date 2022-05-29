@@ -17,6 +17,7 @@ public class FloorDecalScript : MonoBehaviour
 
     float finalDespawnTime;
     float timer = 0;
+    //int wantsToMaintainTorque = 0;
 
     private void OnEnable()
     {
@@ -99,6 +100,7 @@ public class FloorDecalScript : MonoBehaviour
                 }
             }
             player.targetFloorTorque = GetNewTorque(player);
+            player.votesForMaintingFloorTorque++;
         }
 
     }
@@ -117,7 +119,9 @@ public class FloorDecalScript : MonoBehaviour
                     if (player == null) return;
                 }
             }
-            player.targetFloorTorque = -1;
+            player.votesForMaintingFloorTorque--;
+            if(player.votesForMaintingFloorTorque <= 0)
+                player.targetFloorTorque = -1;
         }
     }
 }

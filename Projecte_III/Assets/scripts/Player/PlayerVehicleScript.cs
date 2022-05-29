@@ -65,7 +65,8 @@ public class PlayerVehicleScript : MonoBehaviour
     public float
         reinitTorqueTimer = -1,
         targetFloorTorque = -1,
-        targetCarTorque = -1;
+        targetCarTorque = -1,
+        votesForMaintingFloorTorque = 0;
 
     private VehicleTriggerAndCollisionEvents events;
 
@@ -370,20 +371,27 @@ public class PlayerVehicleScript : MonoBehaviour
 
     void ReinitTorqueOverTime()
     {
-        if (reinitTorqueTimer >= 0)
+        if (reinitTorqueTimer > -0.5f)
         {
             reinitTorqueTimer -= Time.deltaTime;
-            if (reinitTorqueTimer < 0)
+            if (reinitTorqueTimer <= 0f)
             {
                 targetCarTorque = -1;
+                reinitTorqueTimer = -1;
                 //vehicleTorque = savedVehicleTorque;
             }
         }
 
-        if (targetFloorTorque >= 0) vehicleTorque = targetFloorTorque;
-        else if (targetCarTorque >= 0) vehicleTorque = targetCarTorque;
-        else vehicleTorque = savedVehicleTorque;
-        Debug.Log("FloorTorque: " + targetFloorTorque + ", CarTorque: " + targetCarTorque + ", FinalTorque: " + vehicleTorque);
+        if (targetFloorTorque >= 0f) 
+            vehicleTorque = targetFloorTorque;
+        else if (targetCarTorque >= 0f) 
+            vehicleTorque = targetCarTorque;
+        else 
+            vehicleTorque = savedVehicleTorque;
+
+        if (playerNum > 0) return;
+        Debug.Log("Player " + playerNum + " =>  FloorTorque: " + targetFloorTorque + ", CarTorque: " + targetCarTorque + ", FinalTorque: " + vehicleTorque);
+        //Debug.Log("Player " + playerNum + " =>  Votes: " + votesForMaintingFloorTorque);
     }
 
 }

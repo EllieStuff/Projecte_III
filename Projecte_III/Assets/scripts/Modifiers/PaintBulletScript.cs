@@ -26,7 +26,22 @@ public class PaintBulletScript : MonoBehaviour
             //instancedGO.tag = "Untagged";
             GameObject instancedGO = GameObject.Instantiate(decalCarPrefab, transform.position, decalCarPrefab.transform.rotation, other.transform);
             instancedGO.transform.localScale = instancedGO.transform.localScale * transform.localScale.x * sizeInc;
+            PlayerVehicleScript player = other.GetComponentInParent<PlayerVehicleScript>();
+            if (player == null)
+            {
+                player = other.GetComponent<PlayerVehicleScript>();
+                if (player == null)
+                {
+                    player = other.transform.parent.GetComponentInParent<PlayerVehicleScript>();
+                    if (player == null) return;
+                }
+            }
+            player.reinitTorqueTimer = 6f;
+            player.targetCarTorque = player.savedVehicleTorque / 2;
+
             //instancedGO.GetComponent<Collider>().enabled = false;
+
+            //Destroy(gameObject);
         }
         else
         {

@@ -78,33 +78,34 @@ public class DecalDefaultScript : MonoBehaviour
         //}
 
 
-        if (!canSpread) return;
+        //if (!canSpread) 
+        //    return;
 
-        if (canSpread && (other.tag.Contains("Player") || other.tag.Equals("vehicleElement")))
-        {
-            PlayerVehicleScript player = other.GetComponentInParent<PlayerVehicleScript>();
-            if (player == null)
-            {
-                player = other.GetComponent<PlayerVehicleScript>();
-                if (player == null)
-                {
-                    player = other.transform.parent.GetComponentInParent<PlayerVehicleScript>();
-                    if (player == null) return;
-                }
-            }
+        //if (canSpread && (other.tag.Contains("Player") || other.tag.Equals("vehicleElement")))
+        //{
+        //    PlayerVehicleScript player = other.GetComponentInParent<PlayerVehicleScript>();
+        //    if (player == null)
+        //    {
+        //        player = other.GetComponent<PlayerVehicleScript>();
+        //        if (player == null)
+        //        {
+        //            player = other.transform.parent.GetComponentInParent<PlayerVehicleScript>();
+        //            if (player == null) return;
+        //        }
+        //    }
 
-            player.reinitTorqueTimer = finalDespawnTime;
-            player.targetCarTorque = GetNewTorque(player);
-            if (transform.parent.tag.Contains("Player") || transform.parent.tag.Equals("vehicleElement"))
-            {
-                canSpread = false;
-            }
-        }
-        else if (other.name.Contains("Decal"))
-        {
-            if (transform.parent.tag.Contains("Player") || transform.parent.tag.Equals("vehicleElement"))
-                canSpread = false;
-        }
+        //    player.reinitTorqueTimer = finalDespawnTime;
+        //    player.targetCarTorque = GetNewTorque(player);
+        //    if (transform.parent.tag.Contains("Player") || transform.parent.tag.Equals("vehicleElement"))
+        //    {
+        //        canSpread = false;
+        //    }
+        //}
+        //else if (other.name.Contains("Decal"))
+        //{
+        //    if (transform.parent.tag.Contains("Player") || transform.parent.tag.Equals("vehicleElement"))
+        //        canSpread = false;
+        //}
 
     }
 

@@ -16,11 +16,12 @@ public static class Decals
     {
         return (_tag.Equals("Decal") || _tag.Equals("Painting") || _tag.Equals("Oil") || _tag.Equals("Respawn")
             || _tag.Equals("CameraTrigger") || _tag.Equals("Untagged") || _tag.Equals("CameraObjective") || _tag.Equals("CamLimit")
-            || _tag.Equals("PlayerVehicle"));
+            || _tag.Contains("Player") || _tag.Equals("vehicleElement"));
     }
     public static bool CollidingWithPlayer(Collider _other, Transform _originTransform)
     {
-        return _other.CompareTag("PlayerVehicle") && _originTransform != _other.transform;
+        return (_other.tag.Contains("Player") || _other.tag.Equals("vehicleElement")) 
+            && _originTransform != _other.transform;
     }
 
 

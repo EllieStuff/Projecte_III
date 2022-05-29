@@ -22,9 +22,22 @@ public class OilBulletScript : MonoBehaviour
         {
             GameObject instancedGO = GameObject.Instantiate(decalCarPrefab, transform.position, decalCarPrefab.transform.rotation, other.transform);
             instancedGO.transform.localScale = instancedGO.transform.localScale * transform.localScale.x;
+            PlayerVehicleScript player = other.GetComponentInParent<PlayerVehicleScript>();
+            if (player == null)
+            {
+                player = other.GetComponent<PlayerVehicleScript>();
+                if (player == null)
+                {
+                    player = other.transform.parent.GetComponentInParent<PlayerVehicleScript>();
+                    if (player == null) return;
+                }
+            }
+            player.reinitTorqueTimer = 6f;
+            player.targetCarTorque = player.savedVehicleTorque * 8000;
             //instancedGO.tag = "Untagged";
-            other.GetComponentInParent<Rigidbody>().AddExplosionForce(1000, transform.position, col.radius * transform.localScale.x);
+            //other.GetComponentInParent<Rigidbody>().AddExplosionForce(1000, transform.position, col.radius * transform.localScale.x);
 
+            //Destroy(gameObject);
         }
         else
         {

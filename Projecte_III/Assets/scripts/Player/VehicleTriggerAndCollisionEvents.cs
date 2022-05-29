@@ -169,7 +169,9 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
                         child.DestroyDecal();
                 }
             }
-            player.vehicleTorque = player.savedVehicleTorque;
+            player.targetFloorTorque = player.targetCarTorque = player.reinitTorqueTimer = -1;
+            player.votesForMaintingFloorTorque = 0;
+            //player.vehicleTorque = player.savedVehicleTorque;
             //player.oilObstacles.Clear();
             //player.paintObstacles.Clear();
 
