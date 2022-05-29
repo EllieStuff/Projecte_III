@@ -391,6 +391,7 @@ public class PlayerVehicleScript : MonoBehaviour
 
         if (playerNum > 0) return;
         Debug.Log("Player " + playerNum + " =>  FloorTorque: " + targetFloorTorque + ", CarTorque: " + targetCarTorque + ", FinalTorque: " + vehicleTorque);
+        Debug.Log("Player " + playerNum + " =>  TorqueTimer: " + reinitTorqueTimer);
         //Debug.Log("Player " + playerNum + " =>  Votes: " + votesForMaintingFloorTorque);
     }
 

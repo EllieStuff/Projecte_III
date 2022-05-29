@@ -10,15 +10,14 @@ public class DecalDefaultScript : MonoBehaviour
     [SerializeField] float despawnSpeed = 0.003f;
     [SerializeField] Utils.MinMaxFloat despawnSpeedDiff = new Utils.MinMaxFloat(-0.002f, 0.002f);
 
-    [SerializeField] bool canSpread = true;
-    float finalDespawnTime;
+
+    [HideInInspector] public float finalDespawnTime = 8;
     float timer = 0;
 
     private void OnEnable()
     {
         finalDespawnTime = despawnTime.GetRndValue();
         despawnSpeed += despawnSpeedDiff.GetRndValue();
-        //StartCoroutine(DespawnCoroutine());
     }
 
     private void Update()
@@ -36,10 +35,11 @@ public class DecalDefaultScript : MonoBehaviour
         {
             timer += Time.deltaTime;
         }
+
     }
 
 
-    float GetNewTorque(PlayerVehicleScript _player)
+    public float GetNewTorque(PlayerVehicleScript _player)
     {
         float newTorque = 0;
         if (type == DecalType.OIL) newTorque = _player.savedVehicleTorque * 80000;
@@ -49,64 +49,8 @@ public class DecalDefaultScript : MonoBehaviour
     }
     public void DestroyDecal()
     {
-        //StopAllCoroutines();
         GetComponent<Collider>().enabled = false;
         Destroy(gameObject, 0.5f);
-    }
-
-    //IEnumerator DespawnCoroutine()
-    //{
-    //    yield return new WaitForSeconds(finalDespawnTime);
-
-    //    despawnSpeed += despawnSpeedDiff.GetRndValue();
-    //    while (transform.localScale.x > 0.1f)
-    //    {
-    //        yield return new WaitForEndOfFrame();
-    //        transform.localScale = Vector3.Lerp(transform.localScale, Vector3.zero, Time.timeScale * despawnSpeed);
-    //    }
-
-    //    Destroy(gameObject);
-    //}
-
-    private void OnTriggerEnter(Collider other)
-    {
-        //if (other.name.Contains("Road"))
-        //{
-        //    transform.localScale = transform.localScale / 4f;
-        //    //DestroyDecal();
-        //    //return;
-        //}
-
-
-        //if (!canSpread) 
-        //    return;
-
-        //if (canSpread && (other.tag.Contains("Player") || other.tag.Equals("vehicleElement")))
-        //{
-        //    PlayerVehicleScript player = other.GetComponentInParent<PlayerVehicleScript>();
-        //    if (player == null)
-        //    {
-        //        player = other.GetComponent<PlayerVehicleScript>();
-        //        if (player == null)
-        //        {
-        //            player = other.transform.parent.GetComponentInParent<PlayerVehicleScript>();
-        //            if (player == null) return;
-        //        }
-        //    }
-
-        //    player.reinitTorqueTimer = finalDespawnTime;
-        //    player.targetCarTorque = GetNewTorque(player);
-        //    if (transform.parent.tag.Contains("Player") || transform.parent.tag.Equals("vehicleElement"))
-        //    {
-        //        canSpread = false;
-        //    }
-        //}
-        //else if (other.name.Contains("Decal"))
-        //{
-        //    if (transform.parent.tag.Contains("Player") || transform.parent.tag.Equals("vehicleElement"))
-        //        canSpread = false;
-        //}
-
     }
 
 }

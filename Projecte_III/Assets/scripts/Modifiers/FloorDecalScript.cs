@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class FloorDecalScript : MonoBehaviour
 {
-    //TODO:
-    //  - fer un int "wantsToMantainTorque" aquí que sigui 1 quan si i -1 quan no
-    //  - fer un int "votesForMaintaingTorque" a "PlayerVehicleScript", on es sumarà el valor de cada "wantsToMantainTorque" des d'aquest Update()
-    //  - si "votesForMaintaingTorque < 0", canviem el valor del torque des d'aqui per evitar complicar més la logica (ja sigui al final del frame, amb un LateUpdate() o al principi del seguent)
-
     public enum DecalType { OIL, PAINT };
     [SerializeField] DecalType type;
     [SerializeField] Utils.MinMaxFloat despawnTime;
@@ -17,13 +12,11 @@ public class FloorDecalScript : MonoBehaviour
 
     float finalDespawnTime;
     float timer = 0;
-    //int wantsToMaintainTorque = 0;
 
     private void OnEnable()
     {
         finalDespawnTime = despawnTime.GetRndValue();
         despawnSpeed += despawnSpeedDiff.GetRndValue();
-        //StartCoroutine(DespawnCoroutine());
     }
 
     private void OnBecameVisible()
@@ -52,6 +45,7 @@ public class FloorDecalScript : MonoBehaviour
         {
             timer += Time.deltaTime;
         }
+
     }
 
 
@@ -65,25 +59,10 @@ public class FloorDecalScript : MonoBehaviour
     }
     public void DestroyDecal()
     {
-        //StopAllCoroutines();
         GetComponent<Collider>().enabled = false;
         Destroy(gameObject, 0.5f);
     }
 
-
-    //IEnumerator DespawnCoroutine()
-    //{
-    //    yield return new WaitForSeconds(finalDespawnTime);
-
-    //    despawnSpeed += despawnSpeedDiff.GetRndValue();
-    //    while (transform.localScale.x > 0.1f)
-    //    {
-    //        yield return new WaitForEndOfFrame();
-    //        transform.localScale = Vector3.Lerp(transform.localScale, Vector3.zero, Time.timeScale * despawnSpeed);
-    //    }
-
-    //    Destroy(gameObject);
-    //}
 
     private void OnTriggerEnter(Collider other)
     {
@@ -102,7 +81,6 @@ public class FloorDecalScript : MonoBehaviour
             player.targetFloorTorque = GetNewTorque(player);
             player.votesForMaintingFloorTorque++;
         }
-
     }
 
     private void OnTriggerExit(Collider other)
@@ -124,4 +102,5 @@ public class FloorDecalScript : MonoBehaviour
                 player.targetFloorTorque = -1;
         }
     }
+
 }
