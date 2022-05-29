@@ -11,6 +11,7 @@ public class SpawnTileWithCollider : MonoBehaviour
     void Start()
     {
         _coll = GetComponent<BoxCollider>();
+        prefab = transform.parent.parent;
     }
 
     // Update is called once per frame
@@ -23,7 +24,7 @@ public class SpawnTileWithCollider : MonoBehaviour
         Debug.Log("Collider");
         if(other.gameObject.tag.Contains("Objective"))
         {
-            prefab.parent.GetComponent<GenerateNewTile>().CalculateNewTile();
+            StartCoroutine(prefab.parent.GetComponent<GenerateNewTile>().CalculateNewTile());
             _coll.enabled = false;
         }
     }

@@ -1,4 +1,7 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 #if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -156,7 +159,7 @@ namespace UnityEngine.AI
             return buildSettings;
         }
 
-        public void BuildNavMesh()
+        public async Task BuildNavMesh()
         {
             var sources = CollectSources();
 
@@ -177,7 +180,9 @@ namespace UnityEngine.AI
                 RemoveData();
                 m_NavMeshData = data;
                 if (isActiveAndEnabled)
+                {
                     AddData();
+                }
             }
         }
 
