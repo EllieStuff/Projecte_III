@@ -75,22 +75,15 @@ public class GenerateNewTile : MonoBehaviour
         newRoad = null;
 
         float random = Random.Range(0, 100);
-
-        newRoad = null;
-
         RoadData.Type roadType = lastTile.GetRoadType(random);
-
-        newRoad = null;
-
-        Task t;
 
         RoadData newObject = null;
         if (roadType == RoadData.Type.STRAIGHT)
-            t = GetNewRoad(straightRoads, maxSpawnRates.straight);
+            StartCoroutine(GetNewRoad(straightRoads, maxSpawnRates.straight));
         else if (roadType == RoadData.Type.LEFT)
-            t = GetNewRoad(leftRoads, maxSpawnRates.left);
+            StartCoroutine(GetNewRoad(leftRoads, maxSpawnRates.left));
         else if (roadType == RoadData.Type.RIGHT)
-            t = GetNewRoad(rightRoads, maxSpawnRates.right);
+            StartCoroutine(GetNewRoad(rightRoads, maxSpawnRates.right));
 
         while (newRoad == null) { yield return null; }
 
@@ -110,8 +103,6 @@ public class GenerateNewTile : MonoBehaviour
         //newObject.transform.localScale = _scale;
         newObject.transform.rotation = Quaternion.RotateTowards(newObject.transform.rotation, child.rotation, 360);
 
-        yield return null;
-
         newObject.gameObject.SetActive(true);
         
         yield return null;
@@ -129,9 +120,9 @@ public class GenerateNewTile : MonoBehaviour
 
         yield return null;
 
-        Task t2 = navMesh.BuildNavMesh();
+        Task t = navMesh.BuildNavMesh();
 
-        while (!t2.IsCompleted) { yield return null; }
+        while (!t.IsCompleted) { yield return null; }
 
         yield return null;
 
@@ -142,7 +133,7 @@ public class GenerateNewTile : MonoBehaviour
         yield return 0;
     }
 
-    private async Task GetNewRoad(List<RoadData> _roadList, float _maxSpawnRate)
+    IEnumerator GetNewRoad(List<RoadData> _roadList, float _maxSpawnRate)
     {
         float random = Random.Range(0, _maxSpawnRate);
         float currRndAmount = 0;
@@ -150,32 +141,50 @@ public class GenerateNewTile : MonoBehaviour
         {
             if (random > currRndAmount && random < currRndAmount + road.SpawnRate)
             {
-                Task t3 = OptimizedInstantiate(road.transform);
-                break;
+                StartCoroutine(OptimizedInstantiate(road.transform));
+                yield return 0;
             }
 
             currRndAmount += road.SpawnRate;
         }
+        yield return 0;
     }
 
-    private async Task OptimizedInstantiate(Transform parent) 
+    IEnumerator OptimizedInstantiate(Transform parent) 
     {
+        yield return null;
         Transform newObject = new GameObject("ROAD").transform;
+        yield return null;
         newObject.gameObject.SetActive(false);
+        yield return null;
         newObject.parent = transform;
+        yield return null;
         RoadData dataSavedRoad = parent.gameObject.GetComponent<RoadData>();
+        yield return null;
         RoadData dataNewRoad = newObject.gameObject.AddComponent<RoadData>();
+        yield return null;
 
         dataNewRoad.baseSpawnRate = dataSavedRoad.baseSpawnRate;
+        yield return null;
         dataNewRoad.roadType = dataSavedRoad.roadType;
+        yield return null;
         dataNewRoad.spawnRates.left = dataSavedRoad.spawnRates.left;
+        yield return null;
         dataNewRoad.spawnRates.right = dataSavedRoad.spawnRates.right;
+        yield return null;
         dataNewRoad.spawnRates.straight = dataSavedRoad.spawnRates.straight;
+        yield return null;
 
         foreach (Transform child in parent)
         {
+            yield return null;
             Instantiate(child.gameObject, newObject);
+            yield return null;
         }
+        yield return null;
         newRoad = newObject.gameObject;
+        yield return null;
+
+        yield return 0;
     }
 }
