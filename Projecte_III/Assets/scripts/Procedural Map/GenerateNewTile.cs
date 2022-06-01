@@ -10,6 +10,9 @@ public class GenerateNewTile : MonoBehaviour
 
     [SerializeField] CameraNavFollowScript cameraFollow = null;
     [SerializeField] RoadData lastTile = null;
+    [SerializeField] ComputeShader computeShader_;
+
+    [SerializeField] Instancer _instancer;
 
     NavMeshSurface navMesh;
 
@@ -108,7 +111,8 @@ public class GenerateNewTile : MonoBehaviour
         {
             if (random > currRndAmount && random < currRndAmount + road.SpawnRate)
             {
-                GameObject newRoad = Instantiate(road.gameObject, transform);
+                GameObject _road = road.gameObject;
+                GameObject newRoad = Instantiate(_road, transform);
                 return newRoad.GetComponent<RoadData>();
             }
 
@@ -117,4 +121,49 @@ public class GenerateNewTile : MonoBehaviour
 
         return null;
     }
+
+    public class Instancer : MonoBehaviour
+    {
+        public int instances;
+        public Mesh mesh;
+        public Material[] materials;
+        private List<List<Matrix4x4>> batches = new List<List<Matrix4x4>>();
+        private void RenderBatches()
+        {
+            foreach(var batch in batches)
+            {
+                for (int i = 0; i < mesh.subMeshCount; i++)
+                {
+                    Graphics.DrawMeshInstanced(mesh, i, materials[i], batch);
+                }
+            }
+        }
+
+        private void Update()
+        {
+            RenderBatches();
+        }
+
+        private void Start()
+        {
+            int addedMatrices = 0;
+            batches.Add(new List<Matrix4x4>());
+
+            for (int i = 0; i < instances; i++)
+            {
+                if(addedMatrices < 1000)
+                {
+                    batches[batches.Count - 1].Add(Matrix4x4.TRS(new Vector3(Random.Range(0, 50), Random.Range(0, 50), Random.Range(0, 50)), Random.rotation, Vector3.back /*??*/));
+                    addedMatrices += 1;
+                }
+                else
+                {
+                    batches.Add(new List<Matrix4x4>());
+                    addedMatrices = 0;
+                }
+            }
+        }
+    }
+
+
 }
