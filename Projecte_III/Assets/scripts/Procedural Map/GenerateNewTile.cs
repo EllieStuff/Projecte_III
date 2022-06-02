@@ -153,7 +153,7 @@ public class GenerateNewTile : MonoBehaviour
     IEnumerator OptimizedInstantiate(Transform parent) 
     {
         yield return null;
-        Transform newObject = new GameObject("ROAD").transform;
+        Transform newObject = new GameObject(parent.transform.name).transform;
         yield return null;
         newObject.gameObject.SetActive(false);
         yield return null;
