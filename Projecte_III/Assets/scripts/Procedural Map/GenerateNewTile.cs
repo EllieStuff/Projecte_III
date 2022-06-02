@@ -34,7 +34,7 @@ public class GenerateNewTile : MonoBehaviour
         for (int i = 0; i < tilesGO.Length; i++)
         {
             tiles[i] = tilesGO[i].GetComponent<RoadData>();
-
+            tiles[i].gameObject.SetActive(false);
 
             if (tiles[i].RoadType == RoadData.Type.STRAIGHT)
             {
@@ -153,40 +153,9 @@ public class GenerateNewTile : MonoBehaviour
     IEnumerator OptimizedInstantiate(Transform parent) 
     {
         yield return null;
-        GameObject instance = new GameObject(parent.transform.name);
+        GameObject _newRoad = Instantiate(parent.gameObject, transform);
         yield return null;
-        Transform newObject = Instantiate(instance, transform).transform;
-        yield return null;
-        Destroy(instance);
-        yield return null;
-        newObject.gameObject.SetActive(false);
-        yield return null;
-        RoadData dataSavedRoad = parent.gameObject.GetComponent<RoadData>();
-        yield return null;
-        RoadData dataNewRoad = newObject.gameObject.AddComponent<RoadData>();
-        yield return null;
-
-        dataNewRoad.baseSpawnRate = dataSavedRoad.baseSpawnRate;
-        yield return null;
-        dataNewRoad.roadType = dataSavedRoad.roadType;
-        yield return null;
-        dataNewRoad.spawnRates.left = dataSavedRoad.spawnRates.left;
-        yield return null;
-        dataNewRoad.spawnRates.right = dataSavedRoad.spawnRates.right;
-        yield return null;
-        dataNewRoad.spawnRates.straight = dataSavedRoad.spawnRates.straight;
-        yield return null;
-
-        foreach (Transform child in parent)
-        {
-            yield return null;
-            Instantiate(child.gameObject, newObject);
-            yield return null;
-        }
-        yield return null;
-        newRoad = newObject.gameObject;
-        yield return null;
-
+        newRoad = _newRoad;
         yield return 0;
     }
 }
