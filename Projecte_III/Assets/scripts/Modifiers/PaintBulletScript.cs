@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PaintBulletScript : MonoBehaviour
 {
-    [SerializeField] GameObject decalPrefab;
+    [SerializeField] GameObject decalCarPrefab, decalFloorPrefab;
     [SerializeField] SphereCollider col;
     [SerializeField] float sizeInc = 5.0f;
 
@@ -19,22 +19,28 @@ public class PaintBulletScript : MonoBehaviour
     {
         if (Decals.CollidingWithPlayer(other, originTransform))
         {
-            // Ho silencio perque el joc peta molt si no
+            DecalDefaultScript instancedPaint = GameObject.Instantiate(decalCarPrefab, transform.position, decalCarPrefab.transform.rotation, other.transform).GetComponent<DecalDefaultScript>();
+            instancedPaint.transform.localScale = instancedPaint.transform.localScale * transform.localScale.x * sizeInc;
 
-            //GameObject instancedGO = GameObject.Instantiate(decalPrefab, transform.position, decalPrefab.transform.rotation, other.transform);
-            //instancedGO.transform.localScale = instancedGO.transform.localScale * transform.localScale.x;
-            //instancedGO.tag = "Untagged";
-            GameObject instancedGO = GameObject.Instantiate(decalPrefab, transform.position, decalPrefab.transform.rotation, other.transform);
-            instancedGO.transform.localScale = instancedGO.transform.localScale * transform.localScale.x * sizeInc;
-            //instancedGO.GetComponent<Collider>().enabled = false;
+            PlayerVehicleScript player = other.GetComponentInParent<PlayerVehicleScript>();
+            if (player == null)
+            {
+                player = other.GetComponent<PlayerVehicleScript>();
+                if (player == null)
+                {
+                    player = other.transform.parent.GetComponentInParent<PlayerVehicleScript>();
+                    if (player == null) return;
+                }
+            }
+            player.reinitTorqueTimer = instancedPaint.finalDespawnTime;
+            player.targetCarTorque = instancedPaint.GetNewTorque(player);
+
         }
         else
         {
             if (!Decals.TagToIgnore(other.tag))
             {
-                //Vector3 closesPoint = other.ClosestPoint(transform.position);
-                //Vector3 spawnPoint = closesPoint + ((transform.position - closesPoint).normalized * decalPrefab.transform.localScale.x);
-                GameObject instancedGO = GameObject.Instantiate(decalPrefab, transform.position, decalPrefab.transform.rotation, other.transform);
+                GameObject instancedGO = GameObject.Instantiate(decalFloorPrefab, transform.position, decalFloorPrefab.transform.rotation, other.transform);
                 instancedGO.transform.localScale = instancedGO.transform.localScale * transform.localScale.x * sizeInc;
 
                 Destroy(gameObject);

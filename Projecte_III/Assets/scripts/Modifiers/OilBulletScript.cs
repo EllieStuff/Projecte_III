@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class OilBulletScript : MonoBehaviour
 {
-    [SerializeField] GameObject decalPrefab;
+    [SerializeField] GameObject decalCarPrefab, decalFloorPrefab;
     [SerializeField] SphereCollider col;
     [SerializeField] float sizeInc = 5.0f;
 
@@ -13,28 +13,34 @@ public class OilBulletScript : MonoBehaviour
     private void OnEnable()
     {
         Destroy(gameObject, 10.0f);
-        //StartCoroutine(DespawnCoroutine());
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (Decals.CollidingWithPlayer(other, originTransform))
         {
-            // Ho silencio perque el joc peta molt si no
+            DecalDefaultScript instancedOil = GameObject.Instantiate(decalCarPrefab, transform.position, decalCarPrefab.transform.rotation, other.transform).GetComponent<DecalDefaultScript>();
+            instancedOil.transform.localScale = instancedOil.transform.localScale * transform.localScale.x;
 
-            GameObject instancedGO = GameObject.Instantiate(decalPrefab, transform.position, decalPrefab.transform.rotation, other.transform);
-            instancedGO.transform.localScale = instancedGO.transform.localScale * transform.localScale.x;
-            //instancedGO.tag = "Untagged";
-            other.GetComponentInParent<Rigidbody>().AddExplosionForce(1000, transform.position, col.radius * transform.localScale.x);
+            PlayerVehicleScript player = other.GetComponentInParent<PlayerVehicleScript>();
+            if (player == null)
+            {
+                player = other.GetComponent<PlayerVehicleScript>();
+                if (player == null)
+                {
+                    player = other.transform.parent.GetComponentInParent<PlayerVehicleScript>();
+                    if (player == null) return;
+                }
+            }
+            player.reinitTorqueTimer = instancedOil.finalDespawnTime;
+            player.targetCarTorque = instancedOil.GetNewTorque(player);
 
         }
         else
         {
             if (!Decals.TagToIgnore(other.tag))
             {
-                //Vector3 closesPoint = other.ClosestPoint(transform.position);
-                //Vector3 spawnPoint = closesPoint + ((transform.position - closesPoint).normalized * decalPrefab.transform.localScale.x);
-                GameObject instancedGO = GameObject.Instantiate(decalPrefab, transform.position, decalPrefab.transform.rotation, other.transform);
+                GameObject instancedGO = GameObject.Instantiate(decalFloorPrefab, transform.position, decalFloorPrefab.transform.rotation, other.transform);
                 instancedGO.transform.localScale = instancedGO.transform.localScale * transform.localScale.x * sizeInc;
 
                 Destroy(gameObject);
@@ -46,16 +52,9 @@ public class OilBulletScript : MonoBehaviour
     }
 
 
-
     public void SetOriginTransform(Transform _transform)
     {
         originTransform = _transform;
     }
 
-
-    //IEnumerator DespawnCoroutine()
-    //{
-    //    yield return new WaitForSeconds(10.0f);
-    //    Destroy(gameObject);
-    //}
 }

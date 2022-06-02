@@ -8,8 +8,8 @@ public class BoxModifierScript : MonoBehaviour
     float timer = 2;
 
     [SerializeField] int currentColorID = 0;
-
     [SerializeField] Color currentColor, nextColor;
+    [SerializeField] float colorSpeed = 1.0f;
 
     public PlayersHUDManager hudManager;
 
@@ -90,7 +90,7 @@ public class BoxModifierScript : MonoBehaviour
 
     void ChangeColor()
     {
-        currentColor = Color.Lerp(currentColor, nextColor, 0.01f);
+        currentColor = Color.Lerp(currentColor, nextColor, colorSpeed * Time.deltaTime);
         currentTime += Time.deltaTime;
         currentColor.a = 0.2f;
 

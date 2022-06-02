@@ -9,7 +9,7 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
     private PlayerVehicleScript player;
     [SerializeField] private Transform centerRespawn;
     public Vector3 respawnPosition, respawnRotation, respawnVelocity;
-    bool paintingChecked = false, oilChecked = false, exitCamera;
+    bool exitCamera;
     [SerializeField] float boostPadDuration;
     private bool reduceSpeed;
     public float boostPadMultiplier;
@@ -74,9 +74,6 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
         respawnPosition = new Vector3(0, 0, 0);
         respawnRotation = new Vector3(0, 0, 0);
         respawnVelocity = new Vector3(0, 0, 0);
-        paintingChecked = oilChecked = false;
-
-        //playersHUDManager = GameObject.Find("HUD").transform.GetComponentInChildren<PlayersHUDManager>();
     }
 
     void SetLayerRecursively(Transform _obj, int layer)
@@ -152,6 +149,32 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
                 playerHud = playersHUDManager.GetPlayerHUD(transform.parent.GetComponent<PlayerData>().id);
             }
 
+            //Erase decals
+            Debug.Log(player.playerNum);
+            Transform chasis = player.transform.Find("vehicleChasis");
+            for(int i = 0; i < chasis.childCount; i++)
+            {
+                DecalDefaultScript child = chasis.GetChild(i).GetComponent<DecalDefaultScript>();
+                if (child != null)
+                    child.DestroyDecal();
+            }
+            Transform wheelsFather = player.transform.Find("Wheels Colliders");
+            for(int i = 0; i < wheelsFather.childCount; i++)
+            {
+                Transform currWheel = wheelsFather.GetChild(i);
+                for(int j = 0; j < currWheel.childCount; j++)
+                {
+                    DecalDefaultScript child = currWheel.GetChild(j).GetComponent<DecalDefaultScript>();
+                    if (child != null)
+                        child.DestroyDecal();
+                }
+            }
+            player.targetFloorTorque = player.targetCarTorque = player.reinitTorqueTimer = -1;
+            player.votesForMaintingFloorTorque = 0;
+            //player.vehicleTorque = player.savedVehicleTorque;
+            //player.oilObstacles.Clear();
+            //player.paintObstacles.Clear();
+
 
             transform.position = outTransform.position;
             transform.rotation = outTransform.rotation;
@@ -159,8 +182,6 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
 
             //Resetting variables
             player.vehicleTorque = player.savedVehicleTorque;
-            oilChecked = false;
-            paintingChecked = false;
 
             player.vehicleMaxSpeed = player.savedMaxSpeed;
             player.speedIncrementEnabled = true;
@@ -213,6 +234,11 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
             player.vehicleMaxSpeed = player.savedMaxSpeed;
             player.vehicleAcceleration = player.savedAcceleration;
         }
+
+        //ResetTorqueAfterDecal();
+
+
+        ///End of Update
     }
 
     public void ApplyForce(float forceValue, float _seconds)
@@ -240,18 +266,22 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
 
     }
 
+    //void ResetTorqueAfterDecal()
+    //{
+    //    Debug.Log("Player 1 paints; " + player.paintObstacles.Count);
+    //    if(player.vehicleTorque != player.savedVehicleTorque 
+    //        && player.paintObstacles.Count == 0 && player.oilObstacles.Count == 0)
+    //    {
+    //        player.vehicleTorque = player.savedVehicleTorque;
+    //    }
+    //}
+
+
     void OnCollisionStay(Collision other)
     {
         //------Player Death------
         player.vehicleReversed = (other.gameObject.tag.Equals("ground"));
         //------------------------
-    }
-    IEnumerator WaitTorque()
-    {
-        yield return new WaitForSeconds(5);
-        player.vehicleTorque = player.savedVehicleTorque;
-        oilChecked = false;
-        paintingChecked = false;
     }
 
 
@@ -276,32 +306,12 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
             player.vehicleRB.velocity += transform.TransformDirection(Vector3.back * Time.deltaTime * 5);
 
 
-            if (!paintingChecked && other.CompareTag("Painting"))
-        {
-            paintingChecked = true;
-            if (player.vehicleRB.velocity.magnitude > 1.0f)
-            {
-                //Debug.Log("enter Paint");
-                AddFriction(player.savedVehicleTorque / 2);
-            }
-        }
-        if (!oilChecked && other.CompareTag("Oil"))
-        {
-            oilChecked = true;
-            if (player.vehicleRB.velocity.magnitude > 1.0f)
-            {
-                //Debug.Log("enter Oil");
-                AddFriction(player.savedVehicleTorque*100000);
-            }
-        }
-
         //Terrain
         if (other.CompareTag("Sand") && player.touchingGround)
             OnSand(other);
 
     }
 
-    
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -332,20 +342,23 @@ public class VehicleTriggerAndCollisionEvents : MonoBehaviour
         player.timerReversed = 0;
     }
 
-    void ResetFriction()
-    {
-        //player.vehicleRB.angularDrag = player.savedAngularDrag;
-        player.vehicleTorque = player.savedVehicleTorque;
-    }
+    //void ResetFriction()
+    //{
+    //    //player.vehicleRB.angularDrag = player.savedAngularDrag;
+    //    player.vehicleTorque = player.savedVehicleTorque;
+    //}
 
-    void AddFriction(float _torque)
-    {
-        //Vector3 velFrictionVec = -player.vehicleRB.velocity.normalized * _frictionForce * player.vehicleRB.velocity.magnitude;
-        //player.vehicleRB.AddForce(velFrictionVec, ForceMode.Force);
-        //player.vehicleRB.angularDrag = player.savedAngularDrag * _dragInc;
-        player.vehicleTorque = _torque;
-        StartCoroutine(WaitTorque());
-    }
+    //void AddFriction(float _torque, string _type)
+    //{
+    //    //Vector3 velFrictionVec = -player.vehicleRB.velocity.normalized * _frictionForce * player.vehicleRB.velocity.magnitude;
+    //    //player.vehicleRB.AddForce(velFrictionVec, ForceMode.Force);
+    //    //player.vehicleRB.angularDrag = player.savedAngularDrag * _dragInc;
+    //    player.vehicleTorque = _torque;
+    //    if(_type == "Oil")
+    //        StartCoroutine(WaitTorqueOil());
+    //    else if(_type == "Paint")
+    //        StartCoroutine(WaitTorquePaint());
+    //}
 
     void OnSand(Collider other)
     {
