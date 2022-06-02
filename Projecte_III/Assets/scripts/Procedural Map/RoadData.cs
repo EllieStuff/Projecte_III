@@ -5,9 +5,9 @@ using UnityEngine;
 public class RoadData : MonoBehaviour
 {
     public enum Type { STRAIGHT = 0, LEFT, RIGHT, COUNT };
-    [SerializeField] Type roadType = Type.COUNT;
+    public Type roadType = Type.COUNT;
 
-    [SerializeField] int baseSpawnRate = 60;
+    public int baseSpawnRate = 60;
 
     [System.Serializable]
     public class SpawnRateSet

@@ -3,6 +3,7 @@ using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.AI;
+using System.Threading.Tasks;
 
 public class GenerateNewTile : MonoBehaviour
 {
@@ -21,6 +22,8 @@ public class GenerateNewTile : MonoBehaviour
 
     const int tilesMargin = 3;
 
+    GameObject newRoad;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,7 +34,8 @@ public class GenerateNewTile : MonoBehaviour
         for (int i = 0; i < tilesGO.Length; i++)
         {
             tiles[i] = tilesGO[i].GetComponent<RoadData>();
-            
+            tiles[i].gameObject.SetActive(false);
+
             if (tiles[i].RoadType == RoadData.Type.STRAIGHT)
             {
                 straightRoads.Add(tiles[i]);
@@ -66,41 +70,70 @@ public class GenerateNewTile : MonoBehaviour
         cameraFollow.AddCheckPoints(ref outList);
     }
 
-    public void CalculateNewTile()
+    public IEnumerator CalculateNewTile()
     {
+        newRoad = null;
+
         float random = Random.Range(0, 100);
         RoadData.Type roadType = lastTile.GetRoadType(random);
 
         RoadData newObject = null;
         if (roadType == RoadData.Type.STRAIGHT)
-            newObject = GetNewRoad(ref straightRoads, maxSpawnRates.straight);
+            StartCoroutine(GetNewRoad(straightRoads, maxSpawnRates.straight));
         else if (roadType == RoadData.Type.LEFT)
-            newObject = GetNewRoad(ref leftRoads, maxSpawnRates.left);
+            StartCoroutine(GetNewRoad(leftRoads, maxSpawnRates.left));
         else if (roadType == RoadData.Type.RIGHT)
-            newObject = GetNewRoad(ref rightRoads, maxSpawnRates.right);
-        
-        if (newObject == null) Debug.LogError("Upsie");
+            StartCoroutine(GetNewRoad(rightRoads, maxSpawnRates.right));
+
+        while (newRoad == null) { yield return null; }
+
+        newObject = newRoad.GetComponent<RoadData>();
+
+        yield return null;
 
         Transform child = lastTile.transform.GetChild(0).Find("NewSpawn");
 
+        yield return null;
+
         newObject.transform.position = child.position;
+
+        yield return null;
 
         //Vector3 _scale = newScale;
         //newObject.transform.localScale = _scale;
         newObject.transform.rotation = Quaternion.RotateTowards(newObject.transform.rotation, child.rotation, 360);
 
-        if(transform.childCount > tilesMargin)
+        newObject.gameObject.SetActive(true);
+        
+        yield return null;
+
+        if (transform.childCount > tilesMargin)
             Destroy(transform.GetChild(0).gameObject);
+
+        yield return null;
 
         lastTile = newObject;
 
+        yield return null;
+
         GetCheckpointPositions(ref newObject);
 
-        navMesh.BuildNavMesh();
+        yield return null;
+
+        Task t = navMesh.BuildNavMesh();
+
+        while (!t.IsCompleted) { yield return null; }
+
+        yield return null;
+
         cameraFollow.UpdateDestination();
+
+        yield return null;
+
+        yield return 0;
     }
 
-    RoadData GetNewRoad(ref List<RoadData> _roadList, float _maxSpawnRate)
+    IEnumerator GetNewRoad(List<RoadData> _roadList, float _maxSpawnRate)
     {
         float random = Random.Range(0, _maxSpawnRate);
         float currRndAmount = 0;
@@ -108,13 +141,21 @@ public class GenerateNewTile : MonoBehaviour
         {
             if (random > currRndAmount && random < currRndAmount + road.SpawnRate)
             {
-                GameObject newRoad = Instantiate(road.gameObject, transform);
-                return newRoad.GetComponent<RoadData>();
+                StartCoroutine(OptimizedInstantiate(road.transform));
+                yield return 0;
             }
 
             currRndAmount += road.SpawnRate;
         }
+        yield return 0;
+    }
 
-        return null;
+    IEnumerator OptimizedInstantiate(Transform parent) 
+    {
+        yield return null;
+        GameObject _newRoad = Instantiate(parent.gameObject, transform);
+        yield return null;
+        newRoad = _newRoad;
+        yield return 0;
     }
 }
