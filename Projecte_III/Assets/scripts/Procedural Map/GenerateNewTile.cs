@@ -139,6 +139,7 @@ public class GenerateNewTile : MonoBehaviour
         float currRndAmount = 0;
         foreach (RoadData road in _roadList)
         {
+            yield return null;
             if (random > currRndAmount && random < currRndAmount + road.SpawnRate)
             {
                 StartCoroutine(OptimizedInstantiate(road.transform));
