@@ -3,7 +3,6 @@ using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.AI;
-using System.Threading.Tasks;
 
 public class GenerateNewTile : MonoBehaviour
 {
