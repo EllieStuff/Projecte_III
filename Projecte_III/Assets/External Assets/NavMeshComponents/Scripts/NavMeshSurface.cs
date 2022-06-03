@@ -159,7 +159,7 @@ namespace UnityEngine.AI
             return buildSettings;
         }
 
-        public async Task BuildNavMesh()
+        public void BuildNavMesh()
         {
             var sources = CollectSources();
 
