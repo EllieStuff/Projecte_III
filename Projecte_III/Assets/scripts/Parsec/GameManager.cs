@@ -74,6 +74,7 @@ public class GameManager : MonoBehaviour
             m_Players[player - 1].inactiveScreensManager = inactiveScreensManager;
             m_Players[player - 1].m_PlayerNumber = player;
             m_Players[player - 1].m_AssignedGuest = guest;
+            m_Players[player - 1].gameManager = this;
             m_Players[player - 1].doneManager = doneManager;
             m_Players[player - 1].Setup();
         }

@@ -2,6 +2,7 @@
 using ParsecUnity;
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class PlayerManager : MonoBehaviour
     internal InactiveScreensManager inactiveScreensManager;
     internal Transform changeColorManager;
     internal DoneButtonManager doneManager;
+    internal GameManager gameManager;
 
     public void Setup()
     {
@@ -22,16 +24,28 @@ public class PlayerManager : MonoBehaviour
 
     private void Update()
     {
-        if (player == null)
+
+        if (player == null || (SceneManager.GetActiveScene().name.Contains("Current") && inactiveScreensManager == null))
         {
-            GameObject _playersManager = GameObject.Find("PlayersManager");
-            player = _playersManager.GetComponent<PlayersManager>().GetPlayer(m_PlayerNumber - 1).GetComponent<PlayerVehicleScript>();
-            parsecInputs = _playersManager.GetComponent<PlayersManager>().GetPlayer(m_PlayerNumber - 1).GetComponent<PlayerInputs>();
-            _playersManager.GetComponent<PlayersManager>().numOfPlayers++;
-            inactiveScreensManager.spawnParsecCar = true;
-            changeColorManager.GetChild(player.playerNum).GetComponent<ChangeColor>().enabled = true;
-            if (player.playerNum > 0)
-                _playersManager.GetComponent<PlayersManager>().GetPlayer(player.playerNum).GetComponent<IA>().parsecEnabled = true;
+            try
+            {
+                GameObject _playersManager = GameObject.Find("PlayersManager");
+                player = _playersManager.GetComponent<PlayersManager>().GetPlayer(m_PlayerNumber - 1).GetComponent<PlayerVehicleScript>();
+                parsecInputs = _playersManager.GetComponent<PlayersManager>().GetPlayer(m_PlayerNumber - 1).GetComponent<PlayerInputs>();
+                _playersManager.GetComponent<PlayersManager>().numOfPlayers++;
+                inactiveScreensManager.spawnParsecCar = true;
+                changeColorManager.GetChild(player.playerNum).GetComponent<ChangeColor>().enabled = true;
+                if (player.playerNum > 0)
+                    _playersManager.GetComponent<PlayersManager>().GetPlayer(player.playerNum).GetComponent<IA>().parsecEnabled = true;
+            }
+            catch(Exception e)
+            {
+                gameManager = GameObject.Find("UI").transform.Find("Parsec").Find("GameManager").GetComponent<GameManager>();
+
+                gameManager.SpawnPlayer(m_PlayerNumber, new Parsec.ParsecGuest());
+
+                Destroy(gameObject);
+            }
         }
 
         if (player.playerNum > 0)
