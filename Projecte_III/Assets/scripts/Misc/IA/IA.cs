@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class IA : MonoBehaviour
 {
     private PlayerVehicleScript vehicleScript;
+    private PlayerInputs inputs;
     private Transform target;
     private PlayersManager playersManager;
     private RandomModifierGet randomModifierScript;
@@ -16,10 +17,13 @@ public class IA : MonoBehaviour
 
     private int playerNum;
 
+    public bool parsecEnabled = true;
+
     // Start is called before the first frame update
     void Start()
     {
         throwTimer = 5;
+        inputs = GetComponent<PlayerInputs>();
         vehicleScript = GetComponent<PlayerVehicleScript>();
         playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
         randomModifierScript = GetComponent<RandomModifierGet>();
@@ -39,6 +43,27 @@ public class IA : MonoBehaviour
             if(vehicleScript.timerStartRace <= 0)
                 IAMovement();
         }
+        else if(parsecEnabled)
+        {
+            ParsecInputsDetect();
+
+            if (vehicleScript.timerStartRace <= 0)
+                IAMovement();
+        }
+    }
+
+    void ParsecInputsDetect()
+    {
+        forward = inputs.parsecP.forward;
+        backward = inputs.parsecP.backward;
+        left = inputs.parsecP.left;
+        right = inputs.parsecP.right;
+
+        randomModifierScript.IADown = inputs.parsecP.downArrow;
+        randomModifierScript.IAUp = inputs.parsecP.upArrow;
+        randomModifierScript.IALeft = inputs.parsecP.leftArrow;
+        randomModifierScript.IARight = inputs.parsecP.rightArrow;
+        randomModifierScript.IAItemTrigger = inputs.parsecP.upArrow || inputs.parsecP.downArrow || inputs.parsecP.leftArrow || inputs.parsecP.rightArrow;
     }
 
     void IABrain()

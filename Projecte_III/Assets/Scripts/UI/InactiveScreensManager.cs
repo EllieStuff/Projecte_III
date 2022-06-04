@@ -12,6 +12,8 @@ public class InactiveScreensManager : MonoBehaviour
     [SerializeField] int playersInited = 0;
     [SerializeField] Transform changeColorManager;
 
+    public bool spawnParsecCar;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,7 +28,7 @@ public class InactiveScreensManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playersInited < playersManager.numOfPlayers && currPlayerInputs.Inited())
+        if (playersInited < playersManager.numOfPlayers && (currPlayerInputs.Inited() || spawnParsecCar))
         {
             //Activate Change Color Script
             changeColorManager.GetChild(playersInited).GetComponent<ChangeColor>().enabled = true;
@@ -34,6 +36,7 @@ public class InactiveScreensManager : MonoBehaviour
             StartCoroutine(DisappearBlackScreen(playersInited));
             playersInited++;
             currPlayerInputs = playersManager.GetPlayer(playersInited).GetComponent<PlayerInputs>();
+            spawnParsecCar = false;
         }
     }
 

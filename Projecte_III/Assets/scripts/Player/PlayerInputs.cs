@@ -1,3 +1,4 @@
+using ParsecUnity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using UnityEngine;
 public class PlayerInputs : MonoBehaviour
 {
     PlayersManager playersManagers;
+    PlayerVehicleScript player;
     //PlayersManager.GameModes gameMode = PlayersManager.GameModes.MONO;
     InputSystem inputSystem;
     InputSystem.ControlData[] controlData = new InputSystem.ControlData[1];
@@ -26,6 +28,20 @@ public class PlayerInputs : MonoBehaviour
     // Axis
     Vector2
         chooseItem;
+
+    public ParsecPlayer parsecP;
+
+    public struct ParsecPlayer
+    {
+        public bool forward;
+        public bool backward;
+        public bool left;
+        public bool right;
+        public bool leftArrow;
+        public bool rightArrow;
+        public bool upArrow;
+        public bool downArrow;
+    };
 
     public InputSystem.ControlData[] ControlData { get { return controlData; } }
 
@@ -61,6 +77,7 @@ public class PlayerInputs : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        ParsecPlayer parsecP = new ParsecPlayer();
         try
         {
             playerId = GetComponentInParent<PlayerData>().id;

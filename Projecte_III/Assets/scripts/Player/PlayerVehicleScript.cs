@@ -72,6 +72,8 @@ public class PlayerVehicleScript : MonoBehaviour
 
     internal bool dash = false, dashCollided = false;
 
+    private IA iaComponent;
+
     public bool iaEnabled = false;
 
     private void Awake()
@@ -87,6 +89,8 @@ public class PlayerVehicleScript : MonoBehaviour
     public void Init()
     {
         StopAllCoroutines();
+
+        iaComponent = GetComponent<IA>();
 
         events = GetComponent<VehicleTriggerAndCollisionEvents>();
 
@@ -206,7 +210,7 @@ public class PlayerVehicleScript : MonoBehaviour
         //controls.getAllInput(playerNum);
 
         //------Movement------
-        if (raceStarted && !iaEnabled)
+        if (raceStarted && !iaEnabled && !iaComponent.parsecEnabled)
         {
             vehicleMovement();
             if (!startAcceleration)
