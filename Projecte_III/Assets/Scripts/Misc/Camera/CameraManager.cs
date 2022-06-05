@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CameraManager : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class CameraManager : MonoBehaviour
     [SerializeField] Camera[] renderCameras;
 
     internal PlayersManager playersManager;
+    ParsecStreamFull parsecStream;
     bool inGameScene;
 
     // Start is called before the first frame update
@@ -20,7 +22,10 @@ public class CameraManager : MonoBehaviour
 
     private void Start()
     {
-        
+        parsecStream = transform.GetChild(0).GetComponent<ParsecStreamFull>();
+
+        if (SceneManager.GetActiveScene().name.Contains("Procedural") && GameObject.Find("PLAYER") == null)
+            Destroy(parsecStream);
     }
 
     // Update is called once per frame
