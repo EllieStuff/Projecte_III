@@ -16,6 +16,13 @@ public class PlayerManager : MonoBehaviour
     internal DoneButtonManager doneManager;
     internal GameManager gameManager;
 
+    ChangeColor changeColorScript;
+
+    bool 
+        returnPressed = false,
+        rightPressed = false,
+        leftPressed = false;
+
     public void Setup()
     {
         DontDestroyOnLoad(gameObject);
@@ -29,14 +36,15 @@ public class PlayerManager : MonoBehaviour
         {
             try
             {
-                GameObject _playersManager = GameObject.Find("PlayersManager");
-                player = _playersManager.GetComponent<PlayersManager>().GetPlayer(m_PlayerNumber - 1).GetComponent<PlayerVehicleScript>();
-                parsecInputs = _playersManager.GetComponent<PlayersManager>().GetPlayer(m_PlayerNumber - 1).GetComponent<PlayerInputs>();
-                _playersManager.GetComponent<PlayersManager>().numOfPlayers++;
+                PlayersManager _playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
+                player = _playersManager.GetPlayer(m_PlayerNumber - 1).GetComponent<PlayerVehicleScript>();
+                parsecInputs = _playersManager.GetPlayer(m_PlayerNumber - 1).GetComponent<PlayerInputs>();
+                _playersManager.numOfPlayers++;
                 inactiveScreensManager.spawnParsecCar = true;
-                changeColorManager.GetChild(player.playerNum).GetComponent<ChangeColor>().enabled = true;
+                changeColorScript = changeColorManager.GetChild(player.playerNum).GetComponent<ChangeColor>();
+                changeColorScript.enabled = true;
                 if (player.playerNum > 0)
-                    _playersManager.GetComponent<PlayersManager>().GetPlayer(player.playerNum).GetComponent<IA>().parsecEnabled = true;
+                    _playersManager.GetPlayer(player.playerNum).GetComponent<IA>().parsecEnabled = true;
             }
             catch(Exception e)
             {
@@ -50,7 +58,6 @@ public class PlayerManager : MonoBehaviour
 
         if (player.playerNum > 0)
         {
-
             parsecInputs.parsecP.forward = ParsecInput.GetKey(player.playerNum + 1, KeyCode.W);
             parsecInputs.parsecP.backward = ParsecInput.GetKey(player.playerNum + 1, KeyCode.S);
             parsecInputs.parsecP.left = ParsecInput.GetKey(player.playerNum + 1, KeyCode.A);
@@ -60,10 +67,45 @@ public class PlayerManager : MonoBehaviour
             parsecInputs.parsecP.leftArrow = ParsecInput.GetKey(player.playerNum + 1, KeyCode.LeftArrow);
             parsecInputs.parsecP.rightArrow = ParsecInput.GetKey(player.playerNum + 1, KeyCode.RightArrow);
 
-            if (doneManager != null && !doneManager.GetButton(player.playerNum).isReady && ParsecInput.GetKey(player.playerNum + 1, KeyCode.Return))
-                doneManager.GetButton(player.playerNum).SetReady();
+            CheckReturn();
+            CheckRight();
+            CheckLeft();
         }
     }
+
+    void CheckReturn()
+    {
+        if (!returnPressed && ParsecInput.GetKey(player.playerNum + 1, KeyCode.Return))
+        {
+            returnPressed = true;
+            doneManager.GetButton(player.playerNum).SetReady();
+        }
+        else if (returnPressed && !ParsecInput.GetKey(player.playerNum + 1, KeyCode.Return))
+            returnPressed = false;
+    }
+    void CheckRight()
+    {
+        if (!rightPressed && ParsecInput.GetKey(player.playerNum + 1, KeyCode.D))
+        {
+            rightPressed = true;
+            changeColorScript.PressButton(changeColorScript.buttonRight);
+            changeColorScript.SetNewColor(1);
+        }
+        else if (rightPressed && !ParsecInput.GetKey(player.playerNum + 1, KeyCode.D))
+            rightPressed = false;
+    }
+    void CheckLeft()
+    {
+        if (!leftPressed && ParsecInput.GetKey(player.playerNum + 1, KeyCode.A))
+        {
+            leftPressed = true;
+            changeColorScript.PressButton(changeColorScript.buttonLeft);
+            changeColorScript.SetNewColor(-1);
+        }
+        else if (leftPressed && !ParsecInput.GetKey(player.playerNum + 1, KeyCode.A))
+            leftPressed = false;
+    }
+
 
     public void BreakDown()
     {

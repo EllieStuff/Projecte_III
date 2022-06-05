@@ -13,7 +13,7 @@ public class ChangeColor : MonoBehaviour
     static List<KeyValuePair<int, Material>> defaultColorList = new List<KeyValuePair<int, Material>>();
 
     [SerializeField] VehicleTriggerAndCollisionEvents player;
-    [SerializeField] Button buttonRight, buttonLeft;
+    public Button buttonRight, buttonLeft;
 
     [SerializeField] SpriteRenderer backgroundColor;
     Image textBackgroundColor;
@@ -165,7 +165,7 @@ public class ChangeColor : MonoBehaviour
         textBackgroundColor.color = _curr;
     }
 
-    void PressButton(Button _button)
+    public void PressButton(Button _button)
     {
         if(lastButton != null)
             lastButton.GetComponent<Image>().color = Color.yellow;
