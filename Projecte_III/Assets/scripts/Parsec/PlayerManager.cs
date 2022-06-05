@@ -3,6 +3,7 @@ using ParsecUnity;
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -38,25 +39,39 @@ public class PlayerManager : MonoBehaviour
             {
                 PlayersManager _playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
                 player = _playersManager.GetPlayer(m_PlayerNumber - 1).GetComponent<PlayerVehicleScript>();
-                parsecInputs = _playersManager.GetPlayer(m_PlayerNumber - 1).GetComponent<PlayerInputs>();
-                _playersManager.numOfPlayers++;
-                inactiveScreensManager.spawnParsecCar = true;
-                changeColorScript = changeColorManager.GetChild(player.playerNum).GetComponent<ChangeColor>();
-                changeColorScript.enabled = true;
+                
                 if (player.playerNum > 0)
+                {
+                    parsecInputs = _playersManager.GetPlayer(m_PlayerNumber - 1).GetComponent<PlayerInputs>();
+                    _playersManager.numOfPlayers++;
+                    inactiveScreensManager.spawnParsecCar = true;
+                    changeColorScript = changeColorManager.GetChild(player.playerNum).GetComponent<ChangeColor>();
+                    changeColorScript.enabled = true;
                     _playersManager.GetPlayer(player.playerNum).GetComponent<IA>().parsecEnabled = true;
+                }
             }
             catch(Exception e)
             {
-                gameManager = GameObject.Find("UI").transform.Find("Parsec").Find("GameManager").GetComponent<GameManager>();
+                GameObject parsec = GameObject.Find("UI").transform.Find("Parsec").gameObject;
+                GameObject.Find("UI").transform.Find("OnlineMultiplayerButton").Find("Online Button").GetComponent<PressedButton>().interactable = false;
 
-                gameManager.SpawnPlayer(m_PlayerNumber, new Parsec.ParsecGuest());
+                if (!parsec.activeSelf)
+                {
+                    parsec.SetActive(true);
+                    parsec.transform.Find("Authentication").gameObject.SetActive(false);
+                }
+                else
+                {
+                    gameManager = GameObject.Find("UI").transform.Find("Parsec").Find("GameManager").GetComponent<GameManager>();
 
-                Destroy(gameObject);
+                    gameManager.SpawnPlayer(m_PlayerNumber, new Parsec.ParsecGuest());
+
+                    Destroy(gameObject);
+                }
             }
         }
 
-        if (player.playerNum > 0)
+        if (player != null && player.playerNum > 0)
         {
             parsecInputs.parsecP.forward = ParsecInput.GetKey(player.playerNum + 1, KeyCode.W);
             parsecInputs.parsecP.backward = ParsecInput.GetKey(player.playerNum + 1, KeyCode.S);

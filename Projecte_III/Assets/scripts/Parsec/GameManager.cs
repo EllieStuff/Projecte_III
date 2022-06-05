@@ -89,6 +89,7 @@ public class GameManager : MonoBehaviour
             VerificationUri.text = sessionData.data.verification_uri;
             UserCode.text = sessionData.data.user_code;
             StatusField.text = "Waiting for User";
+            Application.OpenURL(sessionData.data.verification_uri);
         }
     }
 
@@ -121,7 +122,7 @@ public class GameManager : MonoBehaviour
 
     public void StartParsec()
     {
-        streamer.StartParsec(m_Players.Length, IsPublicGame.isOn, "Unity Test", "An Example Unity Project", authdata.id);
+        streamer.StartParsec(m_Players.Length, IsPublicGame.isOn, "Motor Brawl", "A crazy car party game!", authdata.id);
         ShortLinkUri.text = streamer.GetInviteUrl(authdata);
     }
 

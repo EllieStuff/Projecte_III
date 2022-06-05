@@ -8,6 +8,7 @@ public class BackButtonScript : MonoBehaviour
     [SerializeField] float waitTime = 2;
     [SerializeField] PressedButton bttn;
     [SerializeField] Image bg;
+    [SerializeField] bool backToMenu;
 
     float timer = 0.0f;
     Image bttnImage;
@@ -39,7 +40,8 @@ public class BackButtonScript : MonoBehaviour
         if (timer > waitTime)
         {
             bttnImage.color = Color.green;
-            GoBack();
+            if(backToMenu)
+                GoBack();
             this.enabled = false;
         }
     }
