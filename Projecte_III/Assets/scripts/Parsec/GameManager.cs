@@ -25,12 +25,12 @@ public class GameManager : MonoBehaviour
     {
         playersManager = GameObject.Find("PlayersManager").GetComponent<PlayersManager>();
         inactiveScreens = GameObject.Find("UI").transform.Find("InactiveScreens").GetComponent<InactiveScreensManager>();
-        SpawnPlayer(1, new Parsec.ParsecGuest());
-        if (streamer != null)
-        {
-            streamer.GuestConnected += Streamer_GuestConnected;
-            streamer.GuestDisconnected += Streamer_GuestDisconnected;
-        }
+        //SpawnPlayer(1, new Parsec.ParsecGuest());
+        //if (streamer != null)
+        //{
+        //    streamer.GuestConnected += Streamer_GuestConnected;
+        //    streamer.GuestDisconnected += Streamer_GuestDisconnected;
+        //}
     }
 
     private void Start()
@@ -130,6 +130,13 @@ public class GameManager : MonoBehaviour
     {
         if (!roomCreated)
         {
+            SpawnPlayer(1, new Parsec.ParsecGuest());
+            if (streamer != null)
+            {
+                streamer.GuestConnected += Streamer_GuestConnected;
+                streamer.GuestDisconnected += Streamer_GuestDisconnected;
+            }
+
             streamer.StartParsec(m_Players.Length, IsPublicGame.isOn, "Motor Brawl", "A crazy car party game!", authdata.id);
             ShortLinkUri.text = streamer.GetInviteUrl(authdata);
             GUIUtility.systemCopyBuffer = ShortLinkUri.text;
@@ -142,9 +149,9 @@ public class GameManager : MonoBehaviour
         if (roomCreated)
         {
             streamer.StopParsec();
-            //PlayerManager[] players = GameObject.FindObjectsOfType<PlayerManager>();
-            //for (int i = 0; i < players.Length; i++)
-            //    Destroy(players[i].gameObject);
+            PlayerManager[] players = GameObject.FindObjectsOfType<PlayerManager>();
+            for (int i = 0; i < players.Length; i++)
+                Destroy(players[i].gameObject);
             roomCreated = false;
         }
     }
