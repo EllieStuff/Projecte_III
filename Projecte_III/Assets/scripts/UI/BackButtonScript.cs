@@ -49,6 +49,8 @@ public class BackButtonScript : MonoBehaviour
     void GoBack()
     {
         Debug.Log("Succesfully entered");
+        GameObject gameManager = GameObject.FindGameObjectWithTag("GameManager");
+        if (gameManager != null) gameManager.GetComponent<GameManager>().StopParsec();
         Destroy(GameObject.FindGameObjectWithTag("PlayersManager"));
         GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().ChangeScene("Menu");
     }

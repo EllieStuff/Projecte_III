@@ -11,6 +11,7 @@ public class InactiveScreensManager : MonoBehaviour
     DoneButtonManager doneBttnManager;
     [SerializeField] int playersInited = 0;
     [SerializeField] Transform changeColorManager;
+    public int PlayersInited { get { return playersInited; } }
 
     public bool spawnParsecCar;
 

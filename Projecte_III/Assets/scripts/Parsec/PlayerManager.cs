@@ -32,25 +32,25 @@ public class PlayerManager : MonoBehaviour
 
     private void Update()
     {
-
-        if (player == null || (SceneManager.GetActiveScene().name.Contains("Current") && inactiveScreensManager == null))
+        bool inBuildingScene = SceneManager.GetActiveScene().name.Contains("Building Scene");
+        if (player == null || (inBuildingScene && inactiveScreensManager == null))
         {
             try
             {
                 PlayersManager _playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
                 player = _playersManager.GetPlayer(m_PlayerNumber - 1).GetComponent<PlayerVehicleScript>();
-                
+
                 if (player.playerNum > 0)
                 {
                     parsecInputs = _playersManager.GetPlayer(m_PlayerNumber - 1).GetComponent<PlayerInputs>();
-                    _playersManager.numOfPlayers++;
+                    //_playersManager.numOfPlayers++;
                     inactiveScreensManager.spawnParsecCar = true;
                     changeColorScript = changeColorManager.GetChild(player.playerNum).GetComponent<ChangeColor>();
                     changeColorScript.enabled = true;
                     _playersManager.GetPlayer(player.playerNum).GetComponent<IA>().parsecEnabled = true;
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 GameObject parsec = GameObject.Find("UI").transform.Find("Parsec").gameObject;
                 GameObject.Find("UI").transform.Find("OnlineMultiplayerButton").Find("Online Button").GetComponent<PressedButton>().interactable = false;
@@ -82,9 +82,12 @@ public class PlayerManager : MonoBehaviour
             parsecInputs.parsecP.leftArrow = ParsecInput.GetKey(player.playerNum + 1, KeyCode.LeftArrow);
             parsecInputs.parsecP.rightArrow = ParsecInput.GetKey(player.playerNum + 1, KeyCode.RightArrow);
 
-            CheckReturn();
-            CheckRight();
-            CheckLeft();
+            if (inBuildingScene)
+            {
+                CheckReturn();
+                CheckRight();
+                CheckLeft();
+            }
         }
     }
 

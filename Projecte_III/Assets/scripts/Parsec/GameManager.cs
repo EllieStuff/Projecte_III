@@ -18,26 +18,31 @@ public class GameManager : MonoBehaviour
     [SerializeField] DoneButtonManager doneManager;
     private ParsecUnity.API.SessionResultDataData authdata;
     PlayersManager playersManager;
+    InactiveScreensManager inactiveScreens;
+    bool roomCreated = false;
 
     void Awake()
     {
-        SpawnPlayer(1, new Parsec.ParsecGuest());
-        if (streamer != null)
-        {
-            streamer.GuestConnected += Streamer_GuestConnected;
-            streamer.GuestDisconnected += Streamer_GuestDisconnected;
-        }
+        playersManager = GameObject.Find("PlayersManager").GetComponent<PlayersManager>();
+        inactiveScreens = GameObject.Find("UI").transform.Find("InactiveScreens").GetComponent<InactiveScreensManager>();
+        //SpawnPlayer(1, new Parsec.ParsecGuest());
+        //if (streamer != null)
+        //{
+        //    streamer.GuestConnected += Streamer_GuestConnected;
+        //    streamer.GuestDisconnected += Streamer_GuestDisconnected;
+        //}
     }
 
     private void Start()
     {
-        playersManager = GameObject.Find("PlayersManager").GetComponent<PlayersManager>();
+
     }
 
     int GetFreePlayer()
     {
         if (m_Players == null) return 0;
-        for (int i = 1; i < m_Players.Length; i++)
+        Debug.Log(inactiveScreens.PlayersInited);
+        for (int i = inactiveScreens.PlayersInited; i < m_Players.Length; i++)
             if (m_Players[i] == null)
                 return i + 1;
         return 0;
@@ -88,6 +93,7 @@ public class GameManager : MonoBehaviour
         {
             VerificationUri.text = sessionData.data.verification_uri;
             UserCode.text = sessionData.data.user_code;
+            GUIUtility.systemCopyBuffer = sessionData.data.user_code;
             StatusField.text = "Waiting for User";
             Application.OpenURL(sessionData.data.verification_uri);
         }
@@ -122,13 +128,25 @@ public class GameManager : MonoBehaviour
 
     public void StartParsec()
     {
-        streamer.StartParsec(m_Players.Length, IsPublicGame.isOn, "Motor Brawl", "A crazy car party game!", authdata.id);
-        ShortLinkUri.text = streamer.GetInviteUrl(authdata);
+        if (!roomCreated)
+        {
+            streamer.StartParsec(m_Players.Length, IsPublicGame.isOn, "Motor Brawl", "A crazy car party game!", authdata.id);
+            ShortLinkUri.text = streamer.GetInviteUrl(authdata);
+            GUIUtility.systemCopyBuffer = ShortLinkUri.text;
+            roomCreated = true;
+        }
     }
 
     public void StopParsec()
     {
-        streamer.StopParsec();
+        if (roomCreated)
+        {
+            streamer.StopParsec();
+            PlayerManager[] players = GameObject.FindObjectsOfType<PlayerManager>();
+            for (int i = 0; i < players.Length; i++)
+                Destroy(players[i].gameObject);
+            roomCreated = false;
+        }
     }
 
     // Update is called once per frame
