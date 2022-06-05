@@ -7,7 +7,7 @@ public class TutorialWindow : MonoBehaviour
 {
     [SerializeField] GameObject uiSet;
 
-    private float timer = 1;
+    private float timer = 3;
     private bool closed;
 
     void Start()
@@ -29,7 +29,7 @@ public class TutorialWindow : MonoBehaviour
 
         if (timer > 0) 
         {
-            timer -= Time.deltaTime;
+            timer -= Time.unscaledDeltaTime;
         }
         else if(closed)
         {
