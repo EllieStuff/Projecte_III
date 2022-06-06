@@ -16,6 +16,7 @@ public class PlayerInputs : MonoBehaviour
     bool inputPathChecked = false;
 
     bool generalInputsEnabled = true, menuInputsEnabled = true;
+    int itCount = 0;
 
     // Keys
     float
@@ -91,6 +92,8 @@ public class PlayerInputs : MonoBehaviour
         inputSystem = GameObject.FindGameObjectWithTag("InputSystem").GetComponent<InputSystem>();
         controlData[0] = null;
         playerInputPath = playerInputPath + playerId.ToString();
+
+        //StartCoroutine(DelayToBeInited());
     }
 
     // Update is called once per frame
@@ -111,17 +114,6 @@ public class PlayerInputs : MonoBehaviour
             case PlayersManager.GameModes.MULTI_LOCAL:
                 if (controlData[0] == null)
                 {
-                    GameObject gameManagerGO = GameObject.FindGameObjectWithTag("GameManager");
-                    if(gameManagerGO != null)
-                    {
-                        if (gameManagerGO.GetComponent<GameManager>().RoomCreated) 
-                            this.enabled = false;
-                    }
-                    //else
-                    //{
-                    //    this.enabled = false;
-                    //}
-
                     for (int i = 0; i <= playerId; i++)
                     {
                         if (i == playerId)
@@ -146,6 +138,21 @@ public class PlayerInputs : MonoBehaviour
                         else if (!playersManagers.GetPlayer(i).GetComponent<PlayerInputs>().Inited())
                             break;
                     }
+
+                    if (itCount >= playerId)
+                    {
+                        GameObject gameManagerGO = GameObject.FindGameObjectWithTag("GameManager");
+                        if (gameManagerGO != null)
+                        {
+                            if (gameManagerGO.GetComponent<GameManager>().RoomCreated)
+                                this.enabled = false;
+                        }
+                        //else
+                        //{
+                        //    this.enabled = false;
+                        //}
+                    }
+                    else itCount++;
                 }
                 else
                 {
@@ -215,5 +222,12 @@ public class PlayerInputs : MonoBehaviour
     {
         menuInputsEnabled = _enable;
     }
+
+
+    //IEnumerator DelayToBeInited()
+    //{
+    //    yield return new WaitForSeconds(0.5f);
+    //    readyToBeInited = true;
+    //}
 
 }

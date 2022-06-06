@@ -35,73 +35,26 @@ public class InactiveScreensManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playersInited < playersManager.numOfPlayers && ((currPlayerInputs.Inited() && canReceiveLocalPlayers) || spawnParsecCar))
+        if (playersInited < playersManager.numOfPlayers && ((currPlayerInputs.Inited() && canReceiveLocalPlayers)/* || spawnParsecCar*/))
         {
-            //Activate Change Color Script
-            changeColorManager.GetChild(playersInited).GetComponent<ChangeColor>().enabled = true;
-            //
-            StartCoroutine(DisappearBlackScreen(playersInited));
-            playersInited++;
-            currPlayerInputs = playersManager.GetPlayer(playersInited).GetComponent<PlayerInputs>();
-            spawnParsecCar = false;
+            SetNewCar();
         }
         else if(canReceiveLocalPlayers && parsecInited)
         {
             canReceiveLocalPlayers = false;
         }
-        /*else if (playersInited < playersManager.numOfPlayers && NeedsToInitPrevParsecPlayer())
-        {
-            //TODO: Wtfff, porque se queda en bucle infinitooo
-            int playerId = GetPrevParsecPlayerId();
-            PlayerManager parsecPlayer = parsecPlayersToInit[playerId];
-            parsecPlayer.InitParsecPlayer(false);
-
-            //int parsecPlayerId = GetPrevParsecPlayerId();
-            //GameManager gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
-            //gameManager.SpawnPlayer(parsecPlayerId, gameManager.currGuest);
-            //
-            changeColorManager.GetChild(playersInited).GetComponent<ChangeColor>().enabled = true;
-            //
-            StartCoroutine(DisappearBlackScreen(playersInited));
-            playersInited++;
-
-            //PlayerManager parsecPlayer = parsecPlayersToInit[GetPrevParsecPlayerId()];
-            //parsecPlayer.InitParsecPlayer(false);
-
-            currPlayerInputs = playersManager.GetPlayer(playersInited).GetComponent<PlayerInputs>();
-        }*/
 
     }
 
-
-    bool NeedsToInitPrevParsecPlayer()
+    public void SetNewCar()
     {
-        for(int i = 0; i < parsecPlayersToInit.Length; i++)
-        {
-            if (parsecPlayersToInit[i].playerPos == playersInited)
-                return true;
-        }
-        ////TODO: Posar PArsecPlayerInited com a check als playerPrefs per evitar que es confongui amb l'original
-        //for (int i = 0; i < 4; i++)
-        //{
-        //    if (PlayerPrefs.GetInt("ParsecPlayerId" + i, -1) == playersInited && PlayerPrefs.GetInt("ParsecPlayerId" + i, -1) > 0)
-        //        return true;
-        //}
-        return false;
-    }
-    int GetPrevParsecPlayerId()
-    {
-        for (int i = 0; i < parsecPlayersToInit.Length; i++)
-        {
-            if (parsecPlayersToInit[i].playerPos == playersInited)
-                return i;
-        }
-        //for (int i = 0; i < 4; i++)
-        //{
-        //    if (PlayerPrefs.GetInt("ParsecPlayerId" + i, -1) == playersInited)
-        //        return i;
-        //}
-        return -1;
+        //Activate Change Color Script
+        changeColorManager.GetChild(playersInited).GetComponent<ChangeColor>().enabled = true;
+        //
+        StartCoroutine(DisappearBlackScreen(playersInited));
+        playersInited++;
+        currPlayerInputs = playersManager.GetPlayer(playersInited).GetComponent<PlayerInputs>();
+        //spawnParsecCar = false;
     }
 
 
