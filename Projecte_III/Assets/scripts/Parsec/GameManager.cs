@@ -158,6 +158,7 @@ public class GameManager : MonoBehaviour
             ShortLinkUri.text = streamer.GetInviteUrl(authdata);
             GUIUtility.systemCopyBuffer = ShortLinkUri.text;
             roomCreated = true;
+            PlayerPrefs.SetString("RoomCreated", "true");
         }
     }
 
@@ -171,6 +172,7 @@ public class GameManager : MonoBehaviour
             for (int i = 0; i < players.Length; i++)
                 Destroy(players[i].gameObject);
             roomCreated = false;
+            PlayerPrefs.SetString("RoomCreated", "false");
         }
     }
 

@@ -52,7 +52,7 @@ public class PlayerManager : MonoBehaviour
     private void Update()
     {
         bool inBuildingScene = SceneManager.GetActiveScene().name.Contains("Building Scene");
-        if (player == null || (inBuildingScene && inactiveScreensManager == null))
+        if ((player == null || (inBuildingScene && inactiveScreensManager == null)) && PlayerPrefs.GetString("RoomCreated", "false") == "true")
         {
             try
             {
