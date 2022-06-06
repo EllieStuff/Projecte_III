@@ -111,6 +111,17 @@ public class PlayerInputs : MonoBehaviour
             case PlayersManager.GameModes.MULTI_LOCAL:
                 if (controlData[0] == null)
                 {
+                    GameObject gameManagerGO = GameObject.FindGameObjectWithTag("GameManager");
+                    if(gameManagerGO != null)
+                    {
+                        if (gameManagerGO.GetComponent<GameManager>().RoomCreated) 
+                            this.enabled = false;
+                    }
+                    //else
+                    //{
+                    //    this.enabled = false;
+                    //}
+
                     for (int i = 0; i <= playerId; i++)
                     {
                         if (i == playerId)

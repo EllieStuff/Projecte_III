@@ -23,12 +23,14 @@ public class GameManager : MonoBehaviour
     bool adminAssigned = false;
     public Parsec.ParsecGuest currGuest;
 
+    public bool RoomCreated { get { return roomCreated; } }
+
     void Awake()
     {
         playersManager = GameObject.Find("PlayersManager").GetComponent<PlayersManager>();
         inactiveScreens = GameObject.Find("UI").transform.Find("InactiveScreens").GetComponent<InactiveScreensManager>();
 
-        bool streamerActive = streamer.enabled;
+        bool tmpStreamerEnabled = streamer.enabled;
         streamer.enabled = true;
         currGuest = new Parsec.ParsecGuest();
         SpawnPlayer(1, currGuest);
@@ -37,7 +39,8 @@ public class GameManager : MonoBehaviour
             streamer.GuestConnected += Streamer_GuestConnected;
             streamer.GuestDisconnected += Streamer_GuestDisconnected;
         }
-        streamer.enabled = streamerActive;
+        roomCreated = inactiveScreens.parsecInited = tmpStreamerEnabled;
+        streamer.enabled = tmpStreamerEnabled;
     }
 
     private void Start()
@@ -158,6 +161,7 @@ public class GameManager : MonoBehaviour
             ShortLinkUri.text = streamer.GetInviteUrl(authdata);
             GUIUtility.systemCopyBuffer = ShortLinkUri.text;
             roomCreated = true;
+            inactiveScreens.parsecInited = true;
             PlayerPrefs.SetString("RoomCreated", "true");
         }
     }

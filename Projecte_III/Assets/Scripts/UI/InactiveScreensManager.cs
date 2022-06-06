@@ -14,8 +14,11 @@ public class InactiveScreensManager : MonoBehaviour
     public int PlayersInited { get { return playersInited; } }
 
     public bool spawnParsecCar;
+    public bool parsecInited = false;
 
     PlayerManager[] parsecPlayersToInit;
+    bool canReceiveLocalPlayers = true;
+
 
     // Start is called before the first frame update
     void Start()
@@ -32,7 +35,7 @@ public class InactiveScreensManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playersInited < playersManager.numOfPlayers && (currPlayerInputs.Inited() || spawnParsecCar))
+        if (playersInited < playersManager.numOfPlayers && ((currPlayerInputs.Inited() && canReceiveLocalPlayers) || spawnParsecCar))
         {
             //Activate Change Color Script
             changeColorManager.GetChild(playersInited).GetComponent<ChangeColor>().enabled = true;
@@ -41,6 +44,10 @@ public class InactiveScreensManager : MonoBehaviour
             playersInited++;
             currPlayerInputs = playersManager.GetPlayer(playersInited).GetComponent<PlayerInputs>();
             spawnParsecCar = false;
+        }
+        else if(canReceiveLocalPlayers && parsecInited)
+        {
+            canReceiveLocalPlayers = false;
         }
         /*else if (playersInited < playersManager.numOfPlayers && NeedsToInitPrevParsecPlayer())
         {
