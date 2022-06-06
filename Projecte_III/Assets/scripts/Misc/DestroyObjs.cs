@@ -13,6 +13,11 @@ public class DestroyObjs : MonoBehaviour
         GameObject playersManager = GameObject.FindGameObjectWithTag("PlayersManager");
         if(playersManager != null) Destroy(playersManager);
 
+        //for (int i = 0; i < 4; i++)
+        //{
+        //    PlayerPrefs.SetInt("ParsecPlayerId" + i, -1);
+        //}
+
         Destroy(gameObject);
     }
 }

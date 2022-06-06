@@ -20,17 +20,24 @@ public class GameManager : MonoBehaviour
     PlayersManager playersManager;
     InactiveScreensManager inactiveScreens;
     bool roomCreated = false;
+    bool adminAssigned = false;
+    public Parsec.ParsecGuest currGuest;
 
     void Awake()
     {
         playersManager = GameObject.Find("PlayersManager").GetComponent<PlayersManager>();
         inactiveScreens = GameObject.Find("UI").transform.Find("InactiveScreens").GetComponent<InactiveScreensManager>();
-        //SpawnPlayer(1, new Parsec.ParsecGuest());
-        //if (streamer != null)
-        //{
-        //    streamer.GuestConnected += Streamer_GuestConnected;
-        //    streamer.GuestDisconnected += Streamer_GuestDisconnected;
-        //}
+
+        bool streamerActive = streamer.enabled;
+        streamer.enabled = true;
+        //currGuest = new Parsec.ParsecGuest();
+        //SpawnPlayer(1, currGuest);
+        if (streamer != null)
+        {
+            streamer.GuestConnected += Streamer_GuestConnected;
+            streamer.GuestDisconnected += Streamer_GuestDisconnected;
+        }
+        streamer.enabled = streamerActive;
     }
 
     private void Start()
@@ -62,31 +69,39 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void Streamer_GuestConnected(object sender, Parsec.ParsecGuest guest)
+    private void Streamer_GuestConnected(object _sender, Parsec.ParsecGuest _guest)
     {
         int iPlayer = GetFreePlayer();
         if (iPlayer == 0) return;
-        SpawnPlayer(iPlayer, guest);
+        SpawnPlayer(iPlayer, _guest);
     }
 
-    public void SpawnPlayer(int player, Parsec.ParsecGuest guest)
+    public void SpawnPlayer(int _playerId, Parsec.ParsecGuest _guest/*, bool _isAdmin, bool _reinitId = true*/)
     {
         if (m_Players == null) return;
-        if (player >= 1 && player <= m_Players.Length)
+        if (_playerId >= 1 && _playerId <= m_Players.Length)
         {
-            m_Players[player - 1] = new GameObject("PLAYER").AddComponent<PlayerManager>();
-            m_Players[player - 1].changeColorManager = changeColorManager;
-            m_Players[player - 1].inactiveScreensManager = inactiveScreensManager;
-            m_Players[player - 1].m_PlayerNumber = player;
-            m_Players[player - 1].m_AssignedGuest = guest;
-            m_Players[player - 1].gameManager = this;
-            m_Players[player - 1].doneManager = doneManager;
-            m_Players[player - 1].Setup();
+            m_Players[_playerId - 1] = new GameObject("PLAYER").AddComponent<PlayerManager>();
+            m_Players[_playerId - 1].changeColorManager = changeColorManager;
+            m_Players[_playerId - 1].inactiveScreensManager = inactiveScreensManager;
+            m_Players[_playerId - 1].m_PlayerNumber = _playerId;
+            m_Players[_playerId - 1].m_AssignedGuest = _guest;
+            m_Players[_playerId - 1].gameManager = this;
+            m_Players[_playerId - 1].doneManager = doneManager;
+            m_Players[_playerId - 1].Setup(!adminAssigned);
+            if (!adminAssigned) adminAssigned = true;
+
+            //if (_reinitId)
+            //{
+            //    if (_isAdmin) PlayerPrefs.SetInt("ParsecPlayerId" + (_playerId - 1).ToString(), 0);
+            //    else PlayerPrefs.SetInt("ParsecPlayerId" + (_playerId - 1).ToString(), inactiveScreens.PlayersInited);
+            //}
         }
     }
 
     public void GetAccessCode()
     {
+        streamer.enabled = true;
         //Replace the Game ID with your own.
         ParsecUnity.API.SessionData sessionData = streamer.RequestCodeAndPoll();
         if ((sessionData != null) && (sessionData.data != null))
@@ -130,12 +145,14 @@ public class GameManager : MonoBehaviour
     {
         if (!roomCreated)
         {
-            SpawnPlayer(1, new Parsec.ParsecGuest());
-            if (streamer != null)
-            {
-                streamer.GuestConnected += Streamer_GuestConnected;
-                streamer.GuestDisconnected += Streamer_GuestDisconnected;
-            }
+            streamer.enabled = true;
+            currGuest = new Parsec.ParsecGuest();
+            SpawnPlayer(1, currGuest);
+            //if (streamer != null)
+            //{
+            //    streamer.GuestConnected += Streamer_GuestConnected;
+            //    streamer.GuestDisconnected += Streamer_GuestDisconnected;
+            //}
 
             streamer.StartParsec(m_Players.Length, IsPublicGame.isOn, "Motor Brawl", "A crazy car party game!", authdata.id);
             ShortLinkUri.text = streamer.GetInviteUrl(authdata);
@@ -148,6 +165,7 @@ public class GameManager : MonoBehaviour
     {
         if (roomCreated)
         {
+            streamer.enabled = false;
             streamer.StopParsec();
             PlayerManager[] players = GameObject.FindObjectsOfType<PlayerManager>();
             for (int i = 0; i < players.Length; i++)

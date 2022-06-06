@@ -15,12 +15,15 @@ public class InactiveScreensManager : MonoBehaviour
 
     public bool spawnParsecCar;
 
+    PlayerManager[] parsecPlayersToInit;
+
     // Start is called before the first frame update
     void Start()
     {
         playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
         currPlayerInputs = playersManager.GetPlayer(playersInited).GetComponent<PlayerInputs>();
         doneBttnManager = GameObject.FindGameObjectWithTag("DoneBttnManager").GetComponent<DoneButtonManager>();
+        parsecPlayersToInit = GameObject.FindObjectsOfType<PlayerManager>();
 
         if (playersManager.gameMode == PlayersManager.GameModes.MONO)
             doneBttnManager.buttonsActive = playersInited = 1;
@@ -39,7 +42,61 @@ public class InactiveScreensManager : MonoBehaviour
             currPlayerInputs = playersManager.GetPlayer(playersInited).GetComponent<PlayerInputs>();
             spawnParsecCar = false;
         }
+        else if (playersInited < playersManager.numOfPlayers && NeedsToInitPrevParsecPlayer())
+        {
+            //TODO: Wtfff, porque se queda en bucle infinitooo
+            int playerId = GetPrevParsecPlayerId();
+            PlayerManager parsecPlayer = parsecPlayersToInit[playerId];
+            parsecPlayer.InitParsecPlayer(false);
+
+            //int parsecPlayerId = GetPrevParsecPlayerId();
+            //GameManager gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+            //gameManager.SpawnPlayer(parsecPlayerId, gameManager.currGuest);
+            //
+            changeColorManager.GetChild(playersInited).GetComponent<ChangeColor>().enabled = true;
+            //
+            StartCoroutine(DisappearBlackScreen(playersInited));
+            playersInited++;
+
+            //PlayerManager parsecPlayer = parsecPlayersToInit[GetPrevParsecPlayerId()];
+            //parsecPlayer.InitParsecPlayer(false);
+
+            currPlayerInputs = playersManager.GetPlayer(playersInited).GetComponent<PlayerInputs>();
+        }
+
     }
+
+
+    bool NeedsToInitPrevParsecPlayer()
+    {
+        for(int i = 0; i < parsecPlayersToInit.Length; i++)
+        {
+            if (parsecPlayersToInit[i].playerPos == playersInited)
+                return true;
+        }
+        ////TODO: Posar PArsecPlayerInited com a check als playerPrefs per evitar que es confongui amb l'original
+        //for (int i = 0; i < 4; i++)
+        //{
+        //    if (PlayerPrefs.GetInt("ParsecPlayerId" + i, -1) == playersInited && PlayerPrefs.GetInt("ParsecPlayerId" + i, -1) > 0)
+        //        return true;
+        //}
+        return false;
+    }
+    int GetPrevParsecPlayerId()
+    {
+        for (int i = 0; i < parsecPlayersToInit.Length; i++)
+        {
+            if (parsecPlayersToInit[i].playerPos == playersInited)
+                return i;
+        }
+        //for (int i = 0; i < 4; i++)
+        //{
+        //    if (PlayerPrefs.GetInt("ParsecPlayerId" + i, -1) == playersInited)
+        //        return i;
+        //}
+        return -1;
+    }
+
 
     IEnumerator DisappearBlackScreen(int _idx)
     {
@@ -56,7 +113,7 @@ public class InactiveScreensManager : MonoBehaviour
             text.color = Color.Lerp(initTextColor, Color.clear, timer / lerpTime);
         }
         blackScreen.gameObject.SetActive(false);
-        
+
         yield return new WaitForSeconds(0.4f);
         doneBttnManager.buttonsActive = playersInited;
         doneBttnManager.GetButton(_idx).isActive = true;

@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class PlayerManager : MonoBehaviour
 {
     [HideInInspector] public int m_PlayerNumber;
+    [HideInInspector] public int playerPos;
     [HideInInspector] public GameObject m_Instance;
     [HideInInspector] public Parsec.ParsecGuest m_AssignedGuest;
     PlayerVehicleScript player;
@@ -19,15 +20,33 @@ public class PlayerManager : MonoBehaviour
 
     ChangeColor changeColorScript;
 
-    bool 
+    bool
         returnPressed = false,
         rightPressed = false,
         leftPressed = false;
 
-    public void Setup()
+    public void Setup(bool _isAdmin)
     {
         DontDestroyOnLoad(gameObject);
         ParsecInput.AssignGuestToPlayer(m_AssignedGuest, m_PlayerNumber);
+        if (_isAdmin) playerPos = 0;
+        else playerPos = inactiveScreensManager.PlayersInited;
+        Debug.LogWarning("Player " + m_PlayerNumber + " at " + playerPos);
+    }
+    public void InitParsecPlayer(bool _spawnParsecCar)
+    {
+        PlayersManager _playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
+        player = _playersManager.GetPlayer(playerPos).GetComponent<PlayerVehicleScript>();
+
+        if (player.playerNum > 0)
+        {
+            parsecInputs = player.GetComponent<PlayerInputs>();
+            //_playersManager.numOfPlayers++;
+            inactiveScreensManager.spawnParsecCar = _spawnParsecCar;
+            changeColorScript = changeColorManager.GetChild(player.playerNum).GetComponent<ChangeColor>();
+            changeColorScript.enabled = true;
+            _playersManager.GetPlayer(player.playerNum).GetComponent<IA>().parsecEnabled = true;
+        }
     }
 
     private void Update()
@@ -37,18 +56,7 @@ public class PlayerManager : MonoBehaviour
         {
             try
             {
-                PlayersManager _playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
-                player = _playersManager.GetPlayer(m_PlayerNumber - 1).GetComponent<PlayerVehicleScript>();
-
-                if (player.playerNum > 0)
-                {
-                    parsecInputs = _playersManager.GetPlayer(m_PlayerNumber - 1).GetComponent<PlayerInputs>();
-                    //_playersManager.numOfPlayers++;
-                    inactiveScreensManager.spawnParsecCar = true;
-                    changeColorScript = changeColorManager.GetChild(player.playerNum).GetComponent<ChangeColor>();
-                    changeColorScript.enabled = true;
-                    _playersManager.GetPlayer(player.playerNum).GetComponent<IA>().parsecEnabled = true;
-                }
+                InitParsecPlayer(true);
             }
             catch (Exception e)
             {
@@ -63,7 +71,7 @@ public class PlayerManager : MonoBehaviour
                 else
                 {
                     gameManager = GameObject.Find("UI").transform.Find("Parsec").Find("GameManager").GetComponent<GameManager>();
-
+                    
                     gameManager.SpawnPlayer(m_PlayerNumber, new Parsec.ParsecGuest());
 
                     Destroy(gameObject);
@@ -129,4 +137,5 @@ public class PlayerManager : MonoBehaviour
     {
         //Destroy(m_Instance);
     }
+
 }
