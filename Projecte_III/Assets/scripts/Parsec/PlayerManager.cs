@@ -30,38 +30,31 @@ public class PlayerManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         ParsecInput.AssignGuestToPlayer(m_AssignedGuest, m_PlayerNumber);
         if (_isAdmin) playerPos = 0;
-        else playerPos = inactiveScreensManager.PlayersInited;
+        else playerPos = m_PlayerNumber - 1;
         Debug.LogWarning("Player " + m_PlayerNumber + " at " + playerPos);
     }
     public void InitParsecPlayer(bool _spawnParsecCar)
     {
-        PlayersManager _playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
-        player = _playersManager.GetPlayer(playerPos).GetComponent<PlayerVehicleScript>();
-
-        if (player.playerNum > 0)
+        try 
         {
-            parsecInputs = player.GetComponent<PlayerInputs>();
-            //_playersManager.numOfPlayers++;
-            inactiveScreensManager.spawnParsecCar = _spawnParsecCar;
-            changeColorScript = changeColorManager.GetChild(player.playerNum).GetComponent<ChangeColor>();
-            changeColorScript.enabled = true;
-            _playersManager.GetPlayer(player.playerNum).GetComponent<IA>().parsecEnabled = true;
-        }
-    }
-
-    private void Update()
-    {
-        bool inBuildingScene = SceneManager.GetActiveScene().name.Contains("Building Scene");
-        if ((player == null || (inBuildingScene && inactiveScreensManager == null)) && PlayerPrefs.GetString("RoomCreated", "false") == "true")
-        {
-            try
+            PlayersManager _playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
+            player = _playersManager.GetPlayer(playerPos).GetComponent<PlayerVehicleScript>();
+            if (player.playerNum > 0)
             {
-                InitParsecPlayer(true);
+                parsecInputs = player.GetComponent<PlayerInputs>();
+                _playersManager.numOfPlayers++;
+                inactiveScreensManager.spawnParsecCar = _spawnParsecCar;
+                changeColorScript = changeColorManager.GetChild(player.playerNum).GetComponent<ChangeColor>();
+                changeColorScript.enabled = true;
+                _playersManager.GetPlayer(player.playerNum).GetComponent<IA>().parsecEnabled = true;
             }
-            catch (Exception e)
+        }
+        catch (Exception e)
+        {
+            if(GameObject.Find("UI") != null) 
             {
                 GameObject parsec = GameObject.Find("UI").transform.Find("Parsec").gameObject;
-                GameObject.Find("UI").transform.Find("OnlineMultiplayerButton").Find("Online Button").GetComponent<PressedButton>().interactable = false;
+                GameObject.Find("UI").transform.Find("Online Button").GetComponent<PressedButton>().interactable = false;
 
                 if (!parsec.activeSelf)
                 {
@@ -71,12 +64,21 @@ public class PlayerManager : MonoBehaviour
                 else
                 {
                     gameManager = GameObject.Find("UI").transform.Find("Parsec").Find("GameManager").GetComponent<GameManager>();
-                    
+
                     gameManager.SpawnPlayer(m_PlayerNumber, new Parsec.ParsecGuest());
 
                     Destroy(gameObject);
                 }
             }
+        }
+    }
+
+    private void Update()
+    {
+        bool inBuildingScene = SceneManager.GetActiveScene().name.Contains("Building Scene");
+        if ((player == null || (inBuildingScene && inactiveScreensManager == null)) /*&& PlayerPrefs.GetString("RoomCreated", "false") == "true"*/)
+        {
+            InitParsecPlayer(true);
         }
 
         if (player != null && player.playerNum > 0)

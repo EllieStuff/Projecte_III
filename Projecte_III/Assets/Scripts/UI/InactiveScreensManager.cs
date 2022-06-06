@@ -42,7 +42,7 @@ public class InactiveScreensManager : MonoBehaviour
             currPlayerInputs = playersManager.GetPlayer(playersInited).GetComponent<PlayerInputs>();
             spawnParsecCar = false;
         }
-        else if (playersInited < playersManager.numOfPlayers && NeedsToInitPrevParsecPlayer())
+        /*else if (playersInited < playersManager.numOfPlayers && NeedsToInitPrevParsecPlayer())
         {
             //TODO: Wtfff, porque se queda en bucle infinitooo
             int playerId = GetPrevParsecPlayerId();
@@ -62,7 +62,7 @@ public class InactiveScreensManager : MonoBehaviour
             //parsecPlayer.InitParsecPlayer(false);
 
             currPlayerInputs = playersManager.GetPlayer(playersInited).GetComponent<PlayerInputs>();
-        }
+        }*/
 
     }
 

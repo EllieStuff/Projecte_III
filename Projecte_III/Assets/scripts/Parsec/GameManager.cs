@@ -30,8 +30,8 @@ public class GameManager : MonoBehaviour
 
         bool streamerActive = streamer.enabled;
         streamer.enabled = true;
-        //currGuest = new Parsec.ParsecGuest();
-        //SpawnPlayer(1, currGuest);
+        currGuest = new Parsec.ParsecGuest();
+        SpawnPlayer(1, currGuest);
         if (streamer != null)
         {
             streamer.GuestConnected += Streamer_GuestConnected;
