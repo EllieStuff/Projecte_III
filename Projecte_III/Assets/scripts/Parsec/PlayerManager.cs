@@ -43,7 +43,8 @@ public class PlayerManager : MonoBehaviour
             {
                 parsecInputs = player.GetComponent<PlayerInputs>();
                 _playersManager.numOfPlayers++;
-                inactiveScreensManager.spawnParsecCar = _spawnParsecCar;
+                //inactiveScreensManager.spawnParsecCar = _spawnParsecCar;
+                inactiveScreensManager.SetNewCar();
                 changeColorScript = changeColorManager.GetChild(player.playerNum).GetComponent<ChangeColor>();
                 changeColorScript.enabled = true;
                 _playersManager.GetPlayer(player.playerNum).GetComponent<IA>().parsecEnabled = true;
