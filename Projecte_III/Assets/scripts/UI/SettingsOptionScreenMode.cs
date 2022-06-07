@@ -7,7 +7,9 @@ using TMPro;
 public class SettingsOptionScreenMode : SettingsOptionClass
 {
     [SerializeField] Button left, right;
-    [SerializeField] TextMeshProUGUI text;
+    [SerializeField] TextMeshProUGUI currentScreenModeText, titleScreenModeText;
+
+    [SerializeField] Color selectColor;
 
     string[] textScreenMode =
     {
@@ -26,7 +28,7 @@ public class SettingsOptionScreenMode : SettingsOptionClass
         if (currentMode.ToString().Contains("Full")) currentModeText = 0;
         else if (currentMode.ToString().Contains("Window")) currentModeText = 1;
 
-        text.text = textScreenMode[currentModeText];
+        currentScreenModeText.text = textScreenMode[currentModeText];
         Screen.fullScreenMode = currentMode;
     }
 
@@ -52,9 +54,12 @@ public class SettingsOptionScreenMode : SettingsOptionClass
         currentModeText++;
         if (currentModeText > 1) currentModeText = 0;
 
-        text.text = textScreenMode[currentModeText];
+        currentScreenModeText.text = textScreenMode[currentModeText];
 
         Screen.fullScreenMode = currentMode;
+
+        right.image.color = Color.white;
+        LerpColor(right.image, selectColor);
     }
     public override void Interact_Left(bool _calledFromScript = false)
     {
@@ -67,17 +72,34 @@ public class SettingsOptionScreenMode : SettingsOptionClass
         currentModeText--;
         if (currentModeText < 0) currentModeText = 1;
 
-        text.text = textScreenMode[currentModeText];
+        currentScreenModeText.text = textScreenMode[currentModeText];
 
         Screen.fullScreenMode = currentMode;
+
+        left.image.color = Color.white;
+        LerpColor(left.image, selectColor);
+    }
+    IEnumerator LerpColor(Image _image, Color _color)
+    {
+        Color initColor = _image.color;
+        yield return new WaitForSecondsRealtime(0.2f);
+
+        float timer = 0.0f, maxTime = 0.2f;
+        while (timer < maxTime)
+        {
+            yield return new WaitForEndOfFrame();
+            timer += Time.deltaTime;
+            _image.color = Color.Lerp(initColor, _color, timer / maxTime);
+        }
+        _image.color = _color;
     }
 
     public override void Select()
     {
-
+        titleScreenModeText.color = selectColor;
     }
     public override void Deselect()
     {
-
+        titleScreenModeText.color = Color.white;
     }
 }

@@ -25,10 +25,18 @@ public class SettingsMenuScript : MonoBehaviour
         options[(int)SettingsOption.RESOLUTION] = transform.Find("Resolution").GetComponent<SettingsOptionClass>();
 
     }
+    private void OnEnable()
+    {
+        
+    }
+
     public void Init(GlobalMenuInputs _inputs, InputSystem.KeyData _playerManaging)
     {
         inputs = _inputs;
         playerManaging = _playerManaging;
+
+        options[0].Select();
+        idx = 0;
     }
 
     // Update is called once per frame

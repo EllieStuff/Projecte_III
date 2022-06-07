@@ -1754,7 +1754,7 @@ GameObject:
   - component: {fileID: 5903273979117743615}
   - component: {fileID: 5637015660395517763}
   m_Layer: 0
-  m_Name: General Volume
+  m_Name: Global Volume Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1794,7 +1794,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 5903273979035420065}
-  sliderSpeed: 10
+  handle: {fileID: 0}
 --- !u!1 &5903273979157707211
 GameObject:
   m_ObjectHideFlags: 0
@@ -1989,7 +1989,7 @@ GameObject:
   - component: {fileID: 5903273979584103212}
   - component: {fileID: 7193393522425057062}
   m_Layer: 0
-  m_Name: SFX Volume
+  m_Name: SFX Volume Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2029,7 +2029,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 5903273978297990605}
-  sliderSpeed: 10
+  handle: {fileID: 0}
 --- !u!1 &5903273979679853280
 GameObject:
   m_ObjectHideFlags: 0
@@ -2152,7 +2152,7 @@ GameObject:
   - component: {fileID: 5903273979837831582}
   - component: {fileID: 5526974381133063751}
   m_Layer: 0
-  m_Name: OST Volume
+  m_Name: OST Volume Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2192,7 +2192,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 5903273978685425234}
-  sliderSpeed: 10
+  handle: {fileID: 0}
 --- !u!1 &5903273979984872758
 GameObject:
   m_ObjectHideFlags: 0
@@ -3093,9 +3093,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17addef4e916dd94bb615603fe4f3efa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  left: {fileID: 0}
-  right: {fileID: 0}
-  text: {fileID: 0}
+  left: {fileID: 1021524644982549493}
+  right: {fileID: 4955290530812855329}
+  selectedResolutionText: {fileID: 5128634684552390213}
+  resolutionTitleText: {fileID: 830135914969334584}
+  selectColor: {r: 0.8784314, g: 0.7921569, b: 0.23529412, a: 1}
   possibleResolution: []
 --- !u!1 &7064405672757556752
 GameObject:
@@ -3297,7 +3299,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   left: {fileID: 7510936642722003465}
   right: {fileID: 6211198417146632735}
-  text: {fileID: 7437956138619431138}
+  currentScreenModeText: {fileID: 7437956138619431138}
+  titleScreenModeText: {fileID: 2161409054214203711}
+  selectColor: {r: 0.8784314, g: 0.7921569, b: 0.23529412, a: 1}
 --- !u!1 &8397878711790573161
 GameObject:
   m_ObjectHideFlags: 0

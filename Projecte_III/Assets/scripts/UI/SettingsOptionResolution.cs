@@ -7,7 +7,10 @@ using TMPro;
 public class SettingsOptionResolution : SettingsOptionClass
 {
     [SerializeField] Button left, right;
-    [SerializeField] TextMeshProUGUI text;
+    [SerializeField] TextMeshProUGUI selectedResolutionText, resolutionTitleText;
+
+    [SerializeField] Color selectColor;
+
 
     string[] textResolution;
 
@@ -43,7 +46,7 @@ public class SettingsOptionResolution : SettingsOptionClass
         currentModeText = GetCurrentResolution(_currRes.width, _currRes.height);
 
         resolution = possibleResolution[currentModeText];
-        text.text = textResolution[currentModeText];
+        selectedResolutionText.text = textResolution[currentModeText];
     }
 
     void IsResolutionSaved(Vector2 _res, ref List<Vector2> _resList)
@@ -97,13 +100,16 @@ public class SettingsOptionResolution : SettingsOptionClass
         currentModeText++;
         if (currentModeText >= possibleResolution.Length) currentModeText = 0;
 
-        text.text = textResolution[currentModeText];
+        selectedResolutionText.text = textResolution[currentModeText];
 
         resolution = possibleResolution[currentModeText];
 
        // canvasParent.referenceResolution = resolution;
 
         Screen.SetResolution((int)resolution.x, (int)resolution.y, Screen.fullScreen);
+
+        right.image.color = Color.white;
+        LerpColor(right.image, selectColor);
     }
     public override void Interact_Left(bool _calledFromScript = false)
     {
@@ -112,19 +118,36 @@ public class SettingsOptionResolution : SettingsOptionClass
         currentModeText--;
         if (currentModeText < 0) currentModeText = possibleResolution.Length - 1;
 
-        text.text = textResolution[currentModeText];
+        selectedResolutionText.text = textResolution[currentModeText];
 
         resolution = possibleResolution[currentModeText];
 
         Screen.SetResolution((int)resolution.x, (int)resolution.y, Screen.fullScreen);
+
+        left.image.color = Color.white;
+        LerpColor(left.image, selectColor);
+    }
+    IEnumerator LerpColor(Image _image, Color _color)
+    {
+        Color initColor = _image.color;
+        yield return new WaitForSecondsRealtime(0.2f);
+
+        float timer = 0.0f, maxTime = 0.2f;
+        while (timer < maxTime)
+        {
+            yield return new WaitForEndOfFrame();
+            timer += Time.deltaTime;
+            _image.color = Color.Lerp(initColor, _color, timer / maxTime);
+        }
+        _image.color = _color;
     }
 
     public override void Select()
     {
-
+        resolutionTitleText.color = selectColor; 
     }
     public override void Deselect()
     {
-
+        resolutionTitleText.color = Color.white;
     }
 }
