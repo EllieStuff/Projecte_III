@@ -35,7 +35,7 @@ public class PlayerManager : MonoBehaviour
     }
     public void InitParsecPlayer(bool _spawnParsecCar)
     {
-        try 
+        if(player == null) 
         {
             PlayersManager _playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
             player = _playersManager.GetPlayer(playerPos).GetComponent<PlayerVehicleScript>();
@@ -50,7 +50,7 @@ public class PlayerManager : MonoBehaviour
                 _playersManager.GetPlayer(player.playerNum).GetComponent<IA>().parsecEnabled = true;
             }
         }
-        catch (Exception e)
+        else
         {
             if(GameObject.Find("UI") != null) 
             {
