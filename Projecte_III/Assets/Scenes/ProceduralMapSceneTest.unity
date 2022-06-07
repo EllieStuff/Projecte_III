@@ -45901,6 +45901,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8675250126377046717}
     m_Modifications:
+    - target: {fileID: 1161327170872608501, guid: 0c73f74167818bd408c84331b3fefe32, type: 3}
+      propertyPath: usePlayerManaging
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5903273978215516348, guid: 0c73f74167818bd408c84331b3fefe32, type: 3}
       propertyPath: m_Name
       value: BGSettings
@@ -47094,6 +47098,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b81376f4b51e0434781f9559b1271d10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slider: {fileID: 0}
 --- !u!1 &5903273978577281468
 GameObject:
   m_ObjectHideFlags: 0
@@ -47234,6 +47239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b81376f4b51e0434781f9559b1271d10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slider: {fileID: 0}
 --- !u!224 &5903273978804466370
 RectTransform:
   m_ObjectHideFlags: 0
@@ -49087,6 +49093,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b81376f4b51e0434781f9559b1271d10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slider: {fileID: 0}
 --- !u!224 &8675250125576456914
 RectTransform:
   m_ObjectHideFlags: 0

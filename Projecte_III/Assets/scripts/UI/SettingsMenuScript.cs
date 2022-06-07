@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class SettingsMenuScript : MonoBehaviour
 {
-    enum SettingsOption { GLOBAL_VOLUME, OST_VOLUME, SFX_VOLUME, WINDOWED, COUNT };
+    enum SettingsOption { GLOBAL_VOLUME, OST_VOLUME, SFX_VOLUME, WINDOWED, RESOLUTION, COUNT };
 
     [SerializeField] bool usePlayerManaging = true;
 
@@ -22,6 +22,7 @@ public class SettingsMenuScript : MonoBehaviour
         options[(int)SettingsOption.OST_VOLUME] = transform.Find("OST Volume Slider").GetComponent<SettingsOptionClass>();
         options[(int)SettingsOption.SFX_VOLUME] = transform.Find("SFX Volume Slider").GetComponent<SettingsOptionClass>();
         options[(int)SettingsOption.WINDOWED] = transform.Find("Windowed").GetComponent<SettingsOptionClass>();
+        options[(int)SettingsOption.RESOLUTION] = transform.Find("Resolution").GetComponent<SettingsOptionClass>();
 
     }
     public void Init(GlobalMenuInputs _inputs, InputSystem.KeyData _playerManaging)
