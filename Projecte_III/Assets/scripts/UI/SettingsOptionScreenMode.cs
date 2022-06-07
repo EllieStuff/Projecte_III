@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class SettingsOptionToggle : SettingsOptionClass
+public class SettingsOptionScreenMode : SettingsOptionClass
 {
     [SerializeField] Button left, right;
     [SerializeField] TextMeshProUGUI text;
@@ -21,9 +21,12 @@ public class SettingsOptionToggle : SettingsOptionClass
     // Start is called before the first frame update
     void Start()
     {
-        text.text = textScreenMode[currentModeText];
+        currentMode = Screen.fullScreenMode;
 
-        currentMode = FullScreenMode.ExclusiveFullScreen;
+        if (currentMode.ToString().Contains("Full")) currentModeText = 0;
+        else if (currentMode.ToString().Contains("Window")) currentModeText = 1;
+
+        text.text = textScreenMode[currentModeText];
         Screen.fullScreenMode = currentMode;
     }
 
