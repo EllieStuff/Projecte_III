@@ -23,6 +23,7 @@ public class ChangeColor : MonoBehaviour
     PlayerMenuInputsPressed playerInputs;
     Button lastButton = null;
     bool gradient = false;
+    int randomSFX;
 
     // Start is called before the first frame update
     void Start()
@@ -77,21 +78,27 @@ public class ChangeColor : MonoBehaviour
 
     private void Update()
     {
+
         if (playerInputs.MenuRightPressed)
         {
             PressButton(buttonRight);
             SetNewColor(1);
+            randomSFX = Random.Range(1, 5);
+            AudioManager.Instance.Play_SFX("ChangeCarColor" + randomSFX + "_SFX");
         }
         else if (playerInputs.MenuLeftPressed)
         {
             PressButton(buttonLeft);
             SetNewColor(-1);
+            randomSFX = Random.Range(1, 5);
+            AudioManager.Instance.Play_SFX("ChangeCarColor" + randomSFX + "_SFX");
         }
     }
 
     public void SetNewColor(int _direction)
     {
         colorList[currentValue] = defaultColorList[currentValue];
+        randomSFX = Random.Range(1, 5);
 
         do
         {
@@ -114,6 +121,9 @@ public class ChangeColor : MonoBehaviour
 
     public void IncreaseColorId()
     {
+        randomSFX = Random.Range(1, 5);
+        AudioManager.Instance.Play_SFX("ChangeCarColor" + randomSFX +"_SFX");
+
         PressButton(buttonRight);
 
         if (!playerInputs.UsesKeyboard())
@@ -140,6 +150,9 @@ public class ChangeColor : MonoBehaviour
 
     public void DecreaseColorId()
     {
+        randomSFX = Random.Range(1, 5);
+        AudioManager.Instance.Play_SFX("ChangeCarColor" + randomSFX +"_SFX");
+
         PressButton(buttonLeft);
 
         if (!playerInputs.UsesKeyboard()) 
