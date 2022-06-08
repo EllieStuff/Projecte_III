@@ -13,6 +13,49 @@ TagManager:
   - Water
   - InitPos
   - Floater
+  - VehicleSet
+  - ModifierSpots
+  - StatsManager
+  - Player2
+  - Tree
+  - PlayerVehicle
+  - front
+  - rear
+  - Decal
+  - Painting
+  - Oil
+  - CameraTrigger
+  - Valla
+  - InputSystem
+  - Wheels
+  - OilGun
+  - PaintGun
+  - Plunger
+  - AlaDelta
+  - ChasisElevation
+  - Umbrella
+  - RadialMenu
+  - SceneManager
+  - RendererCameras
+  - PlayersManager
+  - RenderTexturesManager
+  - Sand
+  - SceneSelector
+  - CamerasManager
+  - DoneBttnManager
+  - RadialMenuManager
+  - PositionsManager
+  - Raft
+  - FinishedGame
+  - CameraObjective
+  - Road
+  - CamLimit
+  - SlowSpeedCollider
+  - BirdPoop
+  - TransitionFadeImage
+  - TopCollider
+  - VoidObstacle
+  - GameManager
   layers:
   - Default
   - TransparentFX
@@ -21,9 +64,9 @@ TagManager:
   - Water
   - UI
   - Modifiers
-  - 
-  - 
-  - 
+  - Player2
+  - Road
+  - IgnorePlayers
   - 
   - 
   - 
@@ -49,4 +92,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: UI
+    uniqueID: 16014327
     locked: 0
