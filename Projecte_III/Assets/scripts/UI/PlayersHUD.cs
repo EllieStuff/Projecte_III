@@ -74,6 +74,7 @@ public class PlayersHUD : MonoBehaviour
     {
         if(!modifier.gameObject.activeSelf)
         {
+            AudioManager.Instance.Play_SFX("ModifierBox_SFX");
             IEnumerator roll = RollModifier();
             StartCoroutine(roll);
         }

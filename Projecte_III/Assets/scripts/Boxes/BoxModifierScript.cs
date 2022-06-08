@@ -53,6 +53,8 @@ public class BoxModifierScript : MonoBehaviour
             //Box Picked Particles
             other.transform.parent.GetChild(3).GetChild(6).GetComponent<ParticleSystem>().Play();
 
+            //AudioManager.Instance.Play_SFX("ModifierBox_SFX");
+
             destroy = true;
             Physics.IgnoreCollision(other, GetComponent<Collider>());
             if(hudManager == null) hudManager = GameObject.Find("HUD").transform.GetComponentInChildren<PlayersHUDManager>();
