@@ -23,9 +23,9 @@ public class SettingsOptionScreenMode : SettingsOptionClass
     // Start is called before the first frame update
     void Start()
     {
-        //currentMode = Screen.fullScreenMode;
+        currentMode = FullScreenMode.MaximizedWindow;
 
-        if (currentMode.ToString().Contains("Full")) currentModeText = 0;
+        if (currentMode.ToString().Contains("Maximized")) currentModeText = 0;
         else if (currentMode.ToString().Contains("Window")) currentModeText = 1;
 
         currentScreenModeText.text = textScreenMode[currentModeText];
