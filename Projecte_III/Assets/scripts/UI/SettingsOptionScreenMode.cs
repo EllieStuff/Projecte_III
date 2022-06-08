@@ -23,7 +23,7 @@ public class SettingsOptionScreenMode : SettingsOptionClass
     // Start is called before the first frame update
     void Start()
     {
-        currentMode = Screen.fullScreenMode;
+        //currentMode = Screen.fullScreenMode;
 
         if (currentMode.ToString().Contains("Full")) currentModeText = 0;
         else if (currentMode.ToString().Contains("Window")) currentModeText = 1;
@@ -51,10 +51,10 @@ public class SettingsOptionScreenMode : SettingsOptionClass
 
         Debug.Log("Right");
 
-        if (currentMode == FullScreenMode.ExclusiveFullScreen)
+        if (currentMode != FullScreenMode.Windowed)
             currentMode = FullScreenMode.Windowed;
         else if (currentMode == FullScreenMode.Windowed)
-            currentMode = FullScreenMode.ExclusiveFullScreen;
+            currentMode = FullScreenMode.FullScreenWindow;
 
         currentModeText++;
         if (currentModeText > 1) currentModeText = 0;
@@ -72,10 +72,10 @@ public class SettingsOptionScreenMode : SettingsOptionClass
             return;
 
         Debug.Log("Left");
-        if (currentMode == FullScreenMode.ExclusiveFullScreen)
+        if (currentMode != FullScreenMode.Windowed)
             currentMode = FullScreenMode.Windowed;
         else if (currentMode == FullScreenMode.Windowed)
-            currentMode = FullScreenMode.ExclusiveFullScreen;
+            currentMode = FullScreenMode.FullScreenWindow;
 
         currentModeText--;
         if (currentModeText < 0) currentModeText = 1;
