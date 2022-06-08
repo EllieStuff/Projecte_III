@@ -44,6 +44,11 @@ public class SettingsOptionScreenMode : SettingsOptionClass
     }
     public override void Interact_Right(bool _calledFromScript = false)
     {
+        //if (!((!invokeCalledByScript && playerManaging.deviceType == InputSystem.DeviceTypes.KEYBOARD) || invokeCalledByScript))
+        //    return;
+        if (MouseFilterCheck(_calledFromScript))
+            return;
+
         Debug.Log("Right");
 
         if (currentMode == FullScreenMode.ExclusiveFullScreen)
@@ -58,11 +63,14 @@ public class SettingsOptionScreenMode : SettingsOptionClass
 
         Screen.fullScreenMode = currentMode;
 
-        right.image.color = Color.white;
-        LerpColor(right.image, selectColor);
+        right.image.color = selectColor;
+        StartCoroutine(LerpColor(right.image, Color.white));
     }
     public override void Interact_Left(bool _calledFromScript = false)
     {
+        if (MouseFilterCheck(_calledFromScript))
+            return;
+
         Debug.Log("Left");
         if (currentMode == FullScreenMode.ExclusiveFullScreen)
             currentMode = FullScreenMode.Windowed;
@@ -76,19 +84,19 @@ public class SettingsOptionScreenMode : SettingsOptionClass
 
         Screen.fullScreenMode = currentMode;
 
-        left.image.color = Color.white;
-        LerpColor(left.image, selectColor);
+        left.image.color = selectColor;
+        StartCoroutine(LerpColor(left.image, Color.white));
     }
     IEnumerator LerpColor(Image _image, Color _color)
     {
         Color initColor = _image.color;
-        yield return new WaitForSecondsRealtime(0.2f);
+        yield return new WaitForSecondsRealtime(0.1f);
 
-        float timer = 0.0f, maxTime = 0.2f;
+        float timer = 0.0f, maxTime = 0.5f;
         while (timer < maxTime)
         {
             yield return new WaitForEndOfFrame();
-            timer += Time.deltaTime;
+            timer += Time.unscaledTime;
             _image.color = Color.Lerp(initColor, _color, timer / maxTime);
         }
         _image.color = _color;

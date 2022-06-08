@@ -12,6 +12,7 @@ public class SettingsMenuScript : MonoBehaviour
     GlobalMenuInputs inputs = null;
     SettingsOptionClass[] options;    //Nota: Utilitzar herencia per interactuar més facilment amb els diferents cosos dels settings
     int idx = 0;
+    int lastIdx = 0;
     InputSystem.KeyData playerManaging = null;
     //bool invokeCalledByScript = false;
 
@@ -25,18 +26,16 @@ public class SettingsMenuScript : MonoBehaviour
         options[(int)SettingsOption.RESOLUTION] = transform.Find("Resolution").GetComponent<SettingsOptionClass>();
 
     }
-    private void OnEnable()
-    {
-        
-    }
 
     public void Init(GlobalMenuInputs _inputs, InputSystem.KeyData _playerManaging)
     {
         inputs = _inputs;
         playerManaging = _playerManaging;
+        foreach (SettingsOptionClass option in options)
+            option.SetPlayerManaging(_playerManaging);
 
-        options[0].Select();
         idx = 0;
+        SetOptionSelectedFeedback(lastIdx, idx);
     }
 
     // Update is called once per frame
@@ -45,7 +44,7 @@ public class SettingsMenuScript : MonoBehaviour
         if (inputs == null && usePlayerManaging)
             return;
 
-        int lastIdx = idx;
+        lastIdx = idx;
         if (inputs.UpPressed && IsManagingDeviceInput(inputs.UpData.deviceId))
         {
             idx--;

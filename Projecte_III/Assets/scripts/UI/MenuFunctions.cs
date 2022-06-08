@@ -42,6 +42,9 @@ public class MenuFunctions : MonoBehaviour
 
         AudioManager.Instance.Play_SFX("Click_SFX");
         settingsMenu.gameObject.SetActive(true);
+        MainMenuManageInputs mainMenuInputs = GetComponent<MainMenuManageInputs>();
+        mainMenuInputs.menuState = MainMenuManageInputs.MenuState.SETTINGS;
+        mainMenuInputs.mainIdx = (int)MainMenuManageInputs.MenuState.SETTINGS;
         settingsMenu.Init(GetComponent<GlobalMenuInputs>(), null);
     }
 

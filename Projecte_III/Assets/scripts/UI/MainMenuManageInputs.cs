@@ -14,8 +14,7 @@ public class MainMenuManageInputs : MonoBehaviour
 
     internal Button[] mainButtons;
     Transform[] settingOptions;
-    int mainIdx = 0;
-    int settingsIdx = 0;
+    internal int mainIdx = 0;
     
     internal MenuState menuState = MenuState.MAIN;
     UIElementType uiElementType = UIElementType.DEFAULT;
