@@ -84,14 +84,14 @@ public class PlayerManager : MonoBehaviour
 
         if (player != null && player.playerNum > 0)
         {
-            parsecInputs.parsecP.forward = ParsecInput.GetKey(player.playerNum + 1, KeyCode.W);
-            parsecInputs.parsecP.backward = ParsecInput.GetKey(player.playerNum + 1, KeyCode.S);
-            parsecInputs.parsecP.left = ParsecInput.GetKey(player.playerNum + 1, KeyCode.A);
-            parsecInputs.parsecP.right = ParsecInput.GetKey(player.playerNum + 1, KeyCode.D);
-            parsecInputs.parsecP.upArrow = ParsecInput.GetKey(player.playerNum + 1, KeyCode.UpArrow);
-            parsecInputs.parsecP.downArrow = ParsecInput.GetKey(player.playerNum + 1, KeyCode.DownArrow);
-            parsecInputs.parsecP.leftArrow = ParsecInput.GetKey(player.playerNum + 1, KeyCode.LeftArrow);
-            parsecInputs.parsecP.rightArrow = ParsecInput.GetKey(player.playerNum + 1, KeyCode.RightArrow);
+            parsecInputs.parsecP.forward = ParsecInput.GetKey(player.playerNum + 1, KeyCode.W) || ParsecInput.GetAxis(player.playerNum + 1, "Vertical") > 0.3f;
+            parsecInputs.parsecP.backward = ParsecInput.GetKey(player.playerNum + 1, KeyCode.S) || ParsecInput.GetAxis(player.playerNum + 1, "Vertical") < -0.3f;
+            parsecInputs.parsecP.left = ParsecInput.GetKey(player.playerNum + 1, KeyCode.A) || ParsecInput.GetAxis(player.playerNum + 1, "Horizontal") > 0.3f;
+            parsecInputs.parsecP.right = ParsecInput.GetKey(player.playerNum + 1, KeyCode.D) || ParsecInput.GetAxis(player.playerNum + 1, "Horizontal") < -0.3f;
+            parsecInputs.parsecP.upArrow = ParsecInput.GetKey(player.playerNum + 1, KeyCode.UpArrow) || ParsecInput.GetKey(player.playerNum + 1, KeyCode.Joystick1Button3);
+            parsecInputs.parsecP.downArrow = ParsecInput.GetKey(player.playerNum + 1, KeyCode.DownArrow) || ParsecInput.GetKey(player.playerNum + 1, KeyCode.Joystick1Button0);
+            parsecInputs.parsecP.leftArrow = ParsecInput.GetKey(player.playerNum + 1, KeyCode.LeftArrow) || ParsecInput.GetKey(player.playerNum + 1, KeyCode.Joystick1Button2);
+            parsecInputs.parsecP.rightArrow = ParsecInput.GetKey(player.playerNum + 1, KeyCode.RightArrow) || ParsecInput.GetKey(player.playerNum + 1, KeyCode.Joystick1Button1);
 
             if (inBuildingScene)
             {
@@ -104,34 +104,40 @@ public class PlayerManager : MonoBehaviour
 
     void CheckReturn()
     {
-        if (!returnPressed && ParsecInput.GetKey(player.playerNum + 1, KeyCode.Return))
+        bool parsecReturnPressed = 
+            ParsecInput.GetKey(player.playerNum + 1, KeyCode.Return) || ParsecInput.GetKey(player.playerNum + 1, KeyCode.Joystick1Button7);
+        if (!returnPressed && parsecReturnPressed)
         {
             returnPressed = true;
             doneManager.GetButton(player.playerNum).SetReady();
         }
-        else if (returnPressed && !ParsecInput.GetKey(player.playerNum + 1, KeyCode.Return))
+        else if (returnPressed && !parsecReturnPressed)
             returnPressed = false;
     }
     void CheckRight()
     {
-        if (!rightPressed && ParsecInput.GetKey(player.playerNum + 1, KeyCode.D))
+        bool parsecRightPressed =
+            ParsecInput.GetKey(player.playerNum + 1, KeyCode.D) || ParsecInput.GetKey(player.playerNum + 1, KeyCode.Joystick1Button1);
+        if (!rightPressed && parsecRightPressed)
         {
             rightPressed = true;
             changeColorScript.PressButton(changeColorScript.buttonRight);
             changeColorScript.SetNewColor(1);
         }
-        else if (rightPressed && !ParsecInput.GetKey(player.playerNum + 1, KeyCode.D))
+        else if (rightPressed && !parsecRightPressed)
             rightPressed = false;
     }
     void CheckLeft()
     {
-        if (!leftPressed && ParsecInput.GetKey(player.playerNum + 1, KeyCode.A))
+        bool parsecLeftPressed =
+            ParsecInput.GetKey(player.playerNum + 1, KeyCode.A) || ParsecInput.GetKey(player.playerNum + 1, KeyCode.Joystick1Button2);
+        if (!leftPressed && parsecLeftPressed)
         {
             leftPressed = true;
             changeColorScript.PressButton(changeColorScript.buttonLeft);
             changeColorScript.SetNewColor(-1);
         }
-        else if (leftPressed && !ParsecInput.GetKey(player.playerNum + 1, KeyCode.A))
+        else if (leftPressed && !parsecLeftPressed)
             leftPressed = false;
     }
 
