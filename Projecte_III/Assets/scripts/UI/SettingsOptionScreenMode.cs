@@ -53,8 +53,8 @@ public class SettingsOptionScreenMode : SettingsOptionClass
 
         if (currentMode != FullScreenMode.Windowed)
             currentMode = FullScreenMode.Windowed;
-        else if (currentMode == FullScreenMode.Windowed)
-            currentMode = FullScreenMode.FullScreenWindow;
+        else
+            currentMode = FullScreenMode.MaximizedWindow;
 
         currentModeText++;
         if (currentModeText > 1) currentModeText = 0;
@@ -74,8 +74,8 @@ public class SettingsOptionScreenMode : SettingsOptionClass
         Debug.Log("Left");
         if (currentMode != FullScreenMode.Windowed)
             currentMode = FullScreenMode.Windowed;
-        else if (currentMode == FullScreenMode.Windowed)
-            currentMode = FullScreenMode.FullScreenWindow;
+        else
+            currentMode = FullScreenMode.MaximizedWindow;
 
         currentModeText--;
         if (currentModeText < 0) currentModeText = 1;
