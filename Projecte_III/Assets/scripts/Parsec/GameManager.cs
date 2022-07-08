@@ -113,7 +113,7 @@ public class GameManager : MonoBehaviour
             UserCode.text = sessionData.data.user_code;
             GUIUtility.systemCopyBuffer = sessionData.data.user_code;
             StatusField.text = "Waiting for User";
-            Application.OpenURL(sessionData.data.verification_uri);
+            Application.OpenURL("https://parsec.app/activate/?code=" + sessionData.data.user_code);
         }
     }
 
