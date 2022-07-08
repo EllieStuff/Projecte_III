@@ -71,7 +71,22 @@ public class LoadSceneManager : MonoBehaviour
         blackImage.color = Color.black;
 
         if (_newScene != "ProceduralMapSceneTest")
-            Destroy(GameObject.FindGameObjectWithTag("PlayersManager"));
+        {
+            GameObject playersManager = GameObject.FindGameObjectWithTag("PlayersManager");
+            if (playersManager != null)
+            {
+                //if (_newScene.Contains("Building Scene"))
+                //{
+                //    for (int i = 0; i < playersManager.transform.childCount; i++)
+                //        SceneManager.sceneLoaded -= playersManager.transform.GetChild(i).GetComponent<PlayerData>().OnSceneLoaded;
+                //}
+                if(_newScene.Contains("Building Scene"))
+                    playersManager.GetComponent<PlayersManager>().RefreshNumOfPlayers();
+                for (int i = 0; i < playersManager.transform.childCount; i++)
+                    SceneManager.sceneLoaded -= playersManager.transform.GetChild(i).GetComponent<PlayerData>().OnSceneLoaded;
+                Destroy(playersManager);
+            }
+        }
         SceneManager.LoadScene(_newScene);
     }
     IEnumerator StartSceneCoroutine()
