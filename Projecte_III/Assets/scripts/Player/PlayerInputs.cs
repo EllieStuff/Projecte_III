@@ -96,6 +96,7 @@ public class PlayerInputs : MonoBehaviour
         //StartCoroutine(DelayToBeInited());
     }
 
+
     // Update is called once per frame
     void Update()
     {
@@ -221,6 +222,11 @@ public class PlayerInputs : MonoBehaviour
     public void EnableMenuInputs(bool _enable)
     {
         menuInputsEnabled = _enable;
+    }
+
+    public void ResetControlData()
+    {
+        controlData = new InputSystem.ControlData[1] { null };
     }
 
 

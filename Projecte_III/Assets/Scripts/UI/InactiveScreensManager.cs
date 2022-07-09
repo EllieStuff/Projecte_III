@@ -24,6 +24,7 @@ public class InactiveScreensManager : MonoBehaviour
     void Start()
     {
         playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
+        //ToDo: que faci aixo al reiniciar l'escena
         currPlayerInputs = playersManager.GetPlayer(playersInited).GetComponent<PlayerInputs>();
         doneBttnManager = GameObject.FindGameObjectWithTag("DoneBttnManager").GetComponent<DoneButtonManager>();
         parsecPlayersToInit = GameObject.FindObjectsOfType<PlayerManager>();
@@ -53,7 +54,18 @@ public class InactiveScreensManager : MonoBehaviour
         //
         StartCoroutine(DisappearBlackScreen(playersInited));
         playersInited++;
-        currPlayerInputs = playersManager.GetPlayer(playersInited).GetComponent<PlayerInputs>();
+        Transform playerTrans = playersManager.GetPlayer(playersInited);
+        if (playerTrans == null)
+        {
+            int debug = 0;
+        }
+        else
+        {
+            currPlayerInputs = playersManager.GetPlayer(playersInited).GetComponent<PlayerInputs>();
+
+            int debug = 0;
+        }
+
         //spawnParsecCar = false;
     }
 

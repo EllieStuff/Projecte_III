@@ -98,8 +98,15 @@ public class PlayersManager : MonoBehaviour
 
     public void RefreshNumOfPlayers()
     {
+        //for(int i = numOfIAs; i < numOfPlayers; i++)
+        //{
+        //    GetPlayer(i).GetComponent<PlayerInputs>().ResetControlData();
+        //}
         numOfPlayers = numOfPlayers - numOfIAs;
         numOfIAs = 0;
+
+        //numOfPlayers = numOfPlayers - numOfIAs;
+        //numOfIAs = 0;
     }
 
 
