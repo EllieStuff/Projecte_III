@@ -35,9 +35,10 @@ public class InactiveScreensManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playersInited < playersManager.numOfPlayers && ((currPlayerInputs.Inited() && canReceiveLocalPlayers)/* || spawnParsecCar*/))
+        if (playersInited < playersManager.numOfPlayers && ((currPlayerInputs.Inited() && canReceiveLocalPlayers) || spawnParsecCar))
         {
             SetNewCar();
+            spawnParsecCar = false;
         }
         else if(canReceiveLocalPlayers && parsecInited)
         {

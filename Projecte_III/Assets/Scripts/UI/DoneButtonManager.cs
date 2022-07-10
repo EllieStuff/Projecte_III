@@ -102,7 +102,7 @@ public class DoneButtonManager : MonoBehaviour
             tmPro.transform.localPosition = 
                 new Vector3(tmPro.transform.localPosition.x, tmPro.transform.localPosition.y + 0.1f, tmPro.transform.localPosition.z - 0.1f);
 
-            playersManager.numOfIAs++;
+            //playersManager.numOfIAs++;
         }
         
         playersManager.numOfPlayers = 4;

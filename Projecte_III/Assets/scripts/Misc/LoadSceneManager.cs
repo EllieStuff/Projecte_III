@@ -80,8 +80,8 @@ public class LoadSceneManager : MonoBehaviour
                 //    for (int i = 0; i < playersManager.transform.childCount; i++)
                 //        SceneManager.sceneLoaded -= playersManager.transform.GetChild(i).GetComponent<PlayerData>().OnSceneLoaded;
                 //}
-                if(_newScene.Contains("Building Scene"))
-                    playersManager.GetComponent<PlayersManager>().RefreshNumOfPlayers();
+                //if(_newScene.Contains("Building Scene"))
+                //    playersManager.GetComponent<PlayersManager>().RefreshNumOfPlayers();
                 for (int i = 0; i < playersManager.transform.childCount; i++)
                     SceneManager.sceneLoaded -= playersManager.transform.GetChild(i).GetComponent<PlayerData>().OnSceneLoaded;
                 Destroy(playersManager);

@@ -25,6 +25,8 @@ public class PlayerManager : MonoBehaviour
         rightPressed = false,
         leftPressed = false;
 
+    string lastSceneName = "Current Building Scene";
+
     public void Setup(bool _isAdmin)
     {
         DontDestroyOnLoad(gameObject);
@@ -39,13 +41,15 @@ public class PlayerManager : MonoBehaviour
         {
             PlayersManager _playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
             player = _playersManager.GetPlayer(playerPos).GetComponent<PlayerVehicleScript>();
+            //inactiveScreensManager = FindObjectOfType<InactiveScreensManager>();
             if (player.playerNum > 0)
             {
                 parsecInputs = player.GetComponent<PlayerInputs>();
                 _playersManager.numOfPlayers++;
                 //_playersManager.numOfIAs++;
                 //inactiveScreensManager.spawnParsecCar = _spawnParsecCar;
-                inactiveScreensManager.SetNewCar();
+                //inactiveScreensManager.SetNewCar();
+                inactiveScreensManager.spawnParsecCar = true;
                 changeColorScript = changeColorManager.GetChild(player.playerNum).GetComponent<ChangeColor>();
                 changeColorScript.enabled = true;
                 _playersManager.GetPlayer(player.playerNum).GetComponent<IA>().parsecEnabled = true;
@@ -77,6 +81,16 @@ public class PlayerManager : MonoBehaviour
 
     private void Update()
     {
+        //string currSceneName = SceneManager.GetActiveScene().name;
+        //bool inBuildingScene = currSceneName.Contains("Building Scene");
+        
+        //bool sceneChanged = currSceneName != lastSceneName;
+        //if (sceneChanged)
+        //{
+        //    lastSceneName = SceneManager.GetActiveScene().name;
+
+        //}
+
         bool inBuildingScene = SceneManager.GetActiveScene().name.Contains("Building Scene");
         if ((player == null || (inBuildingScene && inactiveScreensManager == null)) /*&& PlayerPrefs.GetString("RoomCreated", "false") == "true"*/)
         {
@@ -141,5 +155,10 @@ public class PlayerManager : MonoBehaviour
     {
         //Destroy(m_Instance);
     }
+
+    //bool InDelay()
+    //{
+
+    //}
 
 }

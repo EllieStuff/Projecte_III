@@ -146,7 +146,10 @@ public class PlayerInputs : MonoBehaviour
                         if (gameManagerGO != null)
                         {
                             if (gameManagerGO.GetComponent<GameManager>().RoomCreated)
+                            {
+                                itCount = 0;
                                 this.enabled = false;
+                            }
                         }
                         //else
                         //{
