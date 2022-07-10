@@ -84,6 +84,8 @@ public class DoneButtonManager : MonoBehaviour
             Transform playerTrans = playersManager.GetPlayer(i);
             if (playerTrans == null)
             {
+                playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
+                playersManager.GetPlayer(i).GetComponent<PlayerVehicleScript>().iaEnabled = true;
                 int id = i;
 
                 int debug = 0;

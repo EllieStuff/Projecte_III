@@ -24,7 +24,6 @@ public class InactiveScreensManager : MonoBehaviour
     void Start()
     {
         playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
-        //ToDo: que faci aixo al reiniciar l'escena
         currPlayerInputs = playersManager.GetPlayer(playersInited).GetComponent<PlayerInputs>();
         doneBttnManager = GameObject.FindGameObjectWithTag("DoneBttnManager").GetComponent<DoneButtonManager>();
         parsecPlayersToInit = GameObject.FindObjectsOfType<PlayerManager>();
@@ -57,6 +56,9 @@ public class InactiveScreensManager : MonoBehaviour
         Transform playerTrans = playersManager.GetPlayer(playersInited);
         if (playerTrans == null)
         {
+            playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
+            currPlayerInputs = playersManager.GetPlayer(playersInited).GetComponent<PlayerInputs>();
+            
             int debug = 0;
         }
         else
