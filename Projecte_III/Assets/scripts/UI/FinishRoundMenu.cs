@@ -8,6 +8,7 @@ public class FinishRoundMenu : MonoBehaviour
     public enum FinishMenuButtons { NEXT_ROUND, EXIT, COUNT }
 
     [SerializeField] RoundManager roundManager;
+    [SerializeField] InGameMenu inGameMenu;
     [SerializeField] Color baseColor, hoverColor;
 
     Button[] buttons;
@@ -74,17 +75,18 @@ public class FinishRoundMenu : MonoBehaviour
     public void ExitButton()
     {
         AudioManager.Instance.Play_SFX("Click_SFX");
-        roundManager.StopAllCoroutines();
-        //Time.timeScale = 1.0f;
+        Time.timeScale = 1.0f;
+        PlayerManager[] players = GameObject.FindObjectsOfType<PlayerManager>();
+        for (int i = 0; i < players.Length; i++)
+            Destroy(players[i].gameObject);
         GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().ChangeScene("Menu");
     }
     public void ResetGame()
     {
         AudioManager.Instance.Play_SFX("Click_SFX");
-        Destroy(GameObject.FindGameObjectWithTag("PlayersManager"));
-        roundManager.StopAllCoroutines();
+        Time.timeScale = 1.0f;
         GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().ChangeScene("Current Building Scene");
-        //SceneManager.LoadScene("Current Building Scene");
+
     }
 
 }

@@ -51,7 +51,10 @@ public class BackButtonScript : MonoBehaviour
         Debug.Log("Succesfully entered");
         GameObject gameManager = GameObject.FindGameObjectWithTag("GameManager");
         if (gameManager != null) gameManager.GetComponent<GameManager>().StopParsec();
-        //Destroy(GameObject.FindGameObjectWithTag("PlayersManager"));
+        PlayerManager[] players = GameObject.FindObjectsOfType<PlayerManager>();
+        for (int i = 0; i < players.Length; i++)
+            Destroy(players[i].gameObject);
+
         GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().ChangeScene("Menu");
     }
 
