@@ -74,17 +74,25 @@ public class FinishRoundMenu : MonoBehaviour
     public void ExitButton()
     {
         AudioManager.Instance.Play_SFX("Click_SFX");
-        roundManager.StopAllCoroutines();
-        //Time.timeScale = 1.0f;
+        Time.timeScale = 1.0f;
+
+        ParsecStreamFull streamer = Camera.main.GetComponent<ParsecStreamFull>();
+        if (streamer != null)
+        {
+            streamer.StopParsec();
+            PlayerManager[] players = GameObject.FindObjectsOfType<PlayerManager>();
+            for (int i = 0; i < players.Length; i++)
+                Destroy(players[i].gameObject);
+        }
+
         GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().ChangeScene("Menu");
     }
     public void ResetGame()
     {
         AudioManager.Instance.Play_SFX("Click_SFX");
-        Destroy(GameObject.FindGameObjectWithTag("PlayersManager"));
-        roundManager.StopAllCoroutines();
+        Time.timeScale = 1.0f;
         GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().ChangeScene("Current Building Scene");
-        //SceneManager.LoadScene("Current Building Scene");
+
     }
 
 }

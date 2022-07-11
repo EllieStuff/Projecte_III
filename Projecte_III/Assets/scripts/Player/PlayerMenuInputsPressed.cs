@@ -54,6 +54,12 @@ public class PlayerMenuInputsPressed : MonoBehaviour
 
     private void Update()
     {
+        if(playerInputs == null)
+        {
+            PlayersManager playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
+            playerInputs = playersManager.GetPlayer(playerId).GetComponent<PlayerInputs>();
+        }
+
         if (playerInputs.Inited())
         {
             if(updateInputs == 0)

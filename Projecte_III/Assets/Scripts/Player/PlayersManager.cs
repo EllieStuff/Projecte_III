@@ -9,6 +9,7 @@ public class PlayersManager : MonoBehaviour
     public GameModes gameMode = GameModes.MONO;
 
     public int numOfPlayers = 1;
+    //public int numOfIAs = 0;
     public Transform[] players;
     //[SerializeField] Transform[] modifiers;
     bool sceneLoaded = false;
@@ -20,7 +21,7 @@ public class PlayersManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (sceneLoaded) return;
 
@@ -94,5 +95,19 @@ public class PlayersManager : MonoBehaviour
             players[i].GetComponent<RandomModifierGet>().ResetModifiers();
         }
     }
+
+    //public void RefreshNumOfPlayers()
+    //{
+    //    for (int i = numOfPlayers - numOfIAs; i < numOfPlayers; i++)
+    //    {
+    //        GetPlayer(i).GetComponent<PlayerInputs>().ResetControlData();
+    //    }
+    //    //numOfPlayers = numOfPlayers - numOfIAs;
+    //    numOfIAs = 0;
+
+    //    //numOfPlayers = numOfPlayers - numOfIAs;
+    //    //numOfIAs = 0;
+    //}
+
 
 }

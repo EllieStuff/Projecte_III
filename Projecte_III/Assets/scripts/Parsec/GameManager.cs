@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     public GameObject PanelParsecControl;
     public InputField VerificationUri;
     public InputField UserCode;
-    public InputField ShortLinkUri;
+    public InputField ShortLinkUrl;
     public Text StatusField;
     public Toggle IsPublicGame;
     [SerializeField] ParsecStreamFull streamer;
@@ -29,6 +29,9 @@ public class GameManager : MonoBehaviour
     {
         playersManager = GameObject.Find("PlayersManager").GetComponent<PlayersManager>();
         inactiveScreens = GameObject.Find("UI").transform.Find("InactiveScreens").GetComponent<InactiveScreensManager>();
+        //PlayerManager[] parsecPlayers = FindObjectsOfType<PlayerManager>();
+        //for (int i = 0; i < parsecPlayers.Length; i++)
+        //    parsecPlayers[i].inactiveScreensManager = inactiveScreens;
 
         bool tmpStreamerEnabled = streamer.enabled;
         streamer.enabled = true;
@@ -41,6 +44,7 @@ public class GameManager : MonoBehaviour
         }
         roomCreated = inactiveScreens.parsecInited = tmpStreamerEnabled;
         streamer.enabled = tmpStreamerEnabled;
+        
     }
 
     private void Start()
@@ -112,8 +116,8 @@ public class GameManager : MonoBehaviour
             VerificationUri.text = sessionData.data.verification_uri;
             UserCode.text = sessionData.data.user_code;
             GUIUtility.systemCopyBuffer = sessionData.data.user_code;
-            StatusField.text = "Waiting for User";
-            Application.OpenURL(sessionData.data.verification_uri);
+            StatusField.text = "Waiting for Server...";
+            Application.OpenURL("https://parsec.app/activate/?code=" + sessionData.data.user_code);
         }
     }
 
@@ -125,16 +129,16 @@ public class GameManager : MonoBehaviour
             case ParsecUnity.API.SessionResultEnum.PolledTooSoon:
                 break;
             case ParsecUnity.API.SessionResultEnum.Pending:
-                StatusField.text = "Waiting for User";
+                StatusField.text = "Waiting for Server...";
                 break;
             case ParsecUnity.API.SessionResultEnum.CodeApproved:
-                StatusField.text = "Code Approved";
+                StatusField.text = "Code Approved!";
                 PanelAuthentication.gameObject.SetActive(false);
                 authdata = data;
                 PanelParsecControl.gameObject.SetActive(true);
                 break;
             case ParsecUnity.API.SessionResultEnum.CodeInvallidExpiredDenied:
-                StatusField.text = "Code Expired";
+                StatusField.text = "Code Expired!";
                 break;
             case ParsecUnity.API.SessionResultEnum.Unknown:
                 StatusField.text = "Unknown State";
@@ -158,8 +162,9 @@ public class GameManager : MonoBehaviour
             //}
 
             streamer.StartParsec(m_Players.Length, IsPublicGame.isOn, "Motor Brawl", "A crazy car party game!", authdata.id);
-            ShortLinkUri.text = streamer.GetInviteUrl(authdata);
-            GUIUtility.systemCopyBuffer = ShortLinkUri.text;
+            ShortLinkUrl.text = streamer.GetInviteUrl(authdata);
+            GUIUtility.systemCopyBuffer = ShortLinkUrl.text;
+            PlayerPrefs.SetString("LastShortUrl", ShortLinkUrl.text);
             roomCreated = true;
             inactiveScreens.parsecInited = true;
             PlayerPrefs.SetString("RoomCreated", "true");
@@ -177,12 +182,13 @@ public class GameManager : MonoBehaviour
                 Destroy(players[i].gameObject);
             roomCreated = false;
             PlayerPrefs.SetString("RoomCreated", "false");
+            PlayerPrefs.SetString("LastShortUrl", "null");
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ReinitSceneWithoutParsec()
     {
-
+        GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().ReloadScene();
     }
+
 }
