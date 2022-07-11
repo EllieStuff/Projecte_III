@@ -29,6 +29,9 @@ public class GameManager : MonoBehaviour
     {
         playersManager = GameObject.Find("PlayersManager").GetComponent<PlayersManager>();
         inactiveScreens = GameObject.Find("UI").transform.Find("InactiveScreens").GetComponent<InactiveScreensManager>();
+        //PlayerManager[] parsecPlayers = FindObjectsOfType<PlayerManager>();
+        //for (int i = 0; i < parsecPlayers.Length; i++)
+        //    parsecPlayers[i].inactiveScreensManager = inactiveScreens;
 
         bool tmpStreamerEnabled = streamer.enabled;
         streamer.enabled = true;
@@ -180,9 +183,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ReinitSceneWithoutParsec()
     {
-
+        LoadSceneManager sceneManager = GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>();
+        sceneManager.ChangeScene("Current Building Scene");
     }
+
 }

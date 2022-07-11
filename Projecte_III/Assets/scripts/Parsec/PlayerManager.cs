@@ -25,7 +25,9 @@ public class PlayerManager : MonoBehaviour
         rightPressed = false,
         leftPressed = false;
 
-    string lastSceneName = "Current Building Scene";
+    //string lastSceneName = "Current Building Scene";
+
+    float initTimer = 0;
 
     public void Setup(bool _isAdmin)
     {
@@ -41,15 +43,15 @@ public class PlayerManager : MonoBehaviour
         {
             PlayersManager _playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
             player = _playersManager.GetPlayer(playerPos).GetComponent<PlayerVehicleScript>();
-            //inactiveScreensManager = FindObjectOfType<InactiveScreensManager>();
+            //inactiveScreensManager = GameObject.Find("UI").transform.Find("InactiveScreens").GetComponent<InactiveScreensManager>();
             if (player.playerNum > 0)
             {
                 parsecInputs = player.GetComponent<PlayerInputs>();
                 _playersManager.numOfPlayers++;
                 //_playersManager.numOfIAs++;
                 //inactiveScreensManager.spawnParsecCar = _spawnParsecCar;
-                //inactiveScreensManager.SetNewCar();
-                inactiveScreensManager.spawnParsecCar = true;
+                inactiveScreensManager.SetNewCar();
+                //inactiveScreensManager.spawnParsecCar = true;
                 changeColorScript = changeColorManager.GetChild(player.playerNum).GetComponent<ChangeColor>();
                 changeColorScript.enabled = true;
                 _playersManager.GetPlayer(player.playerNum).GetComponent<IA>().parsecEnabled = true;
@@ -94,6 +96,12 @@ public class PlayerManager : MonoBehaviour
         bool inBuildingScene = SceneManager.GetActiveScene().name.Contains("Building Scene");
         if ((player == null || (inBuildingScene && inactiveScreensManager == null)) /*&& PlayerPrefs.GetString("RoomCreated", "false") == "true"*/)
         {
+            initTimer += Time.deltaTime;
+        }
+
+        if(initTimer > 0.2f)
+        {
+            initTimer = 0;
             InitParsecPlayer(true);
         }
 
