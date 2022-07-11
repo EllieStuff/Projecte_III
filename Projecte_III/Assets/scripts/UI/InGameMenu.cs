@@ -225,10 +225,13 @@ public class InGameMenu : MonoBehaviour
         Time.timeScale = 1.0f;
 
         ParsecStreamFull streamer = Camera.main.GetComponent<ParsecStreamFull>();
-        streamer.StopParsec();
-        PlayerManager[] players = GameObject.FindObjectsOfType<PlayerManager>();
-        for (int i = 0; i < players.Length; i++)
-            Destroy(players[i].gameObject);
+        if (streamer != null)
+        {
+            streamer.StopParsec();
+            PlayerManager[] players = GameObject.FindObjectsOfType<PlayerManager>();
+            for (int i = 0; i < players.Length; i++)
+                Destroy(players[i].gameObject);
+        }
 
         GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().ChangeScene("Menu");
     }

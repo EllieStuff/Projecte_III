@@ -84,6 +84,7 @@ public class LoadSceneManager : MonoBehaviour
                 //    playersManager.GetComponent<PlayersManager>().RefreshNumOfPlayers();
                 for (int i = 0; i < playersManager.transform.childCount; i++)
                     SceneManager.sceneLoaded -= playersManager.transform.GetChild(i).GetComponent<PlayerData>().OnSceneLoaded;
+                SceneManager.sceneLoaded -= playersManager.GetComponent<PlayersManager>().OnSceneLoaded;
                 Destroy(playersManager);
             }
         }
@@ -118,4 +119,9 @@ public class LoadSceneManager : MonoBehaviour
 
 
     public string GetSceneName() { return currentSceneName; }
+
+    public void ReloadScene()
+    {
+        ChangeScene(GetSceneName());
+    }
 }

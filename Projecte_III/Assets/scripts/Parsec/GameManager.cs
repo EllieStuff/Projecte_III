@@ -185,8 +185,7 @@ public class GameManager : MonoBehaviour
 
     public void ReinitSceneWithoutParsec()
     {
-        LoadSceneManager sceneManager = GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>();
-        sceneManager.ChangeScene("Current Building Scene");
+        GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>().ReloadScene();
     }
 
 }
