@@ -174,4 +174,9 @@ public class RandomModifierGet : MonoBehaviour
         currentModifier = ModifierTypes.NONE;
     }
 
+    string GetModifier(ModifierTypes modifier)
+    {
+        return modifier.ToString();
+    }
+
 }

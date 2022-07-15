@@ -5,10 +5,18 @@ using UnityEngine.UI;
 
 public class PlayersHUD : MonoBehaviour
 {
+    private struct Pair_Percentage_Modifier
+    {
+        public RandomModifierGet.ModifierTypes modifier;
+        public int percentage;
+    }
+
     [SerializeField] Sprite[] possibleModifiers;
 
     [SerializeField] RandomModifierGet player;
     public int id;
+
+    public ModifiersRollData modifiersRollValues; 
 
     Image modifier;
     Image[] lifes;
@@ -90,7 +98,7 @@ public class PlayersHUD : MonoBehaviour
             initial = Random.Range(0, possibleModifiers.Length);
 
         } while (initial == _modifierIdx);
-        
+
         if (initial >= possibleModifiers.Length) initial -= possibleModifiers.Length;
         int currentSprite = initial + 1;
         while(timesShown < 5)
@@ -113,6 +121,32 @@ public class PlayersHUD : MonoBehaviour
         player.SetModifier(_mod);
 
         yield return 0;
+    }
+
+    int GetModifierRolled()
+    {
+        int _modifier = -1;
+
+        List<Pair_Percentage_Modifier> percentages = new List<Pair_Percentage_Modifier>();
+        for (int i = 0; i < (int)RandomModifierGet.ModifierTypes.COUNT; i++)
+        {
+            Pair_Percentage_Modifier pair = new Pair_Percentage_Modifier();
+            pair.modifier = (RandomModifierGet.ModifierTypes)i;
+            pair.percentage = 100;
+
+            percentages.Add(pair);
+        }
+
+        return _modifier;
+    }
+
+    int CalculateNumberOfLivesPercentages()
+    {
+        int percentage = 0;
+
+
+
+        return 0;
     }
 
     public void ClearModifiers()
