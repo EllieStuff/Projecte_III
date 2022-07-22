@@ -4,6 +4,12 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Rewired;
+
+// ToDo: 
+//  - Assegurar-se de que estigui creant el CustomController bé a l'inspector
+//  - Buscar la repo d'exemple de com recollir els comandos de rewired per a parsec
+
 
 public class PlayerManager : MonoBehaviour
 {
@@ -29,10 +35,23 @@ public class PlayerManager : MonoBehaviour
 
     float initTimer = 0;
 
+    Player rewiredPlayer;
+
     public void Setup(bool _isAdmin)
     {
         DontDestroyOnLoad(gameObject);
         ParsecInput.AssignGuestToPlayer(m_AssignedGuest, m_PlayerNumber);
+
+        // Rewired-Parsec Inputs
+        CustomController parsecController = ReInput.controllers.CreateCustomController(0, "Parsec_" + m_AssignedGuest);
+        ParsecInput.AssignGuestToPlayer(m_AssignedGuest, m_PlayerNumber);
+        rewiredPlayer = Rewired.ReInput.players.GetPlayer(m_PlayerNumber);
+        ParsecUnity.ParsecRewiredInput.AssignCustomControllerToUser(m_AssignedGuest, parsecController);
+        rewiredPlayer.controllers.AddController(parsecController, true);
+        //CustomController parsecController = ReInput.controllers.CreateCustomController(0, "Parsec_" + m_PlayerNumber.ToString());
+        //ParsecRewiredInput.AssignCustomControllerToUser(m_AssignedGuest, parsecController);
+        //rewiredPlayer.controllers.AddController(parsecController, true);
+
         if (_isAdmin) playerPos = 0;
         else playerPos = m_PlayerNumber - 1;
         Debug.LogWarning("Player " + m_PlayerNumber + " at " + playerPos);
@@ -83,6 +102,9 @@ public class PlayerManager : MonoBehaviour
 
     private void Update()
     {
+        //if (rewiredPlayer == null)
+        //    rewiredPlayer = ReInput.players.GetPlayer(playerPos);
+
         //string currSceneName = SceneManager.GetActiveScene().name;
         //bool inBuildingScene = currSceneName.Contains("Building Scene");
         
@@ -107,11 +129,13 @@ public class PlayerManager : MonoBehaviour
 
         if (player != null && player.playerNum > 0)
         {
-            if (ParsecInput.GetKey(player.playerNum + 1, KeyCode.Joystick1Button6) || ParsecInput.GetKey(player.playerNum + 1, KeyCode.Joystick2Button6)
-                || ParsecInput.GetKey(player.playerNum + 1, KeyCode.Joystick3Button6) || ParsecInput.GetKey(player.playerNum + 1, KeyCode.Joystick4Button6)) 
-                Debug.LogError("In Vertical - Forwards");
-            if (ParsecInput.GetKey(player.playerNum + 1, KeyCode.Joystick1Button5)) Debug.LogError("In Vertical - Backwards");
-            if (ParsecInput.GetAxis(player.playerNum + 1, "Horizontal") > 0.1f || ParsecInput.GetAxis(player.playerNum + 1, "Horizontal") < -0.1f) Debug.LogError("In Horizontal");
+            //if (ParsecInput.GetKey(player.playerNum + 1, KeyCode.Joystick1Button6) || ParsecInput.GetKey(player.playerNum + 1, KeyCode.Joystick2Button6)
+            //    || ParsecInput.GetKey(player.playerNum + 1, KeyCode.Joystick3Button6) || ParsecInput.GetKey(player.playerNum + 1, KeyCode.Joystick4Button6)) 
+            //    Debug.LogError("In Vertical - Forwards");
+            //if (ParsecInput.GetKey(player.playerNum + 1, KeyCode.Joystick1Button5)) Debug.LogError("In Vertical - Backwards");
+            //if (ParsecInput.GetAxis(player.playerNum + 1, "Horizontal") > 0.1f || ParsecInput.GetAxis(player.playerNum + 1, "Horizontal") < -0.1f) Debug.LogError("In Horizontal");
+
+            //ParsecRewiredInput
 
 
             parsecInputs.parsecP.forward = ParsecInput.GetKey(player.playerNum + 1, KeyCode.W) || ParsecInput.GetKey(player.playerNum + 1, KeyCode.Joystick1Button6);
@@ -136,7 +160,7 @@ public class PlayerManager : MonoBehaviour
     void CheckReturn()
     {
         bool parsecReturnPressed =
-            ParsecInput.GetKey(player.playerNum + 1, KeyCode.Return) || ParsecInput.GetKey(player.playerNum + 1, KeyCode.Joystick1Button7);
+            ParsecInput.GetKey(player.playerNum + 1, KeyCode.Return) || ParsecInput.GetButton(player.playerNum + 1, "Select");
         if (!returnPressed && parsecReturnPressed)
         {
             returnPressed = true;
