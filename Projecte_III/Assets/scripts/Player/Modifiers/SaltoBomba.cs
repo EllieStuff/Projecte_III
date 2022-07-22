@@ -97,11 +97,14 @@ public class SaltoBomba : MonoBehaviour
         }
         else if (!explosionDone && saltoTimer <= saltoDuration - 1.2f && player.touchingGround)
         {
+            playersManager = GameObject.Find("PlayersManager").GetComponent<PlayersManager>();
             SaltoBombaPS.Play();
             for (int i = 0; i < playersManager.players.Length; i++)
             {
                 Transform otherPlayer = playersManager.GetPlayer(i);
-                float explosionDistance = Vector3.Distance(transform.position, otherPlayer.transform.position);
+                if (transform == null) Debug.LogError("Player transform was null");
+                if (otherPlayer == null) Debug.LogError("OtherPlayer transform was null");
+                float explosionDistance = Vector3.Distance(transform.position, otherPlayer.position);
                 //Debug.Log(explosionDistance);
                 if (transform != otherPlayer && explosionDistance <= explosionRange)
                 {
