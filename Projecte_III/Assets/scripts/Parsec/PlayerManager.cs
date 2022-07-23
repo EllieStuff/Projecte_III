@@ -36,6 +36,7 @@ public class PlayerManager : MonoBehaviour
     float initTimer = 0;
 
     Player rewiredPlayer;
+    CustomController parsecController;
 
     public void Setup(bool _isAdmin)
     {
@@ -43,7 +44,7 @@ public class PlayerManager : MonoBehaviour
         ParsecInput.AssignGuestToPlayer(m_AssignedGuest, m_PlayerNumber);
 
         // Rewired-Parsec Inputs
-        CustomController parsecController = ReInput.controllers.CreateCustomController(0, "Parsec_" + m_AssignedGuest);
+        parsecController = ReInput.controllers.CreateCustomController(0, "Parsec_" + m_PlayerNumber);
         ParsecInput.AssignGuestToPlayer(m_AssignedGuest, m_PlayerNumber);
         rewiredPlayer = Rewired.ReInput.players.GetPlayer(m_PlayerNumber);
         ParsecUnity.ParsecRewiredInput.AssignCustomControllerToUser(m_AssignedGuest, parsecController);
@@ -70,6 +71,13 @@ public class PlayerManager : MonoBehaviour
                 //_playersManager.numOfIAs++;
                 //inactiveScreensManager.spawnParsecCar = _spawnParsecCar;
                 inactiveScreensManager.SetNewCar();
+                //// Rewired-Parsec Inputs
+                //parsecController = ReInput.controllers.CreateCustomController(0, "Parsec_" + m_PlayerNumber);
+                //ParsecInput.AssignGuestToPlayer(m_AssignedGuest, m_PlayerNumber);
+                //rewiredPlayer = Rewired.ReInput.players.GetPlayer(m_PlayerNumber);
+                //ParsecUnity.ParsecRewiredInput.AssignCustomControllerToUser(m_AssignedGuest, parsecController);
+                //rewiredPlayer.controllers.AddController(parsecController, true);
+
                 //inactiveScreensManager.spawnParsecCar = true;
                 changeColorScript = changeColorManager.GetChild(player.playerNum).GetComponent<ChangeColor>();
                 changeColorScript.enabled = true;
@@ -127,6 +135,13 @@ public class PlayerManager : MonoBehaviour
             InitParsecPlayer(true);
         }
 
+        if (rewiredPlayer == null) Debug.LogError("rewired null");
+        else if (rewiredPlayer.GetAnyButton()) Debug.LogError("Entering 1");
+        else Debug.LogError("smth 1");
+        if (parsecController == null) Debug.LogError("controller null");
+        else if (parsecController.GetAnyButton()) Debug.LogError("Entering 2");
+        else Debug.LogError("smth 2");
+
         if (player != null && player.playerNum > 0)
         {
             //if (ParsecInput.GetKey(player.playerNum + 1, KeyCode.Joystick1Button6) || ParsecInput.GetKey(player.playerNum + 1, KeyCode.Joystick2Button6)
@@ -137,6 +152,8 @@ public class PlayerManager : MonoBehaviour
 
             //ParsecRewiredInput
 
+            //if (rewiredPlayer.GetAnyButton()) Debug.LogError("Entering 1");
+            //if (parsecController.GetAnyButton()) Debug.LogError("Entering 2");
 
             parsecInputs.parsecP.forward = ParsecInput.GetKey(player.playerNum + 1, KeyCode.W) || ParsecInput.GetKey(player.playerNum + 1, KeyCode.Joystick1Button6);
             parsecInputs.parsecP.backward = ParsecInput.GetKey(player.playerNum + 1, KeyCode.S) || ParsecInput.GetKey(player.playerNum + 1, KeyCode.Joystick1Button5);
@@ -160,7 +177,7 @@ public class PlayerManager : MonoBehaviour
     void CheckReturn()
     {
         bool parsecReturnPressed =
-            ParsecInput.GetKey(player.playerNum + 1, KeyCode.Return) || ParsecInput.GetButton(player.playerNum + 1, "Select");
+            ParsecInput.GetKey(player.playerNum + 1, KeyCode.Return) || ParsecInput.GetButton(player.playerNum + 1, "Select") || rewiredPlayer.GetButton(3);
         if (!returnPressed && parsecReturnPressed)
         {
             returnPressed = true;
