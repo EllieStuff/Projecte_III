@@ -10,25 +10,11 @@ public class ModifiersRollData : ScriptableObject
     [System.Serializable]
     public class ModifierData
     {
+        public string ModifierName = "";
+
         public PercentageModificators[] modificator = { PercentageModificators.NONE };
         public bool invertModificator = false;
     }
 
-    [Space(10)]
-    public ModifierData plunger;
-
-    [Space(10)]
-    public ModifierData umbrella;
-
-    [Space(10)]
-    public ModifierData oil;
-
-    [Space(10)]
-    public ModifierData paintGun;
-
-    [Space(10)]
-    public ModifierData saltoBomba;
-
-    [Space(10)]
-    public ModifierData boost;
+    public ModifierData[] Modifiers;
 }

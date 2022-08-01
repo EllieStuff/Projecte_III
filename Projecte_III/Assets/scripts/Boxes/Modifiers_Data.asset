@@ -12,21 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fa8a48a615bce445aa11dcdc6a513a7, type: 3}
   m_Name: Modifiers_Data
   m_EditorClassIdentifier: 
-  plunger:
-    modificator: 03000000
+  Modifiers:
+  - ModifierName: PLUNGER
+    modificator: 02000000
     invertModificator: 0
-  umbrella:
-    modificator: 03000000
+  - ModifierName: UMBRELLA
+    modificator: 02000000
     invertModificator: 0
-  oil:
-    modificator: 03000000
+  - ModifierName: OIL
+    modificator: 01000000
     invertModificator: 0
-  paintGun:
-    modificator: 03000000
+  - ModifierName: PAINT_GUN
+    modificator: 02000000
     invertModificator: 0
-  saltoBomba:
-    modificator: 03000000
+  - ModifierName: SALTO_BOMBA
+    modificator: 00000000
     invertModificator: 0
-  boost:
-    modificator: 03000000
-    invertModificator: 0
+  - ModifierName: BOOST
+    modificator: 01000000
+    invertModificator: 1
