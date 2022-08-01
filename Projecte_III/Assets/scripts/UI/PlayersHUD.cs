@@ -199,6 +199,9 @@ public class PlayersHUD : MonoBehaviour
 
         _modifier = (int)percentages[it].modifier;
 
+        //Debug method <<can be comented>>
+        DebugPercentages(ref percentages, maxPercentage);
+
         return _modifier;
     }
 
@@ -318,13 +321,13 @@ public class PlayersHUD : MonoBehaviour
         if (inversed) _position = positions.Count - _position - 1;
 
         if(_position == 0)
-            return 0;
-        else if (_position == 1)
-            return 75;
-        else if (_position == 2)
-            return 125;
-        else if (_position == 3)
             return 175;
+        else if (_position == 1)
+            return 125;
+        else if (_position == 2)
+            return 75;
+        else if (_position == 3)
+            return 0;
 
         return 0;
     }
@@ -361,5 +364,14 @@ public class PlayersHUD : MonoBehaviour
         ClearModifiers();
         modifier.gameObject.SetActive(true);
         modifier.sprite = possibleModifiers[_modIdx];
+    }
+
+    public void DebugPercentages(ref List<Pair_Percentage_Modifier> percentages, int maxPercentage)
+    {
+        Debug.Log("Max percentage value: " + maxPercentage + "%");
+        for (int i = 0; i < percentages.Count; i++)
+        {
+            Debug.Log("Player " + id.ToString() + ": " + percentages[i].modifier.ToString() + " modifier has a " + percentages[i].percentage + "%");
+        }
     }
 }
