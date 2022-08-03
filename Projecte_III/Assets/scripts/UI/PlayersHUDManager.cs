@@ -6,6 +6,8 @@ public class PlayersHUDManager : MonoBehaviour
 {
     PlayersHUD[] playerHud;
 
+    [SerializeField] Transform camLimit;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,5 +32,22 @@ public class PlayersHUDManager : MonoBehaviour
     public PlayersHUD GetPlayerHUD(int _idx)
     {
         return playerHud[_idx];
+    }
+
+    public int[] GetPlayerLifes()
+    {
+        int[] lifes = new int[playerHud.Length];
+
+        for (int i = 0; i < lifes.Length; i++)
+        {
+            lifes[i] = playerHud[i].GetLifes();
+        }
+
+        return lifes;
+    }
+
+    public Transform GetCamLimit()
+    {
+        return camLimit;
     }
 }
