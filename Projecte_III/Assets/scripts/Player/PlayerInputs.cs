@@ -96,6 +96,7 @@ public class PlayerInputs : MonoBehaviour
         //StartCoroutine(DelayToBeInited());
     }
 
+
     // Update is called once per frame
     void Update()
     {
@@ -145,7 +146,10 @@ public class PlayerInputs : MonoBehaviour
                         if (gameManagerGO != null)
                         {
                             if (gameManagerGO.GetComponent<GameManager>().RoomCreated)
+                            {
+                                itCount = 0;
                                 this.enabled = false;
+                            }
                         }
                         //else
                         //{
@@ -203,6 +207,16 @@ public class PlayerInputs : MonoBehaviour
 
     public bool Inited()
     {
+        bool cd1 = controlData != null, cd2 = false;
+        if (cd1 && playerId == 1)
+        {
+            int debug1 = 0;
+            cd2 = controlData[0] != null;
+            if(cd2)
+            {
+                int debug2 = 0;
+            }
+        }
         return controlData != null && controlData[0] != null;
     }
     public bool UsesKeyboard()
@@ -221,6 +235,12 @@ public class PlayerInputs : MonoBehaviour
     public void EnableMenuInputs(bool _enable)
     {
         menuInputsEnabled = _enable;
+    }
+
+    public void ResetControlData()
+    {
+        controlData = new InputSystem.ControlData[1] { null };
+        PlayerPrefs.SetInt(playerInputPath, -1);
     }
 
 

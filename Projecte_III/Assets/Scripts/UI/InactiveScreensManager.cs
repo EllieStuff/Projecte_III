@@ -15,6 +15,7 @@ public class InactiveScreensManager : MonoBehaviour
 
     public bool spawnParsecCar;
     public bool parsecInited = false;
+    public Button parsecButton;
 
     PlayerManager[] parsecPlayersToInit;
     bool canReceiveLocalPlayers = true;
@@ -35,9 +36,11 @@ public class InactiveScreensManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playersInited < playersManager.numOfPlayers && ((currPlayerInputs.Inited() && canReceiveLocalPlayers)/* || spawnParsecCar*/))
+        if (playersInited < playersManager.numOfPlayers && ((currPlayerInputs.Inited() && canReceiveLocalPlayers) /*|| spawnParsecCar*/))
         {
             SetNewCar();
+            if (playersInited == 1) parsecButton.interactable = true;
+            //spawnParsecCar = false;
         }
         else if(canReceiveLocalPlayers && parsecInited)
         {
@@ -53,7 +56,21 @@ public class InactiveScreensManager : MonoBehaviour
         //
         StartCoroutine(DisappearBlackScreen(playersInited));
         playersInited++;
-        currPlayerInputs = playersManager.GetPlayer(playersInited).GetComponent<PlayerInputs>();
+        Transform playerTrans = playersManager.GetPlayer(playersInited);
+        if (playerTrans == null)
+        {
+            playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
+            currPlayerInputs = playersManager.GetPlayer(playersInited).GetComponent<PlayerInputs>();
+            
+            int debug = 0;
+        }
+        else
+        {
+            currPlayerInputs = playersManager.GetPlayer(playersInited).GetComponent<PlayerInputs>();
+
+            int debug = 0;
+        }
+
         //spawnParsecCar = false;
     }
 
@@ -74,7 +91,7 @@ public class InactiveScreensManager : MonoBehaviour
         }
         blackScreen.gameObject.SetActive(false);
 
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.8f);
         doneBttnManager.buttonsActive = playersInited;
         doneBttnManager.GetButton(_idx).isActive = true;
     }

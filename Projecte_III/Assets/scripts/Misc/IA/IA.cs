@@ -33,7 +33,10 @@ public class IA : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(vehicleScript.iaEnabled)
+        if(playersManager == null)
+            playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
+
+        if (vehicleScript.iaEnabled)
         {
             if(target == null && !SceneManager.GetActiveScene().name.Equals("Current Building Scene"))
                 target = GameObject.Find("Target").transform;

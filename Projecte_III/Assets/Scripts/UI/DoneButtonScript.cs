@@ -29,6 +29,12 @@ public class DoneButtonScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(playersManager == null)
+        {
+            playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
+            playerInputs = playersManager.GetPlayer(playerId).GetComponent<PlayerInputs>();
+        }
+
         if (isActive && playersManager.gameMode == PlayersManager.GameModes.MULTI_LOCAL)
         {
             if ((playerInputs.Start || playerInputs.MenuAccept) && !startPressed)

@@ -6,7 +6,7 @@ public class RandomModifierGet : MonoBehaviour
 {
     const float INIT_TIMER_MODIFIER = 5.0f;
 
-    public enum ModifierTypes { PLUNGER, UMBRELLA, OIL, PAINT_GUN, SALTO_BOMBA, BOOST, COUNT, NONE };
+    public enum ModifierTypes { PLUNGER, SPATULA, OIL, PAINT_GUN, SALTO_BOMBA, BOOST, COUNT, NONE };
 
     public GameObject[] modifiers;
     GameObject showModifierInstance;
@@ -66,17 +66,9 @@ public class RandomModifierGet : MonoBehaviour
                     timerModifier = INIT_TIMER_MODIFIER;
                     break;
 
-                case ModifierTypes.UMBRELLA:
-                    Umbrella umbrella = GetComponent<Umbrella>();
-                    if (inputs.ShootForward || IAUp)
-                        umbrella.ActivateUmbrella(Quaternion.Euler(90, 180, 0), true);
-                    else if (inputs.ShootBackwards || IADown)
-                        umbrella.ActivateUmbrella(Quaternion.Euler(-90, 180, 0), false);
-                    else if (inputs.ShootLeft || IALeft)
-                        umbrella.ActivateUmbrella(Quaternion.Euler(90, 180, 90), true);
-                    else if (inputs.ShootRight || IARight)
-                        umbrella.ActivateUmbrella(Quaternion.Euler(90, 180, -90), true);
-
+                case ModifierTypes.SPATULA:
+                    Spatula spatula = GetComponent<Spatula>();
+                    spatula.ActivateSpatula(Quaternion.Euler(90, 180, 0), true);
                     timerModifier = INIT_TIMER_MODIFIER;
                     break;
 
@@ -140,7 +132,7 @@ public class RandomModifierGet : MonoBehaviour
             case ModifierTypes.PLUNGER:
                 GetComponent<PlayerThrowPlunger>().hasPlunger = true;
                 break;
-            case ModifierTypes.UMBRELLA:
+            case ModifierTypes.SPATULA:
                 break;
             case ModifierTypes.OIL:
                 GetComponent<PlayerOilGun>().hasOilGun = true;
@@ -158,7 +150,7 @@ public class RandomModifierGet : MonoBehaviour
             case ModifierTypes.PLUNGER:
                 GetComponent<PlayerThrowPlunger>().hasPlunger = false;
                 break;
-            case ModifierTypes.UMBRELLA:
+            case ModifierTypes.SPATULA:
                 break;
             case ModifierTypes.OIL:
                 GetComponent<PlayerOilGun>().hasOilGun = false;

@@ -51,7 +51,7 @@ public class HacksScript : MonoBehaviour
         {
             for (int i = 0; i < players.Length; i++)
             {
-                players[i].GetComponent<Umbrella>().SetUmbrellaModifier();
+                players[i].GetComponent<Spatula>().SetSpatulaModifier();
             }
         }
         else if (Input.GetKeyDown(KeyCode.F4))

@@ -14,6 +14,8 @@ public class DestroyObjs : MonoBehaviour
         if(playersManager != null) Destroy(playersManager);
 
         PlayerPrefs.SetString("RoomCreated", "false");
+        PlayerPrefs.SetString("LastShortUrl", "null");
+
         //for (int i = 0; i < 4; i++)
         //{
         //    PlayerPrefs.SetInt("ParsecPlayerId" + i, -1);

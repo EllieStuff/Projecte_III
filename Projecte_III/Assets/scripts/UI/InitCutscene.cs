@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InitCutscene : MonoBehaviour
 {
     [SerializeField] float disableTime = 9.0f;
+    [SerializeField] Button defaultButton;
 
     GlobalMenuInputs inputSystem;
 
@@ -17,9 +19,12 @@ public class InitCutscene : MonoBehaviour
 
     private void Update()
     {
-        if(inputSystem.StartBttnReleased || inputSystem.EscapeBttnPressed || Input.GetKeyUp(KeyCode.Mouse0))
+        if(inputSystem.StartBttnReleased || inputSystem.EscapeBttnPressed 
+            || inputSystem.AcceptReleased || inputSystem.DeclineReleased
+            || Input.GetKeyUp(KeyCode.Mouse0))
         {
             StopAllCoroutines();
+            defaultButton.Select();
             gameObject.SetActive(false);
         }
     }

@@ -7,18 +7,18 @@ public class PlayerData : MonoBehaviour
 {
     public int id;
 
-    PlayersManager playersManager;
-    GameObject player;
-    PlayerVehicleScript playerScript;
-    bool sceneLoaded = false;
+    //PlayersManager playersManager;
+    //GameObject player;
+    //PlayerVehicleScript playerScript;
+    bool mainMenuSceneLoaded = false, buildingMenuSceneLoaded = false, gameSceneLoaded = false;
 
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
 
-        playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
-        player = playersManager.GetPlayer(id).gameObject;
-        playerScript = player.GetComponent<PlayerVehicleScript>();
+        //playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
+        //player = playersManager.GetPlayer(id).gameObject;
+        //playerScript = player.GetComponent<PlayerVehicleScript>();
 
         GameObject[] objs = GameObject.FindGameObjectsWithTag("VehicleSet");
         if (objs.Length < 2)
@@ -26,19 +26,21 @@ public class PlayerData : MonoBehaviour
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
     }
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (sceneLoaded) return;
+        //if (gameSceneLoaded) return;
 
-        if (scene.name.Contains("Building Scene"))
+        if (scene.name.Contains("Building Scene") && !buildingMenuSceneLoaded)
         {
+            PlayersManager playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
+            PlayerVehicleScript playerScript = playersManager.GetPlayer(id).GetComponent<PlayerVehicleScript>();
 
             Transform initial = GameObject.FindGameObjectWithTag("InitPos").GetComponent<InitPlayerManager>().GetInitPos(id);
             gameObject.transform.localPosition = initial.localPosition;
             gameObject.transform.localRotation = initial.localRotation;
             gameObject.transform.localScale = initial.localScale;
 
-            Rigidbody rb = player.GetComponent<Rigidbody>();
+            Rigidbody rb = playerScript.GetComponent<Rigidbody>();
             rb.constraints = RigidbodyConstraints.FreezeAll;
             rb.useGravity = false;
 
@@ -47,13 +49,18 @@ public class PlayerData : MonoBehaviour
             {
                 Destroy(objs[1]);
             }
+
+            //buildingMenuSceneLoaded = true;
         }
-        else if (scene.name != "Menu")
+        else if (scene.name != "Menu" && !gameSceneLoaded)
         {
             //Transform initial = GameObject.FindGameObjectWithTag("InitPos").GetComponent<InitPosManager>().GetInitPos(id);
             //gameObject.transform.position = initial.position;
             //gameObject.transform.localRotation = initial.localRotation;
             //gameObject.transform.localScale = initial.localScale;
+
+            PlayersManager playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
+            PlayerVehicleScript playerScript = playersManager.GetPlayer(id).GetComponent<PlayerVehicleScript>();
 
             Rigidbody rb = playerScript.GetComponent<Rigidbody>();
             rb.constraints = RigidbodyConstraints.None;
@@ -61,7 +68,7 @@ public class PlayerData : MonoBehaviour
 
             GetComponentInChildren<VehicleTriggerAndCollisionEvents>().Init();
 
-            sceneLoaded = true;
+            //gameSceneLoaded = true;
         }
 
     }
