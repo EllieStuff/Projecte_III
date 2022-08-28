@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class PlayerVehicleScript : MonoBehaviour
 {
+    public enum InitialTurbo { STUN = 0, SMALL_TURBO, MID_TURBO, BIG_TURBO, NONE, COUNT };
+
     internal int playerNum;
 
     [SerializeField] Vector3 centerOfMass = new Vector3(0.0f, -0.7f, 0.0f);
@@ -54,13 +56,14 @@ public class PlayerVehicleScript : MonoBehaviour
     internal float timerStartRace;
     [HideInInspector] public bool raceStarted = false;
     private bool startAcceleration;
+    private float startTurboTimer = -1;
 
     [SerializeField] private AudioClip normalClip;
 
     private Transform outTransform;
     private Rigidbody outVehicleRB;
     internal float baseMaxSpeed;
-    internal bool speedIncrementEnabled;
+    internal bool speedIncrementEnabled, refreshMaxSpeed;
     [HideInInspector]
     public float
         reinitTorqueTimer = -1,
@@ -94,7 +97,7 @@ public class PlayerVehicleScript : MonoBehaviour
 
         events = GetComponent<VehicleTriggerAndCollisionEvents>();
 
-        speedIncrementEnabled = true;
+        speedIncrementEnabled = refreshMaxSpeed = true;
 
         savedVehicleTorque = vehicleTorque;
 
@@ -204,6 +207,7 @@ public class PlayerVehicleScript : MonoBehaviour
 
     void FixedUpdate()
     {
+        //Debug.Log("Time: " + Time.timeSinceLevelLoad);
         //if (controls == null)
         //    controls = new QuadControlSystem();
 
@@ -223,12 +227,27 @@ public class PlayerVehicleScript : MonoBehaviour
         else if (timerStartRace <= 0)
         {
             raceStarted = true;
+            if (startTurboTimer > 0)
+            {
+                float startTurboTime = Time.timeSinceLevelLoad - startTurboTimer - 2.0f;
+                Debug.Log("StartTurboTime: " + startTurboTime);
+                startTurboTimer = -1;
+                if(startTurboTime > 2.0f) { SetInitialTurbo(InitialTurbo.STUN); }
+                else if(startTurboTime > 1.5f) { SetInitialTurbo(InitialTurbo.BIG_TURBO); }
+                else if(startTurboTime > 1.0f) { SetInitialTurbo(InitialTurbo.MID_TURBO); }
+                else if (startTurboTime > 0.6f) { SetInitialTurbo(InitialTurbo.SMALL_TURBO); }
+            }
+
             //vehicleRB.isKinematic = false;
         }
         else if (touchingGround)
         {
             timerStartRace -= Time.deltaTime;
             vehicleRB.velocity = Vector3.zero;
+            if ((inputs.Forward || inputs.parsecP.forward) && startTurboTimer <= 0)
+                startTurboTimer = Time.timeSinceLevelLoad;
+            else if ((!inputs.Forward && !inputs.parsecP.forward) && startTurboTimer > 0)
+                startTurboTimer = -1;
             //vehicleRB.isKinematic = true;
         }
 
@@ -245,7 +264,7 @@ public class PlayerVehicleScript : MonoBehaviour
         if(speedIncrementEnabled && savedMaxSpeed < baseMaxSpeed)
         {
             savedMaxSpeed += Time.deltaTime * 0.04f;
-            vehicleMaxSpeed = savedMaxSpeed;
+            if(refreshMaxSpeed) vehicleMaxSpeed = savedMaxSpeed;
         }
 
         if (touchingGround)
@@ -397,6 +416,44 @@ public class PlayerVehicleScript : MonoBehaviour
         Debug.Log("Player " + playerNum + " =>  FloorTorque: " + targetFloorTorque + ", CarTorque: " + targetCarTorque + ", FinalTorque: " + vehicleTorque);
         Debug.Log("Player " + playerNum + " =>  TorqueTimer: " + reinitTorqueTimer);
         //Debug.Log("Player " + playerNum + " =>  Votes: " + votesForMaintingFloorTorque);
+    }
+
+
+    public void SetInitialTurbo(InitialTurbo _turboType)
+    {
+        switch (_turboType)
+        {
+            case InitialTurbo.STUN:
+                SetInitialTurbo(0.1f, 0.3f);
+                break;
+
+            case InitialTurbo.BIG_TURBO:
+                SetInitialTurbo(1.3f, 3.5f);
+                break;
+            
+            case InitialTurbo.MID_TURBO:
+                SetInitialTurbo(1.2f, 2.8f);
+                break;
+            
+            case InitialTurbo.SMALL_TURBO:
+                SetInitialTurbo(1.1f, 2.0f);
+                break;
+
+            default:
+                break;
+        }
+    }
+    void SetInitialTurbo(float _speed, float _time)
+    {
+        refreshMaxSpeed = false;
+        vehicleMaxSpeed = savedMaxSpeed * _speed;
+        StartCoroutine(EndInitialTurbo(_time));
+    }
+    
+    IEnumerator EndInitialTurbo(float _time)
+    {
+        yield return new WaitForSeconds(_time);
+        refreshMaxSpeed = true;
     }
 
 }
