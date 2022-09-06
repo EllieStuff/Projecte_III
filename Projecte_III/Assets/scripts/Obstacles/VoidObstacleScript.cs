@@ -5,10 +5,12 @@ using UnityEngine;
 public class VoidObstacleScript : MonoBehaviour
 {
     List<Collider> affectedRoads = new List<Collider>();
+    MapWarningObstacle warningSystem;
 
     private void Start()
     {
-        
+        warningSystem = GameObject.Find("HUD").transform.Find("MapEventWarning").GetComponent<MapWarningObstacle>();
+        warningSystem.InstantiateWarning(new Vector3(Mathf.Clamp(transform.parent.parent.localPosition.x * 50, -400, 400), 480, 0), 1.5f);
     }
 
 

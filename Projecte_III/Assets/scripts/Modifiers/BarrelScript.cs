@@ -18,9 +18,18 @@ public class BarrelScript : MonoBehaviour
     [SerializeField] bool hasExploded = false;
     BarrelExplosion explosion = null;
 
+    private MapWarningObstacle warningSystem; 
+
     // Start is called before the first frame update
     void Start()
     {
+        warningSystem = GameObject.Find("HUD").transform.Find("MapEventWarning").GetComponent<MapWarningObstacle>();
+        
+        if(type.Equals(BarrelType.MOBIL))
+            warningSystem.InstantiateWarning(new Vector3(Mathf.Clamp(transform.parent.parent.localPosition.x * 50, -400, 400), 480, 0), 1.5f);
+        else if(type.Equals(BarrelType.EXPLOSIVE))
+            warningSystem.InstantiateWarning(new Vector3(Mathf.Clamp(transform.localPosition.x * 50, -400, 400), 480, 0), 1.5f);
+
         barrel = transform.GetChild(0).GetComponent<BarrelCollision>();
 
         rb = gameObject.AddComponent<Rigidbody>();
