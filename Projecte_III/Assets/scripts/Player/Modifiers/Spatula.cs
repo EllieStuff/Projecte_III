@@ -128,13 +128,11 @@ public class Spatula : MonoBehaviour
 
     public void StopSpatula()
     {
-        Debug.Log("STOPPED");
         spatulaGameObject.transform.localPosition = originalPos;
         spatulaGameObject.transform.localScale = originalScale;
         spatulaIgnited = false;
         spatulaActive = spatulaActivated = false;
         spatulaGameObject.SetActive(false);
-        Debug.Log("IS ACTIVE??: " + spatulaGameObject.activeSelf);
     }
 
 }
