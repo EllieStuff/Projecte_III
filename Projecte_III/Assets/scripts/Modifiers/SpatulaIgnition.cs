@@ -6,7 +6,7 @@ public class SpatulaIgnition : MonoBehaviour
 {
     [SerializeField] PlayersManager players;
     [SerializeField] PlayerVehicleScript localPlayer;
-    const float DISTANCE = 2f;
+    const float DISTANCE = 2.25f;
     const float JUMPSPEED = 2.5f;
 
     public void ThrowPlayer()

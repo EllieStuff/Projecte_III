@@ -151,6 +151,7 @@ public class RandomModifierGet : MonoBehaviour
                 GetComponent<PlayerThrowPlunger>().hasPlunger = false;
                 break;
             case ModifierTypes.SPATULA:
+                GetComponent<Spatula>().StopSpatula();
                 break;
             case ModifierTypes.OIL:
                 GetComponent<PlayerOilGun>().hasOilGun = false;
@@ -160,6 +161,8 @@ public class RandomModifierGet : MonoBehaviour
                 break;
             case ModifierTypes.COUNT:
             case ModifierTypes.NONE:
+                GetComponent<Spatula>().StopSpatula();
+                break;
             default:
                 break;
         }

@@ -45,7 +45,7 @@ public class Spatula : MonoBehaviour
                 //umbrellaGameObject.transform.localPosition = originalPos;
                 //umbrellaGameObject.transform.localScale = originalScale;
             }
-            else if(spatulaTimer <= 1.5f) 
+            else if(spatulaTimer <= 2.4f) 
             {
                 if(!spatulaIgnited && spatulaGameObject.GetComponent<SpatulaIgnition>().CanThrowPlayer())
                 {
@@ -70,6 +70,7 @@ public class Spatula : MonoBehaviour
 
     public void ActivateSpatula(Quaternion direction, bool moveUmbrellaPivot)
     {
+        spatulaTimer = INIT_SPATULA_TIME;
         spatulaGameObject.transform.rotation = new Quaternion(0, 0, 0, 90);
         initPos = direction;
 
@@ -123,6 +124,17 @@ public class Spatula : MonoBehaviour
         spatulaGameObject.transform.localScale = originalScale;
         spatulaIgnited = false;
         spatulaGameObject.SetActive(false);
+    }
+
+    public void StopSpatula()
+    {
+        Debug.Log("STOPPED");
+        spatulaGameObject.transform.localPosition = originalPos;
+        spatulaGameObject.transform.localScale = originalScale;
+        spatulaIgnited = false;
+        spatulaActive = spatulaActivated = false;
+        spatulaGameObject.SetActive(false);
+        Debug.Log("IS ACTIVE??: " + spatulaGameObject.activeSelf);
     }
 
 }
