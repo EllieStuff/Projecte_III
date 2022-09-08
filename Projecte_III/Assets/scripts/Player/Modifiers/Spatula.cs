@@ -53,10 +53,18 @@ public class Spatula : MonoBehaviour
                     spatulaIgnited = true;
                 }
                 if(spatulaIgnited)
+                {
                     spatulaGameObject.transform.rotation = Quaternion.Lerp(spatulaGameObject.transform.rotation, new Quaternion(0, 0, 0, 90), Time.deltaTime * 0.075f);
+                    Quaternion actualRot = spatulaGameObject.transform.localRotation;
+                    spatulaGameObject.transform.localRotation = new Quaternion(0, actualRot.y, actualRot.z, 0);
+                }
             }
             else
+            {
                 spatulaGameObject.transform.localRotation = Quaternion.Lerp(spatulaGameObject.transform.localRotation, initPos, Time.deltaTime * 0.75f);
+                Quaternion actualRot = spatulaGameObject.transform.localRotation;
+                spatulaGameObject.transform.localRotation = new Quaternion(0, actualRot.y, actualRot.z, 0);
+            }
         }
     }
 

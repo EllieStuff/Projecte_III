@@ -11,6 +11,7 @@ public class IA : MonoBehaviour
     private PlayersManager playersManager;
     private RandomModifierGet randomModifierScript;
     private bool forward, backward, left, right;
+    private bool enableMovement = false;
 
     public int ItemThrowProbability;
     private float throwTimer;
@@ -33,8 +34,11 @@ public class IA : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(playersManager == null)
+        if (playersManager == null)
+        {
             playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
+            //enableMovement = false;
+        }
 
         if (vehicleScript.iaEnabled)
         {
@@ -43,8 +47,14 @@ public class IA : MonoBehaviour
 
             IABrain();
 
-            if(vehicleScript.timerStartRace <= 0)
-                IAMovement();
+            if(!enableMovement && vehicleScript.timerStartRace <= 0)
+            {
+                enableMovement = true;
+                int initialTurboType = Random.Range(0, (int)PlayerVehicleScript.InitialTurbo.COUNT);
+                Debug.Log("IA turbo: " + (PlayerVehicleScript.InitialTurbo)initialTurboType);
+                vehicleScript.SetInitialTurbo((PlayerVehicleScript.InitialTurbo)initialTurboType);
+            }
+            if(enableMovement) IAMovement();
         }
         else if(parsecEnabled)
         {
@@ -52,6 +62,7 @@ public class IA : MonoBehaviour
 
             if (vehicleScript.timerStartRace <= 0)
                 IAMovement();
+
         }
     }
 
@@ -177,7 +188,7 @@ public class IA : MonoBehaviour
         if (vehicleScript.speedIncrementEnabled && vehicleScript.savedMaxSpeed < vehicleScript.baseMaxSpeed)
         {
             vehicleScript.savedMaxSpeed += Time.deltaTime * 0.04f;
-            vehicleScript.vehicleMaxSpeed = vehicleScript.savedMaxSpeed;
+            if (vehicleScript.refreshMaxSpeed) vehicleScript.vehicleMaxSpeed = vehicleScript.savedMaxSpeed;
         }
 
         if (vehicleScript.touchingGround)
