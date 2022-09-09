@@ -32,27 +32,8 @@ public class ChangeColor : MonoBehaviour
         gradient = parent.gradient;
         playerInputs = GetComponent<PlayerMenuInputsPressed>();
 
-        textBackgroundColor = transform.GetChild(0).GetComponent<Image>();
-
         buttonRight.GetComponent<Image>().color = Color.yellow;
         buttonLeft.GetComponent<Image>().color = Color.yellow;
-
-        int _rand = Random.Range(0, colorList.Count);
-
-        while(colorList[_rand].Value == null)
-        {
-            _rand = Random.Range(0, colorList.Count);
-        }
-        currentValue = _rand;
-        currentColor = colorList[_rand].Value;
-
-        colorList[_rand] = new KeyValuePair<int, Material>(_rand, null);
-
-        player.DefaultMaterial = currentColor;
-        Color _curr = UseGradientMaterials.GetColor(currentColor.name);
-
-        backgroundColor.color = new Color(_curr.r, _curr.g, _curr.b, 0.45f);
-        textBackgroundColor.color = _curr;
     }
 
     private void OnEnable()
@@ -74,6 +55,25 @@ public class ChangeColor : MonoBehaviour
                 defaultColorList.Add(new KeyValuePair<int, Material>(i, mats[i]));
             }
         }
+
+        textBackgroundColor = transform.GetChild(0).GetComponent<Image>();
+
+        int _rand = Random.Range(0, colorList.Count);
+
+        while (colorList[_rand].Value == null)
+        {
+            _rand = Random.Range(0, colorList.Count);
+        }
+        currentValue = _rand;
+        currentColor = colorList[_rand].Value;
+
+        colorList[_rand] = new KeyValuePair<int, Material>(_rand, null);
+
+        player.DefaultMaterial = currentColor;
+        Color _curr = UseGradientMaterials.GetColor(currentColor.name);
+
+        backgroundColor.color = new Color(_curr.r, _curr.g, _curr.b, 0.45f);
+        textBackgroundColor.color = _curr;
     }
 
     private void Update()
