@@ -16,15 +16,21 @@ public class UseGradientMaterials : MonoBehaviour
 
     [SerializeField] ColorData[] UsedColors;
     [SerializeField] Color AI_Color = Color.gray;
+    [SerializeField] Material AI_Color_Mat;
+    [SerializeField] Material blocked_Car_Mat;
+
+    [SerializeField] Transform backgrounds;
+
     static ColorData[] sharedUsedColors;
 
     PlayersManager playersManager;
 
     static bool activeAI = false;
-    static Color shared_AI_Color;
 
     private void Start()
     {
+        AI_Color.a = 0.5f;
+
         playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
         if (sharedUsedColors == null)
         {
@@ -34,8 +40,6 @@ public class UseGradientMaterials : MonoBehaviour
                 sharedUsedColors[i] = UsedColors[i];
             }
         }
-
-        if (shared_AI_Color == null) shared_AI_Color = AI_Color;
     }
 
     static public Color GetColor(string _colorName)
@@ -50,62 +54,73 @@ public class UseGradientMaterials : MonoBehaviour
         return Color.black;
     }
 
-    static public Color GetAIBgColor()
-    {
-        return Color.gray;
-    }
-
     public void SetAI_Active(UnityEngine.UI.Toggle _toggle)
     {
         Debug.Log("Num of players: " + playersManager.numOfPlayers.ToString());
-        //Activate AIs
-        if(_toggle.isOn)
+        for (int i = /*playersManager.numOfPlayers*/0; i < playersManager.players.Length; i++)
         {
-            for (int i = playersManager.numOfPlayers; i < playersManager.players.Length; i++)
+            SpriteRenderer aiBg = backgrounds.GetChild(i + 1).GetComponent<SpriteRenderer>();
+            Transform aiText = transform.GetChild(i);
+            TextMeshPro tmPro;
+
+            //Activate AIs
+            if (_toggle.isOn)
             {
-                transform.GetChild(i).GetComponent<ChangeColor>().enabled = true;
-                Transform playerTrans = playersManager.GetPlayer(i);
-                if (playerTrans == null)
-                {
-                    playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
-                    playersManager.GetPlayer(i).GetComponent<PlayerVehicleScript>().iaEnabled = true;
-                }
-                else
-                {
-                    playersManager.GetPlayer(i).GetComponent<PlayerVehicleScript>().iaEnabled = true;
-                }
-                TextMeshPro tmPro = playersManager.GetPlayer(i).Find("vehicleChasis").Find("PlayerNumText").GetComponent<TextMeshPro>();
+                //Change car color
+                aiBg.color = AI_Color;
+                aiText.GetComponentInChildren<UnityEngine.UI.Image>().color = AI_Color;
+                aiText.GetComponentInChildren<TextMeshProUGUI>().text = "CPU";
+                playersManager.GetPlayer(i).GetComponentInChildren<VehicleTriggerAndCollisionEvents>().DefaultMaterial = AI_Color_Mat;
+
+                //Change Text
+                tmPro = playersManager.GetPlayer(i).Find("vehicleChasis").Find("PlayerNumText").GetComponent<TextMeshPro>();
                 tmPro.text = "CPU";
                 tmPro.fontSize = 22;
                 tmPro.transform.localPosition =
-                    new Vector3(tmPro.transform.localPosition.x, tmPro.transform.localPosition.y + 0.1f, tmPro.transform.localPosition.z - 0.1f);
+                    new Vector3(tmPro.transform.localPosition.x, tmPro.transform.localPosition.y + 0.01f, tmPro.transform.localPosition.z - 0.1f);
             }
-        }
-        //Disactivate AIs
-        else
-        {
-            for (int i = playersManager.numOfPlayers; i < playersManager.players.Length; i++)
+            //Disactivate AIs
+            else
             {
-                transform.GetChild(i).GetComponent<ChangeColor>().enabled = false;
-                Transform playerTrans = playersManager.GetPlayer(i);
-                if (playerTrans == null)
-                {
-                    playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
-                    playersManager.GetPlayer(i).GetComponent<PlayerVehicleScript>().iaEnabled = false;
-                }
-                else
-                {
-                    playersManager.GetPlayer(i).GetComponent<PlayerVehicleScript>().iaEnabled = false;
-                }
-                TextMeshPro tmPro = playersManager.GetPlayer(i).Find("vehicleChasis").Find("PlayerNumText").GetComponent<TextMeshPro>();
-                tmPro.text = "Player " + i.ToString();
+                //Change car color
+                Color _currentColor = GetDefaultBgColor(i);
+                aiText.GetComponentInChildren<UnityEngine.UI.Image>().color = _currentColor;
+                aiText.GetComponentInChildren<TextMeshProUGUI>().text = "Player " + (i + 1).ToString();
+                _currentColor.a = 0.5f;
+                aiBg.color = _currentColor;
+                playersManager.GetPlayer(i).GetComponentInChildren<VehicleTriggerAndCollisionEvents>().DefaultMaterial = blocked_Car_Mat;
+
+                //Change Text
+                tmPro = playersManager.GetPlayer(i).Find("vehicleChasis").Find("PlayerNumText").GetComponent<TextMeshPro>();
+                tmPro.text = "P" + (i + 1).ToString();
                 tmPro.fontSize = 27;
                 tmPro.transform.localPosition =
-                    new Vector3(tmPro.transform.localPosition.x, tmPro.transform.localPosition.y - 0.1f, tmPro.transform.localPosition.z + 0.1f);
+                    new Vector3(tmPro.transform.localPosition.x, tmPro.transform.localPosition.y - 0.01f, tmPro.transform.localPosition.z + 0.1f);
             }
         }
 
         activeAI = _toggle.isOn;
+    }
+
+    private Color GetDefaultBgColor(int id)
+    {
+        if(id == 0)
+        {
+            return UsedColors[7].color;
+        }
+        else if(id == 1)
+        {
+            return UsedColors[5].color;
+        }
+        else if (id == 2)
+        {
+            return UsedColors[11].color;
+        }
+        else if (id == 3)
+        {
+            return UsedColors[9].color;
+        }
+        return Color.white;
     }
 
     static public bool GetAi_Active()

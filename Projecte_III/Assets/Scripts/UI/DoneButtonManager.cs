@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class DoneButtonManager : MonoBehaviour
 {
@@ -72,7 +73,34 @@ public class DoneButtonManager : MonoBehaviour
         }
         Debug.Log("Changing Scene");
 
+        if (UseGradientMaterials.GetAi_Active()) ActivateAIs();
+
         LoadSceneManager sceneManager = GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>();
         sceneManager.ChangeScene(goToScene);
+    }
+
+    private void ActivateAIs()
+    {
+        PlayersManager playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
+        
+        for (int i = buttonsActive; i < playersManager.players.Length; i++)
+        {
+            transform.GetChild(i).GetComponent<ChangeColor>().enabled = true;
+            Transform playerTrans = playersManager.GetPlayer(i);
+            if (playerTrans == null)
+            {
+                playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
+                playersManager.GetPlayer(i).GetComponent<PlayerVehicleScript>().iaEnabled = true;
+            }
+            else
+            {
+                playersManager.GetPlayer(i).GetComponent<PlayerVehicleScript>().iaEnabled = true;
+            }
+            TextMeshPro tmPro = playersManager.GetPlayer(i).Find("vehicleChasis").Find("PlayerNumText").GetComponent<TextMeshPro>();
+            tmPro.text = "CPU";
+            tmPro.fontSize = 22;
+            tmPro.transform.localPosition =
+                new Vector3(tmPro.transform.localPosition.x, tmPro.transform.localPosition.y + 0.1f, tmPro.transform.localPosition.z - 0.1f);
+        }
     }
 }
