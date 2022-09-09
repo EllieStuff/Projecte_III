@@ -5400,8 +5400,20 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
-  m_IsOn: 1
+      m_Calls:
+      - m_Target: {fileID: 1584530455}
+        m_TargetAssemblyTypeName: UseGradientMaterials, Assembly-CSharp
+        m_MethodName: SetAI_Active
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1461776731}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Toggle, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_IsOn: 0
 --- !u!1 &1468322493
 GameObject:
   m_ObjectHideFlags: 0
@@ -6004,6 +6016,9 @@ MonoBehaviour:
   - colorName: Yellow
     color: {r: 1, g: 0.65882355, b: 0.07450981, a: 1}
   AI_Color: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
+  AI_Color_Mat: {fileID: 2100000, guid: 9d8ce0cb1cce43144902551e8d0eedd5, type: 2}
+  blocked_Car_Mat: {fileID: 2100000, guid: e3fc5c435ceb0b84096ae46c5dfbb339, type: 2}
+  backgrounds: {fileID: 1323372879}
 --- !u!1 &1586814600
 GameObject:
   m_ObjectHideFlags: 0
@@ -27514,7 +27529,6 @@ MonoBehaviour:
   buttonsActive: 0
   goToScene: ProceduralMapSceneTest
   activateWith1Player: 1
-  changeColorManager: {fileID: 1584530454}
 --- !u!222 &6920070519331838724
 CanvasRenderer:
   m_ObjectHideFlags: 0
