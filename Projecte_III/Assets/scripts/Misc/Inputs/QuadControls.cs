@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/scripts/Misc/Inputs/QuadControls.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/Scripts/Misc/Inputs/QuadControls.inputactions'
 
 using System;
 using System.Collections;
@@ -1012,6 +1012,14 @@ public class @QuadControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Select AIs"",
+                    ""type"": ""Button"",
+                    ""id"": ""05fa36da-197d-478f-9eef-d1f6de2b3257"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -1212,6 +1220,28 @@ public class @QuadControls : IInputActionCollection, IDisposable
                     ""action"": ""Decline"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""29802308-c1d5-4d71-bbc7-1ec07bdca51e"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Select AIs"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d8dd2056-476f-4d03-a766-13852f295f2c"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Select AIs"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -1279,6 +1309,7 @@ public class @QuadControls : IInputActionCollection, IDisposable
         m_BuildingMenu_Left = m_BuildingMenu.FindAction("Left", throwIfNotFound: true);
         m_BuildingMenu_Accept = m_BuildingMenu.FindAction("Accept", throwIfNotFound: true);
         m_BuildingMenu_Decline = m_BuildingMenu.FindAction("Decline", throwIfNotFound: true);
+        m_BuildingMenu_SelectAIs = m_BuildingMenu.FindAction("Select AIs", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1674,6 +1705,7 @@ public class @QuadControls : IInputActionCollection, IDisposable
     private readonly InputAction m_BuildingMenu_Left;
     private readonly InputAction m_BuildingMenu_Accept;
     private readonly InputAction m_BuildingMenu_Decline;
+    private readonly InputAction m_BuildingMenu_SelectAIs;
     public struct BuildingMenuActions
     {
         private @QuadControls m_Wrapper;
@@ -1686,6 +1718,7 @@ public class @QuadControls : IInputActionCollection, IDisposable
         public InputAction @Left => m_Wrapper.m_BuildingMenu_Left;
         public InputAction @Accept => m_Wrapper.m_BuildingMenu_Accept;
         public InputAction @Decline => m_Wrapper.m_BuildingMenu_Decline;
+        public InputAction @SelectAIs => m_Wrapper.m_BuildingMenu_SelectAIs;
         public InputActionMap Get() { return m_Wrapper.m_BuildingMenu; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1719,6 +1752,9 @@ public class @QuadControls : IInputActionCollection, IDisposable
                 @Decline.started -= m_Wrapper.m_BuildingMenuActionsCallbackInterface.OnDecline;
                 @Decline.performed -= m_Wrapper.m_BuildingMenuActionsCallbackInterface.OnDecline;
                 @Decline.canceled -= m_Wrapper.m_BuildingMenuActionsCallbackInterface.OnDecline;
+                @SelectAIs.started -= m_Wrapper.m_BuildingMenuActionsCallbackInterface.OnSelectAIs;
+                @SelectAIs.performed -= m_Wrapper.m_BuildingMenuActionsCallbackInterface.OnSelectAIs;
+                @SelectAIs.canceled -= m_Wrapper.m_BuildingMenuActionsCallbackInterface.OnSelectAIs;
             }
             m_Wrapper.m_BuildingMenuActionsCallbackInterface = instance;
             if (instance != null)
@@ -1747,6 +1783,9 @@ public class @QuadControls : IInputActionCollection, IDisposable
                 @Decline.started += instance.OnDecline;
                 @Decline.performed += instance.OnDecline;
                 @Decline.canceled += instance.OnDecline;
+                @SelectAIs.started += instance.OnSelectAIs;
+                @SelectAIs.performed += instance.OnSelectAIs;
+                @SelectAIs.canceled += instance.OnSelectAIs;
             }
         }
     }
@@ -1821,5 +1860,6 @@ public class @QuadControls : IInputActionCollection, IDisposable
         void OnLeft(InputAction.CallbackContext context);
         void OnAccept(InputAction.CallbackContext context);
         void OnDecline(InputAction.CallbackContext context);
+        void OnSelectAIs(InputAction.CallbackContext context);
     }
 }

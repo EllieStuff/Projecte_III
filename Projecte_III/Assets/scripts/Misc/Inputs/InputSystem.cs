@@ -6,7 +6,7 @@ public class InputSystem : MonoBehaviour
 {
     public const float INPUT_THRESHOLD = 0.3f;
 
-    public enum KeyCodes { FORWARD, BACKWARD, LEFT, RIGHT, START, ESCAPE, DRIFT, SHOOT_FORWARD, SHOOT_BACKWARD, SHOOT_LEFT, SHOOT_RIGHT, MENU_UP, MENU_DOWN, MENU_RIGHT, MENU_LEFT, MENU_ACCEPT, MENU_DECLINE };
+    public enum KeyCodes { FORWARD, BACKWARD, LEFT, RIGHT, START, SELECT_AIS, ESCAPE, DRIFT, SHOOT_FORWARD, SHOOT_BACKWARD, SHOOT_LEFT, SHOOT_RIGHT, MENU_UP, MENU_DOWN, MENU_RIGHT, MENU_LEFT, MENU_ACCEPT, MENU_DECLINE };
     public enum AxisCodes { CHOOSE_ITEM };
     public enum DeviceTypes { DEFAULT, KEYBOARD, CONTROLLER };
 
@@ -337,6 +337,18 @@ public class InputSystem : MonoBehaviour
                         {
                             //Debug.Log("Start is " + controls.Quad.Start.controls[i].EvaluateMagnitude());
                             if (controls.Quad.Start.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return currKeyData;
+                        }
+                    }
+
+                    break;
+                
+                case KeyCodes.SELECT_AIS:
+                    for (int i = 0; i < controls.BuildingMenu.SelectAIs.controls.Count; i++)
+                    {
+                        if (controls.BuildingMenu.SelectAIs.controls[i].device.deviceId == mainDeviceId)
+                        {
+                            //Debug.Log("Start is " + controls.Quad.Start.controls[i].EvaluateMagnitude());
+                            if (controls.BuildingMenu.SelectAIs.controls[i].EvaluateMagnitude() > INPUT_THRESHOLD) return currKeyData;
                         }
                     }
 

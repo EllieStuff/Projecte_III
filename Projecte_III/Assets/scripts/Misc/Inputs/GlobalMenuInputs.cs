@@ -14,7 +14,8 @@ public class GlobalMenuInputs : MonoBehaviour
     [HideInInspector]
     public InputSystem.KeyData
         UpData, DownData, RightData, LeftData,
-        AcceptData, DeclineData, StartBttnData, EscapeBttnData;
+        AcceptData, DeclineData, StartBttnData, EscapeBttnData,
+        SelectAIsData;
 
     Dictionary<InputSystem.KeyCodes, bool> keysPressed = new Dictionary<InputSystem.KeyCodes, bool>();
 
@@ -29,6 +30,7 @@ public class GlobalMenuInputs : MonoBehaviour
     public bool Decline { get { return DeclineData.pressed; } }
     public bool StartBttn { get { return StartBttnData.pressed; } }
     public bool EscapeBttn { get { return EscapeBttnData.pressed; } }
+    public bool SelectAis { get { return SelectAIsData.pressed; } }
     public bool UpPressed { get { return Up && !keysPressed[InputSystem.KeyCodes.MENU_UP]; } }
     public bool DownPressed { get { return Down && !keysPressed[InputSystem.KeyCodes.MENU_DOWN]; } }
     public bool RightPressed { get { return Right && !keysPressed[InputSystem.KeyCodes.MENU_RIGHT]; } }
@@ -37,6 +39,7 @@ public class GlobalMenuInputs : MonoBehaviour
     public bool DeclinePressed { get { return Decline && !keysPressed[InputSystem.KeyCodes.MENU_DECLINE]; } }
     public bool StartBttnPressed { get { return StartBttn && !keysPressed[InputSystem.KeyCodes.START]; } }
     public bool EscapeBttnPressed { get { return EscapeBttn && !keysPressed[InputSystem.KeyCodes.ESCAPE]; } }
+    public bool SelectAIsPressed { get { return SelectAis && !keysPressed[InputSystem.KeyCodes.SELECT_AIS]; } }
     public bool UpReleased { get { return !Up && keysPressed[InputSystem.KeyCodes.MENU_UP]; } }
     public bool DownReleased { get { return !Down && keysPressed[InputSystem.KeyCodes.MENU_DOWN]; } }
     public bool RightReleased { get { return !Right && keysPressed[InputSystem.KeyCodes.MENU_RIGHT]; } }
@@ -45,6 +48,7 @@ public class GlobalMenuInputs : MonoBehaviour
     public bool DeclineReleased { get { return !Decline && keysPressed[InputSystem.KeyCodes.MENU_DECLINE]; } }
     public bool StartBttnReleased { get { return !StartBttn && keysPressed[InputSystem.KeyCodes.START]; } }
     public bool EscapeBttnReleased { get { return !EscapeBttn && keysPressed[InputSystem.KeyCodes.ESCAPE]; } }
+    public bool SelectAIsReleased { get { return !SelectAis && keysPressed[InputSystem.KeyCodes.SELECT_AIS]; } }
 
 
     // Start is called before the first frame update
@@ -61,6 +65,7 @@ public class GlobalMenuInputs : MonoBehaviour
         keysPressed.Add(InputSystem.KeyCodes.MENU_DECLINE, false);
         keysPressed.Add(InputSystem.KeyCodes.START, false);
         keysPressed.Add(InputSystem.KeyCodes.ESCAPE, false);
+        keysPressed.Add(InputSystem.KeyCodes.SELECT_AIS, false);
     }
 
     private void Update()
@@ -90,6 +95,7 @@ public class GlobalMenuInputs : MonoBehaviour
         DeclineData = inputSystem.GetKeyData(InputSystem.KeyCodes.MENU_DECLINE, controlData);
         StartBttnData = inputSystem.GetKeyData(InputSystem.KeyCodes.START, controlData);
         EscapeBttnData = inputSystem.GetKeyData(InputSystem.KeyCodes.ESCAPE, controlData);
+        SelectAIsData = inputSystem.GetKeyData(InputSystem.KeyCodes.SELECT_AIS, controlData);
     }
 
     //public int GetDeviceId(InputSystem.KeyCodes _key)
@@ -133,6 +139,10 @@ public class GlobalMenuInputs : MonoBehaviour
         {
             keysPressed[InputSystem.KeyCodes.ESCAPE] = true;
         }
+        if (SelectAis && !keysPressed[InputSystem.KeyCodes.SELECT_AIS])
+        {
+            keysPressed[InputSystem.KeyCodes.SELECT_AIS] = true;
+        }
 
         ResetMap();
     }
@@ -171,6 +181,10 @@ public class GlobalMenuInputs : MonoBehaviour
         if (!EscapeBttn && keysPressed[InputSystem.KeyCodes.ESCAPE])
         {
             keysPressed[InputSystem.KeyCodes.ESCAPE] = false;
+        }
+        if (!SelectAis && keysPressed[InputSystem.KeyCodes.SELECT_AIS])
+        {
+            keysPressed[InputSystem.KeyCodes.SELECT_AIS] = false;
         }
 
     }

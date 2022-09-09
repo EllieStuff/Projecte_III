@@ -999,6 +999,14 @@
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Select AIs",
+                    "type": "Button",
+                    "id": "05fa36da-197d-478f-9eef-d1f6de2b3257",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -1197,6 +1205,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Decline",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "29802308-c1d5-4d71-bbc7-1ec07bdca51e",
+                    "path": "<Gamepad>/select",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Select AIs",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d8dd2056-476f-4d03-a766-13852f295f2c",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Select AIs",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
