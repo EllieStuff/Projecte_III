@@ -26,22 +26,22 @@ public class ClearObstaclesCameraRaycast : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        int playerId = GetComponent<CameraScript>().playerId;
-        player = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>().GetPlayer(playerId);
-        camera = GetComponentInChildren<Camera>();
+        //int playerId = GetComponent<CameraScript>().playerId;
+        //player = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>().GetPlayer(playerId);
+        //camera = GetComponentInChildren<Camera>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 currMargin = player.forward * forwardMargin;
-        currMargin.y += downMargin;
-        Vector3 cameraPos = camera.transform.position + currMargin;
-        Vector3 playerPos = player.position + currMargin;
+        //Vector3 currMargin = player.forward * forwardMargin;
+        //currMargin.y += downMargin;
+        //Vector3 cameraPos = camera.transform.position + currMargin;
+        //Vector3 playerPos = player.position + currMargin;
 
-        Debug.DrawLine(cameraPos, playerPos, Color.red);
-        RaycastHit[] hits = Physics.SphereCastAll(new Ray(playerPos, cameraPos - playerPos), clearingRadius, Vector3.Distance(cameraPos, playerPos));
-        UpdateHitsDictionary(hits);
+        //Debug.DrawLine(cameraPos, playerPos, Color.red);
+        //RaycastHit[] hits = Physics.SphereCastAll(new Ray(playerPos, cameraPos - playerPos), clearingRadius, Vector3.Distance(cameraPos, playerPos));
+        //UpdateHitsDictionary(hits);
     }
 
     

@@ -18,14 +18,23 @@ public class PlayersHUDManager : MonoBehaviour
             playerHud[i] = transform.GetChild(i).GetComponent<PlayersHUD>();
             playerHud[i].id = i;
             if (i >= playersNum)
+            {
                 playerHud[i].gameObject.SetActive(false);
+                //transform.GetChild(i).gameObject.SetActive(false);
+                continue;
+            }
+
+            //playerHud[i] = transform.GetChild(i).GetComponent<PlayersHUD>();
+            //playerHud[i].id = i;
+            //if (i >= playersNum)
+            //    playerHud[i].gameObject.SetActive(false);
             
-            if(playersNum == 1)
-                playerHud[i].GetComponent<RectTransform>().position += new Vector3(700, 0, 0);
-            else if (playersNum == 2)
-                playerHud[i].GetComponent<RectTransform>().position += new Vector3(500, 0, 0);
-            else if (playersNum == 3)
-                playerHud[i].GetComponent<RectTransform>().position += new Vector3(200, 0, 0);
+            //if(playersNum == 1)
+            //    playerHud[i].GetComponent<RectTransform>().position += new Vector3(700, 0, 0);
+            //else if (playersNum == 2)
+            //    playerHud[i].GetComponent<RectTransform>().position += new Vector3(500, 0, 0);
+            //else if (playersNum == 3)
+            //    playerHud[i].GetComponent<RectTransform>().position += new Vector3(200, 0, 0);
         }
     }
 

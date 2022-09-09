@@ -86,6 +86,7 @@ public class CameraNavFollowScript : MonoBehaviour
         for (int i = 0; i < players.numOfPlayers; i++)
         {
             PlayerVehicleScript _player = players.GetPlayer(i).GetComponent<PlayerVehicleScript>();
+            if (_player == null) continue;
             float calculatedDistance = Vector3.Distance(_player.transform.position, limit.position);
             if (_player.transform.InverseTransformDirection(_player.vehicleRB.velocity).z > 6 && calculatedDistance < distance && calculatedDistance <= 50) 
             {

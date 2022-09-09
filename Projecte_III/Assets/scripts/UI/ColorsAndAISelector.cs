@@ -90,10 +90,12 @@ public class ColorsAndAISelector : MonoBehaviour
                 aiText.GetComponentInChildren<TextMeshProUGUI>().text = "Player " + (i + 1).ToString();
                 _currentColor.a = 0.5f;
                 aiBg.color = _currentColor;
-                playersManager.GetPlayer(i).GetComponentInChildren<VehicleTriggerAndCollisionEvents>().DefaultMaterial = blocked_Car_Mat;
+                Transform playerTrans = playersManager.GetPlayer(i);
+                if (playerTrans == null) continue;
+                playerTrans.GetComponentInChildren<VehicleTriggerAndCollisionEvents>().DefaultMaterial = blocked_Car_Mat;
 
                 //Change Text
-                tmPro = playersManager.GetPlayer(i).Find("vehicleChasis").Find("PlayerNumText").GetComponent<TextMeshPro>();
+                tmPro = playerTrans.Find("vehicleChasis").Find("PlayerNumText").GetComponent<TextMeshPro>();
                 tmPro.text = "P" + (i + 1).ToString();
                 tmPro.fontSize = 27;
                 tmPro.transform.localPosition =
