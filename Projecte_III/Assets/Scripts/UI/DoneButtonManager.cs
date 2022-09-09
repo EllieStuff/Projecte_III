@@ -12,6 +12,8 @@ public class DoneButtonManager : MonoBehaviour
     [SerializeField] string goToScene;
     [SerializeField] bool activateWith1Player = false;
 
+    [SerializeField] UseGradientMaterials changeColorManager;
+
     bool loadingLevel = false;
 
     DoneButtonScript[] doneButtonScripts;
@@ -85,7 +87,7 @@ public class DoneButtonManager : MonoBehaviour
         
         for (int i = buttonsActive; i < playersManager.players.Length; i++)
         {
-            transform.GetChild(i).GetComponent<ChangeColor>().enabled = true;
+            changeColorManager.transform.GetChild(i).GetComponent<ChangeColor>().enabled = true;
             Transform playerTrans = playersManager.GetPlayer(i);
             if (playerTrans == null)
             {
@@ -96,11 +98,6 @@ public class DoneButtonManager : MonoBehaviour
             {
                 playersManager.GetPlayer(i).GetComponent<PlayerVehicleScript>().iaEnabled = true;
             }
-            TextMeshPro tmPro = playersManager.GetPlayer(i).Find("vehicleChasis").Find("PlayerNumText").GetComponent<TextMeshPro>();
-            tmPro.text = "CPU";
-            tmPro.fontSize = 22;
-            tmPro.transform.localPosition =
-                new Vector3(tmPro.transform.localPosition.x, tmPro.transform.localPosition.y + 0.1f, tmPro.transform.localPosition.z - 0.1f);
         }
     }
 }

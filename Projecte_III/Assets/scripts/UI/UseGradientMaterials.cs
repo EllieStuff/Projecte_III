@@ -57,6 +57,9 @@ public class UseGradientMaterials : MonoBehaviour
     public void SetAI_Active(UnityEngine.UI.Toggle _toggle)
     {
         Debug.Log("Num of players: " + playersManager.numOfPlayers.ToString());
+
+        
+
         for (int i = /*playersManager.numOfPlayers*/0; i < playersManager.players.Length; i++)
         {
             SpriteRenderer aiBg = backgrounds.GetChild(i + 1).GetComponent<SpriteRenderer>();
