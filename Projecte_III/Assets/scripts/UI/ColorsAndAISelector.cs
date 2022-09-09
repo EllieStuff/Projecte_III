@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class UseGradientMaterials : MonoBehaviour
+public class ColorsAndAISelector : MonoBehaviour
 {
     [System.Serializable]
     public struct ColorData
@@ -20,6 +20,7 @@ public class UseGradientMaterials : MonoBehaviour
     [SerializeField] Material blocked_Car_Mat;
 
     [SerializeField] Transform backgrounds;
+    [SerializeField] InactiveScreensManager inactiveScreens;
 
     static ColorData[] sharedUsedColors;
 
@@ -58,9 +59,7 @@ public class UseGradientMaterials : MonoBehaviour
     {
         Debug.Log("Num of players: " + playersManager.numOfPlayers.ToString());
 
-        
-
-        for (int i = /*playersManager.numOfPlayers*/0; i < playersManager.players.Length; i++)
+        for (int i = inactiveScreens.PlayersInited; i < playersManager.players.Length; i++)
         {
             SpriteRenderer aiBg = backgrounds.GetChild(i + 1).GetComponent<SpriteRenderer>();
             Transform aiText = transform.GetChild(i);

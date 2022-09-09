@@ -5326,6 +5326,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1461776730}
   - component: {fileID: 1461776731}
+  - component: {fileID: 1461776732}
   m_Layer: 5
   m_Name: Toggle
   m_TagString: Untagged
@@ -5402,7 +5403,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1584530455}
-        m_TargetAssemblyTypeName: UseGradientMaterials, Assembly-CSharp
+        m_TargetAssemblyTypeName: ColorsAndAISelector, Assembly-CSharp
         m_MethodName: SetAI_Active
         m_Mode: 2
         m_Arguments:
@@ -5414,6 +5415,20 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 0
+--- !u!114 &1461776732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1461776729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1c9c3c2def1ea9498f488be1c835ae6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AI_selector_logic: {fileID: 1584530455}
+  inputs: {fileID: 6920070520237398568}
 --- !u!1 &1468322493
 GameObject:
   m_ObjectHideFlags: 0
@@ -6019,6 +6034,7 @@ MonoBehaviour:
   AI_Color_Mat: {fileID: 2100000, guid: 9d8ce0cb1cce43144902551e8d0eedd5, type: 2}
   blocked_Car_Mat: {fileID: 2100000, guid: e3fc5c435ceb0b84096ae46c5dfbb339, type: 2}
   backgrounds: {fileID: 1323372879}
+  inactiveScreens: {fileID: 6920070519924564349}
 --- !u!1 &1586814600
 GameObject:
   m_ObjectHideFlags: 0

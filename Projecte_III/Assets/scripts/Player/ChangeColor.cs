@@ -18,7 +18,7 @@ public class ChangeColor : MonoBehaviour
     [SerializeField] SpriteRenderer backgroundColor;
     Image textBackgroundColor;
 
-    UseGradientMaterials parent;
+    ColorsAndAISelector parent;
 
     PlayerMenuInputsPressed playerInputs;
     Button lastButton = null;
@@ -28,7 +28,7 @@ public class ChangeColor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        parent = transform.parent.GetComponent<UseGradientMaterials>();
+        parent = transform.parent.GetComponent<ColorsAndAISelector>();
         gradient = parent.gradient;
         playerInputs = GetComponent<PlayerMenuInputsPressed>();
 
@@ -70,7 +70,7 @@ public class ChangeColor : MonoBehaviour
         colorList[_rand] = new KeyValuePair<int, Material>(_rand, null);
 
         player.DefaultMaterial = currentColor;
-        Color _curr = UseGradientMaterials.GetColor(currentColor.name);
+        Color _curr = ColorsAndAISelector.GetColor(currentColor.name);
 
         backgroundColor.color = new Color(_curr.r, _curr.g, _curr.b, 0.45f);
         textBackgroundColor.color = _curr;
@@ -113,7 +113,7 @@ public class ChangeColor : MonoBehaviour
 
         player.DefaultMaterial = currentColor;
 
-        Color _curr = UseGradientMaterials.GetColor(currentColor.name);
+        Color _curr = ColorsAndAISelector.GetColor(currentColor.name);
 
         backgroundColor.color = new Color(_curr.r, _curr.g, _curr.b, 0.45f);
         textBackgroundColor.color = _curr;
@@ -142,7 +142,7 @@ public class ChangeColor : MonoBehaviour
 
         player.DefaultMaterial = currentColor;
 
-        Color _curr = UseGradientMaterials.GetColor(currentColor.name);
+        Color _curr = ColorsAndAISelector.GetColor(currentColor.name);
 
         backgroundColor.color = new Color(_curr.r, _curr.g, _curr.b, 0.45f);
         textBackgroundColor.color = _curr;
@@ -172,7 +172,7 @@ public class ChangeColor : MonoBehaviour
 
         player.DefaultMaterial = currentColor;
 
-        Color _curr = UseGradientMaterials.GetColor(currentColor.name);
+        Color _curr = ColorsAndAISelector.GetColor(currentColor.name);
 
         backgroundColor.color = new Color(_curr.r, _curr.g, _curr.b, 0.45f);
         textBackgroundColor.color = _curr;

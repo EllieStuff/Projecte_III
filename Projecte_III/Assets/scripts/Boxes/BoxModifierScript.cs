@@ -28,9 +28,9 @@ public class BoxModifierScript : MonoBehaviour
         alphaUpOrDown = true;
         hudManager = GameObject.Find("HUD").transform.GetComponentInChildren<PlayersHUDManager>();
 
-        currentColor = UseGradientMaterials.GetColor(ref currentColorID);
+        currentColor = ColorsAndAISelector.GetColor(ref currentColorID);
         currentColorID++;
-        nextColor = UseGradientMaterials.GetColor(ref currentColorID);
+        nextColor = ColorsAndAISelector.GetColor(ref currentColorID);
 
         currentColor.a = 0.2f;
         nextColor.a = 0.2f;
@@ -109,7 +109,7 @@ public class BoxModifierScript : MonoBehaviour
         currentColor = nextColor;
 
         currentColorID++;
-        nextColor = UseGradientMaterials.GetColor(ref currentColorID);
+        nextColor = ColorsAndAISelector.GetColor(ref currentColorID);
         nextColor.a = 0.2f;
     }
 

@@ -42,7 +42,7 @@ public class PlayersHUD : MonoBehaviour
         player = pManager.GetPlayer(id).GetComponentInChildren<RandomModifierGet>();
         currentLifes = player.transform.GetComponent<PlayerVehicleScript>().lifes;
 
-        mainColor = UseGradientMaterials.GetColor(player.transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material.name);
+        mainColor = ColorsAndAISelector.GetColor(player.transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material.name);
 
         modifier.transform.parent.GetComponent<Image>().color = new Color(mainColor.r, mainColor.g, mainColor.b, 1.0f);
         //Destroy(GetComponent<UseGradientMaterials>());

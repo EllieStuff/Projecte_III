@@ -34,7 +34,7 @@ public class ExplosionScript : MonoBehaviour
 
             id = other.GetComponentInParent<PlayerVehicleScript>().playerNum;
             player = GameObject.Find("PlayersManager").GetComponent<PlayersManager>().GetPlayer(id).GetComponentInChildren<RandomModifierGet>();
-            _color = UseGradientMaterials.GetColor(player.transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material.name);
+            _color = ColorsAndAISelector.GetColor(player.transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material.name);
 
             ExplosionParticles.transform.position = other.transform.position;
             settings.startColor = new ParticleSystem.MinMaxGradient(_color);

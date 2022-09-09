@@ -12,7 +12,8 @@ public class DoneButtonManager : MonoBehaviour
     [SerializeField] string goToScene;
     [SerializeField] bool activateWith1Player = false;
 
-    [SerializeField] UseGradientMaterials changeColorManager;
+    [SerializeField] ColorsAndAISelector changeColorManager;
+    PlayersManager playersManager;
 
     bool loadingLevel = false;
 
@@ -21,6 +22,7 @@ public class DoneButtonManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
         doneButtonScripts = new DoneButtonScript[transform.childCount];
         for(int i = 0; i < doneButtonScripts.Length; i++)
         {
@@ -75,7 +77,23 @@ public class DoneButtonManager : MonoBehaviour
         }
         Debug.Log("Changing Scene");
 
-        if (UseGradientMaterials.GetAi_Active()) ActivateAIs();
+        if (ColorsAndAISelector.GetAi_Active()) ActivateAIs();
+        else
+        {
+            Transform[] _playersCopy = new Transform[buttonsActive];
+
+            for (int i = 0; i < playersManager.numOfPlayers; i++)
+            {
+                if (i < buttonsActive) _playersCopy[i] = playersManager.players[i];
+                else Destroy(playersManager.players[i].parent.gameObject);
+            }
+
+            if(buttonsActive != playersManager.numOfPlayers)
+            {
+                playersManager.players = _playersCopy;
+                playersManager.numOfPlayers = buttonsActive;
+            }
+        }
 
         LoadSceneManager sceneManager = GameObject.FindGameObjectWithTag("SceneManager").GetComponent<LoadSceneManager>();
         sceneManager.ChangeScene(goToScene);
@@ -83,7 +101,6 @@ public class DoneButtonManager : MonoBehaviour
 
     private void ActivateAIs()
     {
-        PlayersManager playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
         
         for (int i = buttonsActive; i < playersManager.players.Length; i++)
         {
