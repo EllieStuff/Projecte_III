@@ -6830,6 +6830,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: a1a66479564cffd4c8c0e807445d6afe, type: 3}
   player: {fileID: 0}
   id: 0
+  modifiersRollValues: {fileID: 11400000, guid: 4aacd4788f27fa244a4ba27a2a6baee6, type: 2}
 --- !u!1 &505354397
 GameObject:
   m_ObjectHideFlags: 0
@@ -6891,6 +6892,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: a1a66479564cffd4c8c0e807445d6afe, type: 3}
   player: {fileID: 0}
   id: 3
+  modifiersRollValues: {fileID: 11400000, guid: 4aacd4788f27fa244a4ba27a2a6baee6, type: 2}
 --- !u!1 &514149548
 GameObject:
   m_ObjectHideFlags: 0
@@ -22191,7 +22193,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4043309055
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -23080,7 +23082,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7884478524487275323, guid: a522520787ade494795580522206d6c4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -7
+      value: -2.55
       objectReference: {fileID: 0}
     - target: {fileID: 7884478524487275323, guid: a522520787ade494795580522206d6c4, type: 3}
       propertyPath: m_LocalRotation.w
@@ -41639,6 +41641,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: a1a66479564cffd4c8c0e807445d6afe, type: 3}
   player: {fileID: 0}
   id: 2
+  modifiersRollValues: {fileID: 11400000, guid: 4aacd4788f27fa244a4ba27a2a6baee6, type: 2}
 --- !u!1001 &1410311138
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -42385,6 +42388,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c51ca15db4869145a89756128beda76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camLimit: {fileID: 1251594449}
 --- !u!1 &1496142174
 GameObject:
   m_ObjectHideFlags: 0
@@ -42402,7 +42406,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1496142175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43429,7 +43433,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roundManager: {fileID: 1574843575}
-  inGameMenu: {fileID: 8675250126377046708}
   baseColor: {r: 1, g: 1, b: 1, a: 1}
   hoverColor: {r: 0.78431374, g: 0.59607846, b: 0.039215688, a: 1}
 --- !u!114 &1595659195
@@ -44115,6 +44118,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: a1a66479564cffd4c8c0e807445d6afe, type: 3}
   player: {fileID: 0}
   id: 1
+  modifiersRollValues: {fileID: 11400000, guid: 4aacd4788f27fa244a4ba27a2a6baee6, type: 2}
 --- !u!1001 &1776818799
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -46604,6 +46608,10 @@ PrefabInstance:
     - target: {fileID: 5719683639042389877, guid: 00994fccf2554644ba12a4970e5a29ab, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7040717086278770830, guid: 00994fccf2554644ba12a4970e5a29ab, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 5.9
       objectReference: {fileID: 0}
     - target: {fileID: 7482993305055559573, guid: 00994fccf2554644ba12a4970e5a29ab, type: 3}
       propertyPath: m_IsActive

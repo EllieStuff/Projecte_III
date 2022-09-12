@@ -68,7 +68,7 @@ public class RandomModifierGet : MonoBehaviour
 
                 case ModifierTypes.SPATULA:
                     Spatula spatula = GetComponent<Spatula>();
-                    spatula.ActivateUmbrella(Quaternion.Euler(90, 180, 0), true);
+                    spatula.ActivateSpatula(Quaternion.Euler(90, 180, 0), true);
                     timerModifier = INIT_TIMER_MODIFIER;
                     break;
 
@@ -164,6 +164,11 @@ public class RandomModifierGet : MonoBehaviour
                 break;
         }
         currentModifier = ModifierTypes.NONE;
+    }
+
+    string GetModifier(ModifierTypes modifier)
+    {
+        return modifier.ToString();
     }
 
 }
