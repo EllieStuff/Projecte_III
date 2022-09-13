@@ -312,7 +312,7 @@ public class PlayersHUD : MonoBehaviour
     {
         int _position = 0;
 
-        while(positions[_position].GetComponentInParent<PlayerData>().id != id)
+        while(positions[_position].parent.GetComponent<PlayerData>().id != id)
         {
             _position++;
             if (_position >= positions.Count) return 0;
