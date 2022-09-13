@@ -896,7 +896,7 @@ Transform:
   - {fileID: 3011723590684166501}
   - {fileID: 1727733947279498046}
   m_Father: {fileID: 8981626880390989721}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3183873946581418036
 GameObject:
@@ -1425,60 +1425,8 @@ Transform:
   - {fileID: 7273592930845203781}
   - {fileID: 442423751515624378}
   m_Father: {fileID: 8981626880390989721}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &5011210166958504735
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 121061088820725761}
-  - component: {fileID: 2699074362455057831}
-  m_Layer: 8
-  m_Name: Obstacles
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &121061088820725761
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5011210166958504735}
-  m_LocalRotation: {x: -0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.2, y: 0, z: 18.160002}
-  m_LocalScale: {x: -1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 8981626880390989721}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2699074362455057831
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5011210166958504735}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7d903e2f5afca042a6cbc2022f60952, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObstacleSelection:
-  - {fileID: 3413318754234699507, guid: 1ed6b3389927e74479a4dda8804ed03c, type: 3}
-  - {fileID: 3413318754234699507, guid: 4735b9c74d72bf949b621fc0878ba595, type: 3}
-  - {fileID: 3413318754234699507, guid: d608227f93667b947a8c42edc6655d02, type: 3}
-  - {fileID: 3413318754234699507, guid: a36f659d4455d064389c17e3b8d51be5, type: 3}
-  - {fileID: 3413318754234699507, guid: a6229f4eb17645a40aade33e22974cc1, type: 3}
-  - {fileID: 3413318754234699507, guid: 0ab143eb61f2eab41a4a7e6bad42142e, type: 3}
-  - {fileID: 3413318754234699507, guid: cc3a0a9560aacf24298cd97324b6109b, type: 3}
-  randomPercent: 0
 --- !u!1 &5285138612196637405
 GameObject:
   m_ObjectHideFlags: 0
@@ -2855,7 +2803,6 @@ Transform:
   m_Children:
   - {fileID: 112740938994830973}
   - {fileID: 4384364141855075820}
-  - {fileID: 121061088820725761}
   - {fileID: 4073955896275505596}
   - {fileID: 1263806415526509194}
   - {fileID: 3619264331028473570}
@@ -9299,7 +9246,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 996056846411140142, guid: c721984bce6fefa4aa8f9236da39c93d, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 996056846411140142, guid: c721984bce6fefa4aa8f9236da39c93d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9583,14 +9530,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c721984bce6fefa4aa8f9236da39c93d, type: 3}
---- !u!4 &4073955896936207670 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 996056846052559012, guid: c721984bce6fefa4aa8f9236da39c93d, type: 3}
-  m_PrefabInstance: {fileID: 3844716327293066642}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4073955896275505596 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 996056846411140142, guid: c721984bce6fefa4aa8f9236da39c93d, type: 3}
+  m_PrefabInstance: {fileID: 3844716327293066642}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4073955896936207670 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 996056846052559012, guid: c721984bce6fefa4aa8f9236da39c93d, type: 3}
   m_PrefabInstance: {fileID: 3844716327293066642}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3846021634126153350
