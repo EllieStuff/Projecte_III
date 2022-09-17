@@ -53,6 +53,8 @@ public class InactiveScreensManager : MonoBehaviour
     {
         //Activate Change Color Script
         changeColorManager.GetChild(playersInited).GetComponent<ChangeColor>().enabled = true;
+        if(currPlayerInputs != null) 
+            currPlayerInputs.GetComponent<PlayerVehicleScript>().bounceScript.Activate(new Vector3Int(0, 1, 0));
         //
         StartCoroutine(DisappearBlackScreen(playersInited));
         playersInited++;
@@ -60,8 +62,12 @@ public class InactiveScreensManager : MonoBehaviour
         if (playerTrans == null)
         {
             playersManager = GameObject.FindGameObjectWithTag("PlayersManager").GetComponent<PlayersManager>();
-            currPlayerInputs = playersManager.GetPlayer(playersInited).GetComponent<PlayerInputs>();
+            for(int i = 0; i < playersInited; i++)
+                playersManager.GetPlayer(i).GetComponent<PlayerVehicleScript>().bounceScript.Activate(new Vector3(0, 1, 0));
             
+            currPlayerInputs = playersManager.GetPlayer(playersInited).GetComponent<PlayerInputs>();
+            //currPlayerInputs.GetComponent<PlayerVehicleScript>().bounceScript.Activate(new Vector3Int(0, 1, 0));
+
             int debug = 0;
         }
         else

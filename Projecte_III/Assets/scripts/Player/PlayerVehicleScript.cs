@@ -71,6 +71,8 @@ public class PlayerVehicleScript : MonoBehaviour
         targetCarTorque = -1,
         votesForMaintingFloorTorque = 0;
 
+    public BounceScript bounceScript;
+
     private VehicleTriggerAndCollisionEvents events;
 
     internal bool dash = false, dashCollided = false;
@@ -82,6 +84,7 @@ public class PlayerVehicleScript : MonoBehaviour
     private void Awake()
     {
         playerNum = GetComponentInParent<PlayerData>().id;
+        //bounceScript = transform.GetChild(0).GetComponent<BounceScript>(); //GetComponentInChildren<BounceScript>();
     }
 
     void Start()
@@ -96,6 +99,8 @@ public class PlayerVehicleScript : MonoBehaviour
         iaComponent = GetComponent<IA>();
 
         events = GetComponent<VehicleTriggerAndCollisionEvents>();
+
+        bounceScript.Deactivate();
 
         speedIncrementEnabled = refreshMaxSpeed = true;
 
@@ -245,9 +250,15 @@ public class PlayerVehicleScript : MonoBehaviour
             timerStartRace -= Time.deltaTime;
             vehicleRB.velocity = Vector3.zero;
             if ((inputs.Forward || inputs.parsecP.forward) && startTurboTimer <= 0)
+            {
                 startTurboTimer = Time.timeSinceLevelLoad;
+                bounceScript.Activate(new Vector3(1, 1, 0));
+            }
             else if ((!inputs.Forward && !inputs.parsecP.forward) && startTurboTimer > 0)
+            {
                 startTurboTimer = -1;
+                bounceScript.Deactivate();
+            }
             //vehicleRB.isKinematic = true;
         }
 
@@ -449,11 +460,13 @@ public class PlayerVehicleScript : MonoBehaviour
         vehicleMaxSpeed = savedMaxSpeed * _speed;
         StartCoroutine(EndInitialTurbo(_time));
     }
+
     
     IEnumerator EndInitialTurbo(float _time)
     {
         yield return new WaitForSeconds(_time);
         refreshMaxSpeed = true;
+        bounceScript.Deactivate();
     }
 
 }

@@ -11,13 +11,16 @@ public class BounceScript : MonoBehaviour
     [SerializeField] float bounceSpeed = -1;
     [SerializeField] float bounceFreq = 0.06f;
 
-    bool isActive = true;
+    internal Vector3 affectedAxis = new Vector3(0, 1, 0);
+
+    bool isActive = false;
     bool bounceFlag = true;
+    float timer = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        Activate();
+        //Activate();
     }
 
     // Update is called once per frame
@@ -25,15 +28,28 @@ public class BounceScript : MonoBehaviour
     {
         if (!isActive) return;
 
-        transform.position = new Vector3(transform.position.x, transform.position.y + bounceSpeed * Time.deltaTime, transform.position.z);
+        timer += Time.deltaTime;
+        if(timer > bounceFreq)
+        {
+            timer = 0;
+            bounceSpeed *= -1;
+        }
+
+        transform.position = new Vector3(
+            transform.position.x + bounceSpeed * Time.deltaTime * affectedAxis.x, 
+            transform.position.y + bounceSpeed * Time.deltaTime * affectedAxis.y, 
+            transform.position.z + bounceSpeed * Time.deltaTime * affectedAxis.z
+        );
 
     }
 
-    public void Activate()
+    public void Activate(Vector3 _affectedAxis, float _affectedTime = -1)
     {
         isActive = true;
+        affectedAxis = _affectedAxis;
         StartCoroutine(CorrectCoroutine());
-        StartCoroutine(VibrateCoroutine());
+        if(_affectedTime >= 0)
+            StartCoroutine(DeactivateCoroutine(_affectedTime));
     }
     public void Deactivate()
     {
@@ -41,24 +57,20 @@ public class BounceScript : MonoBehaviour
         transform.position = new Vector3(origin.position.x, origin.position.y + bounceMargin, origin.position.z);
     }
 
-
-    IEnumerator VibrateCoroutine()
-    {
-        while (isActive)
-        {
-            yield return new WaitForSecondsRealtime(bounceFreq);
-            bounceSpeed *= -1;
-        }
-    }
-
     IEnumerator CorrectCoroutine()
     {
-        transform.position = new Vector3(origin.position.x, origin.position.y + bounceMargin, origin.position.z);
+        //transform.position = new Vector3(origin.position.x, origin.position.y + bounceMargin, origin.position.z);
+        yield return new WaitForSeconds(0.1f);
         while (isActive)
         {
-            yield return new WaitForSeconds(5);
-            transform.position = new Vector3(origin.position.x, origin.position.y + bounceMargin + 0.2f, origin.position.z);
+            transform.position = new Vector3(origin.position.x, origin.position.y + bounceMargin, origin.position.z);
+            yield return new WaitForSeconds(3);
         }
+    }
+    IEnumerator DeactivateCoroutine(float _time)
+    {
+        yield return new WaitForSeconds(_time);
+        Deactivate();
     }
 
 }

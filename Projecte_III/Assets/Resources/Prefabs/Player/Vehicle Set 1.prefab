@@ -400,6 +400,7 @@ MonoBehaviour:
   targetFloorTorque: -1
   targetCarTorque: -1
   votesForMaintingFloorTorque: 0
+  bounceScript: {fileID: 3504441974602687233}
   iaEnabled: 0
 --- !u!114 &7591572402878244577
 MonoBehaviour:
@@ -763,6 +764,7 @@ GameObject:
   - component: {fileID: 38654284546717502}
   - component: {fileID: 5550834918212236619}
   - component: {fileID: 1507571321665681799}
+  - component: {fileID: 3504441974602687233}
   m_Layer: 3
   m_Name: vehicleChasis
   m_TagString: PlayerVehicle
@@ -909,6 +911,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.96, y: 0.76, z: 2}
   m_Center: {x: 0, y: 1.47, z: -0.3}
+--- !u!114 &3504441974602687233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 38654284546717500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac3d39d4557525b4d9e71754631739c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  origin: {fileID: 38654283868662909}
+  bounceMargin: -0.35
+  bounceSpeed: -0.9
+  bounceFreq: 0.06
 --- !u!1 &157221693406162048
 GameObject:
   m_ObjectHideFlags: 0
@@ -10649,6 +10667,20 @@ Transform:
   m_Father: {fileID: 2278175647366256257}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8582422219914664813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1583549956586008342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4cbe8e7ff2082f48808d23aede5aacf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  players: {fileID: 0}
+  localPlayer: {fileID: 38654283868662907}
 --- !u!1 &2278175645968377084
 GameObject:
   m_ObjectHideFlags: 0
@@ -84366,30 +84398,16 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: -1750055341544690568, guid: f1bcdbc7dbbbec0438fdf304cc5c3b7f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: f1bcdbc7dbbbec0438fdf304cc5c3b7f, type: 3}
---- !u!4 &1583549956585911094 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1583549956225210898, guid: f1bcdbc7dbbbec0438fdf304cc5c3b7f, type: 3}
-  m_PrefabInstance: {fileID: 914417956}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1583549956586008342 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1583549956225238578, guid: f1bcdbc7dbbbec0438fdf304cc5c3b7f, type: 3}
   m_PrefabInstance: {fileID: 914417956}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8582422219914664813
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+--- !u!4 &1583549956585911094 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1583549956225210898, guid: f1bcdbc7dbbbec0438fdf304cc5c3b7f, type: 3}
+  m_PrefabInstance: {fileID: 914417956}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1583549956586008342}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4cbe8e7ff2082f48808d23aede5aacf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  players: {fileID: 0}
-  localPlayer: {fileID: 38654283868662907}
 --- !u!1001 &5700957747536066177
 PrefabInstance:
   m_ObjectHideFlags: 0

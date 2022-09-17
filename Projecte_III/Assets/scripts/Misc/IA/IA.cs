@@ -52,6 +52,7 @@ public class IA : MonoBehaviour
                 enableMovement = true;
                 int initialTurboType = Random.Range(0, (int)PlayerVehicleScript.InitialTurbo.COUNT);
                 Debug.Log("IA turbo: " + (PlayerVehicleScript.InitialTurbo)initialTurboType);
+                vehicleScript.bounceScript.Activate(new Vector3(1, 1, 0));
                 vehicleScript.SetInitialTurbo((PlayerVehicleScript.InitialTurbo)initialTurboType);
             }
             if(enableMovement) IAMovement();
