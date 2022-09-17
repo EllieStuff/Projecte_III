@@ -35,11 +35,31 @@ public class BounceScript : MonoBehaviour
             bounceSpeed *= -1;
         }
 
-        transform.position = new Vector3(
-            transform.position.x + bounceSpeed * Time.deltaTime * affectedAxis.x, 
-            transform.position.y + bounceSpeed * Time.deltaTime * affectedAxis.y, 
-            transform.position.z + bounceSpeed * Time.deltaTime * affectedAxis.z
-        );
+        //if (Vector3.Distance(transform.position, origin.position) > 10f)
+        //{
+        //    //timer = 0;
+        //    if (bounceSpeed > 0)
+        //    {
+        //        bounceSpeed = -Mathf.Abs(bounceSpeed);
+        //    }
+        //    else
+        //    {
+        //        bounceSpeed = Mathf.Abs(bounceSpeed);
+        //    }
+        //    transform.position = new Vector3(
+        //        transform.position.x + bounceSpeed * Time.deltaTime * affectedAxis.x * 2,
+        //        transform.position.y + bounceSpeed * Time.deltaTime * affectedAxis.y * 2,
+        //        transform.position.z + bounceSpeed * Time.deltaTime * affectedAxis.z * 2
+        //    );
+        //}
+        //else
+        //{
+            transform.position = new Vector3(
+                transform.position.x + bounceSpeed * Time.deltaTime * affectedAxis.x,
+                transform.position.y + bounceSpeed * Time.deltaTime * affectedAxis.y,
+                transform.position.z + bounceSpeed * Time.deltaTime * affectedAxis.z
+            );
+        //}
 
     }
 

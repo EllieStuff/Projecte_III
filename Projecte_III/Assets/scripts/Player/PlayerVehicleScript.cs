@@ -46,7 +46,7 @@ public class PlayerVehicleScript : MonoBehaviour
     internal float savedAcceleration;
     [SerializeField] internal Material particleMat;
     [SerializeField] private ParticleSystemRenderer smokeBoostParticles;
-    [SerializeField] private ParticleSystem smokeBoostParticlesStart;
+    public ParticleSystem smokeBoostParticlesStart;
     public ParticleSystem smokeBoostParticlesMenu;
     [SerializeField] private ParticleSystem stunParticles;
     [SerializeField] private Transform quadChasisShake;
@@ -105,6 +105,11 @@ public class PlayerVehicleScript : MonoBehaviour
 
         bounceScript.Deactivate();
         smokeBoostParticlesStart.Stop();
+        smokeBoostParticlesMenu.Stop();
+        
+        if(GetComponent<IA>().enabled && SceneManager.GetActiveScene().name.Contains("ProceduralMapScene"))
+            StartCoroutine(ActivateIAStartTurbo());
+        //Debug.Log("currScene"+SceneManager.GetActiveScene().name);
 
         speedIncrementEnabled = refreshMaxSpeed = true;
 
@@ -475,6 +480,11 @@ public class PlayerVehicleScript : MonoBehaviour
         yield return new WaitForSeconds(_time);
         refreshMaxSpeed = true;
         bounceScript.Deactivate();
+    }
+    IEnumerator ActivateIAStartTurbo()
+    {
+        yield return new WaitForSeconds(UnityEngine.Random.Range(2f, 4f));
+        GetComponent<IA>().ActivateStartTurbo();
     }
 
 }
