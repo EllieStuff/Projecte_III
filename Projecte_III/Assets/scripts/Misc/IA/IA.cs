@@ -19,6 +19,7 @@ public class IA : MonoBehaviour
     private int playerNum;
 
     public bool parsecEnabled = true;
+    PlayerVehicleScript.InitialTurbo initialTurbo;
 
     // Start is called before the first frame update
     void Start()
@@ -50,9 +51,7 @@ public class IA : MonoBehaviour
             if(!enableMovement && vehicleScript.timerStartRace <= 0)
             {
                 enableMovement = true;
-                int initialTurboType = Random.Range(0, (int)PlayerVehicleScript.InitialTurbo.COUNT);
-                Debug.Log("IA turbo: " + (PlayerVehicleScript.InitialTurbo)initialTurboType);
-                vehicleScript.SetInitialTurbo((PlayerVehicleScript.InitialTurbo)initialTurboType);
+                vehicleScript.SetInitialTurbo(initialTurbo);
             }
             if(enableMovement) IAMovement();
         }
@@ -64,6 +63,14 @@ public class IA : MonoBehaviour
                 IAMovement();
 
         }
+    }
+
+    public void ActivateStartTurbo()
+    {
+        initialTurbo = (PlayerVehicleScript.InitialTurbo)Random.Range(0, (int)PlayerVehicleScript.InitialTurbo.COUNT);
+        Debug.Log("IA turbo: " + initialTurbo);
+        vehicleScript.bounceScript.Activate(new Vector3(1, 1, 0));
+        vehicleScript.smokeBoostParticlesStart.Play();
     }
 
     void ParsecInputsDetect()

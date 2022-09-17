@@ -46,6 +46,9 @@ public class PlayerVehicleScript : MonoBehaviour
     internal float savedAcceleration;
     [SerializeField] internal Material particleMat;
     [SerializeField] private ParticleSystemRenderer smokeBoostParticles;
+    public ParticleSystem smokeBoostParticlesStart;
+    public ParticleSystem smokeBoostParticlesMenu;
+    [SerializeField] private ParticleSystem stunParticles;
     [SerializeField] private Transform quadChasisShake;
     private float timerShake;
     internal Color defaultColorMat;
@@ -71,6 +74,8 @@ public class PlayerVehicleScript : MonoBehaviour
         targetCarTorque = -1,
         votesForMaintingFloorTorque = 0;
 
+    public BounceScript bounceScript;
+
     private VehicleTriggerAndCollisionEvents events;
 
     internal bool dash = false, dashCollided = false;
@@ -82,6 +87,7 @@ public class PlayerVehicleScript : MonoBehaviour
     private void Awake()
     {
         playerNum = GetComponentInParent<PlayerData>().id;
+        //bounceScript = transform.GetChild(0).GetComponent<BounceScript>(); //GetComponentInChildren<BounceScript>();
     }
 
     void Start()
@@ -96,6 +102,14 @@ public class PlayerVehicleScript : MonoBehaviour
         iaComponent = GetComponent<IA>();
 
         events = GetComponent<VehicleTriggerAndCollisionEvents>();
+
+        bounceScript.Deactivate();
+        smokeBoostParticlesStart.Stop();
+        smokeBoostParticlesMenu.Stop();
+        
+        if(GetComponent<IA>().enabled && SceneManager.GetActiveScene().name.Contains("ProceduralMapScene"))
+            StartCoroutine(ActivateIAStartTurbo());
+        //Debug.Log("currScene"+SceneManager.GetActiveScene().name);
 
         speedIncrementEnabled = refreshMaxSpeed = true;
 
@@ -232,7 +246,8 @@ public class PlayerVehicleScript : MonoBehaviour
                 float startTurboTime = Time.timeSinceLevelLoad - startTurboTimer - 2.0f;
                 Debug.Log("StartTurboTime: " + startTurboTime);
                 startTurboTimer = -1;
-                if(startTurboTime > 2.0f) { SetInitialTurbo(InitialTurbo.STUN); }
+                smokeBoostParticlesStart.Stop();
+                if (startTurboTime > 2.0f) { SetInitialTurbo(InitialTurbo.STUN); }
                 else if(startTurboTime > 1.5f) { SetInitialTurbo(InitialTurbo.BIG_TURBO); }
                 else if(startTurboTime > 1.0f) { SetInitialTurbo(InitialTurbo.MID_TURBO); }
                 else if (startTurboTime > 0.6f) { SetInitialTurbo(InitialTurbo.SMALL_TURBO); }
@@ -245,9 +260,17 @@ public class PlayerVehicleScript : MonoBehaviour
             timerStartRace -= Time.deltaTime;
             vehicleRB.velocity = Vector3.zero;
             if ((inputs.Forward || inputs.parsecP.forward) && startTurboTimer <= 0)
+            {
                 startTurboTimer = Time.timeSinceLevelLoad;
+                bounceScript.Activate(new Vector3(1, 1, 0));
+                smokeBoostParticlesStart.Play();
+            }
             else if ((!inputs.Forward && !inputs.parsecP.forward) && startTurboTimer > 0)
+            {
                 startTurboTimer = -1;
+                bounceScript.Deactivate();
+                smokeBoostParticlesStart.Stop();
+            }
             //vehicleRB.isKinematic = true;
         }
 
@@ -425,6 +448,7 @@ public class PlayerVehicleScript : MonoBehaviour
         {
             case InitialTurbo.STUN:
                 SetInitialTurbo(0.1f, 0.3f);
+                stunParticles.Play();
                 break;
 
             case InitialTurbo.BIG_TURBO:
@@ -449,11 +473,18 @@ public class PlayerVehicleScript : MonoBehaviour
         vehicleMaxSpeed = savedMaxSpeed * _speed;
         StartCoroutine(EndInitialTurbo(_time));
     }
+
     
     IEnumerator EndInitialTurbo(float _time)
     {
         yield return new WaitForSeconds(_time);
         refreshMaxSpeed = true;
+        bounceScript.Deactivate();
+    }
+    IEnumerator ActivateIAStartTurbo()
+    {
+        yield return new WaitForSeconds(UnityEngine.Random.Range(2f, 4f));
+        GetComponent<IA>().ActivateStartTurbo();
     }
 
 }
