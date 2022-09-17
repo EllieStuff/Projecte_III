@@ -46,6 +46,9 @@ public class PlayerVehicleScript : MonoBehaviour
     internal float savedAcceleration;
     [SerializeField] internal Material particleMat;
     [SerializeField] private ParticleSystemRenderer smokeBoostParticles;
+    [SerializeField] private ParticleSystem smokeBoostParticlesStart;
+    public ParticleSystem smokeBoostParticlesMenu;
+    [SerializeField] private ParticleSystem stunParticles;
     [SerializeField] private Transform quadChasisShake;
     private float timerShake;
     internal Color defaultColorMat;
@@ -101,6 +104,7 @@ public class PlayerVehicleScript : MonoBehaviour
         events = GetComponent<VehicleTriggerAndCollisionEvents>();
 
         bounceScript.Deactivate();
+        smokeBoostParticlesStart.Stop();
 
         speedIncrementEnabled = refreshMaxSpeed = true;
 
@@ -237,7 +241,8 @@ public class PlayerVehicleScript : MonoBehaviour
                 float startTurboTime = Time.timeSinceLevelLoad - startTurboTimer - 2.0f;
                 Debug.Log("StartTurboTime: " + startTurboTime);
                 startTurboTimer = -1;
-                if(startTurboTime > 2.0f) { SetInitialTurbo(InitialTurbo.STUN); }
+                smokeBoostParticlesStart.Stop();
+                if (startTurboTime > 2.0f) { SetInitialTurbo(InitialTurbo.STUN); }
                 else if(startTurboTime > 1.5f) { SetInitialTurbo(InitialTurbo.BIG_TURBO); }
                 else if(startTurboTime > 1.0f) { SetInitialTurbo(InitialTurbo.MID_TURBO); }
                 else if (startTurboTime > 0.6f) { SetInitialTurbo(InitialTurbo.SMALL_TURBO); }
@@ -253,11 +258,13 @@ public class PlayerVehicleScript : MonoBehaviour
             {
                 startTurboTimer = Time.timeSinceLevelLoad;
                 bounceScript.Activate(new Vector3(1, 1, 0));
+                smokeBoostParticlesStart.Play();
             }
             else if ((!inputs.Forward && !inputs.parsecP.forward) && startTurboTimer > 0)
             {
                 startTurboTimer = -1;
                 bounceScript.Deactivate();
+                smokeBoostParticlesStart.Stop();
             }
             //vehicleRB.isKinematic = true;
         }
@@ -436,6 +443,7 @@ public class PlayerVehicleScript : MonoBehaviour
         {
             case InitialTurbo.STUN:
                 SetInitialTurbo(0.1f, 0.3f);
+                stunParticles.Play();
                 break;
 
             case InitialTurbo.BIG_TURBO:
