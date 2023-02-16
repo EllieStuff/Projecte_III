@@ -51,6 +51,7 @@ public class Spatula : MonoBehaviour
                 {
                     spatulaGameObject.GetComponent<SpatulaIgnition>().ThrowPlayer();
                     spatulaIgnited = true;
+                    AudioManager.Instance.Play_SFX("SpatulaCharge_SFX");
                 }
                 if(spatulaIgnited)
                 {
@@ -62,7 +63,7 @@ public class Spatula : MonoBehaviour
             }
             else
             {
-                spatulaGameObject.transform.localRotation = Quaternion.Lerp(spatulaGameObject.transform.localRotation, initPos, Time.deltaTime * 0.75f);
+                spatulaGameObject.transform.localRotation = Quaternion.Lerp(spatulaGameObject.transform.localRotation, initPos, Time.deltaTime * 1f);
                 Quaternion actualRot = spatulaGameObject.transform.localRotation;
                 spatulaGameObject.transform.localRotation = new Quaternion(0, actualRot.y, actualRot.z, 0);
             }
@@ -76,7 +77,7 @@ public class Spatula : MonoBehaviour
         spatulaGameObject.transform.rotation = new Quaternion(0, 0, 0, 0);
         initPos = direction;
 
-        AudioManager.Instance.Play_SFX("Umbrella_SFX");
+        AudioManager.Instance.Play_SFX("SpatulaCharge_SFX");
 
         if (moveUmbrellaPivot)
             spatulaGameObject.transform.localPosition -= new Vector3(0, 0, 1);
