@@ -107,7 +107,7 @@ public class PlayerVehicleScript : MonoBehaviour
         smokeBoostParticlesStart.Stop();
         smokeBoostParticlesMenu.Stop();
         
-        if(GetComponent<IA>().enabled && SceneManager.GetActiveScene().name.Contains("ProceduralMapScene"))
+        if(iaEnabled && GetComponent<IA>().enabled && SceneManager.GetActiveScene().name.Contains("ProceduralMapScene"))
             StartCoroutine(ActivateIAStartTurbo());
         //Debug.Log("currScene"+SceneManager.GetActiveScene().name);
 

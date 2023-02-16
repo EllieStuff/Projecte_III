@@ -54,9 +54,10 @@ public class Spatula : MonoBehaviour
                 }
                 if(spatulaIgnited)
                 {
-                    spatulaGameObject.transform.rotation = Quaternion.Lerp(spatulaGameObject.transform.rotation, new Quaternion(0, 0, 0, 90), Time.deltaTime * 0.075f);
-                    Quaternion actualRot = spatulaGameObject.transform.localRotation;
-                    spatulaGameObject.transform.localRotation = new Quaternion(0, actualRot.y, actualRot.z, 0);
+                    spatulaGameObject.transform.localScale = Vector3.Lerp(spatulaGameObject.transform.localScale, Vector3.one, Time.deltaTime * 0.00001f);
+                    //spatulaGameObject.transform.rotation = Quaternion.Lerp(spatulaGameObject.transform.rotation, new Quaternion(0, 0, 0, 90), Time.deltaTime * 0.075f);
+                    //Quaternion actualRot = spatulaGameObject.transform.localRotation;
+                    //spatulaGameObject.transform.localRotation = new Quaternion(0, actualRot.y, actualRot.z, 0);
                 }
             }
             else
@@ -71,7 +72,8 @@ public class Spatula : MonoBehaviour
     public void ActivateSpatula(Quaternion direction, bool moveUmbrellaPivot)
     {
         spatulaTimer = INIT_SPATULA_TIME;
-        spatulaGameObject.transform.rotation = new Quaternion(0, 0, 0, 90);
+        spatulaGameObject.transform.localScale = Vector3.zero;
+        spatulaGameObject.transform.rotation = new Quaternion(0, 0, 0, 0);
         initPos = direction;
 
         AudioManager.Instance.Play_SFX("Umbrella_SFX");
